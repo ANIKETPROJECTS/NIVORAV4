@@ -5,19 +5,6 @@ import FadeIn from '../components/FadeIn'
 import { fetchProject } from '../lib/api'
 import type { Project } from '../lib/api'
 
-// Complete row counts for the 3-col asymmetric grid (featured at indices 0,5,11)
-const GRID_COMPLETE_COUNTS = [2, 5, 7, 10, 12, 15, 18, 21, 24, 27, 30]
-
-function getPaddedGallery(images: string[]): string[] {
-  const valid = images.filter(img => img && img.trim() !== '')
-  if (valid.length === 0) return []
-  const target = GRID_COMPLETE_COUNTS.find(c => c >= valid.length) ?? valid.length
-  const padded = [...valid]
-  while (padded.length < target) {
-    padded.push(valid[padded.length % valid.length])
-  }
-  return padded
-}
 
 interface LightboxProps {
   images: string[]
@@ -272,9 +259,8 @@ export default function ProjectDetail() {
     )
   }
 
-  // Gallery images: filter valid, pad to complete grid rows
-  const rawGallery = project.images.slice(1).filter(img => img && img.trim() !== '')
-  const galleryImages = getPaddedGallery(rawGallery)
+  // Gallery images: only the real images stored in MongoDB (skip the hero at index 0)
+  const galleryImages = project.images.slice(1).filter(img => img && img.trim() !== '')
 
   return (
     <div style={{ background: '#FFFCF7' }} className="pt-20">
@@ -395,7 +381,6 @@ export default function ProjectDetail() {
             <div className="gallery-grid">
               {galleryImages.map((img, i) => {
                 const isFeatured = [0, 5, 11].includes(i)
-                const rawIndex = i % rawGallery.length
                 return (
                   <FadeIn
                     key={`${i}-${img}`}
@@ -410,7 +395,7 @@ export default function ProjectDetail() {
                         boxShadow: '0 2px 12px rgba(46,42,38,0.06)',
                         height: '100%',
                       }}
-                      onClick={() => openLightbox(rawIndex)}
+                      onClick={() => openLightbox(i)}
                     >
                       <img
                         src={img}
@@ -469,7 +454,7 @@ export default function ProjectDetail() {
       {/* Lightbox */}
       {lightboxIndex !== null && (
         <Lightbox
-          images={rawGallery}
+          images={galleryImages}
           startIndex={lightboxIndex}
           projectName={project.name}
           onClose={closeLightbox}
