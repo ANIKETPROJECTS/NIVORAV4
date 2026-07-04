@@ -1,0 +1,29 @@
+I want to fix mobile responsiveness issues on two sections:
+1. Reduce excessive vertical spacing in the Testimonials section on mobile:
+
+On mobile screens, the "What Clients Say" testimonials section currently has too much empty top and bottom padding/margin, making the section feel oversized.
+Add a mobile-specific media query (e.g., @media (max-width: 768px)) to reduce the section's top/bottom padding to roughly 40-50px (down from whatever larger desktop value is currently being inherited, likely 80-100px+).
+Make sure the heading, subheading, testimonial card, and dots indicator spacing inside the section also tighten up proportionally so it doesn't look disjointed — but don't change anything on desktop/tablet, only mobile.
+
+2. Restructure the Footer into a 2-column layout on mobile:
+
+Currently on mobile, the footer stacks everything in a single column (Logo → tagline → "Chat with us" button → Navigate links → What We Do links → Find Us), making it very long to scroll through.
+Restructure it as follows on mobile (@media (max-width: 768px)):
+
+Top (full width): Logo, tagline, and "Chat with us" button — keep centered, stacked as currently.
+Below that, split into a 2-column CSS grid (grid-template-columns: 1fr 1fr):
+
+Left column: "NAVIGATE" heading + links (Home, Portfolio, Services, About, Testimonials, Contact), followed directly below by "FIND US" heading + address, email, phone, and social icon — stacked together in this same left column.
+Right column: "WHAT WE DO" heading + links (Residential Interiors, Commercial Interiors, Hospitality Interiors, Architecture & Space Planning, 2D & 3D Visualization, Renovation & Makeovers).
+
+
+Bottom (full width): Copyright line "© 2025 Nivora Interiors. All rights reserved" and "Designed with intention" text, centered below the 2-column grid.
+
+
+Keep the existing fonts, colors, link styles, and spacing between individual links unchanged — this is purely a layout restructure for mobile, reducing total footer scroll height by roughly 40-50%.
+Ensure desktop/tablet footer layout remains completely unchanged — these changes apply via mobile media query only.
+
+3. Implementation notes:
+
+Test both sections on common mobile viewport widths (375px, 390px, 414px) to confirm spacing looks balanced and the 2-column footer grid doesn't cause text wrapping issues or overflow.
+Make sure the WhatsApp floating button position doesn't overlap with the restructured footer content on mobile.

@@ -1,0 +1,42 @@
+I need two fixes on the homepage:
+
+1. FIX SPACING BETWEEN TESTIMONIAL/QUOTE BOX AND STATS SECTION
+There's a stats bar (showing "Years Experience", "Projects Completed", 
+"Clients Served", "Client Satisfaction" numbers in a dark green box) that 
+sits right below/overlapping a testimonial quote box (the one with the 
+quote "We don't just design spaces, we create legacies."). 
+
+Currently there's no visible gap/spacing between these two elements — they 
+look cramped, almost touching or overlapping awkwardly. I want proper 
+spacing between them, similar to a version where there's a clean visible 
+gap (white/background space) separating the quote box above from the 
+stats bar below, instead of them being squeezed together.
+
+Please find the CSS for these two sections (likely the stats bar has a 
+negative margin-top or is absolutely positioned to overlap the section 
+above it). Adjust the margin/spacing so there is a clear, comfortable gap 
+between the bottom of the testimonial/quote box and the top of the stats 
+bar — across both desktop and mobile breakpoints. Make sure this doesn't 
+break the layout of either section (quote box content and stats numbers 
+should remain fully visible and not get cut off or repositioned 
+incorrectly).
+
+2. INCREASE FONT SIZE OF "DISCOVER OUR STORY" LINK IN PHILOSOPHY SECTION
+In the Philosophy section (the one with "TIMELESS • FUNCTIONAL • PERSONAL" 
+tags and a "Discover Our Story →" link/CTA below it), the "Discover Our 
+Story →" text is currently quite small. 
+
+Please significantly increase its font-size — make it noticeably large/
+prominent (think more like a secondary heading size rather than a small 
+link, e.g. roughly 1.8x-2.5x its current size, you can adjust to whatever 
+looks visually balanced with the rest of the section). Keep the arrow 
+icon/symbol next to it scaled proportionally and keep the underline/
+hover-style intact if there is one. Make sure it still wraps/scales 
+properly on mobile and doesn't overflow its container.
+
+After making both changes, please check the homepage on both desktop and 
+mobile widths to confirm:
+(a) there's now clear spacing between the quote box and stats section, 
+    with no overlap or cramped look,
+(b) the "Discover Our Story" text is now significantly larger and stands 
+    out as intended, without breaking the layout on smaller screens.

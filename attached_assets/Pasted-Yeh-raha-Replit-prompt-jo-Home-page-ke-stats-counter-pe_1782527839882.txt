@@ -1,0 +1,26 @@
+Yeh raha Replit prompt jo Home page ke stats counter pe same fix apply karega:
+
+Prompt for Replit (React):
+
+The Stats counter section on the Home page (8+ Years Experience, 90% Client Satisfaction, etc.) has the same backward/broken counting bug that was just fixed on the About page's stats section. Please apply the same fix here:
+1. Fix the counting direction:
+
+The numbers are currently counting backward or incorrectly instead of cleanly counting up from 0 to their final values (e.g., 0 → 8, 0 → 90).
+Fix the count-up logic so each number strictly animates forward: starting at 0 and incrementing smoothly up to its final target value over ~1.5-2 seconds, with correct "+"/"%" suffixes appended only after the count completes (e.g., "8+", "90%").
+
+2. Check the trigger logic:
+
+If using Intersection Observer or Framer Motion's whileInView: verify the observer correctly fires when the section enters the viewport. If the stats section is already visible on page load (above the fold or near it), add a check to trigger the count-up immediately on mount in that case, rather than waiting for an intersection event that may never fire.
+Confirm the animation re-triggers correctly every time the page is loaded/refreshed and the user scrolls to this section (not just once globally, and not stuck/skipped).
+
+3. Check the count-up function itself:
+
+Verify the end/target values (8, 90, and any other stats shown) are correctly passed into the counting function/component — not defaulting to 0, undefined, or a reversed/swapped value.
+If using react-countup, confirm start={0} and end={targetValue} are both correctly set per stat.
+If implemented manually with useState + setInterval/requestAnimationFrame, verify the increment logic correctly references the target value without stale closures (use useRef if needed, or ensure correct dependency array usage).
+
+4. Testing checklist after the fix:
+
+Refresh the Home page and scroll to the stats section — confirm each number visibly counts up smoothly and forward from 0 to its correct final value (8, 90, etc.) with correct "+"/"%" suffixes.
+Test this behavior consistently across multiple refreshes and on both desktop and mobile.
+Confirm this fix doesn't break or alter the stats' existing styling, positioning, or any surrounding animations on the Home page.

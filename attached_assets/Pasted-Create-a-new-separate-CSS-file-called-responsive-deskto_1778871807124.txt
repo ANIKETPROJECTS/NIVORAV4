@@ -1,0 +1,64 @@
+Create a new separate CSS file called `responsive-desktop.css` for the Nivora Interiors website. This file should only apply styles for screens with min-width: 1024px and above. Cover the following:
+
+NAVBAR:
+- Max-width container: 1400px, centred with auto margins
+- Logo size: height 48px
+- Nav links: font-size 13px, letter-spacing 2px, gap between links 36px
+- "Enquire Now" button: padding 10px 24px, font-size 12px, letter-spacing 2px
+- Navbar height: 72px, vertically centred items
+
+HERO SECTION:
+- Full viewport height (100vh), background-size: cover, background-position: center
+- Headline font-size: clamp(48px, 5.5vw, 80px)
+- Italic gold subtext: clamp(40px, 4.5vw, 68px)
+- Subtext paragraph: font-size 16px, max-width 520px, centred
+- Two CTA buttons: displayed side by side, min-width 200px each, height 52px
+- Mumbai/Pune tabs: positioned top-centre, 24px below navbar
+
+PHILOSOPHY SECTION:
+- Section padding: 100px top and bottom
+- Quote text: font-size clamp(28px, 3vw, 42px), max-width 720px, centred
+- Body paragraph: font-size 16px, max-width 580px, centred, line-height 1.8
+- Brand values line (Timeless · Functional · Personal): margin-top 40px
+
+SERVICES SECTION:
+- 3-column grid: equal width columns, gap 0 (no gap — panels touch)
+- Each panel height: 520px
+- Image: object-fit cover, full panel size
+- Panel title: font-size 28px, positioned bottom-left with 28px padding
+- Explore link: font-size 13px, below the panel, padding 20px 28px
+
+PROCESS SECTION:
+- Split layout: left 45% for images, right 55% for steps
+- Left image stack: two overlapping images, top image 320×420px, bottom image offset by 40px right and 60px down, same size
+- Steps grid: 2 columns for the 4 main steps, then Handover full width below
+- Step title: font-size 22px (serif/italic)
+- Step description: font-size 14px, max-width 240px
+
+BEFORE & AFTER + PROJECTS:
+- Before/After slider: width 80%, max-width 960px, height 520px, centred
+- Projects grid: 3 columns × 2 rows, gap 2px, each cell equal height (300px)
+- "View All Projects" button: centred, margin-top 40px
+
+TESTIMONIALS:
+- 3-column card grid, gap 24px
+- Each card: padding 32px, font-size 14px, line-height 1.8
+- Quote text max-width: none (fills card)
+- Star rating: font-size 14px, margin-bottom 16px
+- Client name: font-size 13px, margin-top 24px
+
+INSTAGRAM GRID:
+- 3 columns × 2 rows, gap 4px
+- Each image: aspect-ratio 1/1, object-fit cover
+- Section heading (@NivoraInteriors): font-size clamp(32px, 3.5vw, 52px)
+
+FINAL CTA:
+- Section padding: 120px top and bottom
+- Heading: font-size clamp(36px, 4vw, 56px), max-width 600px, centred
+- Button: height 54px, padding 0 48px, font-size 13px, letter-spacing 2px
+
+FOOTER:
+- 4-column grid, gap 48px, max-width 1300px, centred, padding 80px 40px 40px
+- Column headings: font-size 11px, letter-spacing 3px, gold colour #C9A96E, margin-bottom 20px
+- Footer links: font-size 13px, line-height 2.2
+- Bottom bar: flex row, space-between, font-size 11px, padding-top 24px

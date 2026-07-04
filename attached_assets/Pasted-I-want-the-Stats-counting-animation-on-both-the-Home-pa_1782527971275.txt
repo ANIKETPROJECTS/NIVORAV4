@@ -1,0 +1,14 @@
+I want the Stats counting animation (on both the Home page and About page) to re-trigger every time the section re-enters the viewport — not just once per page load.
+Current behavior (to fix): Right now, the count-up animation likely only plays once (the first time the section scrolls into view) and stays at the final value even if the user scrolls away and then scrolls back to that section again.
+Desired behavior: Every time the user scrolls away from the Stats section (so it leaves the viewport) and then scrolls back down (or up) to it again, the numbers should reset to 0 and play the count-up animation again from scratch, on both the Home page stats (8+ Years Experience, 90% Client Satisfaction, etc.) and the About page stats (25+ Clients Served, 2 Years of Experience, 2 Cities, 100% End-to-End Solutions).
+Implementation approach:
+
+If using Framer Motion's whileInView, change the viewport prop to remove once: true (or explicitly set once: false), so the animation re-triggers every time the element enters the viewport, whether scrolling down or back up.
+If using a manual Intersection Observer: don't disconnect/unobserve the observer after the first trigger. Instead, on every isIntersecting === true event, reset the count state back to 0 and restart the count-up animation (e.g., via setInterval/requestAnimationFrame), and on isIntersecting === false (section leaves view), you can optionally reset the displayed value back to 0 immediately so it's ready to animate again next time it comes into view.
+Make sure each stat's animation timer/interval is properly cleared and restarted on each re-entry to avoid overlapping intervals or glitchy double-counting if the user scrolls back and forth quickly.
+
+Testing checklist:
+
+On both Home and About pages: scroll down past the Stats section, then scroll back up to it — confirm numbers reset to 0 and count up again smoothly.
+Repeat scrolling away and back multiple times in a row to confirm no glitches, overlapping animations, or incorrect final values occur.
+Confirm this works consistently on both desktop and mobile.

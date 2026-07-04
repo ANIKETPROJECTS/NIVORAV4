@@ -1,0 +1,218 @@
+Perform a full website UI refinement across the entire project. Do not redesign the website or change the existing layout, sections, content, routing, functionality, or data. Instead, improve the visual hierarchy by making the design more balanced, elegant, and consistent throughout every page.
+
+The current design feels oversized, with excessively large headings, images, cards, and spacing. Reduce these elements uniformly while maintaining a luxurious, modern interior design aesthetic.
+
+Overall Goal
+
+Create a clean, premium, editorial-style website where every page follows the same design system.
+
+Maintain consistency across:
+
+Typography
+Card sizes
+Image sizes
+Buttons
+Section spacing
+Component spacing
+Container widths
+Icons
+Border radius
+Shadows
+Animations
+
+The final result should feel like a professionally designed luxury interior design website with excellent visual balance.
+
+Global Layout
+
+Use one consistent container width across the entire website.
+
+Maintain identical horizontal padding on every page.
+
+Reduce unnecessary whitespace while keeping the design airy and premium.
+
+Every section should have consistent vertical padding.
+
+No section should feel significantly larger or smaller than another.
+
+Typography System
+
+Create one typography scale for the entire website.
+
+Standardize:
+
+Hero headings
+Section headings
+Subsection headings
+Card titles
+Paragraph text
+Small labels
+Buttons
+Navigation text
+Footer text
+
+Reduce oversized headings by approximately 15–25% while maintaining strong visual hierarchy.
+
+Maintain consistent line heights and letter spacing throughout.
+
+Use:
+
+Playfair Display for headings
+Inter for all body text
+Images
+
+Use consistent image sizing throughout the project.
+
+Requirements:
+
+Same border radius everywhere
+Same aspect ratios where applicable
+Same object-fit behavior
+Uniform image heights within similar components
+Prevent images from appearing oversized
+
+Images should feel balanced relative to surrounding typography.
+
+Cards
+
+Standardize every card used throughout the website.
+
+Maintain consistent:
+
+Width
+Height
+Padding
+Border radius
+Shadow
+Hover animation
+Internal spacing
+
+Cards should not change size based on content length.
+
+Use reusable card styles across all sections.
+
+Buttons
+
+Use one button system across the project.
+
+Standardize:
+
+Height
+Padding
+Border radius
+Font size
+Icon spacing
+Hover animation
+Transition duration
+
+Primary and secondary buttons should follow the same design language.
+
+Section Spacing
+
+Every section should follow a consistent spacing system.
+
+Standardize:
+
+Top padding
+Bottom padding
+Heading to content spacing
+Content to footer spacing
+Grid gaps
+Column spacing
+
+Avoid sections with excessive empty space.
+
+Components
+
+Apply the same sizing rules across all reusable components.
+
+Examples:
+
+Portfolio items
+Service cards
+Testimonials
+Project showcases
+Team members
+FAQ items
+Blog cards
+Contact section
+Forms
+Navigation
+Footer
+
+No component should appear disproportionately large.
+
+Icons
+
+Standardize icon sizes across the website.
+
+Use consistent:
+
+Width
+Height
+Stroke thickness
+Spacing
+Border Radius
+
+Create one border radius system.
+
+Example:
+
+Small components
+Medium components
+Large image containers
+
+Avoid inconsistent rounding between sections.
+
+Shadows
+
+Use subtle, premium shadows consistently.
+
+Avoid heavy shadows.
+
+Maintain one elevation system across all components.
+
+Animations
+
+Use refined, minimal animations.
+
+Standardize:
+
+Hover duration
+Scale values
+Translation distance
+Fade animations
+Transition timing
+
+Animations should feel smooth and elegant rather than dramatic.
+
+Responsive Design
+
+Ensure every page follows the same responsive behavior.
+
+Desktop:
+
+Consistent container widths
+Balanced spacing
+Uniform grids
+
+Tablet:
+
+Maintain proportional scaling
+
+Mobile:
+
+Consistent typography scale
+Equal spacing between sections
+Uniform image sizing
+Proper touch targets
+Code Requirements
+Do not change existing functionality.
+Do not modify routing or business logic.
+Do not change project data or APIs.
+Do not hardcode sizes for individual components.
+Create reusable design tokens for spacing, typography, colors, border radius, shadows, and animations.
+Reuse shared components wherever possible.
+Ensure every page follows the same visual system.
+Final Design Intent
+
+The entire website should feel cohesive, balanced, and professionally designed. Every page should share the same visual language, with consistent typography, image proportions, card dimensions, spacing, and interactions. The result should resemble a high-end luxury interior design brand, emphasizing elegance, readability, and timeless editorial aesthetics without altering the site's existing content or functionality.

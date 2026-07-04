@@ -1,0 +1,95 @@
+HOME PAGE UI REFINEMENT
+
+Please implement the following design changes across the homepage.
+
+1. HEADER / NAVBAR
+
+* Make the entire navbar use a single consistent olive-green shade.
+* Remove the current appearance of two different green tones.
+* Use one premium luxury olive color throughout the menu bar.
+* Ensure smooth consistency from left to right across the header.
+
+Suggested palette:
+
+* Olive Green: #33452F
+* Deep Olive: #2D3E29
+* Warm Beige Accent: #D4C0A1
+* Soft Gold Accent: #C8A46A
+
+2. LOGO AREA
+
+* Keep the logo typography exactly as provided.
+* Remove any background box behind the logo if it creates visual inconsistency.
+* Blend the logo naturally into the olive navigation bar.
+* Maintain luxury, premium interior-brand aesthetics.
+
+3. CTA BUTTONS
+   BOOK FREE CONSULTATION
+
+* Convert the button into a premium gold gradient button.
+* Use subtle luxury gradients rather than a flat color.
+* Add elegant hover animation.
+* Slight glow or shadow is acceptable.
+
+Suggested gradient:
+background: linear-gradient(
+135deg,
+#E0C38A 0%,
+#C8A46A 50%,
+#A8854F 100%
+);
+
+VIEW OUR PROJECTS
+
+* Apply the same luxury design language.
+* Use an outlined gold/beige style or a softer gradient variation.
+* Ensure both CTA buttons look like part of the same premium design system.
+
+4. COLOR PALETTE REFINEMENT
+   Throughout the homepage, use a refined combination of:
+
+* Olive Green
+* Warm Beige
+* Soft Gold
+* Ivory / Off White
+
+Avoid:
+
+* Bright greens
+* Harsh whites
+* Saturated colors
+* Blue accents
+
+The overall look should feel:
+
+* Luxury
+* Sophisticated
+* Modern Interior Design Brand
+* Minimal
+* Premium
+
+5. CURSOR
+
+* Keep the current custom circular mouse cursor.
+* No changes required.
+
+6. SECTION COLORS
+   Review all homepage sections and improve visual hierarchy using:
+
+* Olive backgrounds
+* Beige backgrounds
+* Gold highlights
+* Soft contrast transitions between sections
+
+Ensure sections feel cohesive and premium while maintaining readability.
+
+7. FINAL EXPECTED RESULT
+   The website should feel similar to a high-end interior design studio:
+
+* Elegant
+* Premium
+* Warm
+* Luxury
+* Consistent olive + beige + gold color palette
+
+Please apply all changes directly and verify responsive behavior on desktop, tablet, and mobile.

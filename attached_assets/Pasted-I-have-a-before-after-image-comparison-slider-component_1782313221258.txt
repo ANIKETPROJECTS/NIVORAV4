@@ -1,0 +1,75 @@
+I have a before/after image comparison slider component on my site (the 
+draggable divider slider where left side = before image, right side = 
+after image, with a circular drag handle in the middle). I want to enhance 
+its behavior across all instances of this component (I will have 5 of 
+these sliders total on the page, similar to the reference layout where 
+multiple before/after sliders sit in a grid, each with its own descriptive 
+labels like "INITIAL SITE" / "KALPANAM DESIGN" or "RAW SPACE" / 
+"CORPORATE HUB" instead of generic "BEFORE"/"AFTER" text).
+
+1. ADD AN AUTO-PLAY REVEAL ANIMATION (keep existing manual drag intact)
+For each before/after slider:
+- Default/initial state: divider at center (50/50 split) — same as current 
+  behavior, no change here.
+- TRIGGER: when the slider scrolls into the viewport (use an 
+  IntersectionObserver, triggering once it's roughly 50% visible) OR when 
+  the user hovers their cursor over the slider — whichever happens first.
+- On trigger, play this sequence automatically:
+  a. Divider animates from center (50%) to far right (~100%), so the 
+     image fully shows the BEFORE side. Duration ~0.8-1s, ease-in-out.
+  b. Hold briefly (~0.5-0.8s).
+  c. Divider animates from far right (~100%) to far left (~0%), so the 
+     image fully shows the AFTER side. Duration ~0.8-1s, ease-in-out.
+  d. Hold briefly (~0.5-0.8s).
+  e. Divider animates back to center (50%) to restore the default resting 
+     position.
+- IMPORTANT: If the user manually clicks/touches and starts dragging the 
+  handle at ANY point during this auto-animation, immediately cancel the 
+  auto-animation and hand full control to the manual drag interaction 
+  (don't fight the user's drag). After the user releases the drag, do NOT 
+  restart the auto-animation again automatically — manual control should 
+  take over for that session/that card, the same as normal slider behavior.
+- The auto-animation should only play once per slider per page view (don't 
+  keep replaying every time it re-enters the viewport on scroll up/down), 
+  unless re-triggered by a fresh hover.
+
+2. STAGGER THE ANIMATION ACROSS ALL 5 SLIDERS (don't let them all auto-play 
+   simultaneously)
+Since there will be 5 of these before/after sliders on the page (e.g. 2 
+visible per row, similar to the reference layout), implement a staggered 
+sequence so they don't all animate at the same time even if multiple are 
+visible together:
+- When the first slider's auto-play trigger fires, start its animation 
+  immediately.
+- The next slider in sequence should only start its own auto-play 
+  animation a few seconds after the previous one's trigger/animation 
+  begins (e.g. ~2-3 second stagger delay between each slider in order — 
+  slider 1, then slider 2, then slider 3, etc., even if sliders 2-5 are 
+  already in the viewport at the same time as slider 1).
+- This stagger should be based on the order the sliders appear on the page 
+  (top to bottom / left to right), not random.
+
+3. UPDATE LABELS TO USE DESCRIPTIVE CONTENT (not generic "BEFORE"/"AFTER")
+Update each slider's overlay labels to match the reference style:
+- Replace the generic "BEFORE" / "AFTER" badge text with descriptive, 
+  per-slider custom labels (e.g. "INITIAL SITE" / "FINAL DESIGN", or 
+  whatever specific names apply to each of my 5 before/after pairs — make 
+  the label text a prop/data field per slider so I can edit each one's 
+  wording easily, e.g. in a JSON/array of slider data with 
+  beforeLabel/afterLabel fields).
+- Also add a small "SLIDE TO COMPARE" badge/pill positioned near the drag 
+  handle (similar placement to the reference image), so users know they 
+  can manually drag it.
+- Keep the existing circular drag handle, but make sure none of these 
+  label changes break its centering or functionality.
+
+Please implement this as a reusable update to the single before/after 
+slider component so all 5 instances inherit this behavior, rather than 
+duplicating logic 5 times. After implementing, test that:
+(a) scrolling each slider into view triggers its own auto-play sequence 
+    in staggered order,
+(b) hovering a slider that hasn't yet triggered also starts its sequence,
+(c) manually dragging at any point overrides/cancels the auto-animation 
+    smoothly without jumping or glitching,
+(d) the custom before/after labels render correctly for each of the 5 
+    sliders.

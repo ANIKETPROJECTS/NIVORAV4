@@ -1,0 +1,213 @@
+When a user clicks on the "Residential Interiors" card from the existing "Our Services" section, navigate to a dedicated Residential Interiors portfolio page.
+
+IMPORTANT:
+- Do NOT modify the existing Services section.
+- Create a new dedicated page for Residential Interiors.
+- Follow the existing Nivora Interiors design language, typography, animations, spacing, and color palette (Beige, Olive Green, Gold, White).
+- This page should feel like a premium luxury portfolio rather than a simple information page.
+
+--------------------------------------------------------
+SECTION 1 : HERO
+--------------------------------------------------------
+
+Create a full-width hero banner.
+
+Content:
+
+Residential Interiors
+
+Designing Homes That Feel Like You
+
+Use an elegant serif heading with a subtle luxury animation.
+
+Below the heading add a small gold divider.
+
+Use a premium residential interior placeholder image for now. I will replace it later.
+
+Add a smooth fade-in animation.
+
+--------------------------------------------------------
+SECTION 2 : INTRODUCTION
+--------------------------------------------------------
+
+Heading:
+
+Designing Homes That Feel Like You
+
+Paragraph:
+
+Your home should be more than just a place to live—it should reflect your personality, lifestyle, and aspirations. Whether you're moving into a new apartment, building your dream villa, renovating an existing home, or creating a weekend retreat, we design spaces that are functional, timeless, and uniquely yours.
+
+Create a premium two-column layout.
+
+Left:
+- Heading
+- Description
+
+Right:
+- Large residential interior image (placeholder)
+
+Animate both columns with a smooth fade-up animation.
+
+--------------------------------------------------------
+SECTION 3 : OUR EXPERTISE
+--------------------------------------------------------
+
+Heading:
+
+Our Expertise
+
+Display these as elegant premium cards instead of bullet points.
+
+Cards:
+
+• Apartments & Flats
+
+• Villas & Bungalows
+
+• Luxury Residences
+
+• Modular Kitchens
+
+• Bedrooms & Living Spaces
+
+• Custom Storage Solutions
+
+Each expertise card should include:
+
+- Premium minimal icon
+- Gold accent
+- Soft shadow
+- Rounded corners
+- Hover lift animation
+- Smooth transition
+
+Desktop:
+3 cards per row
+
+Tablet:
+2 cards per row
+
+Mobile:
+1 card per row
+
+--------------------------------------------------------
+SECTION 4 : FEATURED RESIDENTIAL PROJECTS
+--------------------------------------------------------
+
+Before the full portfolio gallery, create a "Featured Residential Projects" section.
+
+Display 3 premium large project cards.
+
+Each card should include:
+
+- Large project image
+- Project name
+- Small category
+- Short description
+- Elegant hover animation
+
+Use placeholder images for now.
+
+I will replace these images later.
+
+--------------------------------------------------------
+SECTION 5 : RESIDENTIAL PORTFOLIO GALLERY
+--------------------------------------------------------
+
+This should be the main highlight of the page.
+
+Create a premium responsive portfolio gallery.
+
+IMPORTANT:
+Do NOT use random images permanently.
+
+For now, create the gallery using elegant placeholder images and design the gallery in such a way that I can easily replace them with my own Residential Interior project images later.
+
+I will provide all portfolio images after the page structure is completed.
+
+Each gallery card should support:
+
+- Large image
+- Project title
+- Small project category
+- Hover overlay
+- Gold accent animation
+- Image zoom effect
+- View Project button
+
+Clicking a project should open a beautiful lightbox/gallery viewer.
+
+The gallery should support multiple project images without changing the layout.
+
+The layout should automatically adjust as I add more portfolio images later.
+
+--------------------------------------------------------
+SECTION 6 : WHY CHOOSE NIVORA
+--------------------------------------------------------
+
+Create premium icon cards.
+
+Items:
+
+• Personalized Design
+
+• Functional Planning
+
+• Premium Material Selection
+
+• Timeless Interiors
+
+• Attention to Detail
+
+• End-to-End Execution
+
+Use staggered reveal animation.
+
+--------------------------------------------------------
+SECTION 7 : CALL TO ACTION
+--------------------------------------------------------
+
+Heading:
+
+Ready to Design Your Dream Home?
+
+Text:
+
+Let's create a home that reflects your personality and lifestyle.
+
+Button:
+
+Book a Consultation
+
+Use premium hover animation.
+
+--------------------------------------------------------
+ANIMATIONS
+--------------------------------------------------------
+
+Keep all existing website animations.
+
+Add:
+
+- Fade-up on scroll
+- Staggered reveal
+- Image zoom on hover
+- Smooth transitions
+- Intersection Observer animations
+- Lazy loading
+- Prevent layout shifts
+
+--------------------------------------------------------
+IMPORTANT
+--------------------------------------------------------
+
+Do NOT modify the existing Home page.
+
+Do NOT change the existing Services section.
+
+Only create the dedicated Residential Interiors portfolio page.
+
+Maintain the same luxury design language throughout.
+
+The Portfolio Gallery and Featured Projects sections should be built in a reusable way because I will provide and replace all Residential Interior images later without changing the page design or layout.

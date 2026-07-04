@@ -1,0 +1,86 @@
+Perform a complete mobile-first and desktop-perfect responsive optimization across the entire website while preserving the existing design, content, and branding.
+
+Priority:
+1. Mobile Experience (Highest Priority)
+2. Desktop Experience
+3. Tablet Experience
+
+Mobile Optimization Requirements:
+
+Layout & Structure:
+- Reorganize content section-by-section for the best mobile reading experience
+- Stack content vertically where needed
+- Ensure proper content flow without clutter
+- Avoid squeezed text, overlapping elements, or horizontal scrolling
+- Maintain generous spacing between sections
+- Optimize every section individually for mobile usability
+
+Typography:
+- Scale headings, subheadings, and body text appropriately for mobile
+- Ensure all text remains readable without zooming
+- Maintain consistent typography hierarchy
+- Prevent text overflow and awkward line breaks
+
+Images:
+- Make all images fully responsive
+- Ensure images maintain aspect ratio
+- Prevent cropping of important content
+- Optimize image sizing for mobile screens
+- Maintain visual quality on all devices
+
+Cards & Components:
+- Convert multi-column layouts into clean stacked layouts on mobile
+- Maintain consistent spacing between cards
+- Ensure cards look premium and balanced
+- Keep card heights visually consistent where appropriate
+
+Navigation:
+- Fully optimize mobile navigation
+- Smooth open/close transitions
+- Proper spacing for touch interactions
+- Ensure menu items are easy to access
+- Fix any alignment issues
+
+Animations:
+- Verify every animation works correctly on mobile, tablet, and desktop
+- Ensure scroll-triggered animations activate properly
+- Remove animation glitches, delays, or flickering
+- Maintain smooth performance on lower-end mobile devices
+- Use subtle premium animations only
+- Keep animation timing consistent across the website
+
+Desktop Optimization Requirements:
+
+- Preserve luxury and premium appearance
+- Maintain clean alignment throughout
+- Ensure content does not appear too stretched on large screens
+- Keep proper spacing and balance between sections
+- Verify hover effects work smoothly
+- Ensure animations remain elegant and professional
+
+Responsive Testing Requirements:
+
+Test and optimize for:
+- Small Mobile (320px–480px)
+- Standard Mobile (481px–767px)
+- Tablet (768px–1024px)
+- Laptop (1025px–1440px)
+- Large Desktop (1441px+)
+
+Quality Assurance Checklist:
+
+✓ No horizontal scrolling
+✓ No broken layouts
+✓ No overlapping elements
+✓ No cut-off text
+✓ No oversized images
+✓ No inconsistent spacing
+✓ No animation glitches
+✓ No responsiveness issues
+✓ Smooth scrolling throughout
+✓ Professional alignment everywhere
+✓ Fast and smooth interactions
+✓ Premium luxury appearance maintained
+
+Final Goal:
+The website should feel like a high-end luxury interior design brand on every device. Mobile users should have an equally premium experience as desktop users, with perfectly arranged content, smooth animations, clean spacing, elegant typography, and flawless responsiveness throughout the entire website.

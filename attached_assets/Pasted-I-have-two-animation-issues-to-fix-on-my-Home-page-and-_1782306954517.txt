@@ -1,0 +1,27 @@
+I have two animation issues to fix on my Home page, and I need them properly synced together:
+1. Fix: Hero section text stagger animation is not working anymore:
+
+Previously I had a staggered entrance animation implemented for the Hero section (Mumbai/Pune tabs → "Thoughtfully Designed" → "Interiors —" → "That Feel Effortless" → description paragraph → buttons, each fading in + sliding up with a stagger delay between them).
+This animation is currently not playing/visible at all. Please debug why — check if the animation state/trigger logic was accidentally removed, if a condition is preventing it from running, or if it's running but instantly completing without the stagger delay. Fix it so the original staggered fade+slide-up sequence works again exactly as before.
+
+2. The splash/logo screen animation (logo slides right-to-left, then reveals the Home page) must reliably play in ALL of these scenarios:
+
+On the very first page load.
+Every time the user does a full page refresh (on any page, not just Home).
+Every time the user navigates back to the Home page via clicking the navbar "HOME" link.
+Every time the user clicks the navbar logo (which links to Home).
+In other words, this splash animation should NOT be a "show once per session" animation — it should play every single time the Home page is entered/loaded, whether via refresh or in-app navigation.
+Implementation approach: ensure the splash/logo component is mounted fresh and its animation state resets every time the Home route is entered. If using React Router, you can achieve this by using a key prop tied to a navigation counter or location.key on the Home page wrapper, or by resetting the splash's local state in a useEffect that runs on every mount of the Home route component (not just global app mount). Remove any sessionStorage/localStorage flags if they exist that are currently preventing the splash from re-playing on repeat visits.
+
+3. Sync the timing between the splash animation ending and the Hero text animation starting:
+
+The Hero section's staggered text animation should start immediately and precisely when the splash/logo slide-out animation finishes — not after an arbitrary fixed delay that's independent of the splash animation's actual duration.
+Implementation approach: have the splash component accept an onAnimationComplete (or similar) callback prop. When the splash's right-to-left slide-out transition finishes, call this callback, which sets a state (e.g., splashDone = true) in the parent Home page component. The Hero section's text animation sequence should only begin once splashDone becomes true — use this as the trigger condition for starting the Framer Motion stagger sequence (e.g., conditionally render the Hero's motion.div with initial="hidden" and animate={splashDone ? "visible" : "hidden"} using your existing stagger variants).
+This ensures there's no awkward gap or overlap — the moment the logo finishes sliding away, the hero text immediately begins its staggered reveal.
+
+4. Testing checklist after implementation:
+
+Refresh the Home page → splash plays → hero text animates right after splash ends.
+Navigate to another page (e.g., Portfolio), then click "HOME" in navbar → splash plays again → hero text animates again.
+Navigate to another page, then click the logo → splash plays again → hero text animates again.
+Confirm the Hero animation's stagger sequence (tabs → heading lines → accent line → description → buttons) all play correctly with proper delays between each, exactly as originally specified.

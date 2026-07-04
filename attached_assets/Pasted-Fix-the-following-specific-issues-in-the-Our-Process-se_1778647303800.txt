@@ -1,0 +1,220 @@
+Fix the following specific issues in the "Our Process" section 
+on the homepage. Do not redesign anything else — only fix 
+what is listed below.
+
+─────────────────────────────────────────
+FIX 1 — EQUAL COLUMN HEIGHTS
+─────────────────────────────────────────
+The left photo collage must not be taller than the right column.
+
+On the outer section wrapper:
+  align-items: center  (change from stretch)
+  
+On the left column div:
+  position: relative
+  height: 100%
+  max-height: 580px
+  overflow: hidden
+
+Photo 1:
+  position: absolute
+  top: 0
+  left: 0
+  width: 60%
+  height: 68%
+
+Photo 2:
+  position: absolute
+  bottom: 0
+  right: 0
+  width: 55%
+  height: 60%
+  (must not go below the right column's last element)
+
+Both columns must end at the same vertical point.
+Add this to both left and right column divs:
+  align-self: center
+
+─────────────────────────────────────────
+FIX 2 — PHOTO 2 SIZE REDUCTION
+─────────────────────────────────────────
+Photo 2 (corridor image) is too large and 
+dominates Photo 1.
+
+Reduce Photo 2 so it "peeks" from behind Photo 1:
+  width: 52%
+  height: 55%
+  position: absolute
+  bottom: 0
+  right: 0
+
+The overlap of Photo 2 over Photo 1 should be 
+roughly 30% — not 50% as it currently is.
+Photo 1 should always be visually dominant.
+
+─────────────────────────────────────────
+FIX 3 — RIGHT COLUMN TOP ALIGNMENT
+─────────────────────────────────────────
+The "HOW WE WORK" eyebrow and "Our Process" heading 
+must start at the same vertical level as Photo 1's 
+top edge on the left.
+
+On the right column div:
+  display: flex
+  flex-direction: column
+  justify-content: center
+  padding-top: 0
+
+Remove any margin-top or padding-top that is 
+pushing the right column content downward.
+Both columns must feel like they start together.
+
+─────────────────────────────────────────
+FIX 4 — SECTION TOP PADDING
+─────────────────────────────────────────
+The section currently has no breathing room 
+above it — photos nearly touch the navbar.
+
+On the main section wrapper:
+  padding-top: 80px
+  padding-bottom: 80px
+
+─────────────────────────────────────────
+FIX 5 — HANDOVER STEP ALIGNMENT
+─────────────────────────────────────────
+The "Handover" step below the 2x2 grid is broken.
+The description text is indented incorrectly.
+
+Fix the Handover row layout:
+  display: flex
+  flex-direction: row
+  align-items: flex-start
+  gap: 12px
+  padding-top: 18px
+  border-top: 1px solid rgba(161,134,97,0.22)
+  width: 100%
+
+Icon (KeyRound):
+  flex-shrink: 0
+  margin-top: 4px
+  size: 18px
+  color: #a18661
+
+Text wrapper (title + description together):
+  display: flex
+  flex-direction: column
+  gap: 5px
+
+Title "Handover":
+  Cormorant Garamond, italic, 22px
+  color: #21291a
+  margin: 0
+  padding: 0
+
+Description:
+  DM Sans, 300, 13px
+  color: #6D5A41
+  margin: 0
+  padding: 0
+  (NO indentation, NO left margin, 
+   aligned flush under the title)
+
+─────────────────────────────────────────
+FIX 6 — STEP TITLE FONT WEIGHT
+─────────────────────────────────────────
+"Discover", "Visualise", "Execute", "Reveal" 
+are too light and disappear on cream background.
+
+Change all 4 grid step titles:
+  font-family: Cormorant Garamond
+  font-style: italic
+  font-weight: 600  (increase from 400/500)
+  font-size: 24px   (increase from 22px)
+  color: #21291a
+
+Keep "Handover" title the same change:
+  font-weight: 600
+  font-size: 24px
+
+─────────────────────────────────────────
+FIX 7 — NORMALIZE ALL ICONS
+─────────────────────────────────────────
+All 5 Lucide icons must be the same visual size 
+and weight. They currently look mismatched.
+
+Set on every icon in this section:
+  size={18}
+  strokeWidth={1.5}
+  color="#a18661"
+
+Icons to use (replace if currently different):
+  Discover   → Compass
+  Visualise  → Eye
+  Execute    → Wrench
+  Reveal     → Sparkles
+  Handover   → Key
+  
+  (Use "Key" not "KeyRound" — 
+   KeyRound looks heavier than the others)
+
+─────────────────────────────────────────
+FIX 8 — BUTTON WIDTH
+─────────────────────────────────────────
+"BOOK FREE CONSULTATION" button must match 
+the full width of the 2x2 grid above it.
+
+  width: 100%
+  max-width: 100%
+  display: block
+  text-align: center
+  box-sizing: border-box
+  margin-top: 16px
+
+Remove any fixed pixel width on the button.
+
+─────────────────────────────────────────
+FIX 9 — SUBTLE BACKGROUND TEXTURE
+─────────────────────────────────────────
+Add a very faint SVG grain texture over the 
+section background so it does not feel flat.
+
+Inside the section, add an absolutely positioned 
+div as the first child:
+
+  position: absolute
+  inset: 0
+  pointer-events: none
+  z-index: 0
+  opacity: 0.025
+  background-image: url("data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' 
+    width='200' height='200'>
+    <filter id='noise'>
+    <feTurbulence type='fractalNoise' 
+    baseFrequency='0.75' numOctaves='4' 
+    stitchTiles='stitch'/>
+    <feColorMatrix type='saturate' values='0'/>
+    </filter>
+    <rect width='200' height='200' 
+    filter='url(%23noise)' opacity='1'/>
+    </svg>")
+  background-repeat: repeat
+  background-size: 200px 200px
+
+Make sure all content inside the section has:
+  position: relative
+  z-index: 1
+(so they appear above the texture layer)
+
+─────────────────────────────────────────
+DO NOT CHANGE
+─────────────────────────────────────────
+- Do not change fonts already applied
+- Do not change colors
+- Do not change the 2x2 grid layout of steps
+- Do not change section background color
+- Do not change photo images being used
+- Do not change the eyebrow or heading text
+- Do not change animation behavior
+- Do not touch any other section on the page
+- Do not change navbar or footer

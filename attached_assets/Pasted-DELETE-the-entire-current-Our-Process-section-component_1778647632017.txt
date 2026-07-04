@@ -1,0 +1,311 @@
+DELETE the entire current Our Process section component 
+file and rewrite it completely from zero.
+Do not patch. Do not fix. Full rewrite only.
+
+─────────────────────────────────────────
+CREATE FILE: src/components/ProcessSection.jsx
+─────────────────────────────────────────
+
+The section must look EXACTLY like the Services section 
+already on this site ("Designing with You, for You") —
+same two-column balance, same photo collage style, 
+same content density. Copy that section's structure 
+and replace content only.
+
+─────────────────────────────────────────
+SECTION WRAPPER
+─────────────────────────────────────────
+background: #F5F2ED
+width: 100%
+padding: 100px 0
+
+Inner container:
+  max-width: 1200px
+  margin: 0 auto
+  padding: 0 60px
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 80px
+
+─────────────────────────────────────────
+LEFT COLUMN — width: 45%
+─────────────────────────────────────────
+This is a photo collage. 
+Copy EXACTLY how the Services section 
+photo collage is built in this codebase.
+Use the same component/structure already 
+working there.
+
+If the Services section photo collage 
+is working correctly, reuse that exact 
+same JSX and CSS for the left column here.
+Just swap the image sources.
+
+Photo collage specs:
+  Outer div:
+    position: relative
+    width: 100%
+    height: 500px
+
+  Photo 1 (top-left, larger):
+    position: absolute
+    top: 0
+    left: 0
+    width: 65%
+    height: 72%
+    object-fit: cover
+    border: 1.5px solid #a18661
+
+  Photo 2 (bottom-right, smaller):
+    position: absolute
+    bottom: 0
+    right: 0
+    width: 58%
+    height: 62%
+    object-fit: cover
+    border: 1.5px solid #a18661
+    box-shadow: -8px 8px 30px rgba(0,0,0,0.12)
+
+Use these image paths (same images 
+already used in Services section):
+  Photo 1: first interior photo from 
+           Services section left collage
+  Photo 2: second interior photo from 
+           Services section left collage
+
+If images aren't loading, use these 
+as temporary placeholders:
+  Photo 1: 
+    background: linear-gradient(
+      145deg, #c8b99a 0%, #a18661 100%)
+  Photo 2: 
+    background: linear-gradient(
+      145deg, #3d4f2e 0%, #21291a 100%)
+
+─────────────────────────────────────────
+RIGHT COLUMN — width: 55%
+─────────────────────────────────────────
+display: flex
+flex-direction: column
+justify-content: center
+
+EYEBROW TEXT:
+  "HOW WE WORK"
+  font-family: 'Cinzel', serif
+  font-size: 11px
+  letter-spacing: 0.4em
+  color: #a18661
+  text-transform: uppercase
+  margin-bottom: 14px
+
+MAIN HEADING:
+  "Our Process"
+  font-family: 'Cormorant Garamond', serif
+  font-weight: 600
+  font-size: 58px
+  line-height: 1.05
+  color: #21291a
+  margin-bottom: 10px
+
+SUBTEXT:
+  "From first conversation to final reveal — 
+  a seamless, end-to-end journey."
+  font-family: 'DM Sans', sans-serif
+  font-weight: 300
+  font-size: 16px
+  color: #6D5A41
+  line-height: 1.7
+  margin-bottom: 40px
+
+─────────────────────────────────────────
+2x2 STEPS GRID
+─────────────────────────────────────────
+display: grid
+grid-template-columns: 1fr 1fr
+column-gap: 40px
+row-gap: 28px
+margin-bottom: 28px
+
+Each grid cell — exact structure:
+
+  Icon:
+    Lucide React icon
+    size={20}
+    strokeWidth={1.5}
+    color="#a18661"
+    margin-bottom: 10px
+    display: block
+
+  Step Title:
+    font-family: 'Cormorant Garamond', serif
+    font-style: italic
+    font-weight: 600
+    font-size: 28px
+    color: #21291a
+    margin-bottom: 8px
+    line-height: 1.1
+
+  Step Description:
+    font-family: 'DM Sans', sans-serif
+    font-weight: 300
+    font-size: 14px
+    color: #6D5A41
+    line-height: 1.7
+
+GRID CONTENT:
+
+  Cell 1:
+    Icon: <Compass size={20} strokeWidth={1.5} />
+    Title: Discover
+    Text: A free consultation to understand 
+    your lifestyle and budget.
+
+  Cell 2:
+    Icon: <Eye size={20} strokeWidth={1.5} />
+    Title: Visualise
+    Text: 3D renders and mood boards before 
+    a single thing is moved.
+
+  Cell 3:
+    Icon: <Wrench size={20} strokeWidth={1.5} />
+    Title: Execute
+    Text: Master craftsmen, clear timelines, 
+    on-site precision.
+
+  Cell 4:
+    Icon: <Sparkles size={20} strokeWidth={1.5} />
+    Title: Reveal
+    Text: A styled, ready-to-move-in space 
+    that exceeds expectations.
+
+─────────────────────────────────────────
+HANDOVER — FULL WIDTH ROW
+─────────────────────────────────────────
+border-top: 1px solid rgba(161,134,97,0.3)
+padding-top: 24px
+margin-bottom: 28px
+
+display: flex
+flex-direction: row
+align-items: flex-start
+gap: 14px
+
+Left side (icon):
+  <Key size={20} strokeWidth={1.5} 
+  color="#a18661" />
+  margin-top: 6px
+  flex-shrink: 0
+
+Right side (text block):
+  display: flex
+  flex-direction: column
+  gap: 6px
+
+  Title "Handover":
+    font-family: 'Cormorant Garamond', serif
+    font-style: italic
+    font-weight: 600
+    font-size: 28px
+    color: #21291a
+    margin: 0
+
+  Description:
+    font-family: 'DM Sans', sans-serif
+    font-weight: 300
+    font-size: 14px
+    color: #6D5A41
+    line-height: 1.7
+    margin: 0
+    Text: "Your space, fully ready. A relationship 
+    that continues beyond delivery."
+
+─────────────────────────────────────────
+TAGLINE
+─────────────────────────────────────────
+"END-TO-END  ·  TRANSPARENT  ·  HASSLE-FREE"
+font-family: 'Cinzel', serif
+font-size: 10px
+letter-spacing: 0.35em
+color: #6D5A41
+text-transform: uppercase
+margin-bottom: 18px
+
+─────────────────────────────────────────
+BUTTON
+─────────────────────────────────────────
+Text: "BOOK FREE CONSULTATION"
+font-family: 'Cinzel', serif
+font-size: 10px
+letter-spacing: 0.25em
+text-transform: uppercase
+background: #21291a
+color: #F5F2ED
+padding: 16px 36px
+border: none
+border-radius: 1px
+cursor: pointer
+display: inline-block
+width: auto
+(NOT full screen width — only as wide as its text)
+transition: background 0.3s ease, color 0.3s ease
+
+On hover:
+  background: #a18661
+  color: #21291a
+
+─────────────────────────────────────────
+ANIMATIONS — Framer Motion
+─────────────────────────────────────────
+Wrap entire section in motion.section:
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true, amount: 0.15 }}
+  transition={{ duration: 0.6 }}
+
+Left column:
+  motion.div
+  initial={{ opacity: 0, x: -40 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+
+Right column:
+  motion.div
+  initial={{ opacity: 0, x: 40 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.8, ease: "easeOut", 
+  delay: 0.15 }}
+
+─────────────────────────────────────────
+MOBILE (max-width: 768px)
+─────────────────────────────────────────
+Flex direction: column
+Left column: width 100%, height 320px
+  Photo 1: width 60%, height 100%
+  Photo 2: width 50%, height 80%
+Right column: width 100%, padding-top: 40px
+Grid stays 2 columns
+Button: width 100%
+
+─────────────────────────────────────────
+AFTER CREATING THE COMPONENT
+─────────────────────────────────────────
+Import and use ProcessSection in Home.jsx.
+Replace whatever is currently rendering 
+the Our Process section with this new component.
+Delete the old process section code entirely.
+
+─────────────────────────────────────────
+STRICT RULES — DO NOT VIOLATE
+─────────────────────────────────────────
+- Photos MUST render. Test that img src paths 
+  resolve correctly before finishing.
+- Do not use placeholder gray boxes — 
+  use gradient backgrounds if images fail.
+- Do not center the button — left align it.
+- Do not make the button full viewport width.
+- Do not add any dark background to this section.
+- Do not change any other section on the page.
+- Do not change navbar, footer, or any other 
+  component.
+- Do not change global fonts in index.css.

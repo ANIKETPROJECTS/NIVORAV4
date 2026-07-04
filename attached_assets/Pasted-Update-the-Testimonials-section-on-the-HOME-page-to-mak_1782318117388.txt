@@ -1,0 +1,56 @@
+Update the Testimonials section on the HOME page to make it more visually rich and 
+attractive like the dark theme version, but keep the light theme and single card layout.
+
+CARD VISUAL UPGRADE — TWO TONE CARD:
+- Split the card into two background colors:
+  Left panel background: #21291a (dark green)
+  Right panel background: #f5f2ed or white (light cream)
+- Left panel contains: "THE WORD ON THE STREET" label + 
+  "Hear what our clients have said about us!" heading + gold divider
+  — all text in this panel should be WHITE or #f5f2ed
+- Right panel contains: quote text + client name + location
+  — text color: #21291a (dark)
+- Card border: 1px solid #5f745e (olive green)
+- Card border-radius: 12px
+- Card height: auto, generous padding inside both panels
+
+QUOTE MARK DECORATION:
+- Large " " closing quote in top-right of the RIGHT panel
+- Color: #a18661 (gold), font-size: 100px, opacity: 0.3
+- Position: absolute, top-right corner
+
+DIVIDER between left and right panel:
+- Thin vertical line in #a18661 or #5f745e
+
+ANIMATIONS (make it feel premium):
+1. Card slide-in: new testimonial slides in from right with ease-out (0.5s)
+   old testimonial exits to left simultaneously
+2. Left panel text: fades in from bottom (translateY 15px → 0) with 0.3s delay
+3. Quote text: fades in word by word OR fades in with 0.4s delay after card enters
+4. Client name: slides up and fades in after quote (0.5s delay)
+5. Gold divider line on left panel: animates width from 0 to full (0.6s delay)
+6. Arrow buttons on hover: 
+   - Background fills to #21291a
+   - Arrow color changes to white
+   - scale(1.05) transform
+   - smooth 0.2s transition
+7. Auto-advance: every 5 seconds, smooth slide to next
+8. Progress bar below card: gold fill animates left to right over 5s, 
+   resets on slide change
+
+PROGRESS BAR:
+- Thin bar (3px height) below card
+- Track color: #e0d9cf
+- Fill color: #a18661
+- Width matches card width
+- Smooth CSS animation
+
+"READ ALL CLIENT STORIES →" LINK:
+- Color: #a18661
+- Uppercase, letter-spacing: 2px
+- On hover: color darkens to #21291a, underline appears
+- smooth 0.2s transition
+
+Keep all testimonial data unchanged.
+Keep single card layout.
+Do not change any other section or page.

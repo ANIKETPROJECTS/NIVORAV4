@@ -1,0 +1,160 @@
+# Replit Prompt — Home Page Animation Speed + Re-trigger on Navigation
+
+## WHAT TO CHANGE
+
+### 1. SPEED UP HOME PAGE TEXT ANIMATIONS
+
+Find all CSS keyframe animations and transition delays on the Home page hero section (the big heading, italic gold text, subtitle paragraph, and CTA buttons).
+
+**Reduce every animation duration and delay by ~40%:**
+
+| Element | Current (approx) | New target |
+|---|---|---|
+| Main heading fade/slide in | ~800ms | 480ms |
+| Gold italic line | ~1000ms | 600ms |
+| Subtitle paragraph | ~1200ms | 720ms |
+| CTA buttons | ~1400ms | 840ms |
+| Any stagger delay between elements | ~200ms gap | 120ms gap |
+
+General rule: multiply every `animation-duration` and `animation-delay` on the home hero by `0.6`.
+
+Do NOT change easing curves (ease-out, ease-in-out etc.) — only change the timing numbers.
+
+---
+
+### 2. RE-TRIGGER HOME ANIMATIONS ON EVERY VISIT TO HOME PAGE
+
+**Problem:** When user navigates away from Home to any other section (Portfolio, Services, About, Testimonials, Contact) and then comes back to Home — the hero text animations do NOT replay. They only play once on initial load.
+
+**Fix:** Make home page animations replay every single time the user navigates to the Home route.
+
+#### Implementation (choose based on your setup):
+
+**If using React Router / Next.js:**
+```jsx
+// In your Home page component
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom'; // or usePathname in Next.js
+
+export default function HomePage() {
+  const [animKey, setAnimKey] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Every time this component mounts or location changes to '/'
+    setAnimKey(prev => prev + 1);
+    // Scroll to top
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  return (
+    <div key={animKey}>
+      {/* All hero content here — the key change forces React to remount, replaying all CSS animations */}
+    </div>
+  );
+}
+```
+
+**If using CSS classes to trigger animations:**
+```js
+// When navigating to home page
+function triggerHomeAnimations() {
+  const heroElements = document.querySelectorAll('.hero-animate');
+  heroElements.forEach(el => {
+    el.classList.remove('animated');
+    // Force reflow
+    void el.offsetWidth;
+    el.classList.add('animated');
+  });
+}
+```
+
+**If using a page-based router (no SPA):**
+- This is not an issue — full page reload already replays animations
+- No changes needed
+
+---
+
+### 3. LOGO CLICK → HOME WITH ANIMATION REPLAY
+
+Find the logo in the header/navbar (the "nivora INTERIORS" logo on the top left).
+
+Currently it may link to `/` but if already on home, clicking it does nothing visible.
+
+**Change behavior:**
+- Logo click should always navigate to `/` (home)
+- AND trigger the home page animation replay (same as feature 2)
+- If already on home page, scroll to top AND replay animations
+
+```jsx
+// Logo component
+import { useNavigate, useLocation } from 'react-router-dom';
+
+function Logo() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (location.pathname === '/') {
+      // Already on home — scroll to top and replay animations
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      triggerHomeAnimations(); // your animation reset function
+    } else {
+      navigate('/');
+    }
+  };
+
+  return (
+    <a href="/" onClick={handleLogoClick}>
+      {/* logo image/text */}
+    </a>
+  );
+}
+```
+
+---
+
+### 4. "HOME" NAV LINK → SAME BEHAVIOR AS LOGO
+
+Find the "HOME" link in the navigation bar (currently underlined, active state).
+
+Apply the exact same behavior as the logo click above:
+- If on home → scroll to top + replay animations
+- If on another page → navigate to `/` (animations will replay automatically via feature 2)
+
+```jsx
+function NavLink({ to, children }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (to === '/' && location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      triggerHomeAnimations();
+    } else {
+      navigate(to);
+    }
+  };
+
+  return <a href={to} onClick={handleClick}>{children}</a>;
+}
+```
+
+---
+
+## SUMMARY CHECKLIST
+
+| Change | Where |
+|---|---|
+| Reduce animation timing by 40% | Home hero section CSS only |
+| Re-trigger animations on home revisit | Home page component (useEffect on route change) |
+| Logo click replays home animations | Header/Navbar component |
+| "HOME" nav link replays home animations | Header/Navbar component |
+
+## DO NOT CHANGE
+- Any other page's animations or layout
+- Card content, carousel, testimonials
+- Header styling, logo design, nav link styles
+- Animation easing curves — only duration/delay numbers

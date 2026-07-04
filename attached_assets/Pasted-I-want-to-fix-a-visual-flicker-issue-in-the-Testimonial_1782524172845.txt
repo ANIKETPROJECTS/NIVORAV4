@@ -1,0 +1,26 @@
+I want to fix a visual flicker issue in the Testimonials section AND add a couple more entrance animation touches.
+1. Fix the green background flash/flicker on scroll:
+
+Currently, when scrolling down and the Testimonials section first enters the viewport, the dark green section background appears fully visible for a brief moment BEFORE the testimonial card and heading animate in — creating an awkward flash of empty green background before content appears.
+Fix this by:
+
+Adjusting the whileInView viewport trigger settings (e.g., viewport={{ once: true, margin: "-100px" }}) so the animation starts earlier — as soon as the section is about 20-30% visible, not when fully in view.
+Reducing the entrance animation's initial offset distance from its current value (if it's something like 40-50px) down to 15-20px, so content settles in faster.
+Reducing the animation duration for this section's elements to around 500-600ms for a quicker, less noticeable transition.
+Setting the initial opacity of animated elements to around 0.3-0.4 instead of fully 0, so there's no jarring "empty background" moment — content is faintly visible immediately and smoothly fades to full opacity rather than popping in late.
+
+
+
+2. Add a subtle background fade-in for the section itself:
+
+In addition to fixing the content animation timing, also add a very quick fade-in (e.g., opacity 0 to 1 over ~300ms) on the section's background/container itself as it enters the viewport, so the transition into this section feels smoother overall rather than the background "just appearing" instantly.
+
+3. Add entrance animation to the "READ ALL CLIENT STORIES" link:
+
+This link below the progress bar should also fade in + slide up slightly, but with an additional small delay (~200-300ms) after the main card content has animated in — so it appears last in the sequence, giving a natural reading order: heading → card → link.
+
+4. Testing checklist:
+
+Scroll down to this section at both slow and fast scroll speeds to confirm there's no visible flash of plain green background before the card content appears.
+Confirm the heading, card (with stars/avatar/progress bar animations from before), and "READ ALL CLIENT STORIES" link all animate in a clear, smooth sequence without any abrupt jumps or empty-background moments.
+Verify this fix doesn't affect or break any of the previously implemented animations (progress bar auto-fill, star stagger, quote icon rotation, avatar fade-in, arrow hover, card hover lift).

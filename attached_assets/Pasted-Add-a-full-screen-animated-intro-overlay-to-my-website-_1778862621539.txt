@@ -1,0 +1,26 @@
+Add a full-screen animated intro overlay to my website that plays every time the page loads (on every refresh, not limited to once per session).
+
+Here is exactly what it should do:
+
+1. On page load, a full-screen overlay appears covering all page content.
+   - Background color: use the same dark green already present in the website's color scheme (e.g. if the website uses a CSS variable like --color-primary or a hex like #2D5016, use that exact green).
+   - The overlay must sit above everything (z-index: 9999 or higher).
+
+2. The text "Nivora Interiors" types itself out letter by letter in the center of the overlay.
+   - Font color: white (#FFFFFF)
+   - Font style: match the existing heading/brand font used on the site (use the same font-family as the site's logo or h1)
+   - Font size: large and centered — around 3rem to 5rem depending on screen size
+   - Typing speed: approximately 80–100ms per character, so it feels deliberate but not slow
+   - No blinking cursor needed, but you may add one if it looks clean
+
+3. Once the full text "Nivora Interiors" has been typed out:
+   - Pause for about 600ms
+   - Then the entire overlay smoothly slides upward and off the screen using a CSS transition (transform: translateY(-100%))
+   - Transition duration: around 800ms with ease-in timing
+   - Once the overlay is fully off-screen, remove it from the DOM (or set display: none) so it does not interfere with the page
+
+4. This animation must play on EVERY page load and refresh — do NOT use sessionStorage, localStorage, or any other caching mechanism to skip it. Remove any such checks if they exist.
+
+5. The page content behind the overlay should already be rendered and ready — the overlay simply sits on top and lifts away to reveal it. Do not delay page rendering.
+
+Implement this using vanilla JavaScript and CSS (no external libraries). Place the overlay div and its styles either inline in the HTML or in the existing CSS/JS files as appropriate for the project structure.

@@ -1,0 +1,29 @@
+I want to update the Testimonials section ("What Clients Say") on my homepage with the following changes:
+1. Background color:
+
+Change the section background color from the current #5f745e to a deeper dark forest green: #283b22 (matching the "Ready to Transform Your Space" CTA section's background color elsewhere on the site).
+
+2. Testimonial text size:
+
+Increase the font size of the testimonial quote text (the italic review paragraph) to make it more prominent and easily readable — roughly 10-15% larger than the current size, while keeping line-height comfortable.
+
+3. Add subtle background texture to the testimonial card:
+
+Add a very faint, subtle texture or pattern (e.g., a light linen/noise texture or a faint geometric pattern at low opacity, around 3-5%) to the cream-colored testimonial card background — just enough to add depth without affecting text readability or looking busy.
+
+4. Add a "Verified Client" badge:
+
+Next to the client's name (e.g., "Aditya Shinde"), add a small badge or checkmark icon with the label "Verified Client" in small uppercase gold/tan text, positioned right after or below the name.
+
+5. Add entrance animations when a testimonial card becomes active (on slide change):
+
+Star rating animation: Animate the 5 stars to fill in one-by-one with a short delay between each (e.g., 80-100ms stagger), rather than appearing all at once. Each star should have a brief scale-up + fade-in effect.
+Quote icon animation: The large quotation mark icon (top-right of the card) should animate in with a subtle scale-up (from ~0.8 to 1) combined with a slight rotation (e.g., -10deg to 0deg) as the testimonial slide becomes active.
+Avatar animation: The circular client avatar/initials (e.g., "AS") should fade in and scale up slightly (from ~0.9 to 1) when the testimonial becomes active.
+These animations should trigger every time the carousel transitions to a new testimonial (not just on initial page load).
+
+6. Implementation notes:
+
+Use Framer Motion if already installed in the project for cleaner staggered animations (motion.div with variants and staggerChildren works well for the star animation); otherwise use CSS keyframe animations with appropriate animation-delay per star.
+Make sure all existing carousel behavior (auto-scroll every 5 seconds, dots-only navigation, rectangular card shape with #21291a border, star color #a18661) remains unchanged — these are additive enhancements on top of the existing carousel.
+Ensure everything remains fully responsive on mobile, including the texture, badge placement, and animations (animations can be slightly faster/simpler on mobile if needed for performance).

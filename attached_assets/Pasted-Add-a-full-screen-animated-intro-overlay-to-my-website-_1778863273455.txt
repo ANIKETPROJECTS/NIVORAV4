@@ -1,0 +1,61 @@
+Add a full-screen animated intro overlay to my website with the following exact behavior and visual style:
+
+---
+
+TRIGGER:
+- Show this overlay ONLY on the Hero/Home page.
+- Play it on EVERY page load and refresh — no sessionStorage, no localStorage, no cookies, no skip logic of any kind. Remove any such checks if they already exist.
+
+---
+
+VISUAL DESIGN:
+
+Background: deep charcoal — #1a1a18
+The overlay must cover 100% of the viewport (width + height), z-index: 9999.
+
+---
+
+ANIMATION SEQUENCE (step by step):
+
+STEP 1 — Horizontal line wipe (starts at 0.3s after load):
+- A thin horizontal line (height: 1px, color: rgba(255,255,255,0.2)) is centered vertically in the overlay.
+- It starts at width: 0 and expands to width: 60% of the screen, centered horizontally.
+- Duration: 1s, easing: ease-in-out.
+
+STEP 2 — Brand name reveal (starts at 0.9s):
+- The text "Nivora" appears centered, just above the line.
+- Below it, the word "Interiors" appears in smaller size with wide letter-spacing.
+- Both elements start at opacity: 0 and translateY(10px), then transition to opacity: 1 and translateY(0).
+- Duration: 0.7s, easing: ease-out.
+- Font for "Nivora": use the same serif/heading font already on the site (same as logo or h1). Size: ~3.5rem. Color: #f5f0e8. Font-weight: 400. Letter-spacing: 0.2em. Text-transform: uppercase.
+- Font for "Interiors": same font family. Size: ~0.75rem. Color: rgba(255,255,255,0.35). Letter-spacing: 0.5em. Text-transform: uppercase. Margin-top: 10px.
+
+STEP 3 — Green progress bar (starts at 1.2s after load):
+- A solid 2px bar sits at the very bottom edge of the overlay.
+- Color: #3B4A35 (the brand green).
+- It animates from width: 0 to width: 100% over 1.6s with ease timing.
+
+STEP 4 — Overlay exit (starts immediately after the green bar finishes, ~2.8s total):
+- Pause 200ms after bar completes.
+- Then the entire overlay collapses upward using: transform: scaleY(0), transform-origin: top.
+- Duration: 0.9s, easing: cubic-bezier(0.77, 0, 0.18, 1).
+- After the transition ends, remove the overlay from the DOM entirely.
+
+---
+
+PAGE CONTENT:
+- The hero section and all page content must be fully rendered behind the overlay before it starts — the overlay only sits on top and lifts away to reveal it.
+- Do NOT delay or block page rendering.
+
+---
+
+OTHER PAGES (non-Hero):
+- No overlay at all.
+- Page loads normally with just the navbar and content.
+
+---
+
+IMPLEMENTATION:
+- Vanilla JavaScript and CSS only — no external libraries or frameworks.
+- Detect the Hero/Home page using the URL path or an existing body class/id in the project.
+- Place the overlay div and styles in the appropriate existing files based on the project structure.

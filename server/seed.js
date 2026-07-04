@@ -1,0 +1,410 @@
+/**
+ * Seed script — migrates the existing static projects.ts data into MongoDB.
+ * Run once: node server/seed.js
+ *
+ * Images stay as-is (local paths / Google Drive links / etc.).
+ * After seeding, use the /api/projects/upload-images endpoint to replace
+ * image URLs with proper Cloudinary links.
+ */
+import 'dotenv/config'
+import mongoose from 'mongoose'
+import { connectDB } from './db.js'
+import { Project } from './models/Project.js'
+
+const projects = [
+  {
+    id: 'serenity-villa-mumbai',
+    name: 'Royal Living Redefined',
+    location: 'Juhu, Mumbai',
+    category: 'residential',
+    year: '2024',
+    badge: 'residential · 2024',
+    concept: 'Calm monumentality with organic textures',
+    description:
+      'A 4BHK villa reimagined as a sanctuary. The interiors strip away excess to reveal what remains: light, texture, and honest materials. Pale oak panelling runs floor to ceiling in the living spaces, grounded by travertine floors that catch the afternoon sun. The palette — warm stone, soft cream, and muted olive — mirrors the lush garden just beyond the glass.',
+    designIntent:
+      'To create a home that breathes — where every surface tells a quiet story of craft and restraint.',
+    materials: ['Lime-washed oak', 'Honed travertine', 'Natural linen', 'Brushed brass'],
+    coverImage: '/images/royal-living-defined/royal-living-1.png',
+    images: [
+      '/images/royal-living-defined/royal-living-1.png',
+      '/images/royal-living-defined/royal-living-2.jpg',
+      '/images/royal-living-defined/royal-living-3.jpg',
+      '/images/royal-living-defined/royal-living-4.jpg',
+      '/images/royal-living-defined/royal-living-5.jpg',
+      '/images/royal-living-defined/royal-living-6.jpg',
+      '/images/royal-living-defined/royal-living-7.jpg',
+      '/images/royal-living-defined/royal-living-8.jpg',
+      '/images/royal-living-defined/royal-living-9.png',
+      '/images/royal-living-defined/royal-living-10.jpg',
+      '/images/royal-living-defined/royal-living-11.jpg',
+      '/images/royal-living-defined/royal-living-12.jpg',
+      '/images/royal-living-defined/royal-living-13.jpg',
+      '/images/royal-living-defined/royal-living-14.jpg',
+      '/images/royal-living-defined/royal-living-15.png',
+    ],
+  },
+  {
+    id: 'verdant-apartment-pune',
+    name: 'Modern Elegance',
+    location: 'Koregaon Park, Pune',
+    category: 'residential',
+    year: '2024',
+    badge: 'residential · 2024',
+    concept: 'Urban calm in a 3BHK canvas',
+    description:
+      'Lush greens, warm timbers, and artisan ceramics come together in this Pune apartment that defies its urban surroundings. The client wanted nature, warmth, and something entirely their own. Every corner holds a considered object; every room flows into the next with architectural ease.',
+    designIntent: 'Bringing the outside in — a home that feels like a garden you can live in.',
+    materials: ['Walnut veneer', 'Green zellige tiles', 'Cotton voile', 'Aged iron'],
+    coverImage: '/modern-elegance.jpg',
+    images: [
+      '/modern-elegance.jpg',
+      'https://lh3.googleusercontent.com/d/19crtqkU8p4SM98JLpOgVr-7BEIkfn9DS',
+      'https://lh3.googleusercontent.com/d/1uqyhtroN95ePoBJL3uYxQ6mRB5ZdUjzD',
+      'https://lh3.googleusercontent.com/d/1Kgo-CmHJWMyvg-U_8yTMk_1ttNz-JpDE',
+      'https://lh3.googleusercontent.com/d/1vVqxAw2Nng7ipyRWfP7phNHyjqjUVvhV',
+      'https://lh3.googleusercontent.com/d/15VKl-bSRnt0Tg_kiCqdbstxY03d9MB21',
+      'https://lh3.googleusercontent.com/d/1Q79q2QyNuNg75RKRJTvg7IPqrztJRrlP',
+      'https://lh3.googleusercontent.com/d/1Y11m-9Qy5OnqUNdbHfqp68emHUNab8Ac',
+      'https://lh3.googleusercontent.com/d/1SiCCaWMAxJ1-CSHeemFSGxksDmj3myCM',
+      'https://lh3.googleusercontent.com/d/1vW2AYCEOXDN8PwttE73BrM43wD0gDbcE',
+      'https://lh3.googleusercontent.com/d/1SPvcJmW6X4f0FI-s_B6eXh7M9XJk5c0o',
+      'https://lh3.googleusercontent.com/d/1LVhw1pkrsWoJDD1G3kyg051B_axcGAfG',
+      'https://lh3.googleusercontent.com/d/1NAsLtQ5Cj0xTBZg8qGXOlRe1tAXGvwth',
+      'https://lh3.googleusercontent.com/d/1TQ_4-dHz3sWEzLhdoLb__iao7SoEEBMe',
+      'https://lh3.googleusercontent.com/d/1VIH4iiQ9JEV0OO2pWvTnoLVF2qDJeBMH',
+      'https://lh3.googleusercontent.com/d/1ODpOKAyWhzpUFgbUzwuajKosnYSsW3wP',
+      'https://lh3.googleusercontent.com/d/1ac2n8SM6XbUCQL3o6lXqp6T7vROnANNV',
+      'https://lh3.googleusercontent.com/d/1KnKCaoMqjKC1PbY02bONQsbEnZLkRlK5',
+      'https://lh3.googleusercontent.com/d/1iwCAnEiZWIGNHyRSR4WMTxF0Du30LWY0',
+      'https://lh3.googleusercontent.com/d/1GuC3kvio-zi4iwPLTDY5_dpI5p8zX4Z1',
+      'https://lh3.googleusercontent.com/d/19mwLfaRncSA6mWAatQEPCP_7uoPYaohR',
+      'https://lh3.googleusercontent.com/d/1Q5GFvIqQ9CDCl5EuRXIEqJmCSHEDwNzC',
+    ],
+  },
+  {
+    id: 'minimal-penthouse-bandra',
+    name: 'Bungalow Ramakunj',
+    location: 'Bandra West, Mumbai',
+    category: 'residential',
+    year: '2023',
+    badge: 'residential · 2023',
+    concept: 'Sky-high minimalism with warmth',
+    description:
+      'At 32 floors above sea level, this penthouse needed to honour the view while offering the inhabitant a retreat. We stripped the palette to near-monochrome — polished concrete, white oak, and smoked glass — and let the Mumbai skyline do the rest. The result is a home of rare clarity.',
+    designIntent: 'When you live this high, the city becomes the art. Everything else steps back.',
+    materials: ['Polished concrete', 'Smoked glass', 'White oak', 'Terrazzo'],
+    coverImage: '/project-cover-3.jpg',
+    images: [
+      '/project-cover-3.jpg',
+      'https://lh3.googleusercontent.com/d/1eGGCwdygUqqB8z_DLRB_mzESjneynFiK',
+      'https://lh3.googleusercontent.com/d/1sFOJMXPfn7AlxZYLpWPsi5YjfkubA0FC',
+      'https://lh3.googleusercontent.com/d/1Pfu50QZnh7haoetIFS5PlC5JrhBXy3iI',
+      'https://lh3.googleusercontent.com/d/1gUIkJUK_jDwq1bfiDt3aasI2VvbqXkRr',
+      'https://lh3.googleusercontent.com/d/1lm8r2cX2s4Ul8zMJwD4PvfOmPsuHU5i7',
+      'https://lh3.googleusercontent.com/d/1KGzB2XMC9v82b75Icu9eNTv4zOCkPAfi',
+      'https://lh3.googleusercontent.com/d/1HW47jdDZ7apRNIJ9A5Hwe8pM3tYVGY7w',
+      'https://lh3.googleusercontent.com/d/1q4VbXmtoi_soK0i_4jG69BG_cb6vLYLR',
+      'https://lh3.googleusercontent.com/d/1mbfKeqd3AePtdfcN_aJJuN5a5R1PEg-T',
+      'https://lh3.googleusercontent.com/d/13MYKxpiRKEUmuEkgsPoqJrpPTwHz93Fp',
+      'https://lh3.googleusercontent.com/d/1-fzOzquG6ukYhUhpnbzaosrWXGbwRKoE',
+      'https://lh3.googleusercontent.com/d/181EAn5aIn3lr3DTX20rcyydhzyo_sef2',
+      'https://lh3.googleusercontent.com/d/1ZvtxpBnat3IArhnbXnGqaPYla_eiIpnp',
+      'https://lh3.googleusercontent.com/d/13cCrRp2pUH86SjltPWmlZMXvoilzxI_x',
+      'https://lh3.googleusercontent.com/d/1cYYDUpIl4NubH89CHQa6cTZluP8vIbBd',
+      'https://lh3.googleusercontent.com/d/1d0RoOX0yuaIWFCvsjicQqpfdyYem-ecP',
+      'https://lh3.googleusercontent.com/d/1RNFNcZOXtcYDsl9AgnyDbFzhVDOqmuYK',
+      'https://lh3.googleusercontent.com/d/1KBDLtyU9GdS_uIB5SWygH8is6gfrnczH',
+      'https://lh3.googleusercontent.com/d/1rKL1hO6dalAsTBljhWutuf_cjuwmHXOL',
+      'https://lh3.googleusercontent.com/d/1C_QLUeEONLKkc5x1xSgVj4A8aA_rTR96',
+      'https://lh3.googleusercontent.com/d/1bGYxb-6Ongasp_Bnwt2uWzQDNECZzP7P',
+      'https://lh3.googleusercontent.com/d/1grfOCNHvzcgS4BGkLoekG4YSQfELL26l',
+      'https://lh3.googleusercontent.com/d/1OE08aIffP2rXKB5Bctd7Vy5ZQAjQfZq_',
+      'https://lh3.googleusercontent.com/d/1O1ybeVYYsGB84aoguvjEAvBFHZhPXAGh',
+      'https://lh3.googleusercontent.com/d/1yfW0RCG-QB9HdNIv57yZGWZXLqCOJVlF',
+    ],
+  },
+  {
+    id: 'tamarind-home-pune',
+    name: 'The Office Neutral Edit',
+    location: 'Aundh, Pune',
+    category: 'residential',
+    year: '2023',
+    badge: 'residential · 2023',
+    concept: 'Heritage warmth in a contemporary frame',
+    description:
+      'The clients brought treasured antiques, family photographs, and decades of stories. Our task was to honour these while building a home that could comfortably hold the next generation. Reclaimed teak and antique brass weave through contemporary volumes, creating a home that is both deeply personal and remarkably liveable.',
+    designIntent: 'A home that holds memory — heirlooms in conversation with the present.',
+    materials: ['Reclaimed teak', 'Antique brass', 'Handwoven khadi', 'Stone mosaic'],
+    coverImage: '/project-cover-4.jpg',
+    images: [
+      '/project-cover-4.jpg',
+      'https://lh3.googleusercontent.com/d/1CUJKV9MtklxeNgpUrriobVVflBXBiL-i',
+      'https://lh3.googleusercontent.com/d/1ogvVgzFcHDPJxJv3c6A3Ps4WA3dJpu5D',
+      'https://lh3.googleusercontent.com/d/1E5A5ll0eRtVrDE_LCceVtD6BlRgrG35h',
+      'https://lh3.googleusercontent.com/d/1FvROZwK07S5zaJI-luTN2Yd3lrcRpwMd',
+      'https://lh3.googleusercontent.com/d/19SPsjQyMyCH2KrcBdpbKRHdjNOKc7UBA',
+      'https://lh3.googleusercontent.com/d/13qjK7awee8cp833-3-jApe4AbSLS5tC0',
+      'https://lh3.googleusercontent.com/d/1XaJxFk7rAb_3zu3Ifr5DAO1IQpBXRKbJ',
+      'https://lh3.googleusercontent.com/d/1s1FL9iG6JdF8MOHwQa3e4rTjQxBoa8aE',
+      'https://lh3.googleusercontent.com/d/1v844D2A4jhatLaa9Er0Kp31HBsBJ_1jS',
+      'https://lh3.googleusercontent.com/d/1aNGvjV-h6ko5Oij0yuK49iVt7xD-VX9p',
+      'https://lh3.googleusercontent.com/d/1PauXvGpylbmMyu5mmZPoOhgC3uerRcgo',
+      'https://lh3.googleusercontent.com/d/1j8pA2RUGe9AAbk_MRcSJOLOWtFprXOxN',
+    ],
+  },
+  {
+    id: 'grove-studio-mumbai',
+    name: 'The Quiet Curve',
+    location: 'Powai, Mumbai',
+    category: 'residential',
+    year: '2024',
+    badge: 'residential · 2024',
+    concept: 'Compact luxury for the modern professional',
+    description:
+      'Proof that thoughtful design scales to any size. This 700 sq ft studio apartment in Powai was transformed into a complete home: a serene sleeping nook behind fluted oak panels, a kitchen that doubles as a bar, and a workspace that disappears when the workday ends. Nothing wasted. Everything considered.',
+    designIntent: 'Small space, full life — every inch designed with intention.',
+    materials: ['Fluted oak', 'Venetian plaster', 'Aged leather', 'Matte black steel'],
+    coverImage: '/project-cover-5.jpg',
+    images: [
+      '/project-cover-5.jpg',
+      'https://lh3.googleusercontent.com/d/1scPbFaA6jdhW2waOOqjdVuu0gfsbdBRA',
+      'https://lh3.googleusercontent.com/d/11kvwYHXBQf88wQgOFRKmTpaYby5GKK2o',
+      'https://lh3.googleusercontent.com/d/1Auv_QAky0BYxFVkvhxeAy3aX6UqdVx8x',
+      'https://lh3.googleusercontent.com/d/1UsJnBRr0_eipwZ7aRvghGcqMSrvdUzu5',
+      'https://lh3.googleusercontent.com/d/1wMDnuMpSpKTKntIKQi5bi0fcWqIBi0-H',
+      'https://lh3.googleusercontent.com/d/1cP9A2fTV5qoNGif48lOozmFIwM6Aa5_W',
+      'https://lh3.googleusercontent.com/d/1JAv1xrbfP1REkzYZgMS0ENUltXUPxUc4',
+      'https://lh3.googleusercontent.com/d/1WxgO1zGg1NKF-Mzf3Sv_NMVf0exb8vQG',
+    ],
+  },
+  {
+    id: 'amber-bungalow-lonavala',
+    name: 'The Soft Neutral Story',
+    location: 'Lonavala',
+    category: 'residential',
+    year: '2024',
+    badge: 'residential · 2024',
+    concept: 'Weekend sanctuary in the Sahyadris',
+    description:
+      'Nestled into the hills above Lonavala, this weekend home draws its palette directly from its setting — the green of monsoon grass, the grey of wet basalt, the amber of afternoon light. Interiors are deliberately rustic: handloom textiles, exposed stone, and copper accents that age beautifully with the building.',
+    designIntent: 'A place to arrive and exhale — completely.',
+    materials: ['Local basalt', 'Bamboo', 'Handloom cotton', 'Copper'],
+    coverImage: '/project-cover-6.jpg',
+    images: [
+      '/project-cover-6.jpg',
+      'https://lh3.googleusercontent.com/d/1D3oyUl2LE6yfk_znkuSk5P4VNKsc6HtI',
+      'https://lh3.googleusercontent.com/d/11adFn7YdX-3srdA9XH6ZIkvjZjlh5kLh',
+      'https://lh3.googleusercontent.com/d/1IVxoe94cdQ6rPIGUW-EBs9t-OEUgmsAb',
+      'https://lh3.googleusercontent.com/d/1FV4G9sDFF8lE33vYrkwKhBac86m5IOek',
+      'https://lh3.googleusercontent.com/d/1pNSSMY23nKNa5DON68Svh3SYUpD4d9Wv',
+      'https://lh3.googleusercontent.com/d/1bu0lGS4kjpOx4cWLiJWYSMV_P7xpucfK',
+    ],
+  },
+  {
+    id: 'onyx-office-mumbai',
+    name: 'The Layered Calm',
+    location: 'BKC, Mumbai',
+    category: 'commercial',
+    year: '2024',
+    badge: 'commercial · 2024',
+    concept: 'Where ambition meets calm',
+    description:
+      "For a fintech firm seeking to attract global talent, we designed a workplace that competes with the world's finest. Dark tones, curated art, and zones that shift from focused solo work to collaborative energy. The reception is a moment: onyx panels, single pendant light, and a view that announces arrival.",
+    designIntent: 'A workspace that signals success without announcing it.',
+    materials: ['Polished onyx', 'Smoked glass', 'Bouclé', 'Blackened steel'],
+    coverImage: '/project-cover-9.jpg',
+    images: [
+      '/project-cover-9.jpg',
+      'https://lh3.googleusercontent.com/d/17iXKkct-cbeUro-dq1E7JWBQVFL-H8YU',
+      'https://lh3.googleusercontent.com/d/1fLDTewJSZRopm8fPRN9JFgKQM_HlFOjY',
+      'https://lh3.googleusercontent.com/d/1qqH3U9_zl7uaa0osVo8azLrErI2oe1oq',
+      'https://lh3.googleusercontent.com/d/1ZEj7FRqCmUZupRjT5JaRvlBBNRgoajHL',
+      'https://lh3.googleusercontent.com/d/1OF3uCaXfW_kd3SdpN1NAcD2NEbxZRbrn',
+      'https://lh3.googleusercontent.com/d/1s7kyxXHZZKJIPcOSWoblkYQwc8uBjSj-',
+      'https://lh3.googleusercontent.com/d/17GuuHDJheSq_tDYgzXmuwpu_JW3TRbjh',
+      'https://lh3.googleusercontent.com/d/1xrgnpOy0OOw01OFWZX80dkU_43lDFzNI',
+      'https://lh3.googleusercontent.com/d/1BvyjZ5yUvKG5iECp4vJzGwOHxj08IzUC',
+      'https://lh3.googleusercontent.com/d/1WZt0tqNV6XD2DckCnlfgmWsxU_YavDAT',
+      'https://lh3.googleusercontent.com/d/166wAEdtFOsF0nrcT2qmLWA76j179D6h9',
+    ],
+  },
+  {
+    id: 'sage-cafe-pune',
+    name: 'Blushwood Haven',
+    location: 'FC Road, Pune',
+    category: 'commercial',
+    year: '2023',
+    badge: 'commercial · 2023',
+    concept: 'Slow coffee, considered space',
+    description:
+      'Sage was designed to make people stay. Warm light, tactile surfaces, and corners that feel private even when full. The design language is deliberately unhurried — arched niches, trailing plants, shelves of ceramics — a counterpoint to the city outside. Every seat has a view worth looking at.',
+    designIntent: 'A café that earns an extra hour of your time.',
+    materials: ['Exposed brick', 'Rattan', 'Hand-thrown ceramics', 'Warm timber'],
+    coverImage: '/project-cover-10.jpg',
+    images: [
+      '/project-cover-10.jpg',
+      'https://lh3.googleusercontent.com/d/1PgVlgSdHQBLwGmdIeIyMySD2tVZjo1Lg',
+      'https://lh3.googleusercontent.com/d/1-cTONC952fWnzRODG4_rKHKoINt-Aa_O',
+      'https://lh3.googleusercontent.com/d/1lJbxBoyIpVYawGECtjh7IklVRfeaNJG1',
+      'https://lh3.googleusercontent.com/d/1Z2sOAFYLj_Z7McHUCnSJt6JKZ-OQe5xK',
+      'https://lh3.googleusercontent.com/d/1P0Gc0zdaWW9KMgHgTcvwSKT3a2q7s3hU',
+      'https://lh3.googleusercontent.com/d/1JlphlMECWwsnPLIigtFvkgcgrboX9qbU',
+      'https://lh3.googleusercontent.com/d/1-zTnVxQ-_vz7d90X3ibMYsZJvt0k9v2P',
+      'https://lh3.googleusercontent.com/d/1dGhJNKoSdc_LrH2eSqypkjCDwqFTaHBv',
+      'https://lh3.googleusercontent.com/d/1eFmnebdzRd0k4jse6wbBRJX4NehqZX',
+      'https://lh3.googleusercontent.com/d/11hpVWqCVsH28_NqlT_v_mM95XxbToa0U',
+      'https://lh3.googleusercontent.com/d/1uApWqpijQrD5P1s-vcLhjKbBak6hXqvY',
+      'https://lh3.googleusercontent.com/d/1Mtz-5ypauOD0fFxTqWyEjUIsfLMQYDhs',
+      'https://lh3.googleusercontent.com/d/1NPngIpN1aMS9ui4xBsOFBeh-An1GRsK6',
+      'https://lh3.googleusercontent.com/d/12mDWWXaqSItzLXKFzP0BmO5Ej7UkHXtq',
+      'https://lh3.googleusercontent.com/d/1oEBRm-KpQL8t7eko2Eipt00n6cwzhET6',
+      'https://lh3.googleusercontent.com/d/1JyEiqR4fTB1_kqPZLKB0JOGNw_ykdnzk',
+    ],
+  },
+  {
+    id: 'prestige-showroom-mumbai',
+    name: 'Prestige Showroom',
+    location: 'Worli, Mumbai',
+    category: 'commercial',
+    year: '2024',
+    badge: 'commercial · 2024',
+    concept: 'Luxury retail as theatre',
+    description:
+      "A luxury jewellery showroom in Worli's premier retail corridor. The brief was simple: every client who enters must feel they've arrived somewhere exceptional. Book-matched marble floors, velvet-lined display cases, and a private consultation suite that functions as a separate, more intimate world within the larger space.",
+    designIntent: 'The product deserves a stage. We built one.',
+    materials: ['Book-matched marble', 'Velvet', 'Gold leaf', 'Frosted glass'],
+    coverImage: '/project-cover-11.jpg',
+    images: ['/project-cover-11.jpg', '/project-cover-9.jpg', '/project-cover-10.jpg'],
+  },
+  {
+    id: 'summit-office-pune',
+    name: 'Summit Co-Working',
+    location: 'Hinjewadi, Pune',
+    category: 'commercial',
+    year: '2024',
+    badge: 'commercial · 2024',
+    concept: 'Designed for deep work and easy connection',
+    description:
+      "Hinjewadi's newest co-working space was conceived as an antidote to the generic. Acoustic timber panels, moss walls, and generous natural light create a space where focus comes naturally. Enclosed pods sit alongside open collaboration zones; a rooftop terrace completes the ecosystem for a new generation of independent workers.",
+    designIntent: "A co-working space that doesn't look like a co-working space.",
+    materials: ['Acoustic timber panels', 'Moss walls', 'Terrazzo', 'Industrial glass'],
+    coverImage: '/project-cover-12.jpg',
+    images: ['/project-cover-12.jpg', '/project-cover-9.jpg', '/project-cover-10.jpg'],
+  },
+  {
+    id: 'atelier-boutique-mumbai',
+    name: 'Atelier Boutique',
+    location: 'Colaba, Mumbai',
+    category: 'commercial',
+    year: '2023',
+    badge: 'commercial · 2023',
+    concept: 'Fashion as architecture',
+    description:
+      'A fashion boutique in Colaba designed on a single principle: the garments must be the only colour in the room. The space is bleached and pale — raw silk curtains, cast concrete counters, hammered copper fixtures — a gallery-like neutrality that makes each piece of clothing sing.',
+    designIntent: 'The clothes are the colour — the space stays silent.',
+    materials: ['Bleached wood', 'Hammered copper', 'Raw silk', 'Cast concrete'],
+    coverImage: '/project-cover-9.jpg',
+    images: ['/project-cover-9.jpg', '/project-cover-10.jpg', '/project-cover-11.jpg'],
+  },
+  {
+    id: 'meridian-restaurant-pune',
+    name: 'Meridian Restaurant',
+    location: 'Koregaon Park, Pune',
+    category: 'commercial',
+    year: '2024',
+    badge: 'commercial · 2024',
+    concept: 'Fine dining with soul',
+    description:
+      'A fine dining restaurant with 60 covers, designed to feel intimate at every table. The ceiling is a study in layered aged teak — warm, complex, and deeply textural. Below it, travertine floors and handblown glass pendants create pools of warm light. The kitchen is deliberately visible — a theatre within the theatre.',
+    designIntent: 'Where the meal becomes a memory.',
+    materials: ['Aged teak', 'Travertine', 'Handblown glass', 'Sisal'],
+    coverImage: '/project-cover-10.jpg',
+    images: ['/project-cover-10.jpg', '/project-cover-9.jpg', '/project-cover-12.jpg'],
+  },
+  {
+    id: 'hilltop-residence-arch',
+    name: 'Hilltop Residence',
+    location: 'Pune Hills',
+    category: 'architecture',
+    year: '2024',
+    badge: 'architecture · 2024',
+    concept: 'Architecture in dialogue with the landscape',
+    description:
+      "A private residence designed from first principles: how does this building relate to the hill it stands on? The answer came in horizontal planes of granite and glass that step with the terrain rather than fight it. A 40-metre infinity edge pool appears to spill into the valley below. The interior follows the exterior's discipline.",
+    designIntent: 'The house does not sit on the hill — it becomes part of it.',
+    materials: ['Local granite', 'Steel frame', 'Tinted concrete', 'Double-glazed glass'],
+    coverImage: '/project-cover-3.jpg',
+    images: ['/project-cover-3.jpg', '/project-cover-4.jpg', '/project-cover-5.jpg'],
+  },
+  {
+    id: 'courtyard-house-mumbai',
+    name: 'The Courtyard House',
+    location: 'Alibaug, Mumbai',
+    category: 'architecture',
+    year: '2023',
+    badge: 'architecture · 2023',
+    concept: 'The Indian courtyard reinvented',
+    description:
+      'An architecture project that begins not with walls but with the absence of them — a central courtyard open to the sky that organises all rooms around it. Mangalore tiles, laterite stone, and lime plaster reference the vernacular traditions of coastal Maharashtra, while the planning and structure are entirely contemporary.',
+    designIntent: 'A house organised around absence — the courtyard as the heart.',
+    materials: ['Mangalore tiles', 'Lime plaster', 'Jackwood', 'Laterite stone'],
+    coverImage: '/project-cover-4.jpg',
+    images: ['/project-cover-4.jpg', '/project-cover-6.jpg', '/project-cover-3.jpg'],
+  },
+  {
+    id: 'glass-pavilion-lonavala',
+    name: 'Glass Pavilion',
+    location: 'Lonavala',
+    category: 'architecture',
+    year: '2024',
+    badge: 'architecture · 2024',
+    concept: 'Structure dissolved into landscape',
+    description:
+      'A weekend pavilion designed to vanish. Structural glass walls on three sides dissolve the boundary between inside and the monsoon valley beyond. Corten steel frames age to match the surrounding rock. Polished concrete floors reflect the green ceiling of the hill above. A building that earns its place.',
+    designIntent: 'To make a building that the land barely notices.',
+    materials: ['Structural glass', 'Corten steel', 'Polished concrete', 'Stone aggregate'],
+    coverImage: '/project-cover-5.jpg',
+    images: ['/project-cover-5.jpg', '/project-cover-3.jpg', '/project-cover-4.jpg'],
+  },
+  {
+    id: 'studio-house-bandra',
+    name: 'Studio House',
+    location: 'Bandra East, Mumbai',
+    category: 'architecture',
+    year: '2023',
+    badge: 'architecture · 2023',
+    concept: "An artist's home as instrument",
+    description:
+      'Designed for an artist who needed equal parts living space, studio, and gallery, this Bandra house solves multiple briefs in a single architectural gesture. Double-height volumes flood with north light; industrial steel mezzanines carry the studio above the living spaces; raw concrete and reclaimed timber give the whole a material honesty that suits its owner perfectly.',
+    designIntent: 'The house is both home and creative laboratory.',
+    materials: ['Industrial steel', 'Raw concrete', 'Reclaimed timber', 'Fibreglass'],
+    coverImage: '/project-cover-6.jpg',
+    images: ['/project-cover-6.jpg', '/project-cover-3.jpg', '/project-cover-5.jpg'],
+  },
+]
+
+async function seed() {
+  await connectDB()
+
+  let inserted = 0
+  let skipped = 0
+
+  for (const data of projects) {
+    try {
+      await Project.findOneAndUpdate({ id: data.id }, data, { upsert: true, returnDocument: 'after' })
+      inserted++
+    } catch (err) {
+      console.error(`  ✗ ${data.id}:`, err.message)
+      skipped++
+    }
+  }
+
+  console.log(`\n✅ Seeded ${inserted} projects (${skipped} errors)`)
+  await mongoose.disconnect()
+}
+
+seed().catch(err => {
+  console.error(err)
+  process.exit(1)
+})

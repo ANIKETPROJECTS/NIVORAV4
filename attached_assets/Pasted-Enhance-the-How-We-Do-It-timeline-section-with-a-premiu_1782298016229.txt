@@ -1,0 +1,43 @@
+Enhance the "How We Do It" timeline section with a premium scroll-triggered animation.
+
+Animation Requirements:
+
+As the user scrolls down and each timeline step enters the viewport, the checkbox/tick icon should animate from an unchecked state to a checked state.
+The animation should happen sequentially from top to bottom, matching the order of the timeline.
+The checkmark should draw itself smoothly (SVG path animation preferred) rather than appearing instantly.
+Add a subtle scale effect on the diamond icon:
+Initial: scale(0.8), opacity 0
+Animate to: scale(1), opacity 1
+Duration: 500–700ms per step.
+Use Intersection Observer to trigger the animation only when the step becomes visible.
+Once checked, the state should remain checked and should not reset when scrolling back up.
+
+Timeline Line Animation:
+
+Animate the vertical center line progressively as the user scrolls.
+The line should grow from top to bottom, visually connecting completed steps.
+Completed portions of the line should have a slightly darker or accent color.
+
+Content Animation:
+
+Step title fades in + slides upward.
+Description fades in with a slight delay after the title.
+Alternate left/right content blocks should animate from their respective sides:
+Left items → slide from left.
+Right items → slide from right.
+
+Premium Motion Style:
+
+Smooth and elegant, inspired by luxury interior design websites.
+No flashy or bouncing effects.
+Use Framer Motion if available; otherwise use CSS transitions + Intersection Observer.
+Maintain the existing minimalist aesthetic.
+
+Additional Enhancement:
+
+While a step is active, slightly highlight its diamond/check icon with a soft glow.
+Ensure animations are fully responsive and perform smoothly on mobile, tablet, and desktop.
+
+Desired user experience:
+
+As visitors scroll through the process timeline, each milestone should feel like it is being completed in real time—the vertical line progresses downward and every diamond checkbox smoothly transforms into a checked state, creating a premium project journey visualization.

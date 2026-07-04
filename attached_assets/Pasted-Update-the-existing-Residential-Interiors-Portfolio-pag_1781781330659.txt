@@ -1,0 +1,189 @@
+Update the existing Residential Interiors Portfolio page.
+
+The hero/banner image already contains a CTA button:
+
+START YOUR PROJECT →
+
+Modify its functionality as follows:
+
+---------------------------------------------------------
+NAVIGATION
+---------------------------------------------------------
+
+When the user clicks "START YOUR PROJECT →"
+
+Navigate to a NEW dedicated page called:
+
+Residential Project Enquiry
+
+Do NOT scroll on the same page.
+Do NOT open a modal.
+
+Use proper page navigation.
+
+Example route:
+
+/residential-interiors/enquiry
+
+(or follow the existing routing structure used in the project.)
+
+The page transition should be smooth with a subtle fade animation.
+
+---------------------------------------------------------
+NEW PAGE
+---------------------------------------------------------
+
+Create a completely new premium enquiry page.
+
+Maintain the same luxury design language as the entire Nivora Interiors website.
+
+Use:
+
+- Warm Off White background (#F6F3EE)
+- Olive Green accents
+- Gold highlights
+- Elegant serif typography
+- Large spacing
+- Minimal luxury aesthetic
+
+---------------------------------------------------------
+HEADER
+---------------------------------------------------------
+
+Large Heading:
+
+Let's Start Your Project
+
+Subtitle:
+
+Tell us about your vision and we'll help transform it into a beautifully designed space.
+
+Add a thin gold decorative divider below the heading.
+
+---------------------------------------------------------
+FORM
+---------------------------------------------------------
+
+Responsive Layout
+
+Desktop:
+2 Columns
+
+Mobile:
+Single Column
+
+LEFT COLUMN
+
+• Full Name *
+• Email Address *
+• Type of Space *
+
+Dropdown
+
+- Apartment
+- Villa
+- Office
+- Commercial
+- Renovation
+
+• How did you hear about us?
+
+Dropdown
+
+- Google
+- Instagram
+- Facebook
+- Referral
+- Existing Client
+- Other
+
+• Project Description
+
+(Textarea)
+
+---------------------------------------------------------
+
+RIGHT COLUMN
+
+• Phone Number *
+
+• City *
+
+• Budget Range *
+
+Dropdown
+
+- Under ₹5L
+- ₹5L – ₹15L
+- ₹15L – ₹30L
+- ₹30L – ₹50L
+- ₹50L+
+
+• Preferred Callback Time *
+
+Dropdown
+
+- Morning
+- Afternoon
+- Evening
+
+---------------------------------------------------------
+
+BUTTON
+
+Centered luxury button
+
+SEND ENQUIRY
+
+Hover:
+
+- Gold accent
+- Slight lift
+- Smooth transition
+
+---------------------------------------------------------
+
+AFTER BUTTON
+
+Display:
+
+Or chat with us on WhatsApp
+
+---------------------------------------------------------
+
+INPUT STYLE
+
+Luxury Minimal
+
+- Transparent inputs
+- Bottom border only
+- Gold focus underline
+- Dark green text
+- Rounded textarea
+
+---------------------------------------------------------
+
+VALIDATION
+
+Validate all required fields.
+
+Show elegant inline validation messages.
+
+---------------------------------------------------------
+
+SUCCESS MESSAGE
+
+After submission display:
+
+"Thank you. We've received your enquiry and our design team will connect with you shortly."
+
+Display it inside a premium success card with a subtle fade-in animation.
+
+---------------------------------------------------------
+
+IMPORTANT
+
+- Do NOT modify the existing Residential Interiors Portfolio page.
+- The "START YOUR PROJECT →" button should simply navigate to this new dedicated enquiry page.
+- Preserve the existing website typography, colors, spacing, animations, and branding.
+- Make the enquiry page feel premium, elegant, and consistent with the overall Nivora Interiors website.

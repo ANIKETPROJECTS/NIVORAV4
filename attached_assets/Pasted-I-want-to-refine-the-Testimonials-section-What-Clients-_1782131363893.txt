@@ -1,0 +1,27 @@
+I want to refine the Testimonials section ("What Clients Say") with these changes:
+1. Reduce the testimonial card size:
+
+Currently the rectangular testimonial card spans almost the full container width and looks oversized with too much empty space. Reduce it to a more compact, centered card with a max-width of around 650-700px (instead of stretching nearly edge-to-edge).
+Reduce internal padding slightly so the card height feels proportional to its content (stars, quote, text, name) rather than appearing overly tall/wide.
+Keep the existing border color (#21291a), background color, star color (#a18661), and all existing content/animations (quote icon, avatar, verified badge) exactly as they are — only adjust the overall card dimensions/spacing.
+
+2. Add scroll-triggered entrance animation for the whole testimonials section:
+
+When the Testimonials section scrolls into the viewport (use an Intersection Observer or a library like react-intersection-observer / Framer Motion's whileInView), animate the entire card (along with the heading and subheading above it) to fade in + slide up from ~30px below to its final position.
+This animation should trigger once per page load when the section first enters the viewport (not repeat every time user scrolls up/down past it).
+
+3. Dots indicator hover/active animation:
+
+When a dot is active (representing the current testimonial), animate it to grow slightly larger (e.g., scale from 1 to 1.3) with a smooth transition, rather than just instantly changing color/size.
+On hover (desktop), inactive dots should also have a subtle scale-up (e.g., to 1.15) to indicate they're clickable.
+Use a smooth CSS transition (e.g., transition: transform 0.3s ease, background-color 0.3s ease) for these size/color changes.
+
+4. "Read All Client Stories" link hover micro-interaction:
+
+On hover, the arrow icon (→) next to "READ ALL CLIENT STORIES" should animate by moving slightly to the right (e.g., translateX(4px)) with a smooth transition, while the text itself can have a subtle underline or color brightening on hover.
+Make sure this hover effect feels snappy (transition duration around 0.2-0.3s).
+
+5. Implementation notes:
+
+Use Framer Motion if already installed in the project (recommended for the scroll-triggered entrance animation via whileInView prop); otherwise use Intersection Observer + CSS classes.
+Ensure all animations remain smooth and performant on mobile, and that the smaller card size still looks well-proportioned and readable on smaller screens.

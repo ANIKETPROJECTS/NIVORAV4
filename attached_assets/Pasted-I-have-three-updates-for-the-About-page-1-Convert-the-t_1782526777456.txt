@@ -1,0 +1,30 @@
+I have three updates for the About page:
+1. Convert the top hero/intro section ("OUR STORY" / "Design With Purpose & Craft") to light theme too:
+
+Change this section's background from dark green to light cream (#f5f2ed), matching the rest of the page.
+Update text colors: "OUR STORY" label stays gold/tan (#a18661); "Design With" heading changes to dark green (#21291a) or dark gray (#2c2c2c); "Purpose & Craft" (italic accent line) stays gold/tan; description paragraph changes to a softer dark gray (#4a4a4a) for readability.
+Keep the navbar above it unchanged (still dark green, since that's site-wide).
+
+2. Add a counting animation to the Stats section (25+, 2, 2, 100%), matching the Home page's stats counter behavior:
+
+When the Stats section scrolls into the viewport, each number should animate by counting up from 0 to its final value (e.g., 0 → 25, 0 → 2, 0 → 2, 0 → 100) over about 1.5-2 seconds, rather than appearing as static text.
+For "25+" and "100%", make sure the "+" and "%" symbols appear correctly after the count finishes (don't count "25+" as a number with a plus sign mid-animation — count 0 to 25 then append "+").
+Use a library like react-countup if available/easy to add, or implement manually with useState + requestAnimationFrame/setInterval easing from 0 to the target value.
+This animation should trigger once per page load when the section enters the viewport (use Intersection Observer or Framer Motion's whileInView).
+Reference how this counting animation is implemented on the Home page's stats section (8+ Years Experience, 90% Client Satisfaction) and replicate the same approach/timing here for consistency.
+
+3. Significantly enhance the visual design and animations of the "What We Design" + "Our Values" section — KEEP THE EXACT SAME CONTENT, just make it look more premium and emphasized (client feedback: content is fine, but the section currently looks too plain/flat):
+
+Add numbering to each value (01, 02, 03, 04, 05) in large, light-weight serif font, positioned to the left of or behind each value title (e.g., "01" in a large faded gold tone behind "Thoughtful Design"), giving the list more visual hierarchy and a premium editorial feel.
+Add a small icon next to each value title (e.g., a lightbulb for "Thoughtful Design", a clock for "Timeless Elegance", a heart/handshake for "Personal Connection", a diamond/tool for "Quality & Craftsmanship", a shield/checkmark for "Trust & Transparency") in the gold/tan accent color, sized small and positioned just before or above each title.
+Hover interaction: on hovering over each value item, animate the divider line below it to draw/expand from left to right (width 0% to 100%), and slightly shift the value title's color to a richer gold, with a smooth transition (~250ms).
+Entrance animation: as the section scrolls into view, each value item should fade in + slide up with a stagger (~120-150ms between each), and the large number (01, 02, etc.) should fade in with a slight scale-up (0.9 to 1) slightly before its corresponding title text appears.
+"What We Design" bullet list (left side): add a subtle custom bullet icon (small gold diamond/dot, already present but can be made slightly more refined) and animate each bullet to fade in + slide in from the left, staggered (~100ms apart) as the section scrolls into view.
+Add a subtle decorative background element behind the "Our Values" list — e.g., a very faint large outlined circle or geometric shape in a barely-visible gold tint, positioned behind the numbers, to add depth without affecting readability.
+Overall section padding: increase top/bottom padding slightly so the section feels less cramped and more spacious/premium overall.
+
+4. Implementation notes:
+
+Use Framer Motion if already installed for the staggered entrance animations and hover interactions; otherwise CSS transitions/keyframes are fine.
+For icons, use a consistent icon set already used elsewhere in the project (e.g., lucide-react if that's what's installed) for visual consistency.
+Test all changes on both desktop and mobile to ensure spacing, icons, and animations remain clean and readable across screen sizes.

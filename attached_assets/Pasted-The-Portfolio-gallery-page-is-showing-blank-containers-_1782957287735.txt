@@ -1,0 +1,34 @@
+The Portfolio gallery page is showing blank containers with broken image icons — the image elements exist in the code but the actual image files are either missing or have incorrect paths. Please diagnose and fix this completely:
+1. First, run this diagnostic in the browser console:
+
+Open the browser DevTools (F12) → Network tab → filter by "Img" → refresh the Portfolio page.
+Note every image request that returns a 404 error — these are the missing/broken files.
+Also check the Console tab for any image-related errors.
+
+2. Check the image source paths in the Portfolio component:
+
+Open the Portfolio/Gallery component file and find where image src values are defined (likely an array of objects with image paths, or direct imports at the top of the file).
+Check if images are being referenced as:
+
+(a) Direct imports: import img1 from '../assets/portfolio/image1.jpg' — verify each imported file actually exists at that exact path with that exact filename and extension.
+(b) String paths: src="/assets/portfolio/image1.jpg" or src="./images/image1.jpg" — verify these resolve correctly from the project's public folder or src folder.
+(c) External URLs: if any src values are http:// or https:// links, check if those URLs are still accessible/valid.
+
+
+
+3. Check the actual asset folder:
+
+Look inside src/assets/ (or public/assets/ or wherever images are stored) and list what image files actually exist in the portfolio/gallery folder.
+If the folder is empty or the files are missing entirely — flag this clearly in your response, listing exactly which image files are expected but missing, so the user knows they need to upload the actual portfolio photos.
+If files exist but paths are wrong — fix the import paths or src strings to match the actual file locations exactly (check for case sensitivity, wrong subfolder names, wrong extensions like .jpg vs .jpeg vs .JPG).
+
+4. Temporary placeholder fix (if images are genuinely missing):
+
+If the actual portfolio image files don't exist in the project at all, replace the broken src values temporarily with high-quality placeholder images from https://picsum.photos/800/600?random=1 (change the number for each image) so the gallery layout is visible and functional while the real images are being sourced.
+Add a clear comment in the code: // TODO: Replace with actual portfolio image next to each placeholder so they're easy to find and replace later.
+
+5. After fixing:
+
+Confirm all gallery images are visible on both desktop and mobile.
+Confirm no broken image icons or blank containers remain.
+Confirm the existing grid layout, hover effects, and animations still work correctly with the fixed images.

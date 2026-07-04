@@ -1,0 +1,90 @@
+Redesign the existing "Our Services" section instead of creating a new section.
+
+Current Situation:
+- An Our Services section already exists on the website.
+- Keep the existing section structure, routing, links, and functionality intact.
+- Improve the UI/UX to match the premium luxury aesthetic used in the Philosophy section.
+
+Requirements:
+
+1. Convert the existing services into 7 premium service cards:
+
+01 Residential Interiors
+02 Commercial Interiors
+03 Hospitality Interiors
+04 Architecture & Space Planning
+05 2D & 3D Visualization
+06 Developer Solutions
+07 Renovation & Makeovers
+
+2. Keep the website's existing light beige background.
+3. Match the current Nivora color palette:
+   - Beige / Off-white background
+   - Olive green accents
+   - Gold highlights
+   - Elegant serif typography
+
+4. Card Design:
+   - Premium luxury interior design style.
+   - Large background image per service.
+   - Soft dark image overlay.
+   - Service number in gold.
+   - Service title visible by default.
+   - Clean minimal appearance.
+
+5. Hover Interaction:
+   When cursor enters a card:
+   - Image gently zooms.
+   - Dark overlay increases slightly.
+   - Description smoothly fades/slides upward.
+   - "Explore Service" CTA appears.
+   - Gold accent line animates.
+   - Card lifts slightly with shadow.
+
+6. Descriptions:
+
+Residential Interiors:
+Designing elegant homes and living spaces that blend comfort, functionality, and timeless beauty.
+
+Commercial Interiors:
+Creating productive offices, clinics, retail stores, and professional workspaces.
+
+Hospitality Interiors:
+Crafting memorable guest experiences through hotels, cafés, restaurants, and hospitality environments.
+
+Architecture & Space Planning:
+Planning layouts, elevations, facades, and architectural concepts for optimized spaces.
+
+2D & 3D Visualization:
+Creating drawings, renders, and visual presentations that bring ideas to life.
+
+Developer Solutions:
+Design support for sample flats, amenities, marketing suites, and property enhancement.
+
+Renovation & Makeovers:
+Transforming existing spaces through upgrades, modernization, and complete redesigns.
+
+7. Animations:
+- Preserve all existing page animations.
+- Add staggered reveal animation on scroll.
+- Smooth fade-up effect.
+- Use Intersection Observer.
+- Keep performance optimized.
+
+8. Responsive Layout:
+Desktop:
+- 4 cards in first row.
+- 3 cards in second row.
+
+Tablet:
+- 2 cards per row.
+
+Mobile:
+- Single column layout.
+
+9. Important:
+- Do not create a new services section.
+- Upgrade the existing section only.
+- Maintain current navigation, links, and functionality.
+- Keep design consistent with the Philosophy section and overall Nivora branding.
+- Ensure the result feels like a high-end luxury interior design studio website.

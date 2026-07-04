@@ -1,0 +1,39 @@
+On the "Before & After" section (the transformation slider with the 
+draggable before/after comparison image, e.g. "Dining Room Revival"), the 
+image is too small on mobile view — it's hard to actually see the 
+transformation/difference between before and after.
+
+Please fix this for mobile/smaller screens specifically:
+
+1. INCREASE THE IMAGE HEIGHT ON MOBILE
+Find the CSS/styles controlling the before-after image slider's height or 
+aspect-ratio on mobile breakpoints (likely a fixed height, max-height, or 
+aspect-ratio value that's too short/compressed on small screens). Increase 
+it so the image takes up noticeably more vertical space on mobile — aim for 
+something like a 4:5 or 1:1 aspect ratio on mobile (taller than it currently 
+is), instead of the current short/wide crop. The goal is that someone 
+scrolling on their phone can clearly see the difference between the BEFORE 
+and AFTER sides of the image.
+
+2. KEEP IT RESPONSIVE AND PROPORTIONAL
+- The slider/drag handle (the circular drag control in the middle) should 
+  still work correctly and stay vertically centered after the height 
+  increase.
+- The "BEFORE" and "AFTER" labels positioned on the image should reposition 
+  correctly with the new size, not get cut off or misaligned.
+- Don't change the image size/aspect-ratio on desktop/tablet — this fix is 
+  specifically for mobile width (e.g. max-width: 768px or whatever mobile 
+  breakpoint the project already uses).
+- Make sure the card below it (with the "Dining room revival" title and 
+  before/after description text) still has proper spacing and doesn't feel 
+  cramped after the image grows.
+
+3. CHECK FOR CONTENT OVERFLOW
+If the image is inside a card with fixed/limited height, make sure the card 
+container can grow to fit the larger image without clipping or overflow 
+issues.
+
+After the change, please verify on a mobile viewport (around 375px-430px 
+width) that the before/after image is noticeably larger and the 
+transformation is clearly visible, while the drag slider still works 
+smoothly.

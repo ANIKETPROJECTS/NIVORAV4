@@ -1,0 +1,35 @@
+I need two fixes for the Portfolio gallery:
+1. Fix blank/empty spaces in the gallery grid:
+
+Currently there are empty blank gaps in the gallery grid where images are missing (some grid cells have no image).
+Fix approach: check the gallery data array for the current project — if any image slot has an undefined/null/broken src, either:
+
+(a) Remove that slot from the array entirely so the grid reflows without gaps, OR
+(b) If the grid layout uses a specific asymmetric pattern (big+small alternating), repeat/reuse existing images from the same project to fill the empty slots — do NOT use placeholder/external images.
+
+
+The goal is zero empty white spaces in the grid — every visible grid cell must have a real image.
+Important: Do NOT change the existing asymmetric grid layout — keep the current pattern of alternating large and small image cells exactly as it is. Only fill or remove empty slots.
+
+2. Add a lightbox/image viewer when gallery images are clicked:
+
+When a user clicks any image in the gallery, open a full-screen dark overlay lightbox showing that image at full/large size.
+The lightbox should have:
+
+Full-screen dark overlay (rgba(0,0,0,0.9) background) covering the entire viewport.
+Large centered image display with the clicked image shown clearly.
+Left/Right arrow navigation to go to previous/next image in the project's gallery without closing the lightbox.
+Zoom in/out button (or scroll-to-zoom) — clicking the zoom icon should toggle between fit-to-screen and 1:1 actual size, or use CSS transform: scale() to zoom in/out.
+Close button (X) in the top-right corner to dismiss the lightbox and return to the gallery.
+Keyboard support: left arrow key = previous image, right arrow key = next image, Escape key = close lightbox.
+A subtle loading spinner (like the blue circle in the reference image) while the full-size image loads in the lightbox.
+
+
+Use react-photo-view, yet-another-react-lightbox, or react-image-lightbox if any of these are already installed or easy to add — otherwise implement with a simple modal using useState (currentIndex, isOpen) + useEffect for keyboard listeners.
+Make sure the lightbox works on mobile too — swipe left/right to navigate between images (use touch event handlers or a library that supports touch natively).
+
+3. Keep the existing gallery grid layout completely unchanged:
+
+The current asymmetric masonry-style layout (one large image paired with smaller images, alternating sizes) should remain exactly as is.
+Do not restructure, reorder, or change the CSS grid to a standard equal 2-column or 3-column layout.
+Only add the lightbox click behavior on top of the existing layout.

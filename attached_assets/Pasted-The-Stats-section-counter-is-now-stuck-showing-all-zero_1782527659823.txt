@@ -1,0 +1,17 @@
+The Stats section counter is now stuck showing all zeros (0+, 0, 0, 0%) instead of counting up to their actual final values (25+, 2, 2, 100%). The count-up animation is not working at all anymore. Please debug and fix this:
+1. Check the trigger logic first:
+
+If using Intersection Observer or Framer Motion's whileInView to detect when the section enters the viewport: verify the observer is actually firing. A common bug is that if the section is already partially visible on page load (before scroll), the "enter viewport" event might never fire because the element was never not visible to begin with. Add a check: if the element is already in the viewport on mount, trigger the count-up immediately instead of waiting for an intersection event that won't fire.
+Log/console.log when the observer callback fires and what isIntersecting value it receives, to confirm whether the trigger is firing at all.
+
+2. Check the count-up function logic itself:
+
+Verify the end/target values (25, 2, 2, 100) are being correctly passed into the counting function/component for each stat — confirm they aren't accidentally all defaulting to 0 or undefined.
+If using react-countup, verify the end prop is set correctly per stat and that the start prop is 0. Confirm the component isn't wrapped in a condition that prevents it from ever rendering with the correct end value.
+If implemented manually with useState + setInterval/requestAnimationFrame, verify the increment logic is actually updating state on each tick and that the loop correctly references the target end value (not a stale/zero value due to closure issues — make sure to use the correct value either via useRef or by passing it freshly into the effect's dependency array).
+
+3. Confirm the "+" and "%" suffixes still display correctly once the counts reach their final values (e.g., "25+", "100%"), and the two plain stats ("2" Years, "2" Cities) display as just the number.
+4. After fixing, verify:
+
+On page load, scroll down to the Stats section and confirm each number visibly counts up smoothly from 0 to its correct final value (25, 2, 2, 100) over ~1.5-2 seconds, with correct "+"/"%" suffixes, every time the section enters the viewport (test by refreshing and scrolling, not just on initial mount).
+Test this on both desktop and mobile to ensure consistent behavior.

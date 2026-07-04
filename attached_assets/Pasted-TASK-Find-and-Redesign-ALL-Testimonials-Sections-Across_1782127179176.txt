@@ -1,0 +1,179 @@
+TASK: Find and Redesign ALL Testimonials Sections Across the Entire Website
+
+STEP 1 — First scan the entire codebase and find every file where testimonials appear:
+Search for testimonials in all these locations:
+
+Homepage component
+Separate Testimonials page (if exists in nav)
+Any shared/reusable testimonial component
+Router/navigation files where testimonials page is linked
+
+Check these file patterns:
+src/components/Testimonials*
+src/pages/Testimonials*
+src/components/Home* (for homepage testimonials section)
+src/App.tsx or src/router (for testimonials route)
+List every file found before making any changes.
+
+STEP 2 — Brand colours to use everywhere in testimonials:
+css--dark-green: #21291a      /* Main background for testimonials section */
+--gold: #a18661            /* Stars, accents, borders, quote marks */
+--cream: #f5f2ed           /* Card backgrounds, text on dark bg */
+--mid-green: #5f745e       /* Alternate card backgrounds, hover states */
+--brown: #6d5a41           /* Subtle borders, dividers */
+--charcoal: #2c2c2c        /* Body text on light backgrounds */
+
+STEP 3 — New Testimonials Design to implement (inspired by reference images provided):
+Overall Section Layout:
+- Section background: #21291a (dark olive green) — full width
+- Small label above heading: "CLIENT STORIES" — gold colour #a18661, 
+  font-size 11px, letter-spacing 0.15em, Montserrat font
+- Main heading: "What Clients Say" — cream colour #f5f2ed, 
+  Playfair Display font, large serif
+- Subtext below heading: "Every project is a relationship. 
+  These are the words of people who trusted us with their spaces." 
+  — cream with 60% opacity, small font, centered
+Card Design (3 cards in a row on desktop, 1 on mobile):
+Each testimonial card:
+- Background: slightly lighter than section bg — rgba(255,255,255,0.05) 
+  or #2a3320
+- Border: 1px solid #a18661 (gold border — as client requested olive green 
+  border, use gold as it matches brand)
+- Border radius: 8px
+- Padding: 32px
+- No heavy shadow — subtle only
+
+Inside each card (top to bottom):
+1. Star rating — 5 gold stars ★★★★★ colour #a18661, font-size 14px
+2. Review text — cream #f5f2ed, italic, Playfair Display or Lora font, 
+   font-size 16px, line-height 1.8, with opening quote mark " in large 
+   gold colour as decorative element (top right corner of card)
+3. Divider line — thin, gold, 40px wide, margin 20px 0
+4. Client info row at bottom:
+   - Avatar circle (initials) — background #a18661, text #21291a, 
+     40px circle, initials in bold (e.g. PR, AS, MV)
+   - Client name — cream, Montserrat, font-size 14px, font-weight 500
+   - Location below name — gold #a18661, font-size 11px, 
+     letter-spacing 0.1em, uppercase
+Testimonial Data to use — replace placeholder data with this:
+Card 1:
+Stars: 5
+Review: "NIVORA completely transformed our apartment in Bandra. What struck us most was how well Shweta understood what we wanted before we could even articulate it ourselves. The final space feels like us — calm, warm, and beautifully considered."
+Name: Priya & Rohan Khanna
+Location: Bandra West, Mumbai
+Project Type: RESIDENTIAL — 3BHK APARTMENT
+Initials: PK
+
+Card 2:
+Stars: 5
+Review: "Shweta has an extraordinary ability to translate a vague feeling into a very precise space. We came to her with mood boards and half-formed ideas, and she turned them into a home that is exactly what we wanted — and more."
+Name: Ananya & Siddharth Mehta
+Location: Juhu, Mumbai
+Project Type: RESIDENTIAL — PENTHOUSE
+Initials: AM
+
+Card 3:
+Stars: 5
+Review: "Working with NIVORA on our co-working space was an excellent decision. They understood exactly what a creative workspace should feel like — productive but never sterile, professional but warm."
+Name: Nikhil Desai
+Location: Winjuvadi, Pune
+Project Type: COMMERCIAL — CO-WORKING SPACE
+Initials: ND
+
+Card 4 (for carousel/slider — additional):
+Stars: 5
+Review: "Our café has become one of the most photographed spots in Pune. Every corner was designed with intention. The team was professional, transparent, and genuinely talented. What they delivered exceeded everything we imagined."
+Name: Aditya Shinde
+Location: FC Road, Pune
+Project Type: COMMERCIAL — CAFE INTERIOR
+Initials: AS
+
+Card 5:
+Stars: 5
+Review: "Our showroom went from generic to extraordinary. The design draws people in from the street and makes them linger. We have had multiple clients mention how beautiful the space is before they even look at the products."
+Name: Kavya Nair
+Location: Andheri, Mumbai
+Project Type: COMMERCIAL — LUXURY SHOWROOM
+Initials: KN
+
+Card 6:
+Stars: 5
+Review: "The turnkey process was seamless. We handed over the keys and came back to a completed home that required no corrections, no touch-ups, and no follow-ups. That kind of reliability is rare."
+Name: Swati & Arjun Kulkarni
+Location: Thane, Mumbai
+Project Type: RESIDENTIAL — STUDIO APARTMENT
+Initials: SK
+
+STEP 4 — Navigation / Header change:
+In the navigation bar, ADD "TESTIMONIALS" as a separate nav link between "ABOUT" and "CONTACT":
+HOME | PORTFOLIO | SERVICES | ABOUT | TESTIMONIALS | CONTACT
+This link should route to /testimonials page.
+
+STEP 5 — Separate Testimonials PAGE (/testimonials):
+Create or update the full testimonials page with:
+Page structure:
+
+1. Page Hero (no image — just text on dark green background):
+   - Background: #21291a full width, padding 80px top
+   - Small label: "CLIENT STORIES" in gold
+   - Heading: "What Clients Say" in cream, large Playfair Display
+   - Subtext: "Every project is a relationship. These are the words 
+     of people who trusted us with their spaces." — cream, 60% opacity
+
+2. All 6 testimonial cards in a grid:
+   - Desktop: 3 columns x 2 rows
+   - Tablet: 2 columns
+   - Mobile: 1 column
+   - Gap between cards: 24px
+   - Section padding: 80px top and bottom
+   - Background: #21291a continuing from hero
+
+3. Stats bar below cards:
+   Background: #5f745e (mid green)
+   Three stats centered in a row:
+   - 50+ Projects Completed
+   - 5+ Years of Design Excellence  
+   - 100% On-Time Handover
+   Text colour: #f5f2ed (cream)
+   Numbers in large Playfair Display, labels in small Montserrat
+
+4. Final CTA section below stats:
+   Background: #21291a
+   Heading: "Ready to transform your space?" — cream
+   Subtext: "Claim your Free Layout Consultation today and let us 
+   start building your dream."
+   Button: "CLAIM MY FREE OFFER NOW" — background #a18661, 
+   text #f5f2ed, padding 16px 40px, no border radius or small 4px only
+
+STEP 6 — Homepage Testimonials Section update:
+On homepage, show only first 3 cards (Priya, Ananya, Nikhil) as a preview with:
+- Same dark green background #21291a
+- Same card design as above
+- Below the 3 cards: link "Read All Client Stories →" 
+  in gold colour, links to /testimonials page
+- Auto-scrolling carousel on mobile (3 cards swipeable)
+
+STEP 7 — Hover effects on cards:
+.testimonial-card:hover {
+  border-color: #a18661;
+  border-width: 1.5px;
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+  background: rgba(161, 134, 97, 0.08);
+}
+
+STEP 8 — Fonts to use in testimonials (already in project, just apply correctly):
+Section label "CLIENT STORIES": Montserrat, 11px, letter-spacing 0.15em
+Main heading "What Clients Say": Playfair Display, weight 400
+Subtext: Lora or Open Sans, 15px, weight 300
+Review text inside card: Lora or Playfair Display, italic, 16px
+Client name: Montserrat, 14px, weight 500
+Location/project type: Montserrat, 11px, letter-spacing 0.1em, uppercase
+Star rating: use actual ★ character, colour #a18661
+
+After making all changes, confirm:
+
+How many files were updated
+Show me the testimonials section on homepage in preview
+Show me the /testimonials page in preview
+Confirm the nav link is working and routes correctly

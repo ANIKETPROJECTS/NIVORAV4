@@ -1,0 +1,47 @@
+Redesign the Portfolio / Our Masterpieces section into a premium luxury showcase with a light elegant background (ivory, warm white, or soft beige). Create a clean, spacious, editorial-style layout that reflects a high-end interior design brand.
+
+Portfolio Cards:
+- Display projects in a responsive 2x2 or 3-column grid.
+- Show only the project image and project name by default.
+- Keep project names centered and clearly visible on the image.
+- Apply a subtle gradient overlay for readability.
+
+Hover Interaction:
+- On hover, reveal the project description through a smooth overlay animation.
+- Keep the project title visible while the description fades/slides in below it.
+- Use a dark semi-transparent overlay (40–60% opacity).
+- Add a premium “View Project →” CTA button.
+- Use smooth opacity, scale, and translateY animations (300–500ms).
+- No duplicate content, overlapping text, clipping, or layout shifts.
+- Keep all content perfectly aligned within the card boundaries.
+
+Visual Style:
+- Luxury, minimal, sophisticated, and modern.
+- High-quality interior photography.
+- Soft shadows and refined spacing.
+- Elegant typography matching the brand identity.
+- Consistent card dimensions and image ratios.
+
+Mobile Experience:
+- Replace hover with tap interaction.
+- Ensure overlay content remains readable and properly positioned.
+- Maintain smooth transitions and responsive behavior across all devices.
+
+Section Content:
+Badge: OUR MASTERPIECES
+
+Heading: Spaces That Tell Your Story
+
+Subheading:
+Every project reflects a unique vision, thoughtfully transformed into spaces that inspire, function beautifully, and stand the test of time.
+
+Projects:
+• Calista Residence
+• Neelaya Villa
+• Sparsh Living
+• Modern Industrial Office
+• Aurelia Penthouse
+• Urban Serenity
+
+Expected Result:
+A premium portfolio gallery where project names remain visible by default and detailed descriptions elegantly appear through a smooth overlay animation on hover, creating a luxury architecture and interior design showcase experience.

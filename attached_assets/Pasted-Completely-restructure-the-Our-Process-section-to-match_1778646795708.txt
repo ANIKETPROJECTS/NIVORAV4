@@ -1,0 +1,188 @@
+Completely restructure the "Our Process" section to match 
+the exact layout proportions of the Services section 
+(Image 3 reference — "Designing with You, for You").
+
+─────────────────────────────────────────
+CORE LAYOUT CHANGE
+─────────────────────────────────────────
+The section must be a single viewport-height block.
+No scrolling within the section.
+Both columns must be exactly equal: 50% / 50%.
+The section height is fixed to fit everything in one view.
+
+Layout:
+  display: flex
+  flex-direction: row
+  min-height: 600px
+  align-items: stretch (both columns same height)
+  max-width: 1200px
+  margin: 0 auto
+  padding: 80px 40px
+  gap: 80px
+
+─────────────────────────────────────────
+LEFT COLUMN — 50% width
+─────────────────────────────────────────
+Exact copy of how Image 3's left side works:
+
+Two photos stacked in an overlapping collage.
+Position: relative on the column div.
+Column height: 100% of section height.
+
+Photo 1 (larger, sits behind):
+  position: absolute
+  top: 0
+  left: 0
+  width: 62%
+  height: 75%
+  object-fit: cover
+  border: 1.5px solid #a18661
+  border-radius: 0
+
+Photo 2 (smaller, overlaps bottom-right of Photo 1):
+  position: absolute
+  bottom: 0
+  right: 0
+  width: 58%
+  height: 65%
+  object-fit: cover
+  border: 1.5px solid #a18661
+  border-radius: 0
+  box-shadow: -6px 6px 24px rgba(33,41,26,0.12)
+
+Use the same real project photos already used 
+in the Services section (Image 3 style).
+If no photos available use:
+  Photo 1: linear-gradient(145deg, #c8b99a, #a18661)
+  Photo 2: linear-gradient(145deg, #3d4f2e, #21291a)
+
+─────────────────────────────────────────
+RIGHT COLUMN — 50% width
+─────────────────────────────────────────
+Vertically centered content. No scrolling.
+
+Eyebrow:
+  "HOW WE WORK"
+  Cinzel, 9px, letter-spacing 0.35em
+  Color: #a18661
+  Margin-bottom: 10px
+
+Heading:
+  "Our Process"
+  Cormorant Garamond, 600, 52px
+  Color: #21291a
+  Margin-bottom: 8px
+
+Short subtext (NEW — add this line):
+  "From first conversation to final reveal — 
+  a seamless, end-to-end journey."
+  DM Sans, 300, 14px, color: #6D5A41
+  Margin-bottom: 32px
+
+─────────────────────────────────────────
+STEPS — CONDENSED TO 4 ROWS, 2 COLUMNS
+─────────────────────────────────────────
+IMPORTANT: Do NOT list steps vertically one by one.
+Instead arrange them in a 2x2 grid 
+(exactly like Image 3's service icons grid).
+Plus one final step spanning full width below.
+
+Grid:
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 20px 32px
+  margin-bottom: 20px
+
+Each step cell:
+  display: flex
+  flex-direction: column
+  gap: 6px
+
+Step icon:
+  Lucide React icon, 18px, color #a18661
+  Same icons as before
+
+Step title:
+  Cormorant Garamond, italic, 22px
+  Color: #21291a
+  Margin: 0
+
+Step description — SHORTEN TO ONE LINE EACH:
+  DM Sans, 300, 13px
+  Color: #6D5A41
+  Line-height: 1.6
+  Max 1 short sentence only
+
+CONDENSED STEP CONTENT:
+
+  Cell 1 — Discover (Compass icon):
+    "A free consultation to understand your 
+    lifestyle and budget."
+
+  Cell 2 — Visualise (Eye icon):
+    "3D renders and mood boards before 
+    a single thing is moved."
+
+  Cell 3 — Execute (Wrench icon):
+    "Master craftsmen, clear timelines, 
+    on-site precision."
+
+  Cell 4 — Reveal (Sparkles icon):
+    "A styled, ready-to-move-in space 
+    that exceeds expectations."
+
+Full-width row below grid — Step 5:
+  display: flex
+  align-items: flex-start
+  gap: 10px
+  padding-top: 16px
+  border-top: 1px solid rgba(161,134,97,0.25)
+
+  KeyRound icon, 18px, #a18661
+  Title: "Handover" — Cormorant Garamond italic 22px
+  Text: "Your space, fully ready. 
+  A relationship that continues beyond delivery."
+  DM Sans 300 13px #6D5A41
+
+─────────────────────────────────────────
+BELOW THE GRID
+─────────────────────────────────────────
+Tagline:
+  "END-TO-END  ·  TRANSPARENT  ·  HASSLE-FREE"
+  Cinzel, 8px, letter-spacing 0.3em
+  Color: #6D5A41
+  Margin-top: 20px
+
+Button (exact style of Image 3's "EXPLORE OUR SERVICES"):
+  Text: "BOOK FREE CONSULTATION"
+  Background: #21291a
+  Color: #F5F2ED
+  Cinzel, 9px, letter-spacing 0.2em
+  Padding: 15px 32px
+  Border-radius: 1px
+  Border: none
+  Margin-top: 14px
+  On hover: background #a18661, color #21291a
+  Transition: 0.3s ease
+
+─────────────────────────────────────────
+REMOVE THESE — THEY CAUSED THE IMBALANCE
+─────────────────────────────────────────
+- Remove the "NIVORA INTERIORS · MUMBAI & PUNE" 
+  label below the photo collage
+- Remove the left border (border-left) on each step
+- Remove all divider lines between steps
+- Remove ghost numbers entirely
+- Remove excessive padding between steps
+- Do not let the right column scroll independently
+
+─────────────────────────────────────────
+MOBILE (below 768px)
+─────────────────────────────────────────
+Stack vertically.
+Left column photo collage: height 280px, width 100%
+  Photo 1: width 58%, height 100%
+  Photo 2: width 48%, height 85%, bottom 0, right 0
+Right column: full width, padding-top 32px
+Grid stays 2 columns on mobile (compact enough)
+Button: full width

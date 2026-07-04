@@ -1,0 +1,28 @@
+I want to improve the aesthetics, typography, and visual hierarchy of two sections on the About page: "Mission & Vision" and "What We Design & Our Values". The content/copy stays exactly the same — only visual treatment changes.
+1. Mission & Vision boxes — redesign:
+
+Reduce the box height so it fits the content more snugly (remove excess empty space at the bottom) — use padding adjustments rather than a fixed large height.
+Add a small icon above each label: a target/bullseye icon (🎯-style, use an actual icon component) above "MISSION", and a compass or eye icon above "VISION" — sized small (~24-28px), in the gold/tan accent color (#a18661), positioned above the label text.
+Make the "MISSION"/"VISION" labels slightly larger and bolder with increased letter-spacing for more presence.
+Add a top border accent: a 3-4px gold (#a18661) border specifically on the top edge of each box (in addition to or replacing the current thin uniform border), to give each box a clearer visual "header" feel.
+Give each box a very subtle distinct background tint — e.g., Mission box with a barely-visible warm tint, Vision box with a barely-visible cooler tint — just enough to subtly differentiate them without looking inconsistent.
+Add a hover effect: on hover, the box lifts slightly (translateY(-4px)) with an increased shadow and the top border brightens.
+Add a scroll-triggered entrance animation: both boxes fade in + slide up with a slight stagger (~150ms apart) as the section enters the viewport.
+
+2. "What We Design" & "Our Values" section — redesign:
+
+Add a small uppercase gold label above each column's heading if not already present ("WHAT WE DESIGN" above "Spaces That Work for Real Life", "OUR VALUES" above the values list) — check if these exist above the current viewport and ensure consistent styling with other section labels site-wide.
+For "What We Design" bullets: replace the current plain bullet dots with a small refined gold diamond/dash icon, and animate each bullet to fade in + slide in from the left with a stagger (~100ms apart) on scroll into view.
+For "Our Values" list: add large, light-weight serif numbering (01, 02, 03, 04, 05) in a faded gold tone, positioned to the left of each value title, plus a small relevant icon next to each title (lightbulb for Thoughtful Design, clock for Timeless Elegance, heart for Personal Connection, gem/tool for Quality & Craftsmanship, shield for Trust & Transparency). On hover, animate the divider line below each value to draw left-to-right, and shift the title to a richer gold tone. Stagger the entrance animation for each value item (~120-150ms apart) as the section scrolls into view, with the number fading in + scaling up slightly just before its title.
+
+3. Refine the color palette for both sections (and apply consistently if these colors aren't already standardized site-wide):
+
+Main headings: use a richer dark green (#21291a) instead of any generic dark gray, for stronger brand consistency.
+Body/description text: use a warm soft gray (#5c5c5c) rather than pure gray or pure black, for better harmony with the cream (#f5f2ed) background.
+Keep all uppercase labels and accents in the established gold/tan (#a18661).
+
+4. Implementation notes:
+
+Use Framer Motion if already installed for entrance/hover animations; otherwise CSS transitions/keyframes.
+Use an icon library already used elsewhere in the project (e.g., lucide-react) for the new icons, for visual consistency.
+Test on both desktop and mobile to ensure spacing, icons, and animations look clean and proportional across screen sizes.

@@ -1,0 +1,83 @@
+The Residential Interiors page is already responsive, but the mobile experience needs refinement.
+
+IMPORTANT:
+Do NOT redesign the desktop layout.
+Only improve the mobile responsiveness while preserving the desktop design exactly as it is.
+
+========================================
+1. HOW WE DO IT TIMELINE (MOBILE FIX)
+========================================
+
+Current issue:
+- Timeline breaks line by line.
+- Cards are misaligned.
+- Vertical line and diamond icons don't align properly.
+- Cards feel cramped and difficult to read.
+
+Fix:
+
+Desktop:
+- Keep the existing alternating left/right timeline exactly as it is.
+
+Mobile (max-width: 768px):
+- Convert to a clean single-column timeline.
+- Keep ONE vertical timeline line on the left side.
+- All cards should appear on the right side of the line.
+- Every diamond icon should align perfectly with its corresponding card.
+- Remove any unnecessary alternating layout.
+- Cards should have equal spacing (24–32px).
+- Card width: nearly full width with proper side padding.
+- Increase readability with better padding and typography.
+- Maintain smooth fade-up animations.
+- Timeline should look elegant and premium, not compressed.
+
+========================================
+2. OUR EXPERTISE (MOBILE FIX)
+========================================
+
+Current issue:
+- Cards are too close together.
+- Spacing is inconsistent.
+- Layout looks cramped on smaller screens.
+
+Fix:
+
+Desktop:
+- Keep existing 3-column layout.
+
+Tablet:
+- 2-column grid.
+
+Mobile:
+- 1 card per row.
+- Full width.
+- Equal card heights.
+- 20–24px spacing between cards.
+- Increase internal padding.
+- Center icon and text.
+- Improve typography scaling.
+- Add smooth hover/tap feedback.
+- Prevent text overflow.
+
+========================================
+3. GLOBAL MOBILE IMPROVEMENTS
+========================================
+
+- Prevent horizontal scrolling.
+- Add consistent left/right padding (20px).
+- Reduce oversized headings proportionally.
+- Increase line-height for better readability.
+- Ensure buttons are touch-friendly (minimum 48px height).
+- Images should scale responsively without cropping important content.
+- Maintain generous whitespace without creating excessive empty areas.
+- Keep all existing animations lightweight and smooth.
+
+========================================
+IMPORTANT
+========================================
+
+- Preserve the current desktop design exactly.
+- Only improve the mobile experience.
+- Do not change colors, branding, typography, navigation, or existing animations.
+- Ensure the page looks polished and premium on devices from 320px to 768px.
+- Test responsiveness at 320px, 375px, 390px, 414px, 430px, and 768px to ensure a consistent experience.

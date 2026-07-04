@@ -1,0 +1,53 @@
+I want to redesign the loading/splash screen (the one showing the "nivora" 
+logo before the main site loads) and the transition into the homepage.
+
+1. REPLACE THE STATIC RINGS WITH A BREATHING GOLDEN GLOW
+Currently there are static concentric circular rings behind the "nivora" 
+logo on the loading screen. Remove them. Replace with a soft, pulsing 
+radial glow effect directly behind/around the logo text that mimics a 
+gentle "breathing" light:
+- Use a radial-gradient glow in a warm muted gold tone (something like 
+  rgba(201, 166, 107, ...) — adjust to match the existing logo gold color 
+  in the codebase) with a soft blur.
+- Animate it with a smooth, slow pulse: scale roughly between 0.85x and 
+  1.15x, opacity between ~0.6 and 1, on a loop of about 2-2.5 seconds, 
+  ease-in-out timing. It should feel like a slow heartbeat/breathing light, 
+  not a flashing or harsh effect.
+- Keep it centered behind the "nivora" wordmark and "INTERIORS" subtext, 
+  so it visually highlights/frames the logo.
+- Optional: add a very subtle shimmer/sparkle accent if it doesn't 
+  complicate things, but the main effect should be the pulsing glow.
+- This should only be a CSS/animation change to the loader component — 
+  don't change layout, fonts, or logo positioning.
+
+2. TRANSITION INTO HOMEPAGE: SLIDE FROM RIGHT TO LEFT
+Currently the loader probably fades out into the homepage. Change this so 
+that once the loading animation finishes (after roughly 1.8-2.5 seconds, 
+or once site assets are ready — whichever the current logic uses to decide 
+when to remove the loader):
+- The main website content should slide in from the right and settle into 
+  place (translateX from 100% to 0%), like a horizontal wipe/slide-in, NOT 
+  a fade or zoom.
+- Duration: around 0.6-0.8 seconds, with a smooth easing curve (e.g. 
+  cubic-bezier(0.65,0,0.35,1) or ease-in-out).
+- The loader can sit behind/underneath and simply get covered by the 
+  incoming site, or fade out very quickly (under 0.2s) right as the slide 
+  starts — whichever is cleaner to implement with the current structure.
+
+3. IMPORTANT — DON'T REGRESS EARLIER FIX
+This full loading screen + slide-in sequence should only run on the 
+genuine first/fresh load of the site (i.e., whatever logic currently 
+decides when to show this splash screen at all). It should NOT replay 
+this loader or slide-in transition when the user is just navigating 
+between internal pages (Home, Services, About, etc.) using the nav bar. 
+If there's already a flag/condition controlling when the splash screen 
+shows, keep using that same condition — I just want the splash screen's 
+internal animation (glow instead of rings) and its exit transition (slide 
+instead of fade) changed.
+
+After implementing, please test:
+(a) A hard refresh / fresh load of the site to confirm the golden glow 
+    pulses smoothly around the logo, and the site then slides in from the 
+    right.
+(b) Navigating between internal pages afterward to confirm the splash 
+    screen does NOT replay.

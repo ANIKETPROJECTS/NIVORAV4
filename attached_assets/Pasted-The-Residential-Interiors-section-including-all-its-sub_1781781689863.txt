@@ -1,0 +1,79 @@
+The Residential Interiors section (including all its sub-pages and sections) must be redesigned with a mobile-first responsive approach.
+
+IMPORTANT:
+- Do NOT create separate Desktop and Mobile pages.
+- Do NOT duplicate components.
+- Use a single responsive codebase with CSS media queries (or Tailwind responsive utilities if already used in the project).
+- Ensure the design is pixel-perfect on both desktop and mobile.
+
+Responsive Breakpoints:
+- Mobile: 320px–767px
+- Tablet: 768px–1023px
+- Desktop: 1024px+
+
+Apply responsive improvements to ALL Residential Interiors sections:
+
+1. Hero Section
+- Desktop: Full-width banner with text aligned elegantly.
+- Mobile: Reduce hero height, scale typography proportionally, keep CTA fully visible without cropping.
+- Ensure images maintain aspect ratio.
+
+2. Introduction Section
+- Desktop: Two-column layout (text + image).
+- Mobile: Stack vertically (text first, image second).
+- Proper padding (20–24px) on mobile.
+
+3. Our Expertise
+- Desktop: 3 cards per row.
+- Tablet: 2 cards per row.
+- Mobile: 1 card per row with full width.
+- Equal card heights and spacing.
+
+4. How We Do It Timeline
+- Desktop: Alternating left/right timeline.
+- Mobile: Single-column timeline with the vertical line aligned to the left.
+- Cards should remain readable with proper spacing.
+
+5. Featured Projects
+- Desktop: Large premium cards in a grid.
+- Tablet: 2-column grid.
+- Mobile: Single-column cards with consistent spacing.
+
+6. Portfolio Gallery
+- Desktop: Masonry/grid layout.
+- Tablet: 2-column responsive grid.
+- Mobile: Single-column gallery with full-width images.
+- Images should never stretch or crop important content.
+
+7. Why Choose Nivora
+- Desktop: Multi-column icon cards.
+- Mobile: Single-column stacked cards.
+
+8. Call-to-Action Section
+- Center aligned on all devices.
+- Buttons should span an appropriate width on mobile.
+
+9. Enquiry Page
+- Desktop: Two-column form.
+- Tablet: Two-column where space allows.
+- Mobile: Single-column form with large touch-friendly inputs and buttons.
+
+General Responsive Rules:
+- No horizontal scrolling.
+- Images should use responsive sizing.
+- Typography should scale smoothly using responsive units.
+- Buttons should have a minimum height of 48px for touch accessibility.
+- Maintain generous whitespace without excessive empty areas.
+- Preserve all existing animations while ensuring they perform well on mobile.
+- Lazy-load images and prevent layout shifts.
+- Test for responsiveness at common widths (375px, 768px, 1024px, 1440px).
+
+Performance:
+- Keep animations lightweight.
+- Optimize images.
+- Ensure fast loading and smooth scrolling.
+
+Deliverables:
+- Refactor the existing Residential Interiors pages and components into a fully responsive implementation.
+- Do NOT create separate mobile.html and desktop.html files.
+- Use one clean, maintainable responsive codebase that provides an excellent experience across desktop, tablet, and mobile.

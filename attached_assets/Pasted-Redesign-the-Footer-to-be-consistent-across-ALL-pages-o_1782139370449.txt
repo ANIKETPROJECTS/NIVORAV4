@@ -1,0 +1,64 @@
+Redesign the Footer to be consistent across ALL pages of the Nivora Interiors website.
+
+BRAND COLORS (use exactly these):
+- Background: #21291a (deep forest green)
+- Gold accent: #a18661
+- Light sage: #5f745e
+- Cream text: #f5f2ed
+- Muted brown: #6d5a41
+- Dark: #2c2c2c
+
+FOOTER LAYOUT (4 columns):
+
+Column 1 — Brand:
+- Nivora logo (same as navbar, white/cream version)
+- Tagline: "Thoughtful spaces designed for refined living."
+- WhatsApp "Chat with us" button (green, keep existing style)
+
+Column 2 — NAVIGATE:
+- Font: same spaced uppercase tracking as current nav (letter-spacing: 0.15em)
+- Links: Home, Portfolio, Services, About, Testimonials, Contact
+- Color: #f5f2ed, hover color: #a18661 with underline transition
+
+Column 3 — WHAT WE DO:
+- Residential Interiors
+- Commercial Interiors  
+- Hospitality Interiors
+- Architecture & Space Planning
+- 2D & 3D Visualization
+- Renovation & Makeovers
+- Same font and hover style as Navigate column
+
+Column 4 — FIND US:
+- Bandra West, Mumbai 400050
+- Koregaon Park, Pune 411001
+- Ambernath, Maharashtra 421505  ← ADD THIS
+- hello@nivorainteriors.com (clickable mailto)
+- +91 72766 87805 (clickable tel)
+- Instagram icon (keep existing)
+
+DIVIDER LINE:
+- Thin horizontal rule above bottom bar, color: #a18661 at 30% opacity
+
+BOTTOM BAR:
+- Left: © 2025 Nivora Interiors. All rights reserved.
+- Right: "Designed with intention."
+- Both in #6d5a41, font-size: 12px
+
+ANIMATIONS (scroll-triggered via IntersectionObserver, run once):
+- Column 1 (logo + tagline): fade in from left, translateX(-20px) → 0, duration 700ms
+- Column 2 (Navigate): fade in + slide up, translateY(20px) → 0, duration 600ms, delay 100ms
+- Column 3 (What We Do): same as column 2, delay 200ms
+- Column 4 (Find Us): fade in from right, translateX(20px) → 0, duration 700ms, delay 300ms
+- Bottom bar: fade in, opacity 0 → 1, duration 500ms, delay 500ms
+- Easing: ease-out on all, no bounce
+
+HOVER EFFECTS:
+- Nav links: color transitions to #a18661, underline slides in from left (width 0 → 100%), transition 300ms
+- Email and phone: color #a18661 on hover
+- Instagram icon: opacity 0.7 → 1 + subtle scale 1 → 1.05 on hover
+
+IMPORTANT:
+- This footer must be the SAME component used across ALL pages (Home, Portfolio, Services, About, Testimonials, Contact)
+- Do not create separate footers per page — use one shared Footer component
+- Make sure footer always sticks to the bottom and there's no gap between page content and footer

@@ -1,0 +1,260 @@
+When a user clicks on the "Commercial Interiors" card from the existing "Our Services" section, navigate to a dedicated Commercial Interiors portfolio page.
+
+IMPORTANT:
+- Do NOT modify the existing Services section.
+- Create a new dedicated page for Commercial Interiors.
+- Follow the same layout, design system, spacing, animations, typography, and responsiveness used for the Residential Interiors page to maintain consistency across all service pages.
+- Use the existing Nivora Interiors color palette (Warm Ivory, Beige, Gold, Deep Charcoal).
+- This page should feel like a premium commercial interior design portfolio.
+
+--------------------------------------------------------
+SECTION 1 : HERO
+--------------------------------------------------------
+
+Create a full-width premium hero banner.
+
+Content:
+
+Commercial Interiors
+
+Spaces Designed for Productivity & Impact
+
+Add an elegant serif heading with a luxury fade-in animation.
+
+Below the heading, place a thin gold divider.
+
+Use a premium commercial interior placeholder image for now.
+I will provide the final hero image later.
+
+Include the existing premium CTA button:
+
+START YOUR PROJECT →
+
+The button should navigate to the dedicated Commercial Interiors Enquiry page already created.
+
+--------------------------------------------------------
+SECTION 2 : INTRODUCTION
+--------------------------------------------------------
+
+Heading:
+
+Spaces Designed for Productivity & Impact
+
+Paragraph:
+
+A well-designed workspace inspires creativity, improves efficiency, and leaves a lasting impression on clients and visitors. From corporate offices and co-working spaces to retail stores, clinics, and fitness studios, we create environments that balance functionality, comfort, and brand identity.
+
+Layout:
+
+Desktop:
+Two-column layout
+
+Left:
+Heading
+Description
+
+Right:
+Large commercial interior image placeholder
+
+I will replace this image later.
+
+Animate both columns with smooth fade-up animation.
+
+--------------------------------------------------------
+SECTION 3 : OUR EXPERTISE
+--------------------------------------------------------
+
+Heading:
+
+Our Expertise
+
+Display as premium expertise cards.
+
+Cards:
+
+• Corporate Offices
+
+• Co-working Spaces
+
+• Retail Stores
+
+• Clinics & Healthcare Facilities
+
+• Fitness Studios & Gyms
+
+• Reception & Waiting Areas
+
+Each card should include:
+
+- Minimal premium icon
+- Gold accent
+- Soft shadow
+- Thin border
+- Rounded corners
+- Lift animation on hover
+
+Desktop:
+3 cards per row
+
+Tablet:
+2 cards per row
+
+Mobile:
+1 card per row
+
+--------------------------------------------------------
+SECTION 4 : HOW WE DO IT
+--------------------------------------------------------
+
+Reuse the exact same premium timeline design used in Residential Interiors.
+
+Keep:
+
+- Same animations
+- Same responsiveness
+- Same layout
+- Same styling
+
+Only update the introductory text if necessary to suit Commercial Interior projects.
+
+--------------------------------------------------------
+SECTION 5 : FEATURED COMMERCIAL PROJECTS
+--------------------------------------------------------
+
+Create a premium Featured Projects section.
+
+Display three large featured project cards.
+
+Each card should contain:
+
+- Large project image
+- Project title
+- Project category
+- Short project description
+
+IMPORTANT:
+
+Use elegant placeholders for now.
+
+I will provide all Featured Project images later.
+
+Do NOT hardcode permanent images.
+
+--------------------------------------------------------
+SECTION 6 : COMMERCIAL PORTFOLIO GALLERY
+--------------------------------------------------------
+
+This should be the main highlight of the page.
+
+Create a premium responsive portfolio gallery.
+
+IMPORTANT:
+
+Design this gallery as a reusable portfolio component.
+
+For now:
+
+Use placeholder images only.
+
+I WILL PROVIDE ALL COMMERCIAL INTERIOR PROJECT IMAGES LATER.
+
+The gallery should allow me to easily replace placeholder images without changing the layout.
+
+Each gallery item should support:
+
+- Large image
+- Project title
+- Project category
+- Hover overlay
+- Gold accent animation
+- Image zoom effect
+- View Project button
+
+Clicking a project should open a premium lightbox/gallery viewer.
+
+The gallery should support adding unlimited commercial projects in the future.
+
+--------------------------------------------------------
+SECTION 7 : WHY CHOOSE NIVORA
+--------------------------------------------------------
+
+Use the newly redesigned editorial layout.
+
+Heading:
+
+Spaces Designed To Perform
+
+Keep the premium architectural layout instead of feature cards.
+
+Use:
+
+01 Brand-Led Design
+
+02 Functional Space Planning
+
+03 Timely Project Delivery
+
+04 Premium Material Selection
+
+05 Workplace Experience
+
+06 End-to-End Execution
+
+Maintain:
+
+- Editorial layout
+- Thin gold dividers
+- Luxury typography
+- Fade-up animations
+- Hover interactions
+
+--------------------------------------------------------
+SECTION 8 : CALL TO ACTION
+--------------------------------------------------------
+
+Heading:
+
+Let's Design Your Commercial Space
+
+Text:
+
+Create inspiring commercial environments that strengthen your brand, improve productivity, and leave lasting impressions.
+
+Button:
+
+START YOUR PROJECT →
+
+Maintain the same premium CTA styling used throughout the website.
+
+--------------------------------------------------------
+RESPONSIVENESS
+--------------------------------------------------------
+
+Desktop:
+Maintain elegant editorial layouts.
+
+Tablet:
+Balanced responsive layouts.
+
+Mobile:
+Stack sections vertically with proper spacing.
+
+Ensure:
+
+- No horizontal scrolling.
+- Responsive typography.
+- Responsive images.
+- Proper touch targets.
+- Smooth animations.
+- Optimized loading.
+
+--------------------------------------------------------
+IMPORTANT
+--------------------------------------------------------
+
+- Do NOT change the Home page.
+- Do NOT modify the existing Services section.
+- Do NOT change the Residential Interiors page.
+- Create the Commercial Interiors page using the same design system for consistency.
+- Use placeholder images throughout because I will provide all Commercial Interior images later.
+- The final page should look like a premium commercial interior design portfolio, not a generic service page.

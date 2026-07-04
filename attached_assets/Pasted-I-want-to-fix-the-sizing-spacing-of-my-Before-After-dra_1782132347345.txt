@@ -1,0 +1,23 @@
+I want to fix the sizing/spacing of my Before & After drag-slider component and add some animations:
+1. Fix container width and spacing:
+
+Currently the before/after slider image stretches edge-to-edge across the full browser width with no side margins, making it look oversized and heavy.
+Wrap the slider in a container with max-width: 1100px (or match whatever max-width is used by other major sections on the site, like the Hero or Testimonials section, for consistency) and center it with margin: 0 auto.
+Add horizontal padding to this container (e.g., padding: 0 20px on mobile, scaling up appropriately on larger screens) so there's visible white/light space on the left and right sides of the slider image, matching how the rest of the site sections are spaced.
+
+2. Reduce image height/aspect ratio:
+
+The current slider image appears too tall. Adjust its aspect ratio to be wider and shorter (e.g., aspect-ratio: 16/9 or 16/10 instead of the current near-square/tall ratio) so it feels more proportionate within the smaller container.
+
+3. Add these animations:
+
+Drag-hint wiggle: About 1-1.5 seconds after the slider loads/becomes visible, animate the drag handle to gently wiggle left-right once (e.g., move ±15px with ease-in-out, 2-3 oscillations over ~1.5s) to hint to first-time visitors that it's draggable. This should only play once per project view (not repeat continuously).
+Drag handle active scale: When the user starts dragging the handle (onMouseDown/onTouchStart), scale the handle up slightly (e.g., scale(1.15)) and scale it back to normal on release (onMouseUp/onTouchEnd), giving tactile feedback during interaction.
+Project switch fade transition: When navigating between different before/after projects (via arrows or dots), cross-fade the slider image smoothly (fade-out current, fade-in next) instead of an abrupt jump cut. Duration around 300-400ms.
+BEFORE/AFTER label hover: On hover over the image, slightly increase the opacity/brightness of the "BEFORE" and "AFTER" pill labels to draw attention to them (subtle, ~0.2s transition).
+
+4. Implementation notes:
+
+Use Framer Motion if already installed for cleaner animation handling, otherwise CSS transitions/keyframes are fine.
+Make sure the wiggle hint animation doesn't interfere with actual user dragging — if the user starts dragging before the hint animation would play, skip or cancel the hint.
+Test that all spacing and animations work well on both desktop and mobile (touch drag included).

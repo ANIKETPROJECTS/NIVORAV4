@@ -1,0 +1,150 @@
+# Replit Prompt — Stats Section: Update Numbers + Count-Up Animation
+
+## SECTION LOCATION
+The dark green rounded stats bar on the Home page (below "Our Philosophy" section) with 4 stats in a row.
+
+---
+
+## CHANGE 1 — UPDATE THE STAT NUMBERS AND LABELS
+
+Change the existing stats to these new values:
+
+| Old | New |
+|---|---|
+| 8+ Years Experience | **2+ Years Experience** |
+| 180+ Projects Completed | **25+ Projects Completed** |
+| 150+ Clients Served | **50+ Clients Served** |
+| 90% Client Satisfaction | **90% Client Satisfaction** *(keep same)* |
+
+Only change the numbers and "+" symbols. Do NOT change:
+- Label text style (YEARS EXPERIENCE, PROJECTS COMPLETED, etc.)
+- Font, color, layout, background, border-radius
+- Anything else in this section
+
+---
+
+## CHANGE 2 — COUNT-UP ANIMATION ON SCROLL
+
+When this stats section scrolls into the viewport, each number counts up from 0 (or 1) to its final value.
+
+**Trigger:** IntersectionObserver with `threshold: 0.3` — fires once when 30% of the section is visible. Animation plays only ONCE per page visit (do not replay on scroll back up).
+
+**Count-up config per stat:**
+
+| Stat | Count from | Count to | Suffix | Duration |
+|---|---|---|---|---|
+| Years Experience | 0 | 2 | + | 1200ms |
+| Projects Completed | 0 | 25 | + | 1800ms |
+| Clients Served | 0 | 50 | + | 1600ms |
+| Client Satisfaction | 0 | 90 | % | 1400ms |
+
+**Easing:** Use `easeOutQuart` — starts fast, slows down near the end (feels satisfying):
+
+```js
+function easeOutQuart(t) {
+  return 1 - Math.pow(1 - t, 4);
+}
+```
+
+**Full implementation:**
+
+```js
+function animateCountUp(element, from, to, duration, suffix) {
+  const start = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutQuart(progress);
+    const current = Math.floor(from + (to - from) * eased);
+    element.textContent = current + suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      element.textContent = to + suffix; // ensure exact final value
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+function easeOutQuart(t) {
+  return 1 - Math.pow(1 - t, 4);
+}
+
+// IntersectionObserver setup
+const statsSection = document.querySelector('.stats-section'); // use your actual selector
+let hasAnimated = false;
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !hasAnimated) {
+      hasAnimated = true;
+
+      // Trigger each stat
+      animateCountUp(document.querySelector('.stat-years .stat-number'), 0, 2, 1200, '+');
+      animateCountUp(document.querySelector('.stat-projects .stat-number'), 0, 25, 1800, '+');
+      animateCountUp(document.querySelector('.stat-clients .stat-number'), 0, 50, 1600, '+');
+      animateCountUp(document.querySelector('.stat-satisfaction .stat-number'), 0, 90, 1400, '%');
+
+      observer.disconnect(); // fire only once
+    }
+  });
+}, { threshold: 0.3 });
+
+observer.observe(statsSection);
+```
+
+**If using React:**
+
+```jsx
+import { useEffect, useRef, useState } from 'react';
+
+function CountUp({ from = 0, to, duration, suffix }) {
+  const [current, setCurrent] = useState(from);
+  const hasRun = useRef(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !hasRun.current) {
+        hasRun.current = true;
+        const start = performance.now();
+
+        const tick = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 4);
+          setCurrent(Math.floor(from + (to - from) * eased));
+          if (progress < 1) requestAnimationFrame(tick);
+          else setCurrent(to);
+        };
+
+        requestAnimationFrame(tick);
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return <span ref={ref}>{current}{suffix}</span>;
+}
+
+// Usage in stats section:
+<CountUp to={2} duration={1200} suffix="+" />   {/* Years */}
+<CountUp to={25} duration={1800} suffix="+" />  {/* Projects */}
+<CountUp to={50} duration={1600} suffix="+" />  {/* Clients */}
+<CountUp to={90} duration={1400} suffix="%" />  {/* Satisfaction */}
+```
+
+---
+
+## DO NOT CHANGE
+- Section background color (dark green)
+- Border radius of the stats card
+- Font style of numbers or labels
+- Divider lines between stats
+- Label text (YEARS EXPERIENCE, PROJECTS COMPLETED, CLIENTS SERVED, CLIENT SATISFACTION)
+- Any other section on the page

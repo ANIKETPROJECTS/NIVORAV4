@@ -1,0 +1,42 @@
+I need you to fix two issues in the Home page hero section of this website:
+
+1. SLOW DOWN HERO ENTRANCE ANIMATION
+The animation that plays when the home page hero (background image + heading 
++ subheading + CTA buttons) appears is currently too fast. Find wherever this 
+animation is defined (CSS @keyframes/transition, Framer Motion variants, GSAP 
+timeline, AOS, or a JS-based fade-in) and increase the duration (roughly 
+1.5x–2x longer than current) and/or use a smoother easing (e.g. ease-in-out) 
+so it feels slower and more cinematic. Keep the image, heading, subheading, 
+and buttons animating in the same relative sequence/order as now — just 
+slower overall, don't break the existing entrance flow.
+
+2. FIX DELAYED TEXT ON INTERNAL NAVIGATION BACK TO HOME
+Right now, when a user navigates from another page (Services, About, etc.) 
+back to Home using the internal nav links (client-side routing, not a hard 
+reload), the hero background image appears immediately, but the 
+heading/subheading text appears several seconds later. This delay should 
+only ever happen (if at all) on the very first visit to the site — not every 
+time someone clicks back to Home internally.
+
+Please find the root cause. Likely candidates:
+- A hardcoded animation-delay / transition-delay on the text elements that 
+  re-triggers every time the Home component re-mounts
+- A setTimeout in the component's mount/useEffect logic that artificially 
+  delays showing the text
+- An "animate on scroll" / "animate on mount" library re-running its entry 
+  animation on every route change, even though the image isn't gated by the 
+  same delay
+
+Fix it so that:
+- On a genuinely first/fresh visit to the site, the slowed-down entrance 
+  animation (from point 1) plays once as intended.
+- On any later in-app navigation back to Home, the heading and subheading 
+  text appear together with the image immediately — no lag behind the image.
+  (A sessionStorage/localStorage flag to detect "already visited in this 
+  session" is a fine approach if needed.)
+
+After fixing, test by: 
+(a) loading the site fresh on Home, and 
+(b) navigating Home → Services → Home (and Home → About → Home) using the 
+nav bar, to confirm the text now appears immediately with the image every 
+time, with no delay.

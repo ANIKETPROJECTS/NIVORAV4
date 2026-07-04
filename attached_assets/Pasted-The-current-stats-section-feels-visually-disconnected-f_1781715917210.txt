@@ -1,0 +1,82 @@
+The current stats section feels visually disconnected from the Philosophy section and looks like a separate green block. Redesign it to feel like a premium continuation of the Philosophy area rather than an isolated banner.
+
+Issues to Fix:
+1. Counters are static after loading and do not feel engaging.
+2. The olive block is too tall and creates excessive empty space.
+3. The quote card, philosophy section, and stats section do not feel visually connected.
+4. The design currently feels broken into separate pieces rather than one luxury composition.
+5. The counters only animate once and then remain static.
+
+Redesign Requirements:
+
+LAYOUT
+- Integrate the stats section directly with the Philosophy section.
+- Reduce unnecessary vertical height.
+- Create a smooth visual transition between the beige philosophy section and the statistics area.
+- Use a premium interior-design agency aesthetic similar to luxury architecture and interior studio websites.
+
+COUNTER ANIMATION
+- Numbers must continuously animate in an elegant way.
+- On first viewport entry:
+  - Count from 0 to target value.
+- After reaching target:
+  - Add subtle micro-animation every few seconds.
+  - Example:
+      248 → 249 → 250
+      11 → 12
+      97 → 98
+  - Or a gentle shimmer/highlight sweep effect across numbers.
+- Animation should feel premium and not distracting.
+- Use requestAnimationFrame for smoothness.
+- Trigger using Intersection Observer.
+
+NEW VISUAL DIRECTION
+
+Option A (Preferred)
+- Remove the large olive rectangle.
+- Create a floating luxury stats card.
+- Background: Deep olive (#3F5234).
+- Rounded corners: 24px.
+- Max width: 1200px.
+- Center aligned.
+- Slight overlap between Philosophy section and Services section.
+- Soft shadow.
+- Looks like a premium information panel.
+
+Option B
+- Use a gradient:
+  background: linear-gradient(
+    135deg,
+    #31452F,
+    #556B2F,
+    #2D3F2A
+  );
+- Add subtle texture/noise effect.
+- Reduce height by 40%.
+
+TYPOGRAPHY
+- Large elegant serif numbers.
+- Labels in luxury uppercase tracking.
+- Better spacing between number and label.
+- Increase contrast.
+- Make numbers the visual focus.
+
+STAT ITEMS
+- 12+ Years Experience
+- 250+ Projects Completed
+- 200+ Clients Served
+- 98% Client Satisfaction
+
+INTERACTIONS
+- Hover:
+  - Slight lift.
+  - Soft glow.
+  - Gold accent line appears.
+- Mobile responsive.
+- Keep performance optimized.
+
+IMPORTANT
+- Keep existing Philosophy section animations unchanged.
+- Keep existing quote card unchanged.
+- Only redesign and improve the statistics section.
+- Make the final result feel like a premium luxury interior design website rather than a generic statistics banner.

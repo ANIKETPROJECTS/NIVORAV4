@@ -1,0 +1,54 @@
+Update the Testimonials section with these exact changes:
+
+SECTION HEADING (top of section):
+- Keep "CLIENT STORIES" as the small uppercase gold label at top center
+- Change main heading to "What Clients Say" 
+  (large serif font, same as Image 1 style — big, elegant, centered)
+- Keep the subtitle text: "Every project is a relationship. These are the words 
+  of people who trusted us with their spaces."
+- This heading block stays above the card, centered
+
+CARD LAYOUT (keep existing single-card design from Image 2):
+- Left panel: "THE WORD ON THE STREET" label + "Hear what our clients have said about us!" heading + gold divider line
+- Right panel: quote text + client name + location
+- Card border: olive green (#5f745e)
+- Background: #f5f2ed (light cream)
+
+PROGRESS BAR (below card):
+- Remove the dot indicators
+- Add a thin horizontal progress bar instead
+- Bar fills from left to right over 4-5 seconds (duration of one slide)
+- When testimonial changes, bar resets and fills again
+- Bar color: #a18661 (gold) on a light gray track
+- Width: same as card width, centered below card
+
+READ ALL CLIENT STORIES LINK:
+- Add below the progress bar
+- Text: "READ ALL CLIENT STORIES →"
+- Style: uppercase, spaced letters, small font, gold color (#a18661)
+- On click: navigate to /testimonials page
+- Add subtle underline on hover
+
+ANIMATIONS (add all of these):
+1. On page load: section heading fades in and slides up (opacity 0→1, translateY 20px→0)
+2. Card entrance: each new testimonial slides in from right, old one exits to left 
+   (for next arrow) and vice versa for previous arrow
+3. Quote text: fades in with slight delay after card slides in
+4. Client name: fades in after quote text (staggered)
+5. Arrow buttons: scale up slightly on hover (transform: scale(1.1))
+6. Progress bar: smooth CSS transition fill, ease-in-out
+7. Auto-advance: every 5 seconds automatically go to next testimonial
+
+KEEP:
+- All existing testimonial data (names, quotes, locations)
+- Left/right arrow navigation
+- Light cream background theme
+- Card border styling
+
+REMOVE:
+- Dot/circle indicators below card
+- Star ratings
+- Verified client badges
+- Avatar circles with initials
+
+Do not change any other section on the page.

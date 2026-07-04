@@ -1,0 +1,262 @@
+Remove the existing Home → Featured Spaces section completely and redesign it to match the premium editorial layout shown in the reference image. Keep all existing project data and images. Only redesign the layout, spacing, typography, hierarchy, and interactions.
+
+Goal
+
+Create a luxury editorial portfolio section with large immersive imagery, generous whitespace, elegant typography, and an alternating left-right composition that feels premium, architectural, and minimal.
+
+The design should emphasize storytelling instead of traditional cards.
+
+Section Header
+
+Remove the existing:
+
+Featured Spaces heading
+Subtitle
+CTA button
+
+Replace with:
+
+Small Label (Uppercase)
+
+OUR PORTFOLIO
+
+Main Heading
+
+Designed to Inspire Modern Living
+
+Subtitle
+
+Thoughtfully crafted interiors that blend elegance, comfort, and timeless design.
+
+Header Styling:
+
+Center aligned
+Large vertical spacing
+Luxury editorial appearance
+Playfair Display for heading
+Inter for subtitle
+Thin decorative divider below heading
+Plenty of whitespace above and below
+Overall Layout
+
+Instead of cards, create an alternating editorial portfolio layout.
+
+Each portfolio item becomes one horizontal content block.
+
+Desktop:
+
+Two-column layout
+Image occupies approximately 55%
+Content occupies approximately 45%
+
+Alternate every row:
+
+Row 1
+
+Image  | Content
+
+Row 2
+
+Content | Image
+
+Row 3
+
+Image | Content
+
+Continue alternating throughout the section.
+
+Tablet:
+
+Stack vertically
+Image first
+Content below
+
+Mobile:
+
+Single column
+Full-width image
+Text underneath
+Portfolio Block Structure
+
+Each project block contains:
+
+Image Section
+
+Large immersive interior image
+
+Requirements:
+
+Large landscape image
+Fixed aspect ratio
+Rounded corners (24–32px)
+Object-fit: cover
+No overlays
+No gradients
+No labels
+No badges
+Soft subtle shadow only
+Content Section
+
+Display:
+
+Small project number
+
+Example
+
+01
+
+Luxury project title
+
+Example
+
+Luxury Apartment Interiors
+
+Short elegant description
+
+Maximum:
+
+2 lines
+
+Example
+
+Modern designs crafted for elegant urban lifestyles.
+
+Optional subtle divider below description.
+
+Minimal circular arrow button beneath or beside the text.
+
+Arrow button:
+
+Outline circle
+Thin border
+Hover fills slightly
+Arrow rotates gently
+Spacing
+
+Create an open editorial composition.
+
+Section padding:
+
+Top: 120px
+
+Bottom: 120px
+
+Space between portfolio blocks:
+
+100–140px
+
+Gap between image and content:
+
+80–120px
+
+Maintain generous whitespace throughout.
+
+Typography
+
+Heading
+
+Playfair Display
+Elegant serif
+Large size
+Light weight
+
+Project Title
+
+Playfair Display
+Large
+Sophisticated
+High contrast
+
+Descriptions
+
+Inter
+Medium weight
+Comfortable line height
+Soft gray color
+
+Project Number
+
+Small uppercase
+Muted gray
+Wide letter spacing
+Styling
+
+Background:
+
+Warm ivory / luxury white
+
+Color palette:
+
+Soft ivory
+Charcoal
+Warm gray
+Elegant accent (subtle terracotta or muted gold)
+
+Cards:
+
+None.
+
+Instead use clean editorial blocks with generous whitespace.
+
+Shadows:
+
+Very soft and minimal.
+
+Corners:
+
+Large rounded corners on images only.
+
+Hover Effects
+
+Image
+
+Scale to 1.03
+Smooth transform
+
+Content
+
+Slight fade-in or translateY(-4px)
+
+Arrow
+
+Rotate 20°
+Background subtly changes
+
+Transition
+
+500ms ease
+
+Hover effects should remain refined and understated.
+
+Responsive Behaviour
+
+Desktop
+
+Alternating image/content layout
+Balanced proportions
+Large spacing
+
+Tablet
+
+Stack vertically
+Image above content
+Reduce spacing proportionally
+
+Mobile
+
+Single-column layout
+Full-width responsive image
+Comfortable text spacing
+Touch-friendly arrow button
+Data & Code Rules
+Keep all existing project images.
+Keep all existing project data.
+Do not hardcode portfolio items.
+Dynamically map portfolio items from existing data.
+Use a reusable PortfolioItem component.
+Alternate image and content positions programmatically using the item index (index % 2).
+Maintain accessibility with semantic HTML and proper alt text.
+Ensure fully responsive layout without using masonry, sliders, or carousels.
+Final Design Intent
+
+The section should resemble a high-end interior design magazine rather than a traditional portfolio grid. Prioritize elegant typography, oversized imagery, generous whitespace, and an alternating editorial composition that creates a premium, luxurious browsing experience inspired by the provided reference.

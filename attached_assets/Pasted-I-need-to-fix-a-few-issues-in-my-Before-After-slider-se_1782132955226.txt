@@ -1,0 +1,19 @@
+I need to fix a few issues in my "Before & After" slider section:
+1. Before and After images are identical:
+
+In one or more of the transformation projects, the "before" image and "after" image being used are actually the same image file (or visually identical), which defeats the purpose of the comparison slider. Please check each project's before/after image pairs in the data/assets folder and replace any duplicate images with the correct, distinct before and after photos for that project.
+If the correct distinct images already exist somewhere in the project's asset folder but just aren't linked properly, fix the references. If actual distinct images are missing and need to be sourced/uploaded, flag which specific project(s) need new images so I can provide them.
+
+2. Increase description text font size below the slider:
+
+The "BEFORE" and "AFTER" description text (e.g., "A dated dining arrangement with mismatched furniture, poor lighting and no focal point.") below the project title is currently too small and hard to read.
+Increase its font size by roughly 15-20% (e.g., if currently around 13-14px, bump it to around 15-16px) and slightly increase line-height for better readability, while keeping the existing font family and color.
+
+3. Fix missing "after" image in the Kitchen Transformation project:
+
+The 3rd before/after project (Kitchen Transformation) has a broken/missing "after" image — it's showing blank/no image instead of the actual photo.
+Locate the image reference for this project's "after" image in the code, check if the file path is correct and the image file actually exists in the assets folder, and fix the broken link. If the image file itself is missing from the project assets entirely, flag this so I can upload the correct kitchen "after" photo.
+
+4. Implementation notes:
+
+After fixing image references, test each of the before/after projects in the carousel to confirm: (a) before and after images are visually distinct for every project, and (b) no broken/missing images remain anywhere in this section.

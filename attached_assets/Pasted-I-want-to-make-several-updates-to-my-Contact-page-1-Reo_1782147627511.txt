@@ -1,0 +1,45 @@
+I want to make several updates to my Contact page:
+1. Reorder the page sections:
+
+Currently the order is: Navbar → "Ready to Begin?" hero section → Contact Form + Sidebar → Footer.
+Change it to: Navbar → Contact Form + Sidebar FIRST → "Ready to Begin?" hero section → Footer.
+So the form should be the first thing visible right after the navbar, and the "Ready to Begin?" section (with "REACH OUT", heading, "Not sure where to start?", and description) should now appear below the form, just above the footer.
+
+2. Remove the Budget Range field:
+
+Remove the "BUDGET RANGE" dropdown field entirely from the contact form (the one with options like "Under ₹10 Lakhs", "₹10 – ₹25 Lakhs", etc.).
+Adjust the form grid layout so remaining fields (Full Name, Phone Number, Email Address, City, Type of Space, How did you hear about us?, Project Description) flow cleanly without leaving an empty gap where Budget Range was.
+
+3. Change the submit button text:
+
+Change the form's submit button label from "SEND ENQUIRY" (or whatever it currently says) to "SEND MESSAGE".
+
+4. Update the sidebar location details:
+
+Replace the current placeholder address ("Suite 405, The Design Hub, Bandra West, Mumbai 400050") with the existing Ambernath address that's already used elsewhere on the site (check the Footer component or other Contact-related components for the correct existing address string and reuse it here — do not invent a new address).
+Keep the Phone (+91 72766 87805), Email (hello@nivorainteriors.com), and "CHAT ON WHATSAPP" button exactly as they currently are — just update the Location field's address text.
+
+5. Add a "Studio Hours" section below the location/contact details in the sidebar:
+
+Add a thin horizontal divider line below the existing contact details (phone/email/location/WhatsApp button), similar to the divider style already used elsewhere in the sidebar.
+Below that divider, add a "STUDIO HOURS" label (small uppercase gold/tan text, same style as "LOCATION", "PHONE", "EMAIL" labels above it).
+Below that, show:
+
+"Monday – Saturday: 10:00 AM – 7:00 PM"
+"Sunday: By appointment only"
+
+
+Below the studio hours, add a small bordered/boxed quote: "We respect your privacy. No spam, just great design." in italic text, matching the style shown in the reference (light border box, subtle background).
+
+6. Add more animations throughout the Contact page:
+
+Scroll-triggered entrance animations: As the user scrolls down, animate each major block (form fields, sidebar contact card, "Ready to Begin?" section) to fade in + slide up when it enters the viewport (use Framer Motion's whileInView or Intersection Observer, staggered slightly between elements).
+Input focus animations: When a user clicks/focuses into any form input, animate the underline below it to smoothly expand from center outward (or change color) in gold/tan, rather than an instant snap.
+Submit button hover/press: On hover, the "SEND MESSAGE" button should have a smooth scale-up (e.g., scale(1.03)) and slight shadow increase; on click/press, scale down briefly (scale(0.97)) for tactile feedback.
+Sidebar icons (Phone, Email, Location): On hover over each contact detail row, animate the icon to do a small bounce or rotate (e.g., a subtle wiggle) to add personality.
+"CHAT ON WHATSAPP" button: Add a subtle continuous pulse/glow animation around its border (very subtle, not distracting) to draw attention to it as a CTA.
+
+7. Implementation notes:
+
+Use Framer Motion if already installed in the project for the scroll entrance and hover/press animations; otherwise use CSS transitions/keyframes.
+Make sure the new section order, removed field, and all animations work properly and remain responsive on mobile devices.

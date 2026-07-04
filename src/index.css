@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand colours */
+  --green-deep: #2D3E29;
+  --green-mid: #33452F;
+  --green-light: #3b4a35;
+  --gold: #C8A46A;
+  --gold-accent: #C8A46A;
+  --gold-light: #D4C0A1;
+  --cream: #f5f0e8;
+  --alabaster: #ede8df;
+  --charcoal: #3a3a3a;
+  --soft-grey: #7a7a7a;
+  --off-white: #faf8f4;
+  --olive: #33452F;
+  --deep-olive: #2D3E29;
+  --warm-beige: #D4C0A1;
+  --soft-gold: #C8A46A;
+
+  /* ── Design tokens ──────────────────────────────────────────────── */
+
+  /* Container */
+  --container-max: 1180px;
+  --container-pad: 2rem;
+
+  /* Section spacing */
+  --section-py: 88px;
+  --section-py-sm: 64px;
+  --section-py-lg: 96px;
+
+  /* Typography scale */
+  --text-hero:    clamp(36px, 5vw, 68px);
+  --text-h1:      clamp(1.9rem, 4vw, 3.25rem);
+  --text-h2:      clamp(1.6rem, 3.2vw, 2.75rem);
+  --text-h3:      clamp(1.15rem, 2.2vw, 1.85rem);
+  --text-subhead: clamp(1rem, 1.6vw, 1.35rem);
+  --text-body:    14.5px;
+  --text-label:   10px;
+
+  /* Border radius */
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+
+  /* Shadows */
+  --shadow-card:  0 4px 24px rgba(20,18,14,0.08), 0 1px 4px rgba(20,18,14,0.04);
+  --shadow-hover: 0 18px 52px rgba(20,18,14,0.15), 0 4px 14px rgba(20,18,14,0.08);
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16,1,0.3,1);
+  --duration-fast: 300ms;
+  --duration-base: 480ms;
+  --duration-slow: 650ms;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background-color: var(--green-deep);
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Responsive display headings — tightened ~15-20% */
+h1 { font-size: clamp(1.9rem, 4vw, 3.25rem); }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.75rem); }
+h3 { font-size: clamp(1.1rem, 2.2vw, 1.85rem); }
+
+::selection {
+  background: var(--gold);
+  color: var(--green-deep);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--green-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ── Section labels ───────────────────────────────────────────────── */
+.section-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #C9A96E;
+}
+.section-label::before,
+.section-label::after {
+  content: '';
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background-color: #C9A96E;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.section-label::before { margin-right: 12px; }
+.section-label::after  { margin-left:  12px; }
+
+/* ── Global container ─────────────────────────────────────────────── */
+.site-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+/* ── Consistent section padding ───────────────────────────────────── */
+.section-py    { padding-top: var(--section-py);    padding-bottom: var(--section-py); }
+.section-py-sm { padding-top: var(--section-py-sm); padding-bottom: var(--section-py-sm); }
+.section-py-lg { padding-top: var(--section-py-lg); padding-bottom: var(--section-py-lg); }
+
+/* ── Shared image wrapper ─────────────────────────────────────────── */
+.img-cover {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+
+/* ── Shared hover lift ─────────────────────────────────────────────── */
+.hover-lift {
+  transition: transform var(--duration-base) var(--ease-out-expo),
+              box-shadow var(--duration-base) var(--ease-out-expo);
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ── WhatsApp pulse animation ─────────────────────────────────────── */
+@keyframes whatsapp-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+.whatsapp-pulse { animation: whatsapp-pulse 3s ease-in-out infinite; }
+.whatsapp-pulse:hover { animation: none; transform: scale(1.1); }
+
+@layer utilities {
+  .text-gold        { color: var(--gold); }
+  .text-gold-light  { color: var(--gold-light); }
+  .text-cream       { color: var(--cream); }
+  .text-soft-grey   { color: var(--soft-grey); }
+  .bg-green-deep    { background-color: var(--green-deep); }
+  .bg-green-mid     { background-color: var(--green-mid); }
+  .bg-green-light   { background-color: var(--green-light); }
+  .bg-cream         { background-color: var(--cream); }
+  .bg-alabaster     { background-color: var(--alabaster); }
+  .border-gold      { border-color: var(--gold); }
+  .font-serif       { font-family: 'Cormorant Garamond', serif; }
+  .font-sans        { font-family: 'Jost', sans-serif; }
+}

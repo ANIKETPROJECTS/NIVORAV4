@@ -1,0 +1,35 @@
+I want to convert the background theme of my About page's main content sections from dark green to light, matching the same light/dark pattern used on my Home page (where only the hero and bottom CTA/footer are dark green, and all content sections in between are light cream #f5f2ed).
+1. Keep these sections dark green (unchanged):
+
+The top hero banner ("OUR STORY" / "Design With Purpose & Craft" / description) — keep its current dark green background and white/gold text exactly as is.
+The bottom CTA section and Footer (if they currently exist below the Founder section) — keep dark green, unchanged.
+
+2. Convert these sections to light cream background (#f5f2ed):
+
+"Who We Are" section (image + "A Boutique Studio Built on Listening" text block)
+Stats section (25+ Clients Served, 2 Years of Experience, 2 Cities, 100% End-to-End Solutions)
+"What We Design" + "Our Values" section (bullet list + values list)
+"Mission" + "Vision" section (two-box layout)
+"The Founder" section (Shweta Mahadik bio + photo)
+
+3. Update text/element colors for each converted section to maintain contrast on the light background:
+
+Main headings: change from white/cream to dark green (#21291a) or dark gray (#2c2c2c).
+Body paragraph text: change from light gray/cream to a softer dark gray (e.g., #4a4a4a) for comfortable readability.
+Small uppercase labels (e.g., "WHO WE ARE", "OUR VALUES", "MISSION", "THE FOUNDER"): keep these in the gold/tan accent color (#a18661) — these should remain the same color, just ensure they're legible against the new light background.
+Stat numbers (25+, 2, 2, 100%) and "Our Values"/"Mission"/"Vision" box borders: keep gold/tan accent color (#a18661), but adjust any background fills if needed for contrast on cream.
+Divider lines: change from light/white divider lines to a subtle gold or light gray divider suited for the cream background.
+The quote box in the Founder section ("For me, design is not about decoration...") — update its background to either white or a very light tan tint with dark text, instead of being transparent against dark green.
+
+4. Keep ALL existing animations exactly as they currently are — do not modify or remove any current entrance/scroll animations on these sections. This is purely a color/background/text-contrast update.
+5. Add NEW animations to the "Mission & Vision" and "What We Design & Our Values" sections specifically (in addition to whatever animations already exist):
+
+Mission & Vision boxes: When this section scrolls into view, animate each box (Mission, Vision) to fade in + slide up with a slight stagger between them (~150-200ms apart), and add a subtle border-color transition on hover (border brightens slightly to a richer gold on hover).
+What We Design bullet list: Animate each bullet point to fade in + slide in from the left, staggered one after another (~100ms delay between each bullet) as the section scrolls into view.
+Our Values list: Animate each value item (Thoughtful Design, Timeless Elegance, Personal Connection, Quality & Craftsmanship, Trust & Transparency) to fade in + slide up, staggered (~100-120ms between each), with the divider line below each one drawing left-to-right (width 0% to 100%) as that item animates in.
+Both lists should trigger their stagger animation once when the section enters the viewport (use whileInView with once: true if using Framer Motion).
+
+6. Implementation notes:
+
+Use Framer Motion if already installed for the new staggered animations; keep using whatever method (CSS/Framer Motion) is already powering the existing animations on other sections.
+Test the full page scroll on both desktop and mobile to confirm smooth color transitions between the dark hero, light content sections, and dark CTA/footer at the bottom, with no abrupt jarring contrast jumps or readability issues.

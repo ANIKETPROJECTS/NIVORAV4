@@ -1,0 +1,567 @@
+/* ============================================================
+   responsive-mobile.css
+   Nivora Interiors — styles for max-width: 767px (mobile)
+   ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* ── GLOBAL ─────────────────────────────────────────────── */
+
+  body {
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  section,
+  .section-wrapper {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    overflow-x: hidden;
+  }
+
+  .container,
+  .max-w-7xl,
+  [class*="max-w-"] {
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+
+
+  /* ── NAVBAR ─────────────────────────────────────────────── */
+
+  header {
+    height: 60px;
+  }
+
+  header .navbar-inner {
+    height: 60px;
+  }
+
+  header img.logo {
+    height: 36px;
+    width: 36px;
+  }
+
+  /* Hide desktop nav and enquire button */
+  header nav,
+  header a.enquire-btn {
+    display: none !important;
+  }
+
+  /* Mobile overlay — slides in from right */
+  .mobile-menu-overlay {
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    background-color: #2E4A30;
+  }
+
+  .mobile-menu-overlay.open {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-overlay a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .mobile-menu-overlay .menu-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+
+  /* ── HERO SECTION ───────────────────────────────────────── */
+
+  .hero-section {
+    height: 100svh;
+  }
+
+  .hero-headline {
+    font-size: clamp(32px, 8vw, 48px);
+    line-height: 1.2;
+  }
+
+  .hero-subheadline {
+    font-size: clamp(28px, 7vw, 42px);
+    line-height: 1.2;
+  }
+
+  .hero-body {
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .hero-cta-group a,
+  .hero-cta-group button {
+    width: 100%;
+    height: 50px;
+    min-width: unset;
+  }
+
+  .hero-location-tabs {
+    font-size: 12px;
+    gap: 16px;
+  }
+
+  .hero-scroll-indicator {
+    display: none;
+  }
+
+
+  /* ── PHILOSOPHY SECTION ─────────────────────────────────── */
+
+  /* Cream gap above separates from the hero; tight bottom flows into carousel */
+  .philosophy-section {
+    padding-top: 40px !important;
+    padding-bottom: 32px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Hide the animated full-width rule — acts as an unwanted divider on mobile */
+  .philosophy-text-block > div:nth-child(4) > div:first-child {
+    display: none !important;
+  }
+
+  /* Single column — image first (order: -1), text block below */
+  .philosophy-flex {
+    flex-direction: column !important;
+    gap: 0 !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Image column — full width; bottom gap separates it from text block */
+  .philosophy-image-col {
+    order: -1;
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    margin-bottom: 36px !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Gold frame hidden — causes horizontal overflow on mobile */
+  .philosophy-frame {
+    display: none !important;
+  }
+
+  /* Wrapper: block layout, photo stacks above card in the flow */
+  .philosophy-image-wrap {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* Photo container clips the image at a clean 4:3 proportion */
+  .philosophy-photo-inner {
+    position: relative !important;
+    overflow: hidden !important;
+    /* aspect-ratio height for each screen: 320→240px, 375→281px, 414→311px */
+    height: clamp(240px, 75vw, 320px) !important;
+  }
+
+  /* Photo: fills the container, focuses on the upper interior */
+  .philosophy-photo {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: unset !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+    display: block !important;
+    max-width: 100% !important;
+  }
+
+  /* ── Quote card — flows naturally below the image ─────────
+     position: relative pulls it OUT of the absolute stack.
+     margin-top: -16px gives the single subtle overlap pixel
+     the design calls for; the rest of the card sits below
+     the image in open cream space, centred horizontally.    */
+  .philosophy-quote-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    /* Subtle 16 px overlap with the image bottom edge */
+    margin-top: -16px !important;
+    /* Centred, 88 % of container, max capped for readability */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 88% !important;
+    max-width: 360px !important;
+    padding: 22px 24px 20px !important;
+    border-radius: 14px !important;
+    z-index: 6 !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    display: block !important;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18) !important;
+  }
+
+  /* Opening quotation mark — scaled for mobile */
+  .philosophy-quote-card > div:first-child {
+    font-size: 38px !important;
+    line-height: 0.7 !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Quote body — comfortable reading size */
+  .philosophy-quote-card > p:first-of-type {
+    font-size: 14.5px !important;
+    line-height: 1.75 !important;
+    margin: 0 !important;
+  }
+
+  /* Founder attribution */
+  .philosophy-quote-card > p:last-of-type {
+    font-size: 12px !important;
+    margin-top: 12px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* ── Text block ───────────────────────────────────────────
+     90 % wide, centred, top padding separates from the
+     quote card above                                        */
+  .philosophy-text-block {
+    flex: none !important;
+    width: 90% !important;
+    max-width: 440px !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding: 2.5rem 0 0 !important;
+  }
+
+  /* Section label row */
+  .philosophy-text-block > div:first-child {
+    margin-bottom: 1.75rem !important;
+  }
+
+  /* Main quote heading — dominant focal point */
+  .philosophy-text-block > p:nth-child(2) {
+    font-size: clamp(1.7rem, 6.5vw, 2.25rem) !important;
+    line-height: 1.22 !important;
+    margin-bottom: 1.75rem !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Body paragraph — warm contrast, open leading */
+  .philosophy-text-block > p:nth-child(3) {
+    font-size: 1rem !important;
+    line-height: 1.9 !important;
+    color: #4a3520 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Values strip — breathing room above */
+  .philosophy-text-block > div:nth-child(4) {
+    margin-top: 2rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* CTA — natural conclusion of the section */
+  .philosophy-text-block > div:last-child {
+    margin-top: 2.5rem !important;
+  }
+
+
+  /* ── STATS SECTION ──────────────────────────────────────── */
+
+  /* Hide the desktop grid card on mobile */
+  .stats-wrapper {
+    display: none !important;
+  }
+
+  /* Show the mobile carousel — consistent 1.5rem gutters, tighter spacing */
+  .mobile-stats-carousel {
+    display: block !important;
+    background: #F7F4EF;
+    padding: 20px 1.5rem 40px !important;
+  }
+
+  /* Card — full-width inside the 1rem side gutters */
+  .stat-float-card {
+    border-radius: 20px !important;
+    width: 100% !important;
+  }
+
+  /* Each stat cell — balanced vertical padding */
+  .stat-float-item {
+    padding: 32px 12px 28px !important;
+  }
+
+  /* Stat number — bolder, larger, commanding presence */
+  .stat-float-num {
+    font-size: clamp(3rem, 13vw, 4.25rem) !important;
+    font-weight: 500 !important;
+    margin-bottom: 12px !important;
+    letter-spacing: -0.03em !important;
+    color: #f5f0e8 !important;
+  }
+
+  /* Stat label — lifted contrast, legible tracking */
+  .stat-float-label {
+    font-size: 9px !important;
+    letter-spacing: 2.5px !important;
+    color: rgba(201, 169, 110, 0.80) !important;
+  }
+
+
+  /* ── SERVICES SECTION (HOME) ─────────────────────────────── */
+
+  /* 2rem top flows naturally from carousel bottom (40px → 32px = 72px total) */
+  .services-section-home {
+    padding-top: 2rem !important;
+    padding-bottom: 4rem !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  /* Heading — more commanding on mobile */
+  .services-section-home h2 {
+    font-size: clamp(2.1rem, 7.5vw, 3rem) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 1.1rem !important;
+  }
+
+  /* Description — larger text, richer contrast */
+  .svc-header-desc {
+    font-size: 15px !important;
+    line-height: 1.9 !important;
+    color: rgba(38, 36, 33, 0.70) !important;
+  }
+
+  /* Header block bottom margin — less gap before card grid */
+  .services-section-home > div > div {
+    margin-bottom: 2.5rem !important;
+  }
+
+
+  /* ── SERVICES GRID (EXISTING) ────────────────────────────── */
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-panel {
+    width: 100%;
+    height: 320px;
+  }
+
+  .services-panel-title {
+    font-size: 22px;
+  }
+
+  .services-explore-link {
+    font-size: 12px;
+    padding: 16px 20px;
+  }
+
+
+  /* ── PROCESS SECTION ────────────────────────────────────── */
+
+  .process-layout {
+    flex-direction: column;
+  }
+
+  .process-images {
+    width: 100%;
+    height: 280px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .process-images .img-top {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+  }
+
+  /* Hide overlapping second image on mobile */
+  .process-images .img-bottom {
+    display: none;
+  }
+
+  .process-steps {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .process-step-handover {
+    grid-column: 1;
+  }
+
+  .process-step-number {
+    font-size: 48px;
+  }
+
+  .process-step-title {
+    font-size: 18px;
+  }
+
+  .process-step-desc {
+    font-size: 13px;
+    max-width: 100%;
+  }
+
+
+  /* ── BEFORE & AFTER + PROJECTS ──────────────────────────── */
+
+  .before-after-slider {
+    width: 100%;
+    height: 260px;
+    max-width: 100%;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 2px;
+  }
+
+  .projects-grid-cell {
+    height: 200px;
+  }
+
+  .projects-view-all a,
+  .projects-view-all button {
+    width: 100%;
+    height: 50px;
+  }
+
+
+  /* ── TESTIMONIALS ───────────────────────────────────────── */
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonial-card {
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .testimonial-card p {
+    font-size: 13px;
+  }
+
+  .testimonial-stars {
+    font-size: 13px;
+  }
+
+
+  /* ── INSTAGRAM GRID ─────────────────────────────────────── */
+
+  .instagram-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 3px;
+  }
+
+  .instagram-heading {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+
+  .instagram-follow-link {
+    font-size: 12px;
+    margin-top: 20px;
+    display: block;
+  }
+
+
+  /* ── FINAL CTA ──────────────────────────────────────────── */
+
+  .final-cta-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .final-cta-heading {
+    font-size: clamp(28px, 7vw, 40px);
+    line-height: 1.3;
+  }
+
+  .final-cta-subtext {
+    font-size: 13px;
+    padding: 0 16px;
+  }
+
+  .final-cta-btn {
+    width: 100%;
+    height: 52px;
+    font-size: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+  }
+
+
+  /* ── FOOTER ─────────────────────────────────────────────── */
+
+  footer .footer-inner {
+    padding-top: 60px;
+    padding-bottom: 32px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .footer-col {
+    margin-bottom: 36px;
+    border-right: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .footer-col-heading {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    margin-bottom: 14px;
+  }
+
+  .footer-col a,
+  .footer-col p,
+  .footer-col span {
+    font-size: 13px;
+    line-height: 2.4;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+
+  /* ── FLOATING WHATSAPP BUTTON ───────────────────────────── */
+
+  .whatsapp-pulse,
+  a[aria-label="Chat on WhatsApp"] {
+    width: 52px !important;
+    height: 52px !important;
+    bottom: 20px !important;
+    right: 16px !important;
+  }
+
+}
+/* end @media (max-width: 767px) */

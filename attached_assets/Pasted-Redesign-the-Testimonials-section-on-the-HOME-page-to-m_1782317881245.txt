@@ -1,0 +1,50 @@
+Redesign the Testimonials section on the HOME page to match the visual impact 
+of the dark theme version but keep it in light theme. Make it feel premium and luxurious.
+
+OVERALL SECTION:
+- Background: #f5f2ed (light cream) — keep light theme
+- Add a very subtle texture or keep flat cream — no dark background
+- Section should feel grand and editorial like the dark version
+
+HEADING AREA:
+- "CLIENT STORIES" label: #a18661, uppercase tracked letters
+- "What Clients Say" heading: #21291a, very large serif font 
+  (same large impactful size as dark version — at least 72-80px)
+- Subtitle: #6d5a41, italic, centered
+- Add more breathing space (padding) above and below the heading block
+
+CARD LAYOUT — GO BACK TO 3 CARDS SIDE BY SIDE:
+- Show 3 testimonial cards in a row (like Image 2 layout)
+- Auto-slide the group of 3 cards (not 1 at a time)
+- Keep left/right arrow navigation
+
+CARD DESIGN — TWO ALTERNATING COLORS:
+- Card 1 (left): background #21291a (dark green), 
+  text white/cream, quote mark gold, stars gold
+- Card 2 (center): background #ffffff or #faf9f6 (white), 
+  text #21291a dark, quote mark #a18661, stars gold
+  — make center card slightly taller/larger to give it prominence
+- Card 3 (right): background #5f745e (olive green), 
+  text white/cream, quote mark gold, stars gold
+- This alternating dark-light-dark pattern makes it visually rich
+
+CARD CONTENT:
+- Large decorative " " quote mark top right of each card
+- Star rating in gold (★★★★★)
+- Quote text in italic
+- Thin gold divider line before client name
+- Client avatar circle with initials (like Image 2)
+- Client name bold, location below in smaller gold text
+- "VERIFIED CLIENT" badge
+
+BOTTOM:
+- Keep the progress bar or dot indicators below cards
+- "READ ALL CLIENT STORIES →" link in #a18661
+
+ANIMATIONS:
+- Cards fade+slide in on scroll (intersection observer)
+- Center card animates slightly later for staggered effect
+- Hover on card: subtle lift (translateY -4px) with box-shadow
+- Arrow buttons: scale on hover
+
+Do not change any other section or page.

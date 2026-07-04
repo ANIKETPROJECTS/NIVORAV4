@@ -1,0 +1,73 @@
+### Section 4 — Our Process (Light Editorial Redesign)
+
+Background: Warm Alabaster #F5F2ED. No dark backgrounds.
+
+Layout: Two-column split — 40% left (photo collage), 60% right 
+(vertical step list). Max-width 1200px, centered.
+
+LEFT COLUMN — Photo Collage (same style as Services section Image 1):
+- Two placeholder image divs with warm gradient fills
+- Photo 1: width 260px, height 320px, positioned top-left, 
+  border: 1px solid #a18661, border-radius: 2px
+- Photo 2: width 200px, height 260px, overlapping Photo 1 
+  at bottom-right corner, offset by +80px right and +140px down,
+  border: 1px solid #a18661, border-radius: 2px
+- Small 10px gold square (background #a18661) at the overlap corner
+- Entire collage div: position relative, height 420px
+
+RIGHT COLUMN — Vertical Step List:
+Eyebrow above heading: "HOW WE WORK" — Montserrat 9px, 
+letter-spacing 0.3em, color #6D5A41, text-transform uppercase.
+
+Heading: "Our Process" — Playfair Display, 48px, color #21291a, 
+font-weight 400, margin-bottom 36px.
+
+5 steps listed vertically. Each step:
+- Outer wrapper: padding-left 20px, border-left 3px solid #a18661, 
+  margin-bottom 32px, position relative
+- Ghost number: position absolute, left -10px, top -16px, 
+  font-family Playfair Display italic, font-size 72px, 
+  color rgba(161,134,97,0.10), line-height 1, z-index 0, 
+  pointer-events none
+- Step icon: Lucide icon (small, 18px, color #a18661) 
+  inline before the title
+- Step title: Playfair Display, 22px, color #21291a, 
+  position relative, z-index 1, margin-bottom 8px
+- Description: Lora, 15px, color #6D5A41, line-height 1.8
+- Divider after each step (except last): 
+  1px solid rgba(161,134,97,0.3), width 100%, margin-top 24px
+
+Steps:
+01 — Discover (icon: ear or compass) — "We begin by listening — 
+  understanding how you live, what you value, and what your 
+  space needs to do for you."
+02 — Visualise (icon: eye or layers) — "Concepts, mood boards, 
+  material palettes, and 3D walkthroughs that make the vision 
+  tangible before a single thing is moved."
+03 — Execute (icon: tool) — "Precise project management with 
+  trusted craftspeople, clear timelines, and constant 
+  communication."
+04 — Reveal (icon: sparkles or star) — "The handover. A finished 
+  space that surprises — even though you approved every detail."
+05 — Handover (icon: key) — "Deep-cleaned, styled, and truly 
+  ready. Your space, exactly as you imagined it."
+
+Below steps, tagline (not inside a border):
+"END-TO-END  ·  TRANSPARENT  ·  HASSLE-FREE"
+Montserrat, 9px, letter-spacing 0.35em, color #6D5A41, 
+text-transform uppercase.
+
+CTA Button below tagline:
+"Book Free Consultation" — background #21291a, color #F5F2ED, 
+Montserrat 10px all-caps, letter-spacing 0.18em, 
+padding 14px 28px, border-radius 2px, margin-top 28px.
+On hover: background #a18661, color #21291a, transition 0.3s ease.
+
+Entry animation (Framer Motion):
+- Left photo collage: fade in + slide from left (x: -40 → 0), 
+  duration 0.8s
+- Right column steps: stagger in top to bottom, each step 
+  fade + translateY(20 → 0), 0.12s delay between steps
+
+Mobile: Stack vertically. Photo collage on top (reduced height 
+280px), steps below. Border-left on steps becomes border-top.

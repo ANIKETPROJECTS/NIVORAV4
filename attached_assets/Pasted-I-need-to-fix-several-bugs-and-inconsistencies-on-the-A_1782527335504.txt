@@ -1,0 +1,35 @@
+I need to fix several bugs and inconsistencies on the About page:
+1. Fix the broken numbering overlap in "Our Values" section:
+
+Currently the large decorative numbers (01, 02, 03, 04, 05) are overlapping directly on top of/colliding with the description text below each value title (e.g., "01" overlaps "Every decision is intentional. We never add without asking why.").
+Fix the positioning: the large number should be placed either:
+
+(a) As a background watermark positioned absolute, behind and slightly offset from the title (using z-index: 0 with reduced opacity, e.g., 15-20%, positioned so it doesn't overlap the description text below), OR
+
+(b) As an inline element to the left of the title in the same flex row (icon + number + title on one line, description text below on its own line, with proper spacing/margin so nothing overlaps).
+Recommended approach: use a flex container for each value item with the icon + large number positioned to the left in a fixed-width column, and the title + description in a separate column to the right — this avoids overlap entirely regardless of text length.
+Test with all 5 values to confirm no text overlap occurs at any screen size.
+
+2. Fix the Stats counting animation direction:
+
+The stats counter (25+, 2, 2, 100%) is currently counting in the wrong direction (appears to count backward or glitch instead of cleanly counting up from 0 to the final value).
+Fix the count-up logic so each number animates strictly forward: starting at 0 and incrementing smoothly up to its final value (25, 2, 2, 100) over ~1.5-2 seconds, with appropriate "+"/"%" symbols appended only after the count completes.
+Double check the useEffect/requestAnimationFrame or react-countup implementation — ensure the start prop/value is 0 and end prop/value is the target number, not reversed.
+
+3. Apply consistent heading typography across the About page, matching the "Our Services" page's heading style:
+
+Identify the exact font-family, font-weight, font-size, and letter-spacing used for the "Our Services" heading (on the Services page) and the small uppercase label above it ("WHAT WE OFFER").
+Apply this exact same heading style consistently to all major headings on the About page: "Design With Purpose & Craft", "A Boutique Studio Built on Listening", "Spaces That Work for Real Life", "Mission"/"Vision" box headers, "The Founder" section heading, etc. — and the same small uppercase label style ("OUR STORY", "WHO WE ARE", "WHAT WE DESIGN", "OUR VALUES", "MISSION", "VISION", "THE FOUNDER").
+This is purely a typography consistency fix — don't change colors, layout, or content, just standardize the font-family/weight/sizing of headings and labels to match the Services page reference.
+
+4. Make the "Our Values" numbered list mobile-responsive:
+
+On smaller screens (max-width: 768px), ensure the icon + large number + title + description layout stacks/resizes cleanly without any overlap or cut-off text.
+Reduce the large number's font-size proportionally on mobile (e.g., from a large desktop size down to something more modest like 36-40px) so it doesn't dominate the limited screen width.
+Test on common mobile viewport widths (375px, 390px, 414px) to confirm clean, readable, non-overlapping layout.
+
+5. Testing checklist:
+
+Confirm "Our Values" numbers no longer overlap any text, on both desktop and mobile.
+Confirm stats animate cleanly from 0 up to their final values, never backward or glitchy.
+Confirm all About page headings/labels now visually match the Services page's heading typography.

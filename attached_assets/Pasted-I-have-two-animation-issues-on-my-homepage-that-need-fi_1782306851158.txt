@@ -1,0 +1,25 @@
+I have two animation issues on my homepage that need fixing:
+1. Fix the broken Hero section staggered text animation:
+
+Previously implemented: the Hero section text ("MUMBAI | PUNE" tabs → "Thoughtfully Designed" → "Interiors —" → "That Feel Effortless" → description paragraph → buttons) was supposed to animate in one-by-one (fade in + slide up, staggered ~150-200ms apart) every time the Home page loads.
+This animation is currently NOT working/not visible anymore. Please inspect the Hero component, check if the animation logic (Framer Motion variants/staggerChildren or CSS keyframes) is still present and correctly wired to the JSX elements, and fix whatever is broken (e.g., missing className, incorrect Framer Motion initial/animate props, a CSS class not being applied, or the animation trigger condition being wrong).
+Confirm after fixing that the staggered fade-up sequence plays correctly through all the listed elements in order.
+
+2. Make the splash/logo intro animation (right-to-left slide) play EVERY time the Home page is loaded or revisited:
+
+Currently, the splash screen with the "nivora" logo (which slides in, presumably right to left, before the homepage content appears) only seems to play under certain conditions, not consistently.
+I want this splash/logo slide animation to play in ALL of these scenarios, without exception:
+
+When the user does a full page refresh while on the Home page.
+When the user navigates to Home from any other page (Portfolio, Services, About, Testimonials, Contact) by clicking the "HOME" navbar link.
+When the user clicks the "nivora" logo in the navbar (which presumably also navigates to Home).
+
+
+This means the splash animation should NOT be gated by a "only show once per session" flag (like a sessionStorage or localStorage check that prevents it from re-playing) — it should re-trigger every single time the Home route is entered/re-entered, including via client-side route navigation (not just hard page refreshes).
+Implementation approach: if using React Router, trigger the splash animation logic inside the Home page component's mount lifecycle (e.g., a useEffect that runs on component mount) rather than a global app-level one-time check — this way, navigating away and back to Home (which unmounts/remounts the Home component) will naturally replay the splash animation each time.
+Make sure the splash animation still transitions smoothly into the Hero section's staggered text animation (item #1 above) right after it completes, maintaining the same sequence as originally designed.
+
+3. Implementation notes:
+
+Test thoroughly: (a) refresh on Home page → splash + hero animation both play, (b) navigate from Portfolio/Services/etc. to Home via navbar link → splash + hero animation both play again, (c) click logo from any other page → same result.
+Ensure no animation conflicts or flickering occur when these two animations run back-to-back (splash slide → hero stagger).

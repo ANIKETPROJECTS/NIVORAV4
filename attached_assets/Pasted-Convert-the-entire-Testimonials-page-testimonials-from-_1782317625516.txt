@@ -1,0 +1,55 @@
+Convert the entire Testimonials page (/testimonials) from dark theme to light theme. 
+Reference the Services page design (Image 2) for the light theme style.
+
+GLOBAL PAGE THEME CHANGE:
+- Page background: #f5f2ed (light cream, same as services page)
+- All section backgrounds: #f5f2ed or white
+- Remove all dark green (#21291a) backgrounds from this page
+- Main text color: #21291a (dark green) or #2c2c2c
+- Accent/label color: #a18661 (gold/tan)
+- Border/divider color: #5f745e (olive green)
+
+NAVBAR:
+- Keep the existing dark green navbar as is (do not change navbar)
+
+PAGE HEADER SECTION:
+- Background: #f5f2ed (light cream)
+- "CLIENT STORIES" label: #a18661, uppercase spaced letters
+- "What Clients Say" heading: #21291a dark color, large serif font
+- Subtitle text: #6d5a41 or #2c2c2c, lighter weight
+- Same layout and font sizes, just colors changed from light to dark text
+
+TESTIMONIAL CARDS:
+- Card background: white (#ffffff) or #faf9f6
+- Card border: 1px solid #5f745e (olive green) or light gray
+- Quote text color: #2c2c2c
+- Client name: #21291a, uppercase small caps
+- Location/project type: #a18661
+- Star ratings: #a18661 gold color
+- Quote mark " " decoration: #a18661, large, top-right corner of card
+- Remove any dark card backgrounds
+
+SECTION DIVIDERS:
+- Use thin lines in #a18661 or #e0d9cf (light beige)
+- No dark dividers
+
+ANY CTA BUTTONS on the page:
+- Background: #21291a (dark green)
+- Text: #f5f2ed (cream)
+- Hover: #5f745e
+
+ANY OTHER SECTIONS on the testimonials page 
+(like a contact CTA, bottom banner, etc.):
+- Convert background from dark green to #f5f2ed
+- Text accordingly dark (#21291a)
+
+KEEP UNCHANGED:
+- All testimonial content (names, quotes, locations, star ratings)
+- Card layout and grid structure  
+- Navigation arrows if present
+- Font families
+- Navbar (dark green header stays)
+- Footer (dark green footer stays)
+
+Only change colors — do not restructure layouts or change content.
+Do not affect any other page.

@@ -1,0 +1,147 @@
+# Replit Prompt — "Our Philosophy" Section: Spacing, Sizing & Animation Fixes
+
+## SECTION LOCATION
+The "OUR PHILOSOPHY" section on the Home page — two column layout, left = text, right = bedroom image + gold quote box.
+
+---
+
+## FIX 1 — REMOVE EXCESS TOP/BOTTOM PADDING
+
+The section has too much empty space above and below. Reduce it:
+
+```css
+.philosophy-section {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+```
+
+Goal: section should feel compact — content fills visual space without large empty gaps.
+
+---
+
+## FIX 2 — RIGHT SIDE HEIGHT MATCHES LEFT SIDE CONTENT
+
+The image on the right is too tall. It should only be as tall as the left column:
+
+```css
+.philosophy-right {
+  height: auto;
+  align-self: stretch;
+}
+
+.philosophy-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+```
+
+Add `overflow: hidden` to the image container so it crops cleanly.
+
+---
+
+## FIX 3 — "DISCOVER OUR STORY" LINK — MAKE VISIBLE & BIGGER
+
+The link is too small and barely visible. Fix:
+
+```css
+.discover-link {
+  font-size: 15px;
+  font-style: italic;
+  color: #C9A96E;
+  opacity: 1;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  font-weight: 400;
+  display: inline-block;
+  margin-top: 28px;
+  border-bottom: 1px solid #C9A96E;
+  padding-bottom: 2px;
+}
+
+.discover-link:hover {
+  color: #A07840;
+  border-bottom-color: #A07840;
+}
+```
+
+Do NOT change the link text ("Discover Our Story →") or its href (/about).
+
+---
+
+## FIX 4 — LEFT SIDE ANIMATIONS NOT VISIBLE (CRITICAL BUG)
+
+The left column text is invisible because scroll animation starts at `opacity: 0` but IntersectionObserver is not firing (threshold too high or elements missing the animate class).
+
+**Lower the threshold to 0.1:**
+
+```js
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+});
+```
+
+**CSS — initial hidden state + visible state:**
+
+```css
+.philosophy-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+
+.philosophy-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.philosophy-animate:nth-child(1) { transition-delay: 0ms; }
+.philosophy-animate:nth-child(2) { transition-delay: 120ms; }
+.philosophy-animate:nth-child(3) { transition-delay: 240ms; }
+.philosophy-animate:nth-child(4) { transition-delay: 360ms; }
+.philosophy-animate:nth-child(5) { transition-delay: 480ms; }
+```
+
+**IMPORTANT:** Verify that every left-column element has the `philosophy-animate` class — OUR PHILOSOPHY label, heading, paragraph, divider, icons row, and discover link. If any are missing the class, add it.
+
+**If React is used, apply inline style with state:**
+
+```jsx
+const [sectionRef, isInView] = useInView(0.1);
+
+// Each element gets:
+style={{
+  opacity: isInView ? 1 : 0,
+  transform: isInView ? 'translateY(0)' : 'translateY(20px)',
+  transition: `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`
+}}
+// delays: 0, 120, 240, 360, 480ms for each element in order
+```
+
+---
+
+## SUMMARY
+
+| Issue | Fix |
+|---|---|
+| Too much top/bottom space | padding 60px top and bottom |
+| Image too tall | align-self stretch + object-fit cover |
+| Discover link invisible | font-size 15px, opacity 1, border-bottom always on |
+| Left content not appearing | threshold 0.1, verify all elements have animate class |
+
+## DO NOT CHANGE
+- Text content, colors, fonts anywhere in this section
+- Gold quote box content, position, or styling
+- Section background color
+- Icons (Timeless / Functional / Personal)
+- Any other section or page

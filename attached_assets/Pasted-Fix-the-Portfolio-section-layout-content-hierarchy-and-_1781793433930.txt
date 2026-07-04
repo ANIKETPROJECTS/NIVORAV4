@@ -1,0 +1,97 @@
+Fix the Portfolio section layout, content hierarchy, and project navigation.
+
+Current Issues:
+- Text overlays are inconsistent across cards.
+- Some cards display descriptions while others only show titles.
+- Content positioning is not aligned uniformly.
+- Hover states are inconsistent and visually unbalanced.
+- Portfolio projects are not connected to their respective Service pages.
+- User journey between Portfolio and Services is broken.
+
+Required Fixes:
+
+1. Uniform Portfolio Card Design
+- All project cards must follow the exact same layout structure.
+- Display only:
+  • Project Location (small label)
+  • Project Name (main title)
+- Remove permanent descriptions from cards.
+- Keep typography, spacing, alignment, and positioning consistent across all cards.
+- Ensure titles are aligned at the bottom of every card.
+- Maintain equal card heights and image ratios.
+
+2. Hover Overlay Experience
+- On hover, show:
+  • Project Name
+  • Short Project Description
+  • View Project CTA
+- Use a smooth dark gradient overlay.
+- Apply fade-up animation for content.
+- Prevent overlapping text, clipping, or content collisions.
+- Keep all content inside card boundaries.
+- Maintain consistent spacing throughout.
+
+3. Project Detail Navigation
+Every portfolio card must open its respective project page.
+
+Project Mapping:
+
+Residential Interiors:
+- Calista Residence
+- Neelaya Villa
+- Sparsh Living
+- Aurelia Penthouse
+- Urban Serenity
+
+Commercial Interiors:
+- Modern Industrial Office
+- Corporate Workspace
+- Hospitality Lounge
+- Premium Retail Studio
+
+Architecture:
+- Luxury Villa Architecture
+- Contemporary Residence
+- Modern Facade Design
+- Architectural Planning Project
+
+4. Service Section Integration
+Link every project to its parent service category.
+
+Example Flow:
+
+Services
+→ Residential Interiors
+→ View Projects
+→ Calista Residence
+→ Neelaya Villa
+→ Sparsh Living
+
+Services
+→ Commercial Interiors
+→ View Projects
+→ Modern Industrial Office
+
+Services
+→ Architecture
+→ View Projects
+→ Architectural Projects
+
+5. Cross Navigation
+Add navigation connections between Services and Portfolio.
+
+Required Links:
+- Service Card → Related Projects
+- Portfolio Card → Parent Service
+- Project Detail Page → Related Projects
+- Project Detail Page → Back to Service Category
+
+6. UX Improvements
+- Entire card should be clickable.
+- Add subtle image zoom effect on hover.
+- Add smooth transition between pages.
+- Maintain luxury premium aesthetics.
+- Ensure perfect responsiveness on desktop, tablet, and mobile.
+
+Expected Result:
+Create a premium portfolio experience where every project card has a consistent layout, hover animations are clean and elegant, and all projects are properly connected to their respective Residential Interiors, Commercial Interiors, or Architecture service categories. Users should be able to seamlessly navigate between Services, Portfolio, and Project Detail pages without dead ends.

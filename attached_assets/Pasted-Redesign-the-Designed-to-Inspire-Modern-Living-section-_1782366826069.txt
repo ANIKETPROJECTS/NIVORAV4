@@ -1,0 +1,70 @@
+Redesign the "Designed to Inspire Modern Living" section for a premium interior design website.
+
+Requirements:
+
+• Reduce overall card height by 25–35% to make the page less scroll-heavy.
+• Create a compact, elegant layout with more content visible above the fold.
+• Use a balanced 55/45 image-to-content ratio.
+• Limit image height to 420–480px on desktop.
+• Keep generous white space but reduce excessive vertical gaps.
+• Make typography more refined:
+  - Project number smaller and subtle.
+  - Heading slightly smaller but more premium.
+  - Description width reduced for better readability.
+  - Tighten spacing between elements.
+
+Card Design:
+• Rounded corners (24–28px).
+• Soft shadow with very low opacity.
+• Clean luxury aesthetic.
+• Hover effect:
+  - Slight image zoom (1.03 scale).
+  - Smooth transition.
+  - Subtle elevation.
+
+Layout:
+• Alternate cards:
+  - Card 1: Image Left / Content Right
+  - Card 2: Content Left / Image Right
+  - Continue alternating pattern.
+• Desktop: cards centered with max-width 1400px.
+• Tablet and Mobile:
+  - Stack vertically.
+  - Reduce image height further.
+  - Maintain premium spacing.
+
+Scroll Animations:
+• Animate each card only when it enters viewport.
+• Use Intersection Observer or Framer Motion.
+• Animation sequence:
+  - Initial: opacity 0, translateY 60px.
+  - On enter viewport: opacity 1, translateY 0.
+  - Duration: 0.8–1s.
+  - Ease: easeOut.
+• Trigger once only.
+• Stagger internal elements:
+  - Project number
+  - Heading
+  - Divider
+  - Description
+  - CTA button
+• Delay between elements: 0.1–0.15s.
+
+Image Animation:
+• Fade + scale effect:
+  - opacity 0 → 1
+  - scale 0.95 → 1
+• Duration: 1s.
+
+Content Animation:
+• Slide from opposite direction of image.
+• Smooth luxury motion, not aggressive.
+
+Performance:
+• Lazy load images.
+• Animate only when visible.
+• Avoid heavy effects.
+• Maintain 60fps smooth scrolling.
+
+Goal:
+Create a more compact, premium, modern luxury portfolio section that feels elegant, clean, highly readable, less scrollable, and reveals each project card beautifully as the user scrolls.

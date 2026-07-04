@@ -1,0 +1,71 @@
+Fix the "Our Philosophy" section (2nd section, cream background) for mobile 
+responsive. Currently on mobile the right-side interior photo is being cut 
+off or hidden completely. Every element must be fully visible and 
+beautifully presented on mobile.
+
+CURRENT PROBLEM:
+- Split layout (text left 55%, image right 45%) is not collapsing properly 
+  on mobile
+- The bedroom/interior photo on the right is either overflowing, clipped, 
+  or disappearing on screens below 767px
+- Content is being hidden instead of stacking
+
+MOBILE FIX (max-width: 767px):
+
+LAYOUT:
+1. Remove the side-by-side split layout entirely on mobile
+2. Stack vertically in this exact order:
+   - Image FIRST (top) — full width, height 300px, object-fit: cover, 
+     object-position: center — so the interior photo is always fully 
+     visible and not cropped awkwardly
+   - Then the text block BELOW the image with padding 40px 24px
+
+IMAGE:
+3. The right-side photo — on mobile set:
+   width: 100%
+   height: 300px
+   object-fit: cover
+   object-position: center center
+   display: block
+   Remove any position: absolute, overflow: hidden, or max-height 
+   restrictions that are causing it to be clipped or hidden
+4. Remove the offset gold border frame effect on mobile — it causes 
+   overflow issues on small screens. Show the image cleanly without 
+   the decorative frame border on mobile.
+
+TEXT BLOCK:
+5. "OUR PHILOSOPHY" label: font-size 11px, letter-spacing 2.5px, 
+   centred, margin-bottom 16px
+6. Quote text ("Design is not just seen — it is experienced."): 
+   font-size: clamp(22px, 6vw, 30px), line-height 1.35, 
+   text-align left, padding 0
+7. Body paragraph: font-size 14px, line-height 1.8, 
+   text-align left, margin-top 20px
+8. Horizontal divider rule: full width, margin 28px 0
+9. "TIMELESS · FUNCTIONAL · PERSONAL" values line: 
+   font-size 10px, letter-spacing 2px, colour #C9A96E, 
+   text-align centre, margin-top 4px
+
+GENERAL MOBILE RULES FOR ALL SECTIONS:
+10. Never use display:none or visibility:hidden on any meaningful 
+    content element on mobile — every image, heading, paragraph, 
+    and CTA must remain visible
+11. Never use overflow:hidden on a parent container that clips a 
+    child image — instead control the image size directly with 
+    width and height on the img element itself
+12. For any section using CSS Grid or Flexbox with two columns — 
+    on mobile always add:
+    grid-template-columns: 1fr;
+    or
+    flex-direction: column;
+    so content stacks cleanly instead of overflowing or disappearing
+13. For all sections on mobile — check every image has:
+    max-width: 100%
+    height: auto (or a fixed mobile height like 260px–320px)
+    object-fit: cover
+    display: block
+    This prevents any image from being cut, squashed, or hidden
+14. All section padding on mobile: 56px top and bottom minimum — 
+    never reduce below this or sections will feel cramped
+15. All text containers: padding 0 20px minimum on mobile sides — 
+    no text should touch the screen edge

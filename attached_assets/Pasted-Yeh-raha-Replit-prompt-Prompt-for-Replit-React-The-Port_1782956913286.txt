@@ -1,0 +1,30 @@
+Yeh raha Replit prompt:
+
+Prompt for Replit (React):
+
+The Portfolio page's gallery images are not visible/displaying on both desktop and mobile views. Please debug and fix this:
+1. Diagnose the root cause — check these common issues:
+
+Broken image src paths: Check all image src attributes or import statements in the Portfolio/Gallery component — if images are imported from src/assets/ or referenced via relative paths, verify each file actually exists at that exact path and the filename/extension matches exactly (case-sensitive on Linux servers).
+CSS visibility issues: Check if images have opacity: 0, visibility: hidden, display: none, height: 0, or overflow: hidden on a parent container that's accidentally hiding them — this can happen if an animation's initial state (e.g., Framer Motion's initial={{ opacity: 0 }}) was set but the animate trigger never fires, leaving images permanently invisible.
+Container height issue: Check if the image container or grid has height: 0 or no defined height — images need either a fixed height, aspect-ratio, or content-driven height to be visible. Verify object-fit: cover is set with a proper height/aspect-ratio on each image element.
+z-index layering: Check if any overlay div or container is sitting on top of the images with a higher z-index, blocking them from view without actually hiding them.
+Failed network/asset requests: Open the browser console and check for any 404 errors for image files — if image files are missing from the project's asset folder entirely, identify which ones are missing and either fix the paths or replace them with placeholder images temporarily.
+
+2. After identifying the root cause, apply the fix:
+
+If broken paths: correct all image src/import references to match the actual file locations.
+If CSS/animation hiding them: fix the animation initial/animate states so images are visible, or add a fallback style={{ opacity: 1 }} to ensure they're never stuck invisible.
+If container height issue: add aspect-ratio: 4/3 (or similar) and object-fit: cover to all gallery image elements, and ensure the grid container has proper height/width defined.
+If z-index issue: fix the stacking order so images are not obscured.
+
+3. Ensure the fix works on both desktop and mobile:
+
+On desktop: confirm the gallery grid layout shows all images correctly with proper spacing.
+On mobile: confirm images are visible and the grid reflows to a single column or 2-column layout appropriately (using responsive CSS grid or flexbox media queries).
+
+4. After fixing, verify:
+
+All portfolio gallery images are clearly visible on both desktop and mobile without any blank/white spaces where images should be.
+No console errors related to image loading remain.
+Existing hover effects, animations, or overlays on the gallery images still work correctly after the fix.

@@ -1,0 +1,26 @@
+I want to redesign my Instagram feed section ("Follow Our Journey" / "@NivoraInteriors") to change from a 2-row grid layout to a single-row layout, matching this reference design:
+1. Layout change:
+
+Change the grid from displaying images in 2 rows of 3 (6 images total, large squares) to a single row of 6 smaller square images side by side, all fitting within one row across the container width.
+Each image should be a smaller square thumbnail with minimal/no gap between them (or a very thin gap, e.g., 2-4px), similar to an Instagram grid feed style.
+On smaller/mobile screens, this row can become horizontally scrollable, or wrap to 2-3 images per row if needed — but on desktop it should be a clean single row of 6.
+
+2. Background and heading style:
+
+Change the section background from the current dark green to white/light (matching the reference image's white background).
+Update the heading to "Follow Our Journey" in a serif font (matching the site's heading font used elsewhere, like in Testimonials/Before & After section headings) — dark text color instead of white/cream (since background is now light).
+Below the heading, show "@NIVORAINTERIORS" in small uppercase gold/tan letter-spaced text (similar style to how other section subheadings like "CLIENT STORIES" or "TRANSFORMATIONS" are styled elsewhere on the site).
+
+3. Bottom CTA:
+
+Below the image row, add a "SEE MORE ON INSTAGRAM" text link with a small right-arrow icon (→) next to it, centered below the grid. On hover, animate the arrow to move slightly right (translateX 4px), matching the same hover micro-interaction pattern used elsewhere on the site (like the "Read All Client Stories" link).
+This link should open the Nivora Instagram profile in a new tab.
+
+4. Image hover behavior (keep existing):
+
+Keep the existing hover effect where an Instagram icon overlay appears on top of an image on hover (already present in current implementation) — just adjust its sizing/positioning to fit the new smaller image dimensions.
+
+5. Implementation notes:
+
+Use CSS Grid or Flexbox with grid-template-columns: repeat(6, 1fr) (desktop) to achieve the single-row 6-image layout, adjusting to fewer columns via media queries for mobile.
+Make sure image aspect ratio stays square (aspect-ratio: 1/1) for all 6 thumbnails regardless of their original image dimensions (use object-fit: cover).

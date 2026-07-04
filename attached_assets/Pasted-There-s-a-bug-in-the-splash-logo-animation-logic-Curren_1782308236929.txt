@@ -1,0 +1,34 @@
+There's a bug in the splash/logo animation logic. Currently I'm using sessionStorage to decide whether to show the splash, but sessionStorage persists across page refreshes (it only clears when the tab is closed) — so when the user does a full page refresh on the Home page, the splash incorrectly gets skipped, even though it should always play on a refresh.
+Fix this with the following logic:
+
+Detect actual page reloads/fresh loads using the browser's Navigation Timing API instead of relying solely on sessionStorage:
+javascriptconst navigationEntries = performance.getEntriesByType("navigation");
+const isPageReloadOrFreshLoad = navigationEntries.length > 0 
+  ? (navigationEntries[0].type === "reload" || navigationEntries[0].type === "navigate")
+  : true; // fallback for browsers that don't support this API
+
+"reload" = user hit refresh/F5.
+"navigate" = user typed the URL, used a bookmark, or it's the very first load of a new tab/session.
+Both of these cases should show the splash.
+
+
+Use a separate in-memory flag (not sessionStorage) to track in-app navigation:
+
+Keep a React state or context value (e.g., hasNavigatedInApp, initialized to false) at the top-level App component, which only gets set to true once the user clicks any internal link/navigates via React Router (NOT on initial mount).
+On the Home page component, the splash should play if: isPageReloadOrFreshLoad === true OR hasNavigatedInApp === false.
+The splash should be SKIPPED only when the user navigates to Home via in-app routing (clicking navbar links/logo) after having already navigated elsewhere in the same session — i.e., hasNavigatedInApp === true AND it's not a reload.
+
+
+Expected behavior after this fix:
+
+Fresh browser load / new tab → splash plays.
+Hard refresh (F5 / Ctrl+R) on Home page → splash plays (this is the bug currently failing — must be fixed).
+Hard refresh on any other page, then navigating to Home → splash plays (since it's a fresh load).
+Navigate from About → Home via navbar link or logo (no refresh involved) → splash does NOT play, only the hero text animation plays.
+
+
+Implementation notes:
+
+Remove or stop relying on any sessionStorage-based "splashShown" flag for this logic — replace it entirely with the Navigation Timing API + in-memory app state approach described above.
+Test thoroughly on both desktop and mobile browsers, since Navigation Timing API support can vary slightly — include the fallback shown in step 1 for safety.
+Make sure the hero text animation (slowed down per the previous fix) still triggers correctly right after the splash finishes in all "splash plays" scenarios, and immediately (without splash) in the "skip splash" scenario.

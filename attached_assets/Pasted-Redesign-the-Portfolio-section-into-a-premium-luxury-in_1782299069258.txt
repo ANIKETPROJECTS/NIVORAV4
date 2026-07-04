@@ -1,0 +1,66 @@
+Redesign the “Portfolio” section into a premium luxury interior design showcase. Keep the existing dummy data and project items already available in the project — only redesign layout, interactions, typography, spacing, and visual presentation.
+
+Design Direction
+Modern luxury + editorial style
+Clean light background (#FAF8F5 or soft warm white)
+Elegant typography combination:
+Heading → Playfair Display / Cormorant Garamond
+Body → Inter / Poppins
+High-end architecture/interior studio aesthetic
+Section Structure
+Section Intro
+Large centered heading:
+“Spaces That Tell Your Story”
+Elegant thin divider below heading
+Short subtitle with max-width for readability
+Add subtle fade-up animation on scroll
+Portfolio Grid Layout
+Replace current equal cards with an asymmetrical masonry/grid layout
+First featured project larger (60%)
+Remaining cards arranged in dynamic proportions
+Desktop → 3 columns
+Tablet → 2 columns
+Mobile → stacked cards
+Project Card Redesign
+Rounded corners (20–28px)
+Use image-first design
+Overlay gradient at bottom for readability
+Default state:
+Show only project title + category
+Hover state:
+Smooth zoom image (scale 1.05)
+Dark luxury overlay
+Reveal:
+Project title
+Small project description
+View Project arrow button
+Animate upward (translateY -8px)
+Soft premium shadow
+Card Content
+Show:
+Project Name
+Category (Residential / Commercial)
+Short 1-line description
+Project number (01, 02, 03…)
+Interactive Experience
+Auto stagger reveal on scroll
+Smooth transitions (600–800ms)
+Cursor becomes subtle circular indicator on hover
+Optional parallax effect on images
+Micro Details
+Add thin accent line animation
+Maintain generous whitespace
+Image loading fade-in
+Glassmorphism label for category
+No harsh black colors
+Bottom CTA
+Centered:
+“Explore More Projects”
+Elegant outlined button with hover fill animation
+Technical Requirements
+Keep current dummy data structure unchanged
+Do not hardcode portfolio items
+Build reusable components
+Maintain accessibility and responsive behavior
+Use modern CSS transitions (avoid heavy libraries)
+Ensure premium, smooth, minimal aesthetic similar to top interior design studio websites.

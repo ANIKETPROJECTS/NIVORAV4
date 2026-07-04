@@ -1,0 +1,39 @@
+Right below the navbar, on the Home page, there's a thin dark green strip/
+sliver with a faint gradient/light bleeding into it, sitting between the 
+navbar and the "OUR PHILOSOPHY" section below it. It looks like a leftover 
+hero image, video background, or section that's bleeding through / 
+incorrectly clipped, rather than an intentional design element.
+
+STEP 1 — INVESTIGATE FIRST
+Please check the Home page structure right after the navbar and before the 
+"Our Philosophy" section:
+- Is there a hero section, background image, or video component that ends 
+  here, and is its height/overflow/margin causing a small sliver of it to 
+  remain visible below where it's supposed to end?
+- Is there a z-index or overflow:hidden issue causing part of one section 
+  to show through on top of or behind another?
+- Is there a stray empty div/section with a background-color or 
+  background-image set on it that shouldn't be there?
+- Check both the JSX/HTML structure and the CSS (margin, padding, height, 
+  min-height, overflow, position, z-index) of the sections immediately 
+  above and below this strip.
+
+STEP 2 — REPORT BACK BEFORE FIXING ANYTHING MAJOR
+First tell me what's actually causing this strip (e.g. "it's the tail end 
+of the hero background image because the hero section has a min-height 
+that's larger than its content" or "it's an extra empty div with a 
+background color left over from an earlier edit").
+
+STEP 3 — FIX IT
+Once the cause is confirmed:
+- If it's an unintended leftover/empty element — remove it cleanly, making 
+  sure no other spacing/layout breaks as a result.
+- If it's a sizing/overflow issue with the hero section bleeding past its 
+  intended boundary — correct the height/overflow/margin so the hero ends 
+  cleanly and the "Our Philosophy" section starts right after it with 
+  normal spacing, no visible sliver.
+- Make sure the fix applies correctly on both desktop and mobile widths.
+
+After fixing, please confirm there is a clean, intentional transition from 
+the navbar straight into the "Our Philosophy" section with no unexplained 
+dark strip, gradient remnant, or visual artifact in between.

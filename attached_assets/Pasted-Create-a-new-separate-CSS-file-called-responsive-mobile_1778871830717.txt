@@ -1,0 +1,81 @@
+Create a new separate CSS file called `responsive-mobile.css` for the Nivora Interiors website. This file should apply styles for screens with max-width: 767px. This is the primary mobile breakpoint. Cover all sections:
+
+GLOBAL:
+- All section padding: 60px top and bottom (reduced from desktop)
+- All max-width containers: width 92%, margin auto
+- Remove any horizontal overflow — add overflow-x: hidden to body and all section wrappers
+- Base font-size: 15px, line-height 1.7
+
+NAVBAR:
+- Height: 60px
+- Logo: height 36px
+- Hide all nav links and "Enquire Now" button
+- Show a hamburger menu icon (3 lines) on the right — 24px, gold colour #C9A96E
+- Hamburger opens a full-screen overlay menu: dark green background (#2E4A30), nav links stacked vertically, font-size 24px serif, centred, with 32px gap between links and a close (×) icon top-right
+- The overlay slides in from the right (transform translateX 100% → 0, 0.3s ease)
+
+HERO SECTION:
+- Height: 100svh (small viewport height for mobile browsers)
+- Headline font-size: clamp(32px, 8vw, 48px), line-height 1.2
+- Italic gold subtext: clamp(28px, 7vw, 42px)
+- Paragraph text: font-size 14px, padding 0 16px
+- CTA buttons: stacked vertically, full width (100%), height 50px, gap 12px
+- Mumbai/Pune tabs: font-size 12px, gap 16px
+- SCROLL indicator: hide on mobile
+
+PHILOSOPHY SECTION:
+- Quote text: font-size clamp(22px, 5.5vw, 32px), padding 0 8px
+- Body paragraph: font-size 14px
+- If split layout (portrait + quote): stack vertically — portrait image first (full width, height 280px, object-fit cover), then quote block below with padding-top 40px
+- Brand values line: font-size 10px, letter-spacing 2px, margin-top 28px
+
+SERVICES SECTION:
+- Change 3-column grid to single column stacked layout
+- Each panel: width 100%, height 320px
+- Panel title: font-size 22px
+- Explore link: padding 16px 20px, font-size 12px
+
+PROCESS SECTION:
+- Remove split layout entirely — stack vertically
+- Images (left side): display as a single image, full width, height 280px, object-fit cover, margin-bottom 40px. Hide the overlapping second image on mobile.
+- Steps: single column, each step full width
+- Large faint step numbers (01, 02...): font-size 48px (reduced from 72px desktop)
+- Step title: font-size 18px
+- Step description: font-size 13px
+
+BEFORE & AFTER + PROJECTS:
+- Before/After slider: width 100%, height 260px
+- Projects grid: 1 column on mobile (stacked), OR 2 columns with gap 2px — each cell height 200px
+- "View All Projects" button: full width, height 50px
+
+TESTIMONIALS:
+- Change 3-column card grid to single column stacked layout
+- Each card: padding 24px, margin-bottom 16px
+- Quote text: font-size 13px
+- Star icons: font-size 13px
+
+INSTAGRAM GRID:
+- Change 3×2 grid to 2×3 grid (2 columns, 3 rows) on mobile
+- Each image: aspect-ratio 1/1, object-fit cover
+- Gap: 3px
+- Section heading: font-size clamp(24px, 7vw, 36px)
+- "Follow on Instagram →" link: font-size 12px, margin-top 20px
+
+FINAL CTA:
+- Section padding: 80px top and bottom
+- Heading: font-size clamp(28px, 7vw, 40px), line-height 1.3
+- Subtext: font-size 13px, padding 0 16px
+- Button: full width, height 52px, font-size 12px
+
+FOOTER:
+- Change 4-column grid to single column stacked layout
+- Each column: margin-bottom 36px
+- Column heading: font-size 11px, letter-spacing 2.5px, margin-bottom 14px
+- Footer links: font-size 13px, line-height 2.4
+- Bottom bar: stacked vertically, centred text, gap 8px between the two lines
+- Footer total padding: 60px top, 32px bottom
+
+FLOATING WHATSAPP BUTTON:
+- Size: 52px × 52px (slightly smaller than desktop)
+- Position: bottom 20px, right 16px
+- Keep pulse animation

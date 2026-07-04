@@ -1,0 +1,72 @@
+I want to restyle the "Before & After" / transformation sliders section 
+(keep all existing content, labels, descriptions, drag-to-compare 
+functionality, auto-play reveal, and carousel/dots behavior exactly as is 
+— this is a visual/layout-only change).
+
+1. CHANGE IMAGE BOX ASPECT RATIO TO A WIDER RECTANGLE
+Currently each before/after image card is closer to a square/tall 
+proportion. Change it to a wider, shorter rectangle — roughly a 16:10 or 
+3:2 aspect-ratio (wider than tall), instead of the current taller ratio. 
+Apply this via CSS aspect-ratio (or adjust the existing height/width 
+values) on the image-compare container so both the before and after 
+images, the drag handle, and the "SLIDE TO COMPARE" badge still scale and 
+center correctly inside the new proportions. Apply this on desktop; on 
+mobile, you can keep a slightly taller ratio if needed for readability, 
+but make it noticeably wider/shorter than the current mobile ratio too.
+
+2. ADD A SHORT DESCRIPTIVE LINE BESIDE THE "BEFORE & AFTER" HEADING
+Currently the section just has the "Before & After" heading with a 
+centered subtext line below it. I want to add an additional short line of 
+text positioned to the RIGHT of the heading (roughly aligned with the top 
+of the heading, similar to how some sections have a small instructional 
+line sitting beside a large heading) — small caps, letter-spaced, muted 
+color, right-aligned. Use this placeholder copy (I can edit the wording 
+later):
+
+"SLIDE TO DISCOVER HOW WE TRANSFORM RAW SPACES INTO REFINED LIVING 
+EXPERIENCES."
+
+Layout:
+- Desktop: heading stays on the left, this small text sits to the right, 
+  roughly vertically aligned with the heading block (top-aligned or 
+  center-aligned with it — whichever looks visually balanced).
+- Mobile: stack this text below the heading, centered, since there won't 
+  be horizontal room beside it.
+- Keep the existing centered subtext ("See how thoughtful design 
+  transforms...") as is, below the heading — this new line is in addition 
+  to it, not a replacement.
+
+3. STAGGER THE 2 CARDS PER PAGE INTO A DIAGONAL LAYOUT
+On desktop, where the carousel shows 2 before/after cards per page side by 
+side, currently both cards are aligned at the same vertical position (top 
+edges level with each other). Change this so the second (right) card is 
+vertically offset downward relative to the first (left) card, creating a 
+diagonal/staggered visual rhythm — e.g. shift the right card down by 
+roughly 60-80px relative to the left card.
+- Make sure the title + before/after description text block under EACH 
+  card still sits directly below its own respective image card (so the 
+  text block for the second card is also shifted down to match, not left 
+  behind).
+- Make sure this offset doesn't cause unwanted empty gaps or layout shifts 
+  in the rest of the page below the section — adjust the section's overall 
+  height/margin so spacing after the section still looks clean regardless 
+  of which card page is currently active.
+- This diagonal stagger only applies on desktop (2-cards-per-page view). 
+  On mobile (1-card-per-page), keep cards in a normal single-column stack 
+  with no offset.
+
+4. DO NOT CHANGE
+- The 5 sliders' content, labels (e.g. "INITIAL SPACE"/"NIVORA DESIGN"), 
+  titles, and before/after descriptions.
+- The existing carousel navigation (arrows, dots), auto-play reveal 
+  animation, and manual drag-to-compare functionality — all of this should 
+  keep working exactly as already implemented.
+
+After implementing, please verify on both desktop and mobile that:
+(a) the image boxes are now wider/shorter rectangles,
+(b) the new descriptive line appears beside the heading on desktop and 
+    stacks below it on mobile,
+(c) the 2 cards per page are diagonally staggered on desktop with their 
+    text blocks correctly offset to match,
+(d) all existing carousel, drag, and auto-play functionality still works 
+    without breaking.

@@ -1,0 +1,35 @@
+I want to redesign the Testimonials section of my React website as follows:
+1. Background color:
+
+Change the background color of the entire Testimonials section ("What Clients Say") to #5f745e.
+
+2. Replace the 3-column grid with a single-card auto-scrolling carousel:
+
+Instead of showing 3 testimonial cards side by side, show only ONE testimonial card centered on screen at a time.
+I have 6 testimonials total — store them in an array of objects ({ name, rating, text } or similar) and map through them via the carousel.
+
+3. Card design (match the reference look):
+
+White/cream background card with a olive green border (#4a5c49 or similar shade) around it, rounded corners.
+A large quotation mark icon (") positioned top-right inside the card.
+5-star rating row top-left inside the card (gold/tan stars, same as existing).
+Testimonial text in italic serif font, centered or left-aligned, below the stars.
+Client name (and optionally role/project type) below the testimonial text.
+
+4. Carousel behavior:
+
+Auto-scroll: automatically transition to the next testimonial every 5–6 seconds, with a smooth slide or fade transition. Loop back to the first testimonial after the last one.
+Auto-scroll should NOT pause on hover — it keeps running continuously regardless of user interaction with the card.
+Left/right arrow buttons on either side of the card (or just outside it) to manually go to the previous/next testimonial. Style arrows to match the gold/olive theme.
+Dots indicator below the card — one dot per testimonial (6 dots total), with the active testimonial's dot highlighted (filled gold/tan, others outlined or faded).
+Clicking a dot should jump directly to that testimonial.
+Clicking an arrow or a dot should NOT pause or stop the auto-scroll timer — it keeps running in the background regardless of manual navigation (auto-scroll continues from wherever the user navigated to).
+
+5. Implementation notes:
+
+Use useState for currentIndex and useEffect with setInterval (5000–6000ms) for the auto-scroll, making sure to clean up the interval on unmount.
+Use CSS transitions or a library like framer-motion (if already used in the project) for smooth slide/fade animation between testimonials.
+Make sure it's fully responsive — card should scale down nicely on mobile, arrows can move closer to the card edges on smaller screens.
+Keep the existing heading "What Clients Say", subheading "CLIENT STORIES", and intro paragraph above the carousel unchanged — only restructure the testimonial cards below into this carousel format.
+
+

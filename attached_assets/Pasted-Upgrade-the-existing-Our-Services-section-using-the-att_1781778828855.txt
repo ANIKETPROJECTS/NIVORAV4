@@ -1,0 +1,138 @@
+Upgrade the existing "Our Services" section using the attached card design as inspiration. Do not create a new section. Replace the current service layout with a premium luxury card grid while maintaining the website's existing branding, routing, and functionality.
+
+DESIGN GOAL
+Create a high-end interior design agency experience similar to luxury architecture and interior studio websites. The section should feel elegant, premium, interactive, and visually consistent with the Philosophy section.
+
+SECTION LAYOUT
+- Background: existing light beige/off-white website background.
+- Keep section title and subtitle styling consistent with the site.
+- Add generous spacing above and below the section.
+- Max width: 1400px.
+- Center aligned.
+
+CARD GRID
+Desktop:
+- 4 cards in first row.
+- 3 cards in second row.
+- Equal card heights.
+- Consistent spacing (24-32px gap).
+
+Tablet:
+- 2 cards per row.
+
+Mobile:
+- Single column.
+
+CARD SIZE
+Desktop:
+- Height: 520px
+- Width: responsive within grid
+
+Tablet:
+- Height: 460px
+
+Mobile:
+- Height: 400px
+
+CARD DESIGN
+- Large full-cover image.
+- Border radius: 18px.
+- Overflow hidden.
+- Premium shadow.
+- Dark gradient overlay from bottom.
+- Gold service number (01–07) in top-left corner.
+- Service title visible by default.
+- Description hidden initially.
+- CTA hidden initially.
+
+CONTENT
+
+01 Residential Interiors
+Designing elegant homes and living spaces that blend comfort, functionality, and timeless beauty.
+
+02 Commercial Interiors
+Creating productive offices, clinics, retail stores, and professional workspaces.
+
+03 Hospitality Interiors
+Crafting memorable guest experiences through hotels, cafés, restaurants, and hospitality environments.
+
+04 Architecture & Space Planning
+Planning layouts, elevations, facades, and architectural concepts for optimized spaces.
+
+05 2D & 3D Visualization
+Creating drawings, renders, and visual presentations that bring ideas to life.
+
+06 Developer Solutions
+Design support for sample flats, amenities, marketing suites, and property enhancement.
+
+07 Renovation & Makeovers
+Transforming existing spaces through upgrades, modernization, and complete redesigns.
+
+INITIAL STATE
+- Service number visible.
+- Service title visible near bottom.
+- Description hidden.
+- CTA hidden.
+- Image slightly darkened for readability.
+
+HOVER ANIMATION
+When cursor enters card:
+
+1. Image zooms smoothly (scale 1 → 1.08).
+2. Overlay becomes slightly darker.
+3. Service title moves upward slightly.
+4. Description fades and slides upward.
+5. "Explore Service →" appears.
+6. Gold accent line expands.
+7. Card lifts by 10px.
+8. Shadow becomes deeper.
+
+Animation Duration:
+- 400–600ms
+- ease-out timing
+
+SCROLL ANIMATION
+Cards should animate beautifully when entering viewport.
+
+Use staggered reveal:
+
+Card 1 → 100ms
+Card 2 → 200ms
+Card 3 → 300ms
+Card 4 → 400ms
+Card 5 → 500ms
+Card 6 → 600ms
+Card 7 → 700ms
+
+Animation:
+- opacity: 0 → 1
+- translateY: 50px → 0
+- slight scale: 0.96 → 1
+
+Use Intersection Observer.
+Trigger only once.
+Keep animations smooth and performant.
+
+LOADING EXPERIENCE
+- Prevent layout shifts.
+- Reserve card dimensions before image loads.
+- Use image lazy loading.
+- Add subtle skeleton shimmer until image is loaded.
+- Images should fade in smoothly.
+
+VISUAL STYLE
+- Luxury serif typography.
+- Gold accents.
+- Olive green secondary accents.
+- Beige background.
+- Consistent with Nivora Interiors branding.
+- Elegant and sophisticated.
+- Avoid flashy effects.
+
+IMPORTANT
+- Preserve existing navigation and links.
+- Preserve existing website animations.
+- Do not create a new services section.
+- Replace and enhance the current service cards only.
+- Ensure responsive behavior across desktop, tablet, and mobile.
+- Optimize for performance and smooth animations.

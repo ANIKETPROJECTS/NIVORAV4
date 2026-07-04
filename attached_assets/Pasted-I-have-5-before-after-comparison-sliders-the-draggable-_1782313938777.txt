@@ -1,0 +1,73 @@
+I have 5 before/after comparison sliders (the draggable image-compare cards 
+with "SLIDE TO COMPARE" labels, e.g. "Living Room Refresh", "Master Bedroom 
+Redesign", etc.) in my Transformation Stories / Before & After section. 
+
+Right now they're laid out as a static grid, but fitting all 5 side-by-side 
+at their current size makes the page way too long/wide. I do NOT want to 
+shrink the card size to fit more in — I want to keep each card exactly the 
+size it currently is (same size as currently shown, e.g. 2 cards per row on 
+desktop, 1 per row on mobile).
+
+Please convert this section into a CAROUSEL/SLIDER that shows only the 
+current number of cards per view (2 at a time on desktop, 1 at a time on 
+mobile — match whatever the current responsive layout already shows), and 
+lets the user move through all 5 cards in groups, like this:
+
+1. CAROUSEL STRUCTURE
+- Group the 5 cards into pages based on how many fit per view: e.g. on 
+  desktop showing 2 per view → pages would be [card1, card2], 
+  [card3, card4], [card5] (last page can show fewer cards, don't stretch 
+  card5 to fill the space awkwardly — left-align it or center it).
+- On mobile showing 1 per view → 5 pages, one card each.
+- Use a horizontal slide transition (transform: translateX) between pages, 
+  not a fade, so it feels like physically sliding to the next set.
+
+2. NAVIGATION CONTROLS
+- Add left/right arrow buttons (similar style/position to what's already 
+  used elsewhere on the site) to manually move to the previous/next page 
+  of cards.
+- Add dot indicators below the carousel, one dot per PAGE (not per 
+  individual card) — so if there are 3 pages (on desktop: 2+2+1), show 3 
+  dots. Clicking a dot jumps directly to that page. Highlight the active 
+  page's dot.
+- Looping: after the last page, clicking "next" (or auto-advancing) should 
+  loop back to the first page smoothly.
+
+3. AUTO-ADVANCE BASED ON THE EXISTING AUTO-PLAY REVEAL ANIMATION
+We already have an auto-play reveal animation on each before/after card 
+(divider moves center → before → after → back to center when the card 
+enters view or is hovered). Now tie the carousel's auto-advance to this:
+- When a page of cards becomes active/visible, let their auto-play reveal 
+  animations run as already implemented.
+- Once the visible card(s) on the current page finish their full reveal 
+  animation sequence, wait a short pause (~1-1.5s), then automatically 
+  slide the carousel to the next page (which then triggers ITS cards' 
+  reveal animations, and so on).
+- If a page has 2 cards, wait for BOTH cards' animations to finish before 
+  auto-advancing to the next page.
+
+4. MANUAL OVERRIDE BEHAVIOR
+- If the user clicks an arrow or a dot at any point, immediately cancel 
+  any pending auto-advance timer and jump to the page they selected.
+- If the user is manually dragging a before/after handle on a currently 
+  visible card, don't let the carousel auto-advance away from that card 
+  until the drag interaction ends.
+- After any manual navigation, auto-advance can resume normally from 
+  whichever page the user landed on.
+
+5. KEEP EXISTING FUNCTIONALITY INTACT
+- Each individual card's manual drag-to-compare slider must keep working 
+  exactly as it does now.
+- Each card's labels (e.g. "INITIAL SPACE"/"NIVORA DESIGN", "RAW SPACE"/
+  "BESPOKE RETREAT") and the title/description content below each card 
+  should remain unchanged, just now living inside a carousel page instead 
+  of a static grid.
+
+Please implement this so it works smoothly on both desktop (2 cards per 
+page) and mobile (1 card per page), and test:
+(a) the carousel auto-advances through all pages in order once each 
+    page's reveal animation finishes,
+(b) arrows and dots let the user jump between pages manually at any time,
+(c) dragging a card's compare handle doesn't get interrupted by 
+    auto-advance,
+(d) it loops back to page 1 after the last page.

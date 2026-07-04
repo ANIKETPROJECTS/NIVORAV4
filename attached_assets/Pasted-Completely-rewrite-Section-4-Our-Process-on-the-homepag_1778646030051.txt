@@ -1,0 +1,236 @@
+Completely rewrite Section 4 "Our Process" on the homepage.
+Discard the current implementation entirely and rebuild from scratch.
+
+─────────────────────────────────────────
+FONTS — CHANGE THESE FIRST (very important)
+─────────────────────────────────────────
+In index.css, update Google Fonts import to:
+
+@import url('https://fonts.googleapis.com/css2?
+family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600
+&family=DM+Sans:wght@300;400;500
+&family=Cinzel:wght@400;500
+&display=swap');
+
+Font roles:
+- Section heading "Our Process": Cormorant Garamond, 600, 64px
+- Eyebrow "HOW WE WORK": Cinzel, 400, 10px, letter-spacing 0.4em
+- Step titles (Discover, Visualise etc): Cormorant Garamond, 
+  italic, 500, 32px
+- Step descriptions: DM Sans, 300, 15px, line-height 1.9
+- Tagline + button: Cinzel, 400, 9px, letter-spacing 0.3em
+- All text colors on light background: #21291a (olive/near-black)
+
+─────────────────────────────────────────
+SECTION LAYOUT
+─────────────────────────────────────────
+Full-width section.
+Background: #F5F2ED (warm alabaster). No dark background.
+Padding: 120px top, 120px bottom.
+Max-width: 1200px, centered with auto margins.
+
+Two-column grid:
+  Left column: 42% width
+  Right column: 58% width
+  Gap between columns: 80px
+  Align items: flex-start
+
+─────────────────────────────────────────
+LEFT COLUMN — STACKED PHOTO LAYOUT
+─────────────────────────────────────────
+Use position: relative on the left column. 
+Set min-height: 580px.
+
+Photo 1 (top):
+  - Size: 320px wide × 400px tall
+  - Position: absolute, top: 0, left: 0
+  - Background: use an actual interior image from the project
+    gallery if available, else use gradient: 
+    linear-gradient(160deg, #8a7a65 0%, #b5a48e 100%)
+  - border: 1.5px solid #a18661
+  - border-radius: 0 (sharp corners, luxury editorial feel)
+  - object-fit: cover
+
+Photo 2 (overlapping bottom-right):
+  - Size: 240px wide × 300px tall  
+  - Position: absolute, top: 200px, left: 140px
+  - Background: use second interior image, else gradient:
+    linear-gradient(160deg, #3d4f2e 0%, #21291a 100%)
+  - border: 1.5px solid #a18661
+  - border-radius: 0
+  - object-fit: cover
+  - box-shadow: -8px 8px 40px rgba(33,41,26,0.15)
+
+Gold accent square at overlap corner:
+  - 12px × 12px
+  - Position: absolute, top: 198px, left: 138px
+  - Background: #a18661
+  - z-index: 10
+
+Studio label below collage:
+  - Position: absolute, bottom: 0, left: 0
+  - Font: Cinzel, 8px, letter-spacing 0.3em
+  - Color: #6D5A41
+  - Text: "NIVORA INTERIORS  ·  MUMBAI & PUNE"
+
+─────────────────────────────────────────
+RIGHT COLUMN — PROCESS STEPS
+─────────────────────────────────────────
+
+Eyebrow text at top:
+  "HOW WE WORK"
+  Font: Cinzel, 10px, letter-spacing 0.4em
+  Color: #a18661
+  Margin-bottom: 16px
+
+Main heading:
+  "Our Process"
+  Font: Cormorant Garamond, 600, 64px, line-height 1.0
+  Color: #21291a
+  Margin-bottom: 52px
+
+Steps list — 5 steps total:
+Each step is a div with these exact styles:
+  - Padding: 28px 0 28px 28px
+  - Border-left: 2px solid rgba(161,134,97,0.35)
+  - Margin-bottom: 0 (steps are continuous, no gap)
+  - Position: relative
+  - Transition: border-left-color 0.4s ease
+  On hover: border-left-color becomes #a18661 (full gold)
+
+Inside each step:
+
+  Step header row (flex, align-items center, gap 12px):
+    - Icon: use Lucide React icon, size 18px, color #a18661
+      · Discover → <Compass size={18} />
+      · Visualise → <Eye size={18} />
+      · Execute → <Wrench size={18} />
+      · Reveal → <Sparkles size={18} />
+      · Handover → <KeyRound size={18} />
+    - Step title:
+      Font: Cormorant Garamond, italic, 500, 32px
+      Color: #21291a
+      Transition: color 0.3s
+      On hover: color #a18661
+
+  Step description (below header):
+    Margin-top: 10px
+    Font: DM Sans, 300, 15px, line-height 1.9
+    Color: #6D5A41
+    Max-width: 560px
+
+  Thin divider line after each step (except last):
+    Height: 1px
+    Background: rgba(161,134,97,0.2)
+    Width: 100%
+    Margin: 0 0 0 -28px (extends to left edge including border)
+
+THE 5 STEPS — exact content:
+
+  Step 1:
+    Icon: Compass
+    Title: Discover
+    Text: "A free consultation to understand your lifestyle, 
+    your budget, and what your space truly needs to do for you."
+
+  Step 2:
+    Icon: Eye
+    Title: Visualise
+    Text: "Detailed 3D renders, mood boards, and material 
+    palettes — so you see your home clearly before we build 
+    a single thing."
+
+  Step 3:
+    Icon: Wrench
+    Title: Execute
+    Text: "Our master craftsmen bring the design to life with 
+    precision, managed on-site with meticulous care and 
+    clear timelines."
+
+  Step 4:
+    Icon: Sparkles
+    Title: Reveal
+    Text: "The handover. A deep-cleaned, styled, and 
+    ready-to-move-in space that surprises — even though 
+    you approved every detail."
+
+  Step 5:
+    Icon: KeyRound
+    Title: Handover
+    Text: "Your space, fully ready. A finished interior 
+    built for real living — and a relationship we hope 
+    continues well beyond delivery."
+
+After the steps list, add:
+
+Tagline row (margin-top: 40px):
+  "END-TO-END  ·  TRANSPARENT  ·  HASSLE-FREE"
+  Font: Cinzel, 9px, letter-spacing 0.35em
+  Color: #6D5A41
+
+CTA Button (margin-top: 20px):
+  Text: "BOOK FREE CONSULTATION"
+  Font: Cinzel, 9px, letter-spacing 0.25em
+  Background: #21291a
+  Color: #F5F2ED
+  Padding: 16px 36px
+  Border: none
+  Border-radius: 1px (almost sharp)
+  Cursor: pointer
+  Transition: background 0.3s, color 0.3s
+  On hover: background #a18661, color #21291a
+
+─────────────────────────────────────────
+SCROLL ANIMATION (Framer Motion)
+─────────────────────────────────────────
+Wrap the entire section in a motion.section with:
+  initial: { opacity: 0 }
+  whileInView: { opacity: 1 }
+  viewport: { once: true, amount: 0.2 }
+  transition: { duration: 0.6 }
+
+Left column (photo collage):
+  initial: { opacity: 0, x: -50 }
+  whileInView: { opacity: 1, x: 0 }
+  transition: { duration: 0.8, ease: "easeOut" }
+
+Right column eyebrow + heading:
+  initial: { opacity: 0, y: 30 }
+  whileInView: { opacity: 1, y: 0 }
+  transition: { duration: 0.7, delay: 0.2 }
+
+Each step (staggered):
+  Use motion.div with:
+  initial: { opacity: 0, y: 20 }
+  whileInView: { opacity: 1, y: 0 }
+  transition: { duration: 0.5, delay: index * 0.1 }
+
+─────────────────────────────────────────
+MOBILE RESPONSIVE (below 768px)
+─────────────────────────────────────────
+Stack columns vertically.
+Left column (photo collage) comes first:
+  - Photo 1: width 100%, height 260px
+  - Photo 2: display none on mobile (too cluttered)
+  - min-height: auto
+
+Right column below, full width.
+Step padding-left reduced to 20px.
+Heading font-size: 44px on mobile.
+Step title font-size: 26px on mobile.
+Button full width on mobile.
+
+─────────────────────────────────────────
+IMPORTANT NOTES
+─────────────────────────────────────────
+- Do NOT use any dark olive background in this section
+- Do NOT use box shadows except the subtle one on Photo 2
+- Do NOT center-align text — all text is left-aligned
+- Do NOT add any background cards or panels behind steps
+- No rounded corners anywhere in this section (border-radius: 0 
+  or 1px max)
+- Ghost numbers behind step titles: REMOVE ENTIRELY — 
+  they looked messy in the previous version
+- Keep generous whitespace — do not compress the layout
+- This section should feel like a page from a luxury 
+  architecture magazine, not a SaaS website

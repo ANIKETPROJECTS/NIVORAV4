@@ -1,0 +1,38 @@
+Do NOT modify the Navbar or Footer. Keep their existing dark green theme exactly as it is.
+
+Only update the Portfolio Project Detail pages (such as "Royal Living Redefined", "Modern Elegance", etc.).
+
+Design Requirements:
+
+1. The entire Portfolio section must follow a premium White + Cream luxury theme.
+2. Remove the current dark green background from all Portfolio pages (except Navbar and Footer).
+3. Use:
+   - Primary Background: #FFFCF7
+   - Secondary Background: #F7F2EA
+   - Card Background: #FFFFFF
+   - Accent: #D4B483
+   - Text: #2E2A26
+4. The hero/banner section should have a light cream overlay instead of the current dark overlay so the page feels bright and elegant.
+5. All sections after the hero (Overview, Gallery, Features, Timeline, Materials, Related Projects, etc.) must use alternating White and Cream backgrounds.
+6. All cards should have:
+   - White background
+   - Soft shadow
+   - 16-20px border radius
+   - Thin cream border (#E9DED0)
+7. Replace any dark green section backgrounds with White or Cream only.
+8. Buttons should use:
+   - Cream/Gold background (#D4B483)
+   - Dark text (#2E2A26)
+   - Soft hover animation
+9. Section headings should use elegant typography with dark charcoal text, while body text should be medium grey for readability.
+10. Maintain generous white space and consistent padding throughout the Portfolio pages for a premium luxury feel.
+11. Ensure all animations still work exactly as before. Do not remove or alter any animation logic.
+12. Keep all layouts, components, routing, functionality, responsiveness, and content unchanged. Only update the visual theme.
+13. On mobile and desktop, maintain the same clean White + Cream aesthetic with proper spacing and alignment.
+14. The Portfolio pages should visually match a high-end luxury interior design website, with a bright, sophisticated, and minimal appearance.
+
+Important:
+- Do NOT change the Home page.
+- Do NOT change the Services, About, Testimonials, or Contact pages.
+- Do NOT modify Navbar or Footer.
+- Apply these changes ONLY to the Portfolio Project Detail pages.

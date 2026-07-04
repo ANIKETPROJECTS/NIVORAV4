@@ -1,0 +1,126 @@
+Redesign the Home Page Services section.
+
+Current:
+Only 3 service cards exist.
+
+Goal:
+Create a premium SERVICES showcase with 7 service cards.
+Cards should feel elegant, interactive and luxury—not standard boxes.
+
+Section Style:
+- Background must remain LIGHT (not dark).
+- Use website palette:
+
+Background → Warm ivory (#F7F4EF)
+Card → Soft beige (#F3EEE7)
+Text → Deep charcoal (#262421)
+Accent → Luxury gold (#C8A56A)
+Border → #E8DED1
+
+Section Header:
+Small label:
+OUR SERVICES
+
+Large serif heading:
+"Spaces Designed Across Every Experience"
+
+Subtitle:
+From private residences to large-scale environments, we design spaces that balance beauty, function and identity.
+
+Layout:
+Desktop:
+- 7 cards in premium editorial layout.
+- First row → 4 cards
+- Second row → 3 centered cards
+
+Tablet:
+2 columns
+
+Mobile:
+1 column
+
+Card Interaction (IMPORTANT):
+Default State:
+- Show only:
+  Service Number
+  Service Title
+  Minimal icon
+- Description hidden.
+
+Hover State:
+- Card expands slightly.
+- Description smoothly appears from bottom.
+- Image zoom (subtle).
+- Gold accent line animates.
+- Title shifts upward.
+- Description fades + slides in.
+
+Animation:
+Duration: 500ms
+Ease: cubic-bezier(0.22,1,0.36,1)
+
+Card Style:
+- Rounded corners (24px)
+- Large whitespace
+- Premium shadow
+- Border only
+- Height: 340–420px
+- Overflow hidden
+
+Each card should have subtle background imagery related to service with dark overlay for readability.
+
+Services:
+
+01
+Residential Interiors
+Description:
+Thoughtfully designed homes that reflect personality, lifestyle and everyday comfort.
+
+02
+Commercial Interiors
+Description:
+Functional workspaces, offices and retail environments designed for performance.
+
+03
+Hospitality Interiors
+Description:
+Hotels, cafés and guest experiences crafted to feel memorable and welcoming.
+
+04
+Architecture & Space Planning
+Description:
+Layouts, planning and built forms that connect aesthetics with purpose.
+
+05
+2D & 3D Visualization
+Description:
+Concept drawings, renders and visual development before execution.
+
+06
+Developer Solutions
+Description:
+Sample flats, amenities and curated experiences that enhance property value.
+
+07
+Renovation & Makeovers
+Description:
+Transform existing spaces through upgrades, modernization and thoughtful redesign.
+
+Micro Interactions:
+- Cursor hover glow
+- Smooth card lift
+- Gold underline reveal
+- Slight parallax effect
+
+Remove:
+❌ Existing 3-card layout
+❌ Equal-width boring cards
+❌ Heavy dark backgrounds
+
+Keep:
+✔ Luxury interior aesthetic
+✔ Premium typography
+✔ Minimal elegant feeling
+
+Final result:
+Should feel like a high-end interior design studio portfolio section where descriptions elegantly appear on hover.

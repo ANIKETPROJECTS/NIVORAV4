@@ -1,0 +1,29 @@
+I want to update the Testimonials section on my homepage as follows:
+1. Section background:
+
+Change the full background color of the Testimonials section to #5f745e.
+
+2. Convert testimonial cards into a single rectangular auto-scrolling carousel (reference: attached image of a rectangular testimonial card with quote icon, "Hear what our clients have said about us!" left side text, and review text on the right with arrows):
+
+Instead of 3 cards in a grid, show ONE testimonial at a time in a wide rectangular card (not square, not rounded pill shape — clean rectangle with slightly rounded corners only, matching the reference image proportions).
+The card should have a border color of #21291a around the rectangle.
+Inside the rectangle, keep the existing layout style: 5-star rating, testimonial quote text, and client name — styled cleanly within this rectangular shape.
+Large quotation mark icon (") positioned top-right inside the card, same as before.
+
+3. Star icon color:
+
+Change the color of the star rating icons to #a18661.
+
+4. Carousel behavior:
+
+Auto-scroll: automatically transition to the next testimonial every 5 seconds with a smooth slide or fade transition, looping back to the first after the last one.
+Dots indicator only below the card — one dot per testimonial (6 dots total since there are 6 testimonials), with the active testimonial's dot highlighted (filled in #a18661 or #21291a, others outlined/faded).
+Clicking a dot should jump directly to that testimonial, and the auto-scroll timer should continue running in the background regardless (does not pause).
+Do NOT include left/right arrow buttons — navigation should be via dots only, plus the automatic scrolling.
+
+5. Implementation notes:
+
+Use useState for currentIndex and useEffect with setInterval (5000ms) for auto-scroll, cleaning up on unmount.
+Use CSS transitions for smooth slide/fade animation between testimonials.
+Make it fully responsive — on smaller screens the rectangular card should scale down in width while maintaining the same proportions and border styling.
+Keep the existing heading "What Clients Say", subheading "CLIENT STORIES", and intro paragraph above the carousel unchanged.

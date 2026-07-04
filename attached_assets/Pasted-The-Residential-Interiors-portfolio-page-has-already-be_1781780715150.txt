@@ -1,0 +1,188 @@
+The Residential Interiors portfolio page has already been created.
+
+Now add a new premium section called "How We Do It".
+
+IMPORTANT:
+- Do NOT modify or remove any existing sections.
+- Insert this new section immediately AFTER the "Our Expertise" section and BEFORE the "Featured Residential Projects" section.
+- Maintain the existing Nivora Interiors luxury design language, spacing, typography, colors, and animations.
+
+SECTION TITLE
+
+How We Do It
+
+Subtitle:
+Our refined design journey transforms your vision into a beautifully crafted living space through a seamless and transparent process.
+
+Use an elegant serif heading with a subtle gold divider beneath it.
+
+-------------------------------------------------
+
+LAYOUT
+
+Desktop:
+- Vertical timeline centered on the page.
+- Thin olive-green vertical line.
+- Small premium gold diamond icons positioned on the timeline.
+- Process cards alternate left and right.
+
+Mobile:
+- Convert to a single-column timeline.
+- Timeline remains visible on the left.
+- Cards stack vertically.
+
+Max width:
+1200px
+
+Background:
+Use the same light beige/off-white background already used throughout the website.
+Do NOT introduce a different color palette.
+
+-------------------------------------------------
+
+PROCESS STEPS
+
+1.
+Title:
+Preliminary Call
+
+Description:
+It starts with a preliminary call to understand your lifestyle and design aspirations.
+
+-------------------------------------------------
+
+2.
+
+Title:
+Ground Plan & Blueprints
+
+Description:
+Next, we create a ground plan and blueprints to get your buy-in for the creative vision.
+
+-------------------------------------------------
+
+3.
+
+Title:
+Project Approval & Lock-in
+
+Description:
+We await your approval next, and move on once we both agree on the initial plan.
+
+-------------------------------------------------
+
+4.
+
+Title:
+Mood Boards & 3D Design
+
+Description:
+After finalizing budgets and timelines, we translate ideas into tangible concepts through mood boards and immersive 3D designs.
+
+-------------------------------------------------
+
+5.
+
+Title:
+Material Sourcing & Selections
+
+Description:
+With a clear design direction, we meticulously curate materials, finishes, fabrics, and furnishings.
+
+-------------------------------------------------
+
+6.
+
+Title:
+Site Execution & Vendor Coordination
+
+Description:
+We coordinate with trusted vendors to manage every aspect of the build.
+
+-------------------------------------------------
+
+7.
+
+Title:
+Routine Site Supervision
+
+Description:
+Throughout the execution phase, we conduct regular on-site inspections and quality checks.
+
+-------------------------------------------------
+
+8.
+
+Title:
+Styling & Finishing Touches
+
+Description:
+Once the core construction is complete, we focus on the finishing touches like artwork and décor.
+
+-------------------------------------------------
+
+9.
+
+Title:
+Project Delivery & Handover
+
+Description:
+After a walkthrough, your space is delivered—move-in ready—for you to enjoy.
+
+-------------------------------------------------
+
+CARD DESIGN
+
+Each timeline card should have:
+
+- White background
+- Soft luxury shadow
+- Rounded corners (16px)
+- Elegant spacing
+- Gold step number
+- Serif heading
+- Clean sans-serif body text
+
+Hover Effect:
+
+- Slight lift (translateY)
+- Soft shadow increase
+- Smooth 300ms transition
+
+-------------------------------------------------
+
+SCROLL ANIMATION
+
+Animate each timeline card using Intersection Observer.
+
+Animation:
+
+- opacity: 0 → 1
+- translateY: 40px → 0
+- Stagger reveal (100ms delay between cards)
+
+The vertical timeline line should already be visible.
+
+Diamond icons remain fixed while cards animate.
+
+-------------------------------------------------
+
+RESPONSIVE
+
+Desktop:
+Alternating left/right timeline.
+
+Tablet:
+Slightly narrower cards.
+
+Mobile:
+Single-column timeline with the line aligned left.
+
+-------------------------------------------------
+
+IMPORTANT
+
+- Do NOT modify Hero, Introduction, Our Expertise, Featured Projects, Portfolio Gallery, Why Choose Nivora, or CTA sections.
+- Only insert this new "How We Do It" section between "Our Expertise" and "Featured Residential Projects".
+- Keep animations elegant and lightweight.
+- Ensure the section blends seamlessly with the existing premium Residential Interiors page.

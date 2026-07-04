@@ -1,0 +1,57 @@
+In the Footer component, make ALL of the following changes:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 1 — SPACING & ADDRESS FIX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Reduce footer padding-top and padding-bottom to 50px–60px max. Remove any extra margin on footer wrapper.
+
+2. In FIND US column:
+- Delete "Bandra West, Mumbai 400050"
+- Delete "Koregaon Park, Pune 411001"
+- Keep ONLY: "Ambernath, Maharashtra 421505"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 2 — ANIMATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A) GOLD DIVIDER LINE DRAW (scroll-triggered, run once):
+- The horizontal gold divider line above the bottom bar should animate
+- On footer entering viewport: width animates from 0% → 100%, left to right
+- Duration: 800ms, easing: ease-out
+- Use IntersectionObserver to trigger
+
+B) WHATSAPP BUTTON PULSE RING (infinite, ambient):
+- Add a soft green pulse ring that radiates outward from the WhatsApp "Chat with us" button repeatedly
+- CSS: ::after pseudo-element, border-radius 50px, box-shadow or outline expanding outward
+- Animation: scale(1) opacity(0.6) → scale(1.4) opacity(0) 
+- Duration: 1.8s, infinite, ease-out
+- Color: rgba(37, 211, 102, 0.4) (WhatsApp green)
+
+C) LOGO HOVER GLOW:
+- On hover over footer logo: filter: brightness(1) → brightness(1.25)
+- Transition: 300ms ease
+
+D) INSTAGRAM ICON HOVER:
+- On hover: rotate(15deg) + scale(1.1)
+- Transition: 300ms ease
+- Return to normal on mouse leave
+
+E) COLUMN SCROLL ANIMATIONS (trigger once on viewport entry via IntersectionObserver):
+- Logo column: translateX(-20px) opacity(0) → translateX(0) opacity(1), 700ms ease-out
+- Navigate column: translateY(20px) opacity(0) → translateY(0) opacity(1), 600ms ease-out, delay 100ms
+- What We Do column: same as Navigate, delay 200ms
+- Find Us column: translateX(20px) opacity(0) → translateX(0) opacity(1), 700ms ease-out, delay 300ms
+- Bottom bar: opacity(0) → opacity(1), 500ms ease-out, delay 500ms
+
+F) NAVIGATE & WHAT WE DO LINK HOVER:
+- Color transition to #a18661 on hover, 300ms
+- Underline that sweeps in from left: using ::after pseudo-element, width 0 → 100%, transition 300ms ease
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RULES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- All scroll animations: trigger ONCE only, not on every scroll
+- No bounce or elastic easing anywhere — only ease-out
+- All hover transitions must return smoothly on mouse leave
+- Do not change any colors, fonts, layout, or content beyond what is listed above
+- Make sure animations work on both desktop and mobile

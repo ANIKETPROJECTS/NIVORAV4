@@ -1,0 +1,161 @@
+Update the existing "Our Services" section by adding the following detailed content to each respective service card.
+
+IMPORTANT:
+- Do NOT create a new services section.
+- Keep the existing design, animations, hover effects, and card layout unchanged.
+- Each service card should open its own dedicated service detail page (or existing service detail section if already implemented).
+- Preserve all routing and navigation.
+- Maintain the luxury Nivora Interiors design language.
+
+Each service must contain the following structure:
+
+--------------------------------------------------
+
+1. Residential Interiors
+
+Heading:
+Designing Homes That Feel Like You
+
+Description:
+Your home should be more than just a place to live—it should reflect your personality, lifestyle, and aspirations. Whether you're moving into a new apartment, building your dream villa, renovating an existing home, or creating a weekend retreat, we design spaces that are functional, timeless, and uniquely yours.
+
+Our Expertise
+
+• Apartments & Flats
+• Villas & Bungalows
+• Luxury Residences
+• Modular Kitchens
+• Bedrooms & Living Spaces
+• Custom Storage Solutions
+
+--------------------------------------------------
+
+2. Commercial Interiors
+
+Heading:
+Spaces Designed for Productivity & Impact
+
+Description:
+A well-designed workspace inspires creativity, improves efficiency, and leaves a lasting impression on clients and visitors. From corporate offices and co-working spaces to retail stores, clinics, and fitness studios, we create environments that balance functionality, comfort, and brand identity.
+
+Our Expertise
+
+• Corporate Offices
+• Co-working Spaces
+• Retail Stores
+• Clinics & Healthcare Facilities
+• Fitness Studios & Gyms
+• Reception & Waiting Areas
+
+--------------------------------------------------
+
+3. Hospitality Interiors
+
+Heading:
+Creating Experiences Through Design
+
+Description:
+In hospitality, every detail contributes to the guest experience. We design inviting and memorable environments that combine aesthetics, comfort, and functionality, ensuring every visitor feels welcomed and inspired.
+
+Our Expertise
+
+• Cafés & Restaurants
+• Hotels & Resorts
+• Lounges & Clubhouses
+• Spas & Wellness Centres
+• Banquet & Event Spaces
+• Guest Experience Design
+
+--------------------------------------------------
+
+4. Architecture & Space Planning
+
+Heading:
+Building Strong Foundations for Exceptional Spaces
+
+Description:
+Great design begins with thoughtful planning. Our architectural and space planning services focus on creating efficient layouts, striking elevations, and well-balanced spaces that maximize both aesthetics and functionality.
+
+Our Expertise
+
+• Architectural Planning
+• Floor Plans & Layouts
+• Elevation Design
+• Facade Design
+• Space Optimization
+• Design Development
+
+--------------------------------------------------
+
+5. Interior Design & 3D Visualization
+
+Heading:
+Bringing Ideas to Life Before Execution
+
+Description:
+Visualize your future space with confidence through detailed drawings and realistic 3D renderings. Our design process helps you explore layouts, materials, finishes, and design concepts before construction begins.
+
+Our Expertise
+
+• Space Planning
+• Concept Development
+• 2D Drawings
+• 3D Visualizations
+• Material Selection
+• Design Presentations
+
+--------------------------------------------------
+
+6. Developer & Builder Solutions
+
+Heading:
+Enhancing Properties to Maximize Market Appeal
+
+Description:
+We collaborate with developers and builders to create thoughtfully designed spaces that elevate property value and attract potential buyers. From show apartments to common amenities, every space is crafted to leave a lasting impression.
+
+Our Expertise
+
+• Sample Flats
+• Sales Offices
+• Clubhouses
+• Entrance Lobbies
+• Amenity Spaces
+• Common Area Design
+
+--------------------------------------------------
+
+7. Renovation & Makeovers
+
+Heading:
+Transforming Existing Spaces with Purpose
+
+Description:
+Whether you're updating a home, refreshing a workplace, or modernizing an outdated interior, our renovation services breathe new life into existing spaces while preserving what matters most.
+
+Our Expertise
+
+• Home Renovations
+• Office Refurbishments
+• Kitchen Upgrades
+• Space Reconfiguration
+• Interior Refreshes
+• Styling & Décor Enhancements
+
+--------------------------------------------------
+
+Design Requirements
+
+- Keep the same premium typography used throughout the website.
+- Display the service heading prominently.
+- Follow it with the descriptive paragraph.
+- Show "Our Expertise" as a highlighted subheading.
+- Display expertise items with elegant check icons or minimal gold bullets.
+- Maintain generous spacing and readability.
+- Use fade-up animations for each section as it enters the viewport.
+- Stagger the expertise list animation.
+- Keep the existing luxury beige, olive green, and gold color palette.
+- Ensure the pages are fully responsive.
+- Preserve all current animations and hover interactions.
+- Do not alter existing navigation or routing.
+- Optimize spacing and typography for a premium luxury interior design experience.

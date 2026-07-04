@@ -1,0 +1,74 @@
+Redesign the mobile and desktop presentation of the "Our Story / Our Philosophy" section to achieve a premium luxury interior design aesthetic.
+
+Current issues:
+- Layout feels crowded.
+- Typography hierarchy is weak.
+- Paragraph readability is poor.
+- Quote card placement feels disconnected.
+- Content lacks breathing room.
+- Section does not feel premium on mobile devices.
+
+Requirements:
+
+1. Establish strong visual hierarchy.
+   - Make the main quote ("Design is not just seen — it is experienced.") the primary focal point.
+   - Increase heading prominence using size, spacing, and typography.
+   - Create a clear reading flow:
+     Image → Philosophy Label → Main Quote → Description → Values → CTA.
+
+2. Improve typography.
+   - Increase body text readability.
+   - Use larger font size on mobile.
+   - Use line-height between 1.8 and 2.0.
+   - Improve contrast between text and background.
+   - Avoid overly light paragraph text.
+
+3. Improve spacing.
+   - Add generous vertical spacing between every content block.
+   - Increase whitespace around headings and paragraphs.
+   - Create breathing room above and below the values row.
+   - Ensure the section never feels cramped.
+
+4. Refine the quote card.
+   - Reposition the founder quote card elegantly.
+   - Use subtle overlap rather than covering a large portion of the image.
+   - Ensure the text inside remains readable on mobile.
+   - Scale the card proportionally for smaller screens.
+
+5. Improve image presentation.
+   - Keep image aspect ratio consistent.
+   - Ensure image edges align with overall content grid.
+   - Avoid awkward cropping on mobile.
+
+6. Simplify decorative elements.
+   - Reduce visual noise from divider lines.
+   - Maintain elegance without excessive decoration.
+
+7. Improve CTA placement.
+   - Place the CTA naturally after the content.
+   - Add sufficient spacing above it.
+   - Make it feel like the conclusion of the section.
+
+8. Mobile-first optimization.
+   - Design specifically for:
+     320px
+     375px
+     390px
+     414px widths.
+   - No text crowding.
+   - No overlapping content.
+   - No clipped elements.
+
+9. Desktop refinement.
+   - Preserve the luxury feel on larger screens.
+   - Use balanced spacing and proportions.
+   - Keep content aligned to a clean grid.
+
+10. Animation.
+   - Keep all existing animations.
+   - Animations should be subtle, smooth, and elegant.
+   - No excessive movement.
+   - Content should fade and reveal gracefully without affecting layout stability.
+
+Goal:
+The section should feel like a high-end luxury interior design brand website—clean, spacious, sophisticated, easy to read, visually calm, and premium on both mobile and desktop.

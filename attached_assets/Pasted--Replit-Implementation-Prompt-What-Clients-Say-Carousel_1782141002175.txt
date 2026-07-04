@@ -1,0 +1,204 @@
+# Replit Implementation Prompt — "What Clients Say" Carousel Premium Upgrade
+
+## CONTEXT
+This is the Home page carousel in the "What Clients Say" section. There is also a separate `/testimonials` route page. Changes below must be applied carefully — read the rules for each feature.
+
+---
+
+## SCOPE RULES (CRITICAL — DO NOT VIOLATE)
+- **Auto-scroll** → Home carousel ONLY (NOT the /testimonials route page)
+- **Card entrance stagger animation** → Home carousel ONLY
+- **Active center card highlight** → Home carousel ONLY
+- **Progress bar** → Home carousel ONLY
+- **Quote mark animation** → Home carousel ONLY
+- **DO NOT touch** any card content, text, images, names, ratings, or card layout/styling anywhere
+- **DO NOT touch** the /testimonials page at all — leave it completely unchanged
+
+---
+
+## FEATURE 1 — AUTO-SCROLL (Home carousel only)
+
+Find the "What Clients Say" carousel component on the Home page.
+
+Add this auto-scroll behavior:
+- Cards automatically advance every **4000ms (4 seconds)**
+- Transition: `transform: translateX(...)` with `transition: transform 500ms ease-in-out`
+- After the last card group, loop back seamlessly to first (infinite loop)
+- When user clicks left/right arrow manually → clear existing timer → restart fresh 4-second timer
+- On `mouseenter` of the carousel container → pause auto-scroll (clearInterval)
+- On `mouseleave` of the carousel container → resume auto-scroll (setInterval again)
+
+Implementation pattern (adapt to your framework):
+```js
+// On mount
+autoScrollRef = setInterval(goToNext, 4000);
+
+// On manual arrow click
+clearInterval(autoScrollRef);
+autoScrollRef = setInterval(goToNext, 4000);
+
+// On mouseenter carousel container
+clearInterval(autoScrollRef);
+
+// On mouseleave carousel container
+autoScrollRef = setInterval(goToNext, 4000);
+
+// Cleanup on unmount
+clearInterval(autoScrollRef);
+```
+
+---
+
+## FEATURE 2 — CARD ENTRANCE STAGGER ANIMATION (Home carousel only)
+
+When a new slide/group of cards comes in (on any transition — auto or manual):
+
+- Each card in the incoming group should animate independently
+- Animation: `opacity: 0 → 1` + `translateY(20px → 0px)`
+- Duration: `400ms ease-out` per card
+- Stagger delay: `0ms, 100ms, 200ms` (i.e., card 1 starts immediately, card 2 after 100ms, card 3 after 200ms)
+- This replaces the default "all cards slide in together as a block" behavior
+
+Implementation (React example):
+```jsx
+// When activeIndex changes, reset and re-trigger animation
+// Add a key or animation class to each card based on current slide index
+cards.map((card, i) => (
+  <div
+    key={`${activeIndex}-${i}`}
+    style={{
+      animationDelay: `${i * 100}ms`,
+      animation: 'cardEntrance 400ms ease-out both'
+    }}
+  >
+    ...card content...
+  </div>
+))
+
+// CSS
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+```
+
+---
+
+## FEATURE 3 — ACTIVE CENTER CARD HIGHLIGHT (Home carousel only)
+
+When 3 cards are visible at once, the **middle card (index 1)** should be visually elevated:
+
+- Middle card: `transform: scale(1.02)`, `opacity: 1`
+- Side cards (index 0 and 2): `opacity: 0.85`, `transform: scale(1.0)`
+- Add `transition: transform 300ms ease, opacity 300ms ease` to all cards
+- This gives a magazine-style carousel depth effect
+- **Do NOT change** card background, border, padding, text, shadow, or any other styling — only scale and opacity
+
+```css
+.carousel-card {
+  transition: transform 300ms ease, opacity 300ms ease;
+  opacity: 0.85;
+}
+.carousel-card.is-center {
+  transform: scale(1.02);
+  opacity: 1;
+}
+```
+
+If the carousel shows fewer than 3 cards (mobile), skip this effect entirely.
+
+---
+
+## FEATURE 4 — PROGRESS BAR INSTEAD OF DOTS (Home carousel only)
+
+Remove the existing navigation dots (if any). Replace with a thin progress bar:
+
+- Position: centered below the cards, above any existing nav arrows
+- Width: ~200px (or same width as dot row was)
+- Height: 2px
+- Background (track): `rgba(0,0,0,0.15)` or a light gold/neutral color matching site palette
+- Fill color: your site's gold/accent color (match existing brand color used elsewhere)
+- Behavior: fills from left to right over exactly 4000ms (the auto-scroll interval)
+- On manual arrow click → bar resets to 0% and starts filling again from 0
+- On hover pause → bar freezes at current fill percentage, resumes from there on mouseleave
+
+Implementation:
+```jsx
+// Use a CSS animation with a key that resets on each slide change
+<div style={{ width: '200px', height: '2px', background: 'rgba(0,0,0,0.12)', borderRadius: '2px' }}>
+  <div
+    key={slideKey} // increment this on every slide change to restart animation
+    style={{
+      height: '100%',
+      background: 'YOUR_GOLD_COLOR',
+      borderRadius: '2px',
+      animation: isPaused ? 'none' : 'progressFill 4000ms linear forwards',
+      width: isPaused ? currentFillWidth : undefined
+    }}
+  />
+</div>
+
+@keyframes progressFill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+```
+
+Track the fill width using `performance.now()` or a ref when pausing, so it can resume from the exact position.
+
+---
+
+## FEATURE 5 — QUOTE MARK ANIMATE (Home carousel only)
+
+Each testimonial card has a large `"` opening quote mark (or decorative quotation symbol). When a new slide appears:
+
+- Quote marks should fade in from above with a slight delay **after** the card entrance
+- Animation: `opacity: 0 → 1` + `translateY(-8px → 0px)`
+- Duration: `350ms ease-out`
+- Delay: `200ms` (starts after cards have begun entering)
+
+```css
+@keyframes quoteEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quote-mark {
+  animation: quoteEntrance 350ms ease-out 200ms both;
+}
+```
+
+Apply by resetting the animation when the slide index changes (use a `key` prop on the quote element or toggle a CSS class).
+
+---
+
+## SUMMARY CHECKLIST
+
+| Feature | Home Carousel | /testimonials page |
+|---|---|---|
+| Auto-scroll (4s interval) | ✅ YES | ❌ NO |
+| Card entrance stagger | ✅ YES | ❌ NO |
+| Center card scale/highlight | ✅ YES | ❌ NO |
+| Progress bar (replaces dots) | ✅ YES | ❌ NO |
+| Quote mark fade-in animation | ✅ YES | ❌ NO |
+| Card content/layout/styling | ❌ DO NOT CHANGE | ❌ DO NOT CHANGE |
+
+---
+
+## ADDITIONAL NOTES
+- Cleanup all intervals on component unmount to prevent memory leaks
+- Test infinite loop: after last group, wraps back to first group smoothly
+- Test on mobile: if only 1 card shows, center-card highlight is skipped, other features still work
+- Progress bar should be keyboard accessible — if user tabs to arrow buttons and presses Enter, treat it same as a click (reset timer)

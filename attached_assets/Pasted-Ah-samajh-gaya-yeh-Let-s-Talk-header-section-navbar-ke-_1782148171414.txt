@@ -1,0 +1,33 @@
+Ah samajh gaya — yeh "Let's Talk" header section navbar ke immediately niche fixed rahega (yeh already exist karta hai, just confirm karna hai ki reorder ke baad bhi yeh apni jagah pe top pe hi rahe). Yeh raha fully updated final prompt:
+
+Prompt for Replit (React):
+
+I want to fix the section order on my Contact page AND add animations throughout it. Please implement both together:
+1. Final page structure (top to bottom) should be exactly:
+
+Navbar (unchanged)
+"Let's Talk" header section (stays right after navbar, unchanged): "REACH OUT" label, "Let's Talk" heading, and the description "Every great project begins with a conversation. Reach out and let's explore what's possible for your space." — this section should remain exactly where it currently is, right below the navbar, with its dark green background unchanged.
+Contact Form Section (right after the "Let's Talk" header):
+
+Left side: Contact form — "SEND US A MESSAGE" heading, fields: Full Name, Phone Number, Email Address, City, Type of Space, How did you hear about us?, Project Description (textarea). NO Budget Range field. Submit button labeled "SEND MESSAGE".
+Right side: Details sidebar card — "Nivora Interiors" / "From Vision to Execution" heading, followed by LOCATION (existing Ambernath address used elsewhere on site), PHONE (+91 72766 87805), EMAIL (hello@nivorainteriors.com), "CHAT ON WHATSAPP" button, then a divider, then "STUDIO HOURS": "Monday – Saturday: 10:00 AM – 7:00 PM" and "Sunday: By appointment only", followed by the bordered italic quote box: "We respect your privacy. No spam, just great design."
+
+
+"Ready to Begin?" section (below the form): "REACH OUT" label, "Ready to Begin?" heading, "Not sure where to start?" subheading, description paragraph.
+Footer (last, unchanged).
+
+Move/reorder ONLY the Form+Sidebar section and the "Ready to Begin?" section. The "Let's Talk" header must stay fixed at the very top (right after navbar) exactly as it currently is — do not move or duplicate it.
+2. Add these animations throughout the Contact page:
+
+Scroll-triggered entrance animations: As the user scrolls down, animate each major block ("Let's Talk" header text, form fields, sidebar card, "Ready to Begin?" section) to fade in + slide up (~20-30px) when it enters the viewport. Use Framer Motion's whileInView (if installed) or Intersection Observer, with a slight stagger between elements (~100-150ms). Should trigger once per page load.
+Input focus animation: When a user clicks/focuses into any form input, animate the underline below it to smoothly expand from center outward (or transition its color to gold/tan #a18661), rather than an instant snap. Transition duration ~250-300ms.
+Submit button hover/press animation: On hover, "SEND MESSAGE" button scales up smoothly (scale(1.03)) with a slight shadow increase; on click/press, it scales down briefly (scale(0.97)) for tactile feedback. Smooth transition (~200ms).
+Sidebar icon hover animation: On hovering over each contact detail row (Phone, Email, Location icons), animate the icon with a small bounce or gentle rotate/wiggle (e.g., rotate ±8deg back and forth once) to add a touch of personality.
+WhatsApp button pulse: Add a subtle, continuous, slow pulse/glow animation around the "CHAT ON WHATSAPP" button's border (low-key, not distracting — e.g., a soft glowing ring that gently expands and fades every 2-3 seconds) to draw attention to it as a key CTA.
+Studio Hours / quote box entrance: Included in the staggered scroll entrance animation as part of the sidebar card.
+
+3. Implementation notes:
+
+Use Framer Motion if already installed in the project for cleaner animation handling (recommended for whileInView and hover/tap gestures via motion.div with whileHover/whileTap props); otherwise use CSS transitions/keyframes.
+Ensure animations are smooth and don't cause layout shift or jank, and that everything remains fully responsive and functional on mobile (animations can be simplified/faster on mobile if needed for performance).
+After implementing, verify the final order matches exactly: Navbar → "Let's Talk" header → Form+Sidebar → "Ready to Begin?" → Footer, with all animations working as described.

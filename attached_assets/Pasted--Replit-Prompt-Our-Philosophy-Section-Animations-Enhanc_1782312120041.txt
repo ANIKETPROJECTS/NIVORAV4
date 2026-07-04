@@ -1,0 +1,176 @@
+# Replit Prompt — "Our Philosophy" Section: Animations + Enhancements
+
+## SECTION LOCATION
+This is the "OUR PHILOSOPHY" section on the Home page — directly below the hero image. It has:
+- LEFT: "OUR PHILOSOPHY" label → big quote heading → paragraph text → thin divider line → "TIMELESS • FUNCTIONAL • PERSONAL"
+- RIGHT: Bedroom interior photo with a gold quote box overlapping bottom-left corner
+
+Do NOT change any existing text content, layout structure, or styling unless explicitly mentioned below.
+
+---
+
+## ANIMATION 1 — SCROLL-TRIGGERED ENTRANCE (left side stagger)
+
+When this section scrolls into the viewport, the left column elements animate in one by one:
+
+Use IntersectionObserver with `threshold: 0.2` to trigger when 20% of section is visible.
+
+Stagger sequence (each 120ms apart):
+1. "OUR PHILOSOPHY" label — fade + slide up (translateY 20px → 0)
+2. Big quote heading — fade + slide up
+3. Paragraph text — fade + slide up
+4. Divider line — DO NOT animate here, handled separately in Animation 3
+5. "TIMELESS • FUNCTIONAL • PERSONAL" row — fade + slide up
+
+Each element:
+- `opacity: 0 → 1`
+- `transform: translateY(20px) → translateY(0)`
+- Duration: `600ms ease-out`
+- Delays: 0ms, 120ms, 240ms, 360ms (skip divider, it has its own)
+
+---
+
+## ANIMATION 2 — RIGHT IMAGE FADE + SCALE-IN
+
+When section enters viewport (same IntersectionObserver trigger):
+
+The bedroom photo on the right:
+- `opacity: 0 → 1`
+- `transform: scale(0.95) → scale(1)`
+- Duration: `800ms ease-out`
+- Delay: `200ms` (slightly after left content starts)
+
+---
+
+## ANIMATION 3 — QUOTE BOX "STAMP" POP-IN
+
+The gold quote box (bottom-left corner of image, contains `"` and italic text):
+
+- `opacity: 0 → 1`
+- `transform: scale(0.9) → scale(1)`
+- Duration: `500ms cubic-bezier(0.34, 1.56, 0.64, 1)` — slight spring/bounce for stamp feel
+- Delay: `900ms` — after image animation is done
+
+---
+
+## ANIMATION 4 — DIVIDER LINE DRAW (left to right)
+
+The thin horizontal line above "TIMELESS • FUNCTIONAL • PERSONAL":
+
+Animate it drawing from left to right when section is in view:
+- Start: `width: 0%`
+- End: `width: 100%` (or whatever its full width is)
+- Duration: `800ms ease-out`
+- Delay: `400ms`
+- Use `overflow: hidden` on wrapper if needed
+
+```css
+.philosophy-divider {
+  width: 0%;
+  transition: width 800ms ease-out 400ms;
+}
+.philosophy-divider.in-view {
+  width: 100%;
+}
+```
+
+---
+
+## ANIMATION 5 — IMAGE PARALLAX ON SCROLL
+
+Apply a subtle parallax to the bedroom image as user scrolls:
+
+- On scroll, move the image `translateY` at 30% of scroll speed (so it moves slower than the page)
+- Range: approximately `-20px` to `+20px`
+- Use `requestAnimationFrame` for smooth performance
+- Apply transform on the image element, NOT the container
+
+```js
+window.addEventListener('scroll', () => {
+  const section = document.querySelector('.philosophy-section');
+  const img = section.querySelector('.philosophy-image');
+  const rect = section.getBoundingClientRect();
+  const progress = -rect.top / window.innerHeight;
+  img.style.transform = `scale(1) translateY(${progress * 30}px)`;
+});
+```
+
+Make sure image container has `overflow: hidden` so edges don't show.
+
+---
+
+## ADDITION 1 — FOUNDER SIGNATURE BELOW QUOTE BOX
+
+Inside the gold quote box, below the italic quote text, add:
+
+```
+— Shweta, Founder
+```
+
+- Style: italic, font-size 12px, color same gold/dark tone as existing quote text but slightly lighter
+- Add `margin-top: 12px`
+- No other changes to the quote box styling
+
+---
+
+## ADDITION 2 — ICONS FOR "TIMELESS • FUNCTIONAL • PERSONAL"
+
+Replace the plain text dots/bullets between words with icon + word pairs.
+
+Use minimalist SVG icons (inline or from lucide-react / any icon library already in project):
+
+| Word | Icon |
+|---|---|
+| TIMELESS | Clock / hourglass icon |
+| FUNCTIONAL | Settings / gear icon |
+| PERSONAL | Heart icon |
+
+Layout: `[icon] TIMELESS • [icon] FUNCTIONAL • [icon] PERSONAL`
+
+- Icon size: 14px × 14px
+- Icon color: same gold as existing text (`#C9A96E` or match)
+- Icons sit inline with text, vertically centered
+- Keep existing letter-spacing and text-transform
+
+---
+
+## ADDITION 3 — SUBTLE BACKGROUND TEXTURE (LEFT SIDE)
+
+On the left text column background, add a very faint linen/geometric texture:
+
+Option A (CSS noise pattern — no image needed):
+```css
+.philosophy-left {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A96E' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+```
+
+Opacity must be very subtle — just barely visible, like a linen texture. If it looks too heavy, reduce `fill-opacity` to `0.02`.
+
+---
+
+## ADDITION 4 — "DISCOVER OUR STORY" LINK (bottom of left column)
+
+At the very bottom of the left text column, after the "TIMELESS • FUNCTIONAL • PERSONAL" row, add a text link:
+
+**Text:** `Discover Our Story →`
+
+**Style:**
+- Font: italic, small (13–14px)
+- Color: gold (`#C9A96E`)
+- No underline by default; underline on hover
+- Letter-spacing: 0.08em
+- Margin-top: 28px from the icons row
+
+**Link behavior:** Clicking it navigates to the `/about` page (About route).
+
+---
+
+## DO NOT CHANGE
+- Any existing text content in this section
+- Quote text or heading wording
+- Image (bedroom photo)
+- Overall section layout (left/right split)
+- Any other section on the home page
+- Any other page

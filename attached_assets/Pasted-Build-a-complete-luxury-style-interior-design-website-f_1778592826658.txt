@@ -1,0 +1,684 @@
+Build a complete, luxury-style interior design website for NIVORA Interiors, a boutique interior design studio. The website must feel calm, elegant, premium, minimal, and high-converting, not like a typical bright WordPress template. Use the attached logo as the brand reference for color direction and overall mood.
+
+Brand Identity
+NIVORA is a boutique interior design studio creating thoughtful, refined spaces that balance elegance with everyday functionality. The brand should feel like a premium design studio for high-end clients in Mumbai and Pune. The voice must be calm, confident, elegant, and not salesy.
+
+Visual Style
+Create a dark luxury website using a toned-down palette inspired by the logo:
+
+Primary background: deep forest green / olive green.
+
+Accent color: warm beige / muted gold.
+
+Secondary surfaces: cream / alabaster / off-white.
+
+Text: soft grey and charcoal for readability.
+
+Avoid bright colors, pure black, pure white contrast, flashy gradients, or loud animations.
+
+Keep sections spacious, refined, and minimal.
+
+The design should feel like a boutique interior studio, not a generic agency site.
+
+Typography
+Use an elegant serif for headings and a clean sans-serif for body text.
+
+Headings: a refined serif style, thin, spaced, editorial, premium.
+
+Body: clean sans-serif, highly readable.
+
+Navigation and service labels should be modern and simple.
+
+The typography should match the luxury tone of the logo.
+
+Website Goals
+The website must:
+
+Look premium and dark-minimal.
+
+Generate inquiries.
+
+Show services clearly.
+
+Present portfolio/projects beautifully.
+
+Tell the brand story with trust and authority.
+
+Work beautifully on mobile.
+
+Load fast and remain SEO-friendly.
+
+Include smooth, subtle motion only.
+
+Site Structure
+Create these pages:
+
+Home
+
+Portfolio
+
+Services
+
+About
+
+Testimonials
+
+Contact
+
+Get a Free Quote
+
+Thank You page
+
+Main Navigation
+Header navigation should include:
+
+Home
+
+Portfolio
+
+Services
+
+About
+
+Testimonials
+
+Contact
+
+Get a Free Quote
+
+Add a sticky CTA button such as:
+
+“Enquire Now”
+
+“Book Free Consultation”
+
+Home Page Layout
+Design the homepage in this order:
+
+1. Hero Section
+Full-width background image.
+
+Dark overlay.
+
+Large elegant headline.
+
+Empty space and breathing room.
+
+Buttons:
+
+Book Free Consultation
+
+View Projects
+
+Include location text: Mumbai | Pune.
+
+Suggested hero copy:
+
+Headline: Thoughtfully Designed Interiors That Feel Effortless to Live In
+
+Subtext: We design homes and workspaces that are beautiful, functional, and built for everyday living.
+
+2. Brand Statement
+Include a refined intro section with this kind of message:
+
+“Design is not just seen—it is experienced.”
+
+Add a short paragraph about thoughtful design, refined materials, and timeless spaces.
+
+3. Services Preview
+Show 3 main service cards only:
+
+Residential Interiors
+
+Commercial Interiors
+
+Architecture
+
+Each card should have:
+
+A short description.
+
+A subtle hover effect.
+
+A clear CTA to explore that category.
+
+4. Process Section
+Show a calm, elegant step-by-step process with icons or a timeline.
+
+Use this flow:
+
+Discover
+
+Visualize
+
+Execute
+
+Reveal
+
+Include short descriptions for each step and a line like:
+
+End-to-end. Transparent. Hassle-free.
+
+5. Before/After Section
+Include an interactive before/after slider.
+
+Left: raw or unfinished space.
+
+Right: finished luxury interior.
+
+Add a simple caption about transformation.
+
+Keep labels minimal:
+
+Before
+
+After
+
+6. Portfolio Preview
+Show 4 to 6 project tiles in a bento-style gallery.
+
+Use full-width images.
+
+Use minimal overlay text.
+
+On hover, show project name and location.
+
+Treat this like an art gallery, not a product grid.
+
+7. Testimonials
+Show 3 testimonial cards or a subtle carousel.
+Keep them elegant, short, and authentic.
+
+8. Stats Section
+Add clean counters such as:
+
+25+ Projects Completed
+
+2+ Years of Design Experience
+
+Mumbai & Pune Projects
+
+End-to-End Interior Solutions
+
+9. Instagram Section
+Show a feed-style grid for 4 latest posts.
+Include text like:
+
+Follow our journey @NivoraInteriors for daily design inspiration and behind-the-scenes site visits.
+
+10. Final CTA
+Use a strong but elegant closing section on a dark olive background.
+
+Suggested copy:
+
+Ready to transform your space?
+
+Claim your Free Layout Consultation today and let’s start building your dream.
+
+Add a bold CTA button:
+
+CLAIM MY FREE OFFER NOW
+
+Services Page Structure
+The Services page must be interactive and have 3 major service categories:
+
+Commercial
+
+Residential
+
+Architecture
+
+Each category should open into its own detailed section or page. The user experience should allow clicking a category and then viewing projects inside that category.
+
+Commercial Service Page
+When the user clicks Commercial:
+
+Show a short description of commercial interiors.
+
+Show 6 commercial projects.
+
+Each project card should have:
+
+Project image
+
+Project name
+
+Location
+
+Short concept summary
+
+Clicking a project should open a detailed project view.
+
+Residential Service Page
+When the user clicks Residential:
+
+Show a short description of residential interiors.
+
+Show 6 residential projects.
+
+Clicking a project should open its detail page.
+
+Architecture Service Page
+When the user clicks Architecture:
+
+Show a short description of architecture services.
+
+Show architecture-related projects or case studies.
+
+Clicking a project should open a detailed view.
+
+Project Detail View
+Each project detail page must include:
+
+Project name
+
+Location
+
+Concept
+
+Materials used
+
+Design intent
+
+Multiple images
+
+Storytelling style description
+
+Minimal, clean layout
+
+No clutter
+
+The overall portfolio experience should feel luxurious and editorial.
+
+Portfolio Page
+Create a premium portfolio page with:
+
+Full-width images.
+
+Minimal text overlays.
+
+Smooth hover transitions.
+
+Story-driven project presentation.
+
+Filter or category navigation for:
+
+Residential
+
+Commercial
+
+Architecture
+
+Each project card should lead to a detailed project page.
+
+Include storytelling sections like:
+
+Location
+
+Concept
+
+Materials used
+
+Design intent
+
+The page should feel like a curated design journal.
+
+About Page
+Create a strong About page with this content direction:
+
+Who We Are
+NIVORA is a boutique interior design studio creating thoughtful, refined spaces that balance elegance with everyday functionality. Over the last two years, we’ve completed 25+ residential and commercial interior projects across Mumbai and Pune — designing homes and workspaces that feel personal, practical, and built to last.
+
+Our Presence
+We currently design and execute projects across Mumbai and Pune, partnering with homeowners and businesses who value quality, clarity, and a seamless process.
+
+Our Approach
+Every project begins with listening. We understand how clients live, work, and use their space before designing anything. We provide complete interior design and turnkey solutions with clear timelines and transparent communication.
+
+What We Design
+Include:
+
+Home interiors (1BHK, 2BHK, 3BHK apartments & villas)
+
+Office and workspace design
+
+Showrooms and retail spaces
+
+Cafés and hospitality interiors
+
+Mission
+Create interiors that feel effortlessly luxurious and deeply personal.
+
+Vision
+Be a trusted design partner known for thoughtful luxury, timeless design, and interiors that enrich the way people live and work.
+
+Values
+Include these values:
+
+Thoughtful Design
+
+Timeless Elegance
+
+Personal Connection
+
+Quality & Craftsmanship
+
+Trust & Transparency
+
+At a Glance
+Add a summary block:
+
+25+ Clients Served
+
+2 Years of Design Experience
+
+Projects Across Mumbai & Pune
+
+End-to-End Interior Solutions
+
+Founder Section
+Add a founder profile section for:
+Shweta Mahadik
+
+Include:
+
+Her creative background.
+
+Her civil engineering and interior design background.
+
+Her hands-on approach.
+
+Her belief that design is about calm, meaningful, effortless spaces.
+
+Add a short founder’s note:
+
+“For me, design is not about decoration. It is about creating spaces that feel calm, meaningful, and effortless to live in.”
+
+Testimonials Page
+Create a dedicated testimonials page with:
+
+Elegant cards.
+
+A calm cream or beige background.
+
+Short, genuine client testimonials.
+
+Minimal layout.
+
+Optional client names and locations.
+
+Keep the tone warm, credible, and premium.
+
+Contact Page
+Create a simple, elegant contact page with:
+
+Contact details
+
+Mumbai | Pune
+
+Phone number
+
+Email
+
+WhatsApp button
+
+Embedded form
+
+Location section or map section if possible
+
+Add a gentle note:
+
+“We respect your privacy. No spam, just great design.”
+
+Free Quote Form
+Create a strong lead form section that appears:
+
+Mid-page on home
+
+On contact page
+
+In the final CTA area
+
+Form Title
+Let’s Design Your Space — The Right Way
+
+Form Subheading
+Get a Free Layout Consultation (Worth ₹5,000) and understand how your space can be planned better — before you spend a single rupee.
+
+Form Fields
+Full Name
+
+Phone Number
+
+Project Location
+
+Ambernath
+
+Kalyan
+
+Pune
+
+Mumbai
+
+Other
+
+Project Type
+
+1BHK/2BHK
+
+3BHK+
+
+Villa/Bungalow
+
+Office
+
+Retail / Commercial
+
+Estimated Budget
+
+₹5L – ₹10L
+
+₹10L – ₹20L
+
+₹20L+
+
+Brief Requirements
+
+CTA Button
+CLAIM MY FREE LAYOUT DESIGN
+
+After Submit
+Redirect to a Thank You page with:
+
+“Success! Your vision is in good hands.”
+
+Offer a lead magnet link to a PDF guide such as:
+
+2026 Interior Trend Guide
+
+Thank You Page
+Create a polished thank-you page that:
+
+Confirms the inquiry was submitted.
+
+Reinforces trust.
+
+Includes a downloadable PDF or a simple next-step message.
+
+Uses the same luxury brand style.
+
+Motion and Interaction
+Use subtle, premium animations only:
+
+Slow fade-in
+
+Smooth scroll
+
+Gentle zoom on hover
+
+Soft transitions
+
+Avoid:
+
+Bouncy effects
+
+Flashy transitions
+
+Fast parallax
+
+Loud animation
+
+The movement should feel calm and premium.
+
+Mobile Experience
+Make the site fully responsive.
+
+Keep text readable on dark backgrounds.
+
+Make buttons large enough to tap easily.
+
+Ensure portfolio cards and forms work well on small screens.
+
+Keep the elegant luxury feel on mobile too.
+
+Performance Requirements
+The site should be fast and optimized:
+
+Compressed images
+
+Lazy loading where needed
+
+Good Core Web Vitals
+
+Lightweight layout
+
+No unnecessary visual clutter
+
+SEO Requirements
+Keep the site SEO-friendly:
+
+Use proper heading structure.
+
+Add keyword-rich but natural content.
+
+Include content for:
+
+luxury interior designer
+
+residential interiors
+
+commercial interiors
+
+turnkey interior solutions
+
+Mumbai
+
+Pune
+
+Do not make the site image-only.
+
+Include enough text for search engines without losing the premium feel.
+
+UX Enhancements
+Add these high-conversion features:
+
+Sticky WhatsApp button at bottom-right.
+
+Sticky “Enquire Now” button on mobile if needed.
+
+Smooth scroll to the enquiry form.
+
+Clear CTA repeated through the site.
+
+Strong focus on getting leads.
+
+Footer
+Create a refined footer with:
+
+NIVORA Interior Studio
+
+Thoughtful interiors designed for real living
+
+Mumbai | Pune
+
++91 7276687805
+
+Quick Links:
+
+Home
+
+About
+
+Services
+
+Projects
+
+Contact
+
+Enquiry Form
+
+Use the same dark luxury styling as the rest of the site.
+
+Content Tone
+All copy should sound:
+
+Calm
+
+Elegant
+
+Confident
+
+Premium
+
+Thoughtful
+
+Not aggressive
+
+Not gimmicky
+
+Avoid phrases like:
+
+Best interior designer
+
+Affordable packages
+
+Cheap
+
+Fast and flashy sales language
+
+Prefer phrases like:
+
+Thoughtfully designed spaces
+
+Tailored interiors
+
+Refined materials
+
+Seamless process
+
+Timeless design
+
+End-to-end execution
+
+Overall Experience
+The final website should feel like:
+
+A luxury interior studio
+
+A premium design portfolio
+
+A calm, editorial brand experience
+
+A high-end lead generation website
+
+It should not feel like:
+
+A typical agency template
+
+A bright corporate site
+
+A generic WordPress theme
+
+A cluttered service page
+
+Create everything with strong visual hierarchy, elegant spacing, and refined motion. The entire application should be polished, premium, and conversion-focused.

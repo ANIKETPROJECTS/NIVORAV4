@@ -1,0 +1,71 @@
+Perform a complete premium UI/UX refinement across the entire website while preserving all existing content and functionality.
+
+Design Goals:
+- Luxury, elegant, modern interior design brand aesthetic
+- Clean visual hierarchy
+- Consistent spacing, typography, colors, and animations
+- Professional, polished, high-end appearance
+- Smooth and responsive user experience on all devices
+
+Typography:
+- Use a premium serif font for all major headings
+- Use a clean modern sans-serif font for body text
+- Maintain consistent font sizes across all sections
+- Ensure proper heading hierarchy (H1, H2, H3, body text)
+- Improve readability with balanced line heights and letter spacing
+- Avoid oversized or inconsistent text
+
+Spacing & Layout:
+- Standardize padding and margins throughout the website
+- Ensure consistent spacing between sections
+- Align all content properly
+- Remove any cramped or excessive white spaces
+- Maintain a clean grid system across all pages
+
+Colors:
+- Keep the luxury palette with warm whites, subtle gold accents, charcoal text, and soft neutral tones
+- Ensure color consistency across buttons, icons, links, and dividers
+- Improve contrast for readability
+
+Cards & Components:
+- Make all cards uniform in style and height where applicable
+- Apply elegant shadows and subtle borders
+- Use consistent corner radius throughout the website
+- Improve hover states for all interactive elements
+
+Animations:
+- Review every animation on the website
+- Ensure all animations trigger correctly
+- Remove any laggy, excessive, or distracting effects
+- Use smooth fade, slide, zoom, and reveal animations
+- Maintain consistent animation duration and easing
+- Ensure animations work correctly on desktop, tablet, and mobile
+
+Images:
+- Ensure all images have consistent aspect ratios
+- Optimize image placement and cropping
+- Prevent stretching or distortion
+- Add subtle hover zoom effects where appropriate
+
+Buttons:
+- Standardize button styles throughout the website
+- Consistent sizing, spacing, border radius, and hover states
+- Smooth transitions and premium interactions
+
+Navigation:
+- Ensure navbar spacing, alignment, and responsiveness are perfect
+- Smooth scrolling between sections
+- Clean active and hover states
+
+Responsiveness:
+- Thoroughly optimize for mobile, tablet, laptop, and large screens
+- Prevent layout shifts, overflow issues, and broken spacing
+- Maintain premium appearance on every screen size
+
+Performance:
+- Remove unnecessary styling conflicts
+- Optimize animations and transitions
+- Ensure smooth scrolling and interactions
+
+Final Result:
+The entire website should feel like a premium luxury interior design brand website—minimal, elegant, sophisticated, visually balanced, and highly polished with consistent typography, spacing, animations, and design language across every page and section.

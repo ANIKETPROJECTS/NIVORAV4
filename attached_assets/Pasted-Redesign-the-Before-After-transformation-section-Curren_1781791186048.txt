@@ -1,0 +1,124 @@
+Redesign the "Before & After" transformation section.
+
+Current issue:
+Section uses dark green background and feels heavy.
+
+Goal:
+Create a premium transformation showcase with a clean, luxury feel.
+
+Important:
+- Remove green background completely.
+- Use WHITE / LIGHT palette only.
+- Change typography to match premium interior studio aesthetic.
+
+Color Palette:
+Background → Warm white (#FAF8F4)
+Surface → Soft ivory (#F5F1EA)
+Text → Deep charcoal (#262421)
+Accent → Luxury gold (#C8A56A)
+Border → #E8DED1
+
+Section Header:
+
+Small label:
+TRANSFORMATIONS
+
+Large serif heading:
+"Before & After"
+
+Subtitle:
+See how thoughtful design transforms spaces into refined living experiences.
+
+Layout:
+- Full-width premium slider.
+- Large image comparison cards.
+- Show Before → After transformation.
+- Modern editorial style.
+- Large whitespace.
+
+Slider Behavior (IMPORTANT):
+- Slides should AUTO MOVE continuously.
+- Smooth autoplay.
+- Infinite loop.
+- Cursor interaction:
+   • Hover = slider slows down
+   • Drag cursor = user can manually move
+   • Release = autoplay resumes
+- Transition:
+   duration 900ms
+   ease-in-out
+
+Card Design:
+- Large rounded corners (28px)
+- White surface
+- Soft luxury shadow
+- Minimal borders
+
+Inside each slide:
+
+LEFT:
+BEFORE image
+
+CENTER:
+Elegant transformation indicator
+→ arrow / divider
+
+RIGHT:
+AFTER image
+
+Overlay Labels:
+Small gold tags:
+"BEFORE"
+"AFTER"
+
+Descriptions (ADD THIS):
+
+Below images show text block:
+
+Transformation Title
+
+Before Description:
+Explain old condition.
+
+After Description:
+Explain design improvement.
+
+Example:
+
+Living Room Refresh
+
+Before:
+Dark layout with limited functionality and dated finishes.
+
+After:
+Brighter interiors with custom storage, layered lighting and a modern aesthetic.
+
+Add 4–6 transformation examples.
+
+Interactions:
+- Image subtle zoom on hover
+- Description fade-up
+- Cursor changes to drag
+- Smooth parallax
+
+Typography:
+Heading → Elegant serif
+Body → Clean modern sans
+
+Animations:
+- Fade-in on scroll
+- Stagger text reveal
+- Smooth transitions
+
+Remove:
+❌ Green background
+❌ Heavy containers
+❌ Static slider
+
+Keep:
+✔ Luxury aesthetic
+✔ Premium editorial feeling
+✔ Clean white presentation
+
+Final result:
+Should feel like a high-end interior studio transformation gallery with automatic sliding and visible before/after descriptions.

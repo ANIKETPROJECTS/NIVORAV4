@@ -1,0 +1,32 @@
+I want to redesign my "Before & After" section to use a proper drag-to-reveal comparison slider instead of the current side-by-side two-box layout. Also fix a bug where some images aren't loading.
+1. Fix missing images first:
+
+Inspect the "Before & After" component and check all image src paths/imports for each before/after pair — one or more images are currently broken/missing (showing blank white/gradient placeholders instead of the actual photo). Locate the correct image files in the project assets and fix the broken references.
+
+2. Replace the layout with a single-frame before/after slider:
+
+Instead of two separate image boxes side-by-side, combine the "before" and "after" images into ONE single image frame/container.
+The "after" image should be the base/full image. The "before" image should be overlaid on top of it, clipped to show only the portion to the left of a vertical divider line.
+Add a draggable vertical divider handle (a thin vertical line with a small circular drag handle in the middle, similar to the gold circular handle in the reference image) that the user can click-and-drag left/right across the image to reveal more/less of the before vs after image.
+As the user drags, update the clip-path or width of the "before" image overlay in real-time so the reveal feels smooth and responsive (use onMouseMove/onTouchMove with useState to track the divider's X position as a percentage of the container width).
+Add small labels "BEFORE" and "AFTER" in the corners of the image (bottom-left and bottom-right, matching the reference image's pill-style labels), which stay fixed regardless of drag position.
+Make sure dragging works on both desktop (mouse) and mobile (touch).
+
+3. Layout & content below the image:
+
+Keep a title for each transformation (e.g., "Dining Room Revival") below the slider image.
+Add a short "BEFORE" description and "AFTER" description side-by-side below the title, describing what changed (this already exists in the current design — keep this structure, just adjust spacing if needed to fit below the new single-image slider).
+
+4. Background & typography:
+
+Keep the background of this section white/light colored as it currently is.
+Update the heading font for "Before & After" to a more elegant serif font if not already serif (check what font is used for other headings on the site like "What Clients Say" and match that same serif font family here for consistency).
+
+5. Navigation between multiple transformation projects:
+
+If there are multiple before/after projects to show (e.g., "Dining Room Revival" and others), keep the existing left/right arrow navigation and dots indicator below to switch between different transformation projects — but each individual project should use the new single-frame drag slider described above instead of two separate boxes.
+
+6. Implementation notes:
+
+This is commonly built using a library like react-compare-slider (recommended — lightweight and handles touch/mouse drag out of the box) or react-before-after-slider-component. Use one of these libraries if it simplifies implementation, or build it manually with clip-path if you prefer not adding a new dependency.
+Ensure the image frame maintains aspect ratio and looks good across different screen sizes.

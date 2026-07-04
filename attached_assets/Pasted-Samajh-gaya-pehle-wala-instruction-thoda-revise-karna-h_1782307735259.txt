@@ -1,0 +1,26 @@
+Samajh gaya — pehle wala instruction thoda revise karna hai. Ab clear hai: logo splash sirf ek baar (first load pe) aana chahiye, lekin hero text animation har baar Home page pe aane pe chalna chahiye (whether refresh ho ya kisi aur page se navigate karke aaye). Aur animation speed bhi slow karni hai kyuki abhi itna fast hai ki dikhta hi nahi.
+Yeh raha corrected final prompt:
+
+Prompt for Replit (React):
+
+I need to fix two animation issues on the Home page:
+1. Splash/logo animation should ONLY play on the very first website load — NOT on every navigation:
+
+The logo slide animation (right-to-left slide, then reveals the page) should play only once, when a user first visits the website (i.e., first page load of the session).
+If the user navigates away to another page (e.g., About, Portfolio) and then comes back to Home via the navbar "HOME" link or by clicking the logo, the splash/logo animation should NOT play again — only the Home page content should appear (with its own hero text animation, see point 2 below), without the logo slide-in/out sequence.
+Implementation: use sessionStorage (e.g., sessionStorage.getItem('splashShown')) to track whether the splash has already played in this browser session. On the very first load, play the splash, then set the flag. On all subsequent visits to Home within the same session (via navigation, not full refresh), skip the splash entirely and go straight to the Home page with its hero animation.
+Note: a full page refresh counts as a fresh session in most cases unless persisted differently — if the user does a hard refresh, it's acceptable for the splash to play again since that's effectively a new page load. The key fix is: in-app navigation (clicking links/logo) should never re-trigger the splash, only an actual fresh browser load/refresh should.
+
+2. Fix the Hero section text animation — it's currently too fast to be visible:
+
+The staggered fade + slide-up animation for the Hero text (Mumbai/Pune tabs → "Thoughtfully Designed" → "Interiors —" → "That Feel Effortless" → description → buttons) is currently happening too quickly, so the animation isn't visibly noticeable to users.
+Slow it down: increase each individual element's animation duration to around 700-900ms (from whatever very short duration it currently has), and increase the stagger delay between each element to around 200-250ms.
+This animation should play every time the Home page's content is shown — whether that's right after the one-time splash (on first visit), or immediately when navigating to Home from another page (on all subsequent visits, since splash is skipped per point 1), or on a full page refresh.
+Double check the easing function is a smooth ease-out (not linear or anything abrupt) so the slowed-down animation feels natural rather than sluggish.
+
+3. Testing checklist after implementation:
+
+Fresh browser load (first visit) → splash logo animation plays once → then hero text animates in slowly and visibly.
+Navigate to About page, then click "HOME" in navbar → splash should NOT play → hero text animation plays immediately and visibly (slowed down).
+Navigate to Portfolio, then click the navbar logo → splash should NOT play → hero text animation plays immediately and visibly.
+Hard refresh the Home page → splash plays again (acceptable) → hero text animates in afterward, slowly and visibly.

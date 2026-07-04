@@ -1,0 +1,38 @@
+My website is built in React. I want to add a scroll-triggered exit-intent style popup modal with this exact behavior:
+1. New component: ConsultationPopup.jsx
+
+Create a reusable popup component styled with CSS (or Tailwind/styled-components — match whatever styling approach the rest of the project already uses).
+Use useState to control isOpen (boolean) and hasShown (boolean, so it only triggers once per session).
+Use useEffect to add a scroll event listener on window when the component mounts.
+On the first scroll event detected, start a setTimeout for 6000ms (6 seconds). When it fires, set isOpen = true and hasShown = true (and remove the scroll listener so it doesn't keep re-triggering).
+Clean up the scroll listener and timeout in the useEffect return function to avoid memory leaks.
+Store hasShown in sessionStorage (e.g., sessionStorage.getItem('popupShown')) so the popup doesn't show again if the user navigates between pages in the same session.
+
+2. Popup UI (match this design):
+
+Centered modal card, cream/off-white background (#F5F0E8 or similar), rounded corners, soft shadow.
+Dark semi-transparent overlay (rgba(0,0,0,0.5)) behind the modal covering the full viewport.
+"X" close icon top-right (use lucide-react's X icon if available, or a plain &times;).
+Heading: "Planning your dream home?" — large serif font, dark green (#2F3B2C or match theme), centered.
+Subheading: "GET A FREE 30-MIN DESIGN CONSULTATION" — small, uppercase, letter-spaced, gold/tan color (#B08D57 or match theme).
+Three underline-style input fields (no borders/boxes, just bottom border), each with placeholder text:
+
+Your Name
+Phone Number
+Type of Space
+
+
+Full-width CTA button below inputs: gold/tan background, white bold uppercase text: "BOOK MY FREE CONSULTATION"
+
+3. Behavior on interaction:
+
+Clicking the X icon → sets isOpen = false, simply closes the modal, no navigation.
+Clicking the "BOOK MY FREE CONSULTATION" button → closes the modal AND navigates the user to the Contact page route (use useNavigate() from react-router-dom and navigate to the same path used by the navbar's "CONTACT" link — check App.jsx or the router file to confirm the exact route, e.g. /contact).
+
+4. Integration:
+
+Mount <ConsultationPopup /> once at the top level (e.g., in App.jsx or a shared Layout.jsx) so it applies site-wide, not per-page.
+Make sure z-index is high enough to appear above the navbar and all other content.
+Ensure it's responsive and matches the dark green + cream + gold theme already used on the Contact page.
+
+Please implement this as clean, working React code with proper component structure, and wire it into the existing routing.

@@ -1,0 +1,1 @@
+- [MongoDB + Cloudinary setup](mongo-cloudinary-setup.md) — Express API on port 3001 proxied via Vite; Mongoose model in server/models/Project.js; pre-save async hooks (not next-style) required for Mongoose v9.

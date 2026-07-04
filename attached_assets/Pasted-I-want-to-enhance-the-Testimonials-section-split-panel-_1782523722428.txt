@@ -1,0 +1,29 @@
+I want to enhance the Testimonials section (split-panel design with dark green left panel "Hear what our clients have said about us!" and white right panel with the quote) with the following additions and animations:
+1. Add back the 5-star rating:
+
+Add a row of 5 star icons (color #a18661) above the quote text in the white right panel, same style as previously implemented.
+
+2. Add back the client avatar/initials circle:
+
+Add a small circular avatar with the client's initials (e.g., "SA" for Swati & Arjun) next to/above the client name "SWATI & ARJUN KULKARNI", styled consistently with how it was previously implemented (tan/gold circle background, dark initials text).
+
+3. Animate the progress bar below the card to sync with auto-scroll:
+
+The thin gradient bar below the testimonial card should now function as an auto-scroll progress indicator, similar to Instagram Stories' progress bar.
+It should gradually fill from left to right over the same duration as the auto-scroll interval (5 seconds), then reset to empty and start filling again as soon as the carousel transitions to the next testimonial.
+Use useState + useEffect with requestAnimationFrame or a CSS animation tied to the same interval/key as the auto-scroll's setInterval, restarting the fill animation every time currentIndex changes.
+
+4. Add these additional animations:
+
+Card entrance: When the section scrolls into the viewport, fade in + slide up the whole card (use whileInView if using Framer Motion, trigger once).
+Quote icon animation: The quote mark icon (top-right) should scale up slightly (from 0.8 to 1) combined with a subtle rotation (-10deg to 0deg) each time the testimonial slide changes.
+Arrow hover effect: On hover, the left/right arrow buttons should scale up slightly (scale(1.1)) and their background color should darken slightly, with a smooth transition (~200ms).
+Card hover lift: On hovering over the entire testimonial card, it should lift slightly (translateY(-4px)) with an increased box-shadow, smooth transition (~250ms).
+Star rating animation: Stars should fill in one-by-one with a short stagger (~80-100ms each) whenever the testimonial slide changes, rather than appearing all at once.
+Avatar animation: The avatar circle should fade in + scale up slightly (0.9 to 1) when its testimonial becomes active.
+
+5. Implementation notes:
+
+Use Framer Motion if already installed for cleaner animation handling (recommended for staggered star fill, quote icon rotation, and scroll-triggered entrance); otherwise use CSS transitions/keyframes.
+All slide-change animations (stars, quote icon, avatar) should retrigger every time the carousel moves to a new testimonial — not just once on page load.
+Ensure everything remains fully responsive and smooth on mobile, including touch interactions with the arrows.

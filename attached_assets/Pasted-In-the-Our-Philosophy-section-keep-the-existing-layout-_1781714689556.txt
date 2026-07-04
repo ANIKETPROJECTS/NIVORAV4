@@ -1,0 +1,51 @@
+In the "Our Philosophy" section, keep the existing layout, styling, spacing, typography, and all current scroll/entrance animations exactly as they are. Do not modify or remove any existing animations.
+
+Add the following enhancements:
+
+1. Floating Quote Card
+- Add a small square quote card overlapping the philosophy image.
+- Position: Bottom-left corner of the image, slightly overlapping outside the image frame.
+- Background color: Premium golden/mustard (#C9A227 or similar luxury gold tone).
+- Content:
+  - Elegant quotation mark icon.
+  - Quote text:
+    "We don't just design spaces, we create legacies."
+- Text color: White.
+- Add subtle shadow and smooth hover effect.
+- Animate using the same animation style already used in this section (fade-up/parallax if applicable).
+
+2. Statistics Section
+- Directly below the Philosophy section, add a full-width statistics strip.
+- Background color: Olive green (#556B2F or slightly muted luxury olive tone).
+- Keep design premium, minimal and luxury-focused.
+
+3. Animated Counters
+Create 4 statistics cards with count-up animation triggered when the section enters the viewport.
+
+Statistics:
+- 12+ Years Experience
+- 250+ Projects Completed
+- 200+ Clients Served
+- 98% Client Satisfaction
+
+Animation Requirements:
+- Numbers should count smoothly from 0 to their final value.
+- Counter should start only once when the section becomes visible.
+- Duration: 2–2.5 seconds.
+- Use Intersection Observer for performance.
+- Maintain responsiveness across desktop, tablet, and mobile.
+
+4. Styling
+- Large luxury serif numbers.
+- Small uppercase labels beneath.
+- Thin vertical separators between stats on desktop.
+- Stack neatly on mobile.
+- White/off-white typography for contrast against olive background.
+
+5. Performance
+- Use lightweight implementation.
+- No external libraries.
+- Preserve all existing functionality and animations already present in the Philosophy section.
+
+Goal:
+Create a premium interior-design agency look similar to high-end studio websites, with an elegant floating golden quote card and animated statistics section below it while keeping the current section visually unchanged.

@@ -1,0 +1,220 @@
+# Replit Prompt — Contact Page: Form Fields, Dropdowns & Styling
+
+## OVERALL CONTEXT
+The Contact page has:
+- A CTA banner at top ("Ready to Begin? / Not sure where to start?") — dark green background (Image 1)
+- A two-column layout below: LEFT = form, RIGHT = contact info card (Image 2)
+- Footer same as About page — DO NOT CHANGE footer
+
+---
+
+## SECTION 1 — PAGE BACKGROUND & COLOR PALETTE
+
+Match the warm off-white/cream palette shown in Image 2:
+
+```css
+/* Contact page wrapper (outside the form card) */
+.contact-page {
+  background-color: #F5F0E8; /* warm cream/linen */
+}
+
+/* Form card (the container holding all fields) */
+.contact-form-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E0D0;
+  border-radius: 4px;
+  padding: 40px;
+}
+
+/* Right sidebar card (Nivora Interiors info) */
+.contact-info-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E0D0;
+  border-radius: 4px;
+}
+```
+
+Keep the dark green CTA banner (Image 1) at the top exactly as-is — only the form section below gets the cream palette.
+
+---
+
+## SECTION 2 — FORM FIELDS (ADD ALL OF THESE)
+
+The form must have exactly these fields in a **2-column grid layout** (each row = 2 fields side by side):
+
+### Row 1
+| Field | Type |
+|---|---|
+| FULL NAME * | Text input, placeholder: "Jane Doe" |
+| PHONE NUMBER * | Text input, placeholder: "+91 98765 43210" |
+
+### Row 2
+| Field | Type |
+|---|---|
+| EMAIL ADDRESS * | Email input, placeholder: "jane@example.com" |
+| CITY * | Text input, placeholder: "Mumbai" |
+
+### Row 3
+| Field | Type |
+|---|---|
+| TYPE OF SPACE * | **Dropdown** — options below |
+| BUDGET RANGE * | **Dropdown** — options below |
+
+### Row 4
+| Field | Type |
+|---|---|
+| HOW DID YOU HEAR ABOUT US? * | **Dropdown** — options below |
+| PREFERRED CALLBACK TIME * | **Dropdown** — options below |
+
+### Row 5 (full width)
+| Field | Type |
+|---|---|
+| PROJECT DESCRIPTION | Textarea, placeholder: "Tell us about your project, style preferences, timeline..." |
+
+---
+
+## SECTION 3 — DROPDOWN OPTIONS
+
+### TYPE OF SPACE
+- Select a space type *(placeholder, disabled)*
+- Residential — Apartment
+- Residential — Villa / Bungalow
+- Residential — Penthouse
+- Commercial — Office
+- Commercial — Retail Store
+- Commercial — Restaurant / Café
+- Commercial — Hospitality
+- Other
+
+### BUDGET RANGE
+- Select your budget *(placeholder, disabled)*
+- Under ₹10 Lakhs
+- ₹10 – ₹25 Lakhs
+- ₹25 – ₹50 Lakhs
+- ₹50 Lakhs – ₹1 Crore
+- Above ₹1 Crore
+- Prefer not to say
+
+### HOW DID YOU HEAR ABOUT US?
+- Select an option *(placeholder, disabled)*
+- Instagram
+- Google Search
+- Word of Mouth / Referral
+- Houzz
+- Pinterest
+- LinkedIn
+- A Previous Client
+- Other
+
+### PREFERRED CALLBACK TIME
+- Select a time *(placeholder, disabled)*
+- Morning (9 AM – 12 PM)
+- Afternoon (12 PM – 3 PM)
+- Evening (3 PM – 6 PM)
+- Late Evening (6 PM – 8 PM)
+- Anytime
+
+---
+
+## SECTION 4 — FIELD STYLING
+
+Match the clean underline style shown in Images 2 & 3:
+
+```css
+/* Field label */
+.form-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #888880;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+/* Text inputs and selects — underline only, no box */
+.form-input,
+.form-select {
+  border: none;
+  border-bottom: 1px solid #C8C0B0;
+  border-radius: 0;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 15px;
+  color: #2C2C2A;
+  width: 100%;
+  outline: none;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-bottom-color: #C9A96E; /* gold on focus */
+}
+
+/* Placeholder color */
+.form-input::placeholder {
+  color: #AAAAAA;
+}
+
+/* Textarea */
+.form-textarea {
+  border: 1px solid #C8C0B0;
+  border-radius: 2px;
+  padding: 12px;
+  font-size: 15px;
+  color: #2C2C2A;
+  width: 100%;
+  min-height: 120px;
+  outline: none;
+  background: transparent;
+  resize: vertical;
+}
+
+.form-textarea:focus {
+  border-color: #C9A96E;
+}
+
+/* Grid layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 40px;
+}
+
+.form-field-full {
+  grid-column: 1 / -1; /* full width for textarea */
+}
+```
+
+---
+
+## SECTION 5 — SUBMIT BUTTON
+
+Keep existing button style but ensure it matches site palette:
+- Text: "SEND ENQUIRY →" or keep existing
+- Background: gold (`#C9A96E`) or dark green (`#2D3B2D`) — match whichever is currently used on the page
+- Full width inside the form card
+- Letter-spacing: 0.12em, uppercase, font-size 13px
+
+---
+
+## SECTION 6 — RIGHT SIDEBAR (keep existing content, just verify all items present)
+
+The right card (Image 2) should show:
+- **Nivora Interiors** — heading
+- *From Vision to Execution* — gold italic subheading
+- Phone icon + `+91 99999 99999`
+- Email icon + `hello@nivorainteriors.com`
+- Location icon + `Suite 405, The Design Hub, Bandra West, Mumbai 400050`
+- **CHAT ON WHATSAPP →** button (outlined)
+- Below that: a second small card — **Free Initial Consultation** / "No charges for the first meeting"
+
+Do not add or remove any content from the right sidebar — just make sure it's all there and styled correctly.
+
+---
+
+## DO NOT CHANGE
+- The dark green "Ready to Begin?" CTA banner (Image 1) — leave completely untouched
+- Footer — must remain exactly the same as the About page footer
+- Header / navbar
+- Any other page
+- The "CHAT ON WHATSAPP" button functionality

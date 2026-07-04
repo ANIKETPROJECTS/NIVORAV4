@@ -1,0 +1,58 @@
+Looking carefully at both images — Image 1 is light, airy, editorial (white/cream background, real interior photos, clean layout) while Image 2 is the current dark olive Process section. The goal is to bring that light editorial energy into the Process section.
+
+Design Direction: Light Editorial Process Section
+Core Shift
+Dark olive → Warm Alabaster (#F5F2ED) as the base. Keep the gold accents but let them breathe against cream rather than glow against dark.
+
+Layout Concept — "Split Story" Style (inspired by Image 1's photo + text split)
+Instead of 4 floating circles in a row, do this:
+Left side (40%): A tall stacked column of real interior photos — like Image 1's overlapping/offset photo collage. Two photos slightly offset, one overlapping the other. This grounds the section in real work rather than abstract steps.
+Right side (60%): The numbered process steps listed vertically, like a refined editorial list — not a horizontal timeline.
+
+Typography Treatment
+
+Eyebrow: HOW WE WORK — Montserrat, 9px, letter-spacing 0.3em, Bronze (#6D5A41)
+Main heading: Our Process — Playfair Display, 48px, Olive (#21291a), left-aligned (not centered)
+Step numbers: 01, 02, 03 — Playfair italic, very large (80px), Gold at 15% opacity as a ghost watermark behind each step title
+Step titles: Playfair Display, 24px, Olive
+Step descriptions: Lora, 15px, Bronze, line-height 1.8
+Thin 1px Gold horizontal divider between each step
+
+
+What to Borrow Directly from Image 1
+The overlapping photo collage: Image 1 has two photos — one slightly behind the other, offset diagonally. Do the same on the left side of the Process section:
+
+Top photo: a living room or bedroom shot, slightly tilted or just offset upward
+Bottom photo: a kitchen or workspace shot, overlapping the first at the corner
+Add a thin Gold border frame (1px) around each photo
+Small Gold square accent dot in the corner where they overlap
+
+The "Explore Our Services" button style from Image 1: Use the same solid dark button style for a CTA at the bottom of the right column — "Book Free Consultation" — dark olive background, alabaster text, Montserrat all-caps.
+The icon style from Image 1: Each step gets a very minimal line icon to its left (just like Image 1's lightbulb/wrench icons) — but smaller, in Gold, sitting beside the step number.
+
+Detailed Step Layout (Right Column)
+Each step row:
+[thin gold left border, 3px] [large ghost number] [icon]
+                               Step Title (Playfair 24px, Olive)
+                               Description (Lora 15px, Bronze)
+────────────────────────────── [1px Gold divider line]
+
+The ghost number (01) sits large and faded behind/beside the title — purely decorative, adds depth
+The 3px gold left border is the main visual anchor (like a bookmark)
+Divider line separates each step cleanly
+
+
+Color Usage
+
+Background: Alabaster #F5F2ED — 60% of section
+Step border accents + icons: Gold #a18661 — 10%
+Text: Olive #21291a for titles, Bronze #6D5A41 for body — 30%
+No dark backgrounds anywhere in this section
+
+
+Footer Tagline (below steps)
+END-TO-END  ·  TRANSPARENT  ·  HASSLE-FREE
+
+Montserrat, 9px, letter-spacing 0.35em
+Bronze color
+No flanking lines needed — the light background lets it breathe on its own

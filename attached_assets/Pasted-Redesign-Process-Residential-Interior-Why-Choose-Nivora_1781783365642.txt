@@ -1,0 +1,266 @@
+Redesign Process → Residential Interior → “Why Choose Nivora”
+
+Redesign the “Why Choose Nivora” section completely.
+
+Current problem:
+The section feels visually heavy, repetitive, and too card-based. The dark green blocks make it dense and reduce the premium residential feeling.
+
+Goal:
+Create a luxury residential interior experience that feels editorial, architectural, spacious, refined, and timeless.
+
+The final design should feel like:
+
+High-end interior studio
+Luxury architecture website
+Minimal editorial layout
+Quiet premium aesthetic
+
+NOT:
+
+SaaS feature cards
+boxed UI
+dark luxury
+repetitive equal grids
+Color System
+Background → #F7F4EF
+Surface → #F3EEE7
+Text → #262421
+Muted → #7A756E
+Accent → #C8A56A
+Border → #E7DED2
+
+Important:
+
+Remove dark green entirely from this section.
+Green should only exist in footer.
+Use warm ivory as dominant background.
+SECTION HEADER
+
+Small label:
+
+WHY NIVORA
+
+Style:
+
+uppercase
+letter spacing: 5px
+gold color
+small elegant text
+
+Main heading:
+
+Designed Around
+How You Live
+
+Typography:
+
+large luxury serif
+elegant line breaks
+desktop: 80–88px
+tablet: 64px
+mobile: 42px
+
+Supporting text:
+
+Thoughtful interiors that balance aesthetics, comfort and functionality.
+
+Max width:
+520px
+
+Add:
+
+thin gold divider line
+generous whitespace
+CONTENT LAYOUT
+
+Create 3 editorial experience blocks.
+
+No repeated cards.
+
+BLOCK 01 — (60 / 40)
+
+Desktop:
+60% / 40%
+
+Mobile:
+stack vertically
+
+LEFT:
+
+01
+
+Personalized
+Design
+
+Large serif typography.
+
+Add:
+thin gold underline.
+
+RIGHT:
+
+Minimal content.
+
+Icon:
+single-line luxury icon.
+
+Text:
+
+Every project begins with listening.
+We shape spaces that reflect your personality,
+habits and lifestyle.
+
+Interaction:
+
+hover:
+translateY(-6px)
+
+shadow:
+0 20px 50px rgba(0,0,0,.04)
+BLOCK 02 — FULL WIDTH STRIP
+
+Editorial horizontal layout.
+
+Content:
+
+02
+
+Functional Planning
+
+(vertical divider)
+
+Premium Material Selection
+
+Descriptions:
+
+Functional Planning:
+Smart layouts that work beautifully and efficiently.
+
+Premium Material Selection:
+Hand-picked finishes and materials with timeless character.
+
+Style:
+
+border-top:1px solid #E7DED2;
+border-bottom:1px solid #E7DED2;
+
+padding:
+desktop 100px 0
+mobile 64px 0
+
+No cards.
+
+Divider animates on hover.
+
+Mobile:
+stack vertically.
+
+BLOCK 03 — (40 / 60)
+
+Desktop:
+40 / 60
+
+Mobile:
+stack
+
+LEFT:
+
+03
+
+Attention
+to Detail
+
+Supporting:
+
+Every corner considered.
+Every junction resolved.
+Nothing is left to chance.
+
+RIGHT:
+
+Create two elegant editorial rows.
+
+ROW 1
+
+End-to-End Execution
+
+From concept to final reveal —
+every stage is thoughtfully managed.
+
+ROW 2
+
+Timeless Interiors
+
+Design that remains beautiful long after trends fade.
+
+Style:
+
+background:#F3EEE7;
+border:1px solid #E7DED2;
+
+No heavy cards.
+
+RESPONSIVE BEHAVIOR
+
+Desktop:
+
+asymmetrical composition
+lots of negative space
+
+Tablet:
+
+preserve hierarchy
+reduce typography scale
+
+Mobile:
+
+center intro
+stack blocks
+72px spacing
+remove side gutters
+maintain luxury feel
+
+Typography:
+
+Hero → 42px
+Section → 30px
+Body → 16px
+
+Touch targets:
+minimum 48px.
+
+ANIMATION
+
+On scroll:
+
+fade up
+text reveal
+stagger entrance
+
+Timing:
+
+duration:900ms;
+ease:cubic-bezier(.22,1,.36,1)
+
+Hover:
+
+subtle lift
+gold line expand
+
+Respect:
+prefers-reduced-motion.
+
+ENHANCEMENTS
+
+Add:
+
+subtle paper grain texture
+luxury divider lines
+section numbering (01 / 02 / 03)
+soft depth
+micro parallax (desktop only)
+elegant whitespace rhythm
+
+Final result should feel like:
+
+Luxury residential interior studio + editorial architecture website.

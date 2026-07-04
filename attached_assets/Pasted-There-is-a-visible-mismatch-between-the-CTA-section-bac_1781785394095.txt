@@ -1,0 +1,143 @@
+There is a visible mismatch between the CTA section background and footer background. The transition currently looks broken and creates a hard visual split.
+
+Goal:
+Create one seamless premium surface where the CTA section visually flows into the footer.
+
+Important:
+The CTA background must match the navbar + footer color exactly.
+
+Current issue:
+
+CTA green and footer green are different shades
+Creates a banding effect
+Breaks luxury aesthetic
+Background Rules
+
+Use ONE exact shared background token:
+
+--deep-green: #132818;
+
+Apply:
+
+Navbar → background: var(--deep-green)
+CTA Section → background: var(--deep-green)
+Footer → background: var(--deep-green)
+
+Do NOT use:
+
+linear-gradient()
+rgba overlays
+different opacity layers
+multiple green shades
+
+The transition between sections should appear invisible.
+
+CTA SECTION IMPROVEMENTS
+
+Keep layout centered.
+
+Reduce vertical emptiness.
+
+Desktop:
+
+padding:
+110px 0 100px;
+
+Tablet:
+
+padding:
+90px 32px;
+
+Mobile:
+
+padding:
+72px 24px;
+
+Heading:
+
+Ready to Design
+Your Dream Home?
+
+Style:
+
+font-family: serif;
+font-size:
+desktop → 86px
+tablet → 64px
+mobile → 42px;
+
+line-height:.95;
+color:#F7F4EF;
+
+Subtitle:
+
+max-width:560px;
+margin:auto;
+color:rgba(247,244,239,.70);
+
+Buttons:
+
+Primary:
+
+background:#C8A56A;
+color:#262421;
+
+Hover:
+
+transform:translateY(-2px);
+
+Secondary:
+
+border:1px solid rgba(200,165,106,.35);
+background:transparent;
+color:#F7F4EF;
+CTA → FOOTER TRANSITION
+
+Remove any border or divider.
+
+Instead add:
+
+position:relative;
+
+&::after{
+content:"";
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:120px;
+
+background:
+linear-gradient(
+180deg,
+transparent,
+rgba(0,0,0,.04)
+);
+}
+
+Very subtle only.
+
+FOOTER
+
+Keep same green:
+
+background:#132818;
+
+Top spacing:
+
+padding-top:80px;
+
+Use:
+
+border-top:
+1px solid rgba(255,255,255,.05);
+
+NOT another background color.
+
+Final Outcome
+
+Navbar → CTA → Footer should feel like one continuous luxury canvas.
+
+No visible color jump.
+No separate section feeling.
+Premium residential studio aesthetic.
