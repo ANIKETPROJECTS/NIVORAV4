@@ -5,11 +5,19 @@ import {
   deleteProject, fetchProject, clearAdminToken, Project
 } from '../../lib/api'
 import AdminProjectForm from './AdminProjectForm'
-import AdminSiteSettings from './AdminSiteSettings'
-import { Plus, Pencil, Trash2, LogOut, RefreshCw, ExternalLink, Loader2, Settings } from 'lucide-react'
+import AdminSiteSettings, { SettingsSection } from './AdminSiteSettings'
+import { Plus, Pencil, Trash2, LogOut, RefreshCw, ExternalLink, Loader2, LayoutTemplate, Image, AlignLeft, Grid2X2, Layers } from 'lucide-react'
 
 type ProjectSummary = Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage'>
-type AdminTab = 'projects' | 'site-settings'
+
+type AdminTab = 'projects' | `settings/${SettingsSection}`
+
+const SETTINGS_SECTIONS: { section: SettingsSection; label: string; icon: React.ElementType; hint: string }[] = [
+  { section: 'header',    label: 'Header',             icon: AlignLeft,     hint: 'Navbar logo & branding' },
+  { section: 'footer',    label: 'Footer',             icon: LayoutTemplate, hint: 'Footer logo' },
+  { section: 'expertise', label: 'Our Expertise',      icon: Grid2X2,       hint: 'Homepage service cards' },
+  { section: 'portfolio', label: 'Portfolio Highlights', icon: Layers,       hint: 'Homepage curated items' },
+]
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
@@ -86,29 +94,50 @@ export default function AdminDashboard() {
     }
   }
 
+  const isSettings = tab.startsWith('settings/')
+  const activeSection = isSettings ? (tab.replace('settings/', '') as SettingsSection) : null
+
+  const topbarTitle = tab === 'projects'
+    ? 'Portfolio Projects'
+    : SETTINGS_SECTIONS.find(s => s.section === activeSection)?.label ?? 'Site Settings'
+
   return (
     <div className="adm-root">
-      {/* Sidebar */}
+      {/* ── Sidebar ─────────────────────────────────────────────────────────── */}
       <aside className="adm-sidebar">
         <div className="adm-sidebar-brand">
           <span className="adm-brand-name">nivora</span>
           <span className="adm-brand-sub">admin</span>
         </div>
-        <nav className="adm-nav">
+
+        <nav className="adm-nav" style={{ overflowY: 'auto', flex: 1 }}>
+
+          {/* ── Content group ── */}
+          <div className="adm-nav-group-label">Content</div>
           <div
             className={`adm-nav-item ${tab === 'projects' ? 'adm-nav-active' : ''}`}
             onClick={() => setTab('projects')}
           >
-            Projects
+            <Image size={13} style={{ flexShrink: 0 }} />
+            Portfolio Projects
           </div>
-          <div
-            className={`adm-nav-item ${tab === 'site-settings' ? 'adm-nav-active' : ''}`}
-            onClick={() => setTab('site-settings')}
-            style={{ display: 'flex', alignItems: 'center', gap: 7 }}
-          >
-            <Settings size={13} /> Site Settings
-          </div>
+
+          {/* ── Site Settings group ── */}
+          <div className="adm-nav-group-label" style={{ marginTop: 16 }}>Site Settings</div>
+
+          {SETTINGS_SECTIONS.map(({ section, label, icon: Icon }) => (
+            <div
+              key={section}
+              className={`adm-nav-item ${tab === `settings/${section}` ? 'adm-nav-active' : ''}`}
+              onClick={() => setTab(`settings/${section}` as AdminTab)}
+              title={SETTINGS_SECTIONS.find(s => s.section === section)?.hint}
+            >
+              <Icon size={13} style={{ flexShrink: 0 }} />
+              {label}
+            </div>
+          ))}
         </nav>
+
         <div className="adm-sidebar-footer">
           <button className="adm-logout" onClick={handleLogout}>
             <LogOut size={15} /> Sign Out
@@ -116,18 +145,21 @@ export default function AdminDashboard() {
         </div>
       </aside>
 
-      {/* Main */}
+      {/* ── Main ────────────────────────────────────────────────────────────── */}
       <main className="adm-main">
         {/* Topbar */}
         <header className="adm-topbar">
           <div className="adm-topbar-left">
-            {tab === 'projects' ? (
-              <>
-                <h1 className="adm-page-title">Portfolio Projects</h1>
-                <span className="adm-count">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</span>
-              </>
-            ) : (
-              <h1 className="adm-page-title">Site Settings</h1>
+            <h1 className="adm-page-title">{topbarTitle}</h1>
+            {tab === 'projects' && (
+              <span className="adm-count">
+                {projects.length} {projects.length === 1 ? 'project' : 'projects'}
+              </span>
+            )}
+            {isSettings && activeSection && (
+              <span className="adm-count">
+                {SETTINGS_SECTIONS.find(s => s.section === activeSection)?.hint}
+              </span>
             )}
           </div>
           <div className="adm-topbar-right">
@@ -136,7 +168,7 @@ export default function AdminDashboard() {
                 <button className="adm-btn-ghost-sm" onClick={load} title="Refresh">
                   <RefreshCw size={15} />
                 </button>
-                <a href="/portfolio" target="_blank" rel="noreferrer" className="adm-btn-ghost-sm" title="View site">
+                <a href="/portfolio" target="_blank" rel="noreferrer" className="adm-btn-ghost-sm" title="View portfolio">
                   <ExternalLink size={15} />
                 </a>
                 <button className="adm-btn-add" onClick={() => setShowForm(true)}>
@@ -153,14 +185,21 @@ export default function AdminDashboard() {
 
         {/* Messages (projects tab only) */}
         {tab === 'projects' && successMsg && <div className="adm-success">{successMsg}</div>}
-        {tab === 'projects' && error && <div className="adm-error">{error} <button onClick={() => setError('')}>×</button></div>}
+        {tab === 'projects' && error && (
+          <div className="adm-error">
+            {error}
+            <button onClick={() => setError('')}>×</button>
+          </div>
+        )}
 
         {/* Content */}
         <div className="adm-content">
-          {tab === 'site-settings' ? (
-            <AdminSiteSettings />
+          {isSettings && activeSection ? (
+            <AdminSiteSettings section={activeSection} />
           ) : loading ? (
-            <div className="adm-loading"><Loader2 size={28} className="adm-spin" /> Loading projects…</div>
+            <div className="adm-loading">
+              <Loader2 size={28} className="adm-spin" /> Loading projects…
+            </div>
           ) : projects.length === 0 ? (
             <div className="adm-empty">
               <p>No projects yet.</p>
@@ -239,10 +278,7 @@ export default function AdminDashboard() {
 
       {/* Add Form */}
       {showForm && (
-        <AdminProjectForm
-          onSave={handleAdd}
-          onCancel={() => setShowForm(false)}
-        />
+        <AdminProjectForm onSave={handleAdd} onCancel={() => setShowForm(false)} />
       )}
 
       {/* Edit Form */}
@@ -262,7 +298,7 @@ export default function AdminDashboard() {
           background: #f0ebe3; font-family: Arial, sans-serif;
         }
         .adm-sidebar {
-          width: 220px; min-height: 100vh; flex-shrink: 0;
+          width: 230px; min-height: 100vh; flex-shrink: 0;
           background: #ffffff; border-right: 1px solid #e2d9ce;
           display: flex; flex-direction: column;
           position: sticky; top: 0; height: 100vh;
@@ -276,13 +312,23 @@ export default function AdminDashboard() {
           display: block; font-size: 9px; letter-spacing: 0.35em;
           color: #c0b5a8; text-transform: uppercase; margin-top: 2px;
         }
-        .adm-nav { flex: 1; padding: 16px 0; }
-        .adm-nav-item {
-          padding: 10px 24px; font-size: 13px; color: #9a8e82;
-          cursor: pointer; transition: all 0.2s;
-          border-left: 2px solid transparent;
+        .adm-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+        .adm-nav-group-label {
+          padding: 8px 24px 4px;
+          font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+          color: #c0b5a8; font-weight: 600; user-select: none;
         }
-        .adm-nav-active { color: #7a6245; border-left-color: #7a6245; background: rgba(122,98,69,0.06); }
+        .adm-nav-item {
+          padding: 9px 24px; font-size: 13px; color: #9a8e82;
+          cursor: pointer; transition: all 0.15s;
+          border-left: 2px solid transparent;
+          display: flex; align-items: center; gap: 8px;
+        }
+        .adm-nav-item:hover { color: #5a4730; background: rgba(122,98,69,0.04); }
+        .adm-nav-active {
+          color: #7a6245; border-left-color: #7a6245;
+          background: rgba(122,98,69,0.07); font-weight: 500;
+        }
         .adm-sidebar-footer { padding: 20px 24px; border-top: 1px solid #ede8e1; }
         .adm-logout {
           display: flex; align-items: center; gap: 8px;
@@ -327,7 +373,7 @@ export default function AdminDashboard() {
           display: flex; justify-content: space-between; align-items: center;
         }
         .adm-error button { background: none; border: none; color: #b85a4a; cursor: pointer; font-size: 18px; }
-        .adm-content { padding: 24px 32px; flex: 1; }
+        .adm-content { padding: 28px 32px; flex: 1; max-width: 820px; }
         .adm-loading, .adm-empty {
           display: flex; align-items: center; justify-content: center;
           flex-direction: column; gap: 16px; color: #b0a498;
