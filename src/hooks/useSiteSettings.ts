@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import { fetchSiteSettings, SiteSettings } from '../lib/api'
 
 let cached: SiteSettings | null = null
-let cacheTimestamp = 0
-const CACHE_TTL_MS = 10_000 // treat cache as fresh for 10s; stale after that
 const listeners: Array<() => void> = []
 
 function notifyListeners() {
@@ -12,7 +10,6 @@ function notifyListeners() {
 
 export function invalidateSiteSettings(fresh?: SiteSettings) {
   cached = fresh ?? null
-  cacheTimestamp = fresh ? Date.now() : 0
   notifyListeners()
 }
 
@@ -24,12 +21,10 @@ export function useSiteSettings() {
     let cancelled = false
 
     const reload = () => {
-      setLoading(true)
       fetchSiteSettings()
         .then(data => {
           if (!cancelled) {
             cached = data
-            cacheTimestamp = Date.now()
             setSettings(data)
             setLoading(false)
           }
@@ -39,21 +34,18 @@ export function useSiteSettings() {
         })
     }
 
-    // Initial load: skip if cache is still fresh
-    const cacheIsFresh = cached && (Date.now() - cacheTimestamp) < CACHE_TTL_MS
-    if (!cacheIsFresh) {
+    if (!cached) {
+      setLoading(true)
       reload()
     }
 
-    // Re-fetch whenever this tab/frame becomes visible —
-    // this ensures the website preview picks up changes saved in the admin panel
-    // (each browser tab / Replit preview iframe has its own isolated JS module)
+    // Re-fetch whenever this document becomes visible.
+    // Each browser tab and each Replit preview iframe has its own isolated JS
+    // module, so invalidateSiteSettings() called in the admin panel tab cannot
+    // reach this context. Refetching on visibilitychange ensures the website
+    // always shows the latest saved values when the user looks at it.
     const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        // Only refetch if the cache has gone stale since we last loaded
-        const stale = !cached || (Date.now() - cacheTimestamp) >= CACHE_TTL_MS
-        if (stale) reload()
-      }
+      if (!document.hidden) reload()
     }
     document.addEventListener('visibilitychange', handleVisibilityChange)
 

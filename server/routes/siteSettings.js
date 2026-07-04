@@ -42,7 +42,15 @@ async function getSettings() {
 router.get('/', async (_req, res) => {
   try {
     const doc = await getSettings()
-    res.json(doc)
+    // Convert to plain object so ALL fields are included.
+    // Mongoose schema defaults (e.g. logoSize, footerLogoSize) are applied at
+    // the JS layer but NOT stored in MongoDB until first explicit save, so
+    // res.json(doc) omits them.  Calling toObject() + explicit defaults ensures
+    // the client always receives every field.
+    const plain = doc.toObject({ versionKey: false })
+    if (plain.logoSize == null)       plain.logoSize       = 38
+    if (plain.footerLogoSize == null) plain.footerLogoSize = 200
+    res.json(plain)
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Failed to fetch site settings' })
