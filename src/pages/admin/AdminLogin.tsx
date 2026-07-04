@@ -61,20 +61,20 @@ export default function AdminLogin() {
       <style>{`
         .admin-login-root {
           min-height: 100vh;
-          background: #0e110d;
+          background: #f0ebe3;
           display: flex;
           align-items: center;
           justify-content: center;
           font-family: 'Georgia', serif;
         }
         .admin-login-card {
-          background: #161a14;
-          border: 1px solid #2a2f26;
-          border-radius: 4px;
+          background: #ffffff;
+          border: 1px solid #e2d9ce;
+          border-radius: 6px;
           padding: 48px 40px;
           width: 100%;
           max-width: 380px;
-          box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+          box-shadow: 0 8px 40px rgba(100,80,60,0.10);
         }
         .admin-login-logo {
           text-align: center;
@@ -84,14 +84,14 @@ export default function AdminLogin() {
           display: block;
           font-size: 32px;
           letter-spacing: 0.12em;
-          color: #c9b89a;
+          color: #7a6245;
           font-style: italic;
         }
         .admin-login-sub {
           display: block;
           font-size: 10px;
           letter-spacing: 0.35em;
-          color: #5a6354;
+          color: #b5a99a;
           margin-top: 4px;
           font-family: 'Arial', sans-serif;
         }
@@ -100,34 +100,34 @@ export default function AdminLogin() {
         .admin-field label {
           font-size: 11px;
           letter-spacing: 0.2em;
-          color: #7a8a72;
+          color: #9a8e82;
           font-family: 'Arial', sans-serif;
           text-transform: uppercase;
         }
         .admin-field input {
-          background: #1e241b;
-          border: 1px solid #2a3026;
-          border-radius: 3px;
-          color: #d4c9b0;
+          background: #faf8f5;
+          border: 1px solid #ddd7ce;
+          border-radius: 4px;
+          color: #1a1612;
           font-size: 14px;
           padding: 11px 14px;
           outline: none;
           font-family: 'Arial', sans-serif;
-          transition: border-color 0.2s;
+          transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .admin-field input:focus { border-color: #c9b89a; }
-        .admin-field input::placeholder { color: #3a4036; }
+        .admin-field input:focus { border-color: #7a6245; box-shadow: 0 0 0 3px rgba(122,98,69,0.08); }
+        .admin-field input::placeholder { color: #c8c0b5; }
         .admin-login-error {
-          color: #c07a6a;
+          color: #b85a4a;
           font-size: 13px;
           font-family: 'Arial', sans-serif;
           margin: 0;
         }
         .admin-btn-primary {
-          background: #c9b89a;
-          color: #0e110d;
+          background: #7a6245;
+          color: #ffffff;
           border: none;
-          border-radius: 3px;
+          border-radius: 4px;
           padding: 13px;
           font-size: 12px;
           letter-spacing: 0.2em;
@@ -138,7 +138,7 @@ export default function AdminLogin() {
           transition: background 0.2s, opacity 0.2s;
           margin-top: 4px;
         }
-        .admin-btn-primary:hover:not(:disabled) { background: #d4c9b0; }
+        .admin-btn-primary:hover:not(:disabled) { background: #6a5438; }
         .admin-btn-primary:disabled { opacity: 0.5; cursor: default; }
       `}</style>
     </div>

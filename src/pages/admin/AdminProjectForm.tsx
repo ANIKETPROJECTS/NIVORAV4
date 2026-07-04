@@ -294,110 +294,113 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
       <style>{`
         .apf-overlay {
           position: fixed; inset: 0; z-index: 1000;
-          background: rgba(0,0,0,0.75);
+          background: rgba(60,40,20,0.45);
           display: flex; align-items: flex-start; justify-content: center;
           overflow-y: auto; padding: 32px 16px;
         }
         .apf-panel {
-          background: #161a14;
-          border: 1px solid #2a2f26;
-          border-radius: 6px;
+          background: #ffffff;
+          border: 1px solid #e2d9ce;
+          border-radius: 8px;
           width: 100%; max-width: 820px;
           display: flex; flex-direction: column;
-          box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+          box-shadow: 0 16px 60px rgba(100,70,40,0.18);
         }
         .apf-header {
           display: flex; align-items: center; justify-content: space-between;
           padding: 24px 32px;
-          border-bottom: 1px solid #2a2f26;
+          border-bottom: 1px solid #ede8e1;
         }
-        .apf-title { margin: 0; font-size: 20px; color: #c9b89a; font-weight: normal; letter-spacing: 0.05em; }
+        .apf-title { margin: 0; font-size: 20px; color: #1a1612; font-weight: normal; letter-spacing: 0.03em; }
         .apf-close {
-          background: none; border: none; color: #5a6354; cursor: pointer; padding: 4px;
-          border-radius: 3px; transition: color 0.2s;
+          background: none; border: none; color: #b0a498; cursor: pointer; padding: 4px;
+          border-radius: 4px; transition: color 0.2s;
           display: flex; align-items: center;
         }
-        .apf-close:hover { color: #c9b89a; }
+        .apf-close:hover { color: #7a6245; }
         .apf-body { padding: 24px 32px; display: flex; flex-direction: column; gap: 0; overflow-y: auto; }
         .apf-section { margin-bottom: 32px; }
         .apf-section-title {
-          font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-          color: #7a8a72; font-family: Arial, sans-serif; margin: 0 0 16px 0;
-          padding-bottom: 8px; border-bottom: 1px solid #1e241b;
+          font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+          color: #b0a498; font-family: Arial, sans-serif; margin: 0 0 16px 0;
+          padding-bottom: 8px; border-bottom: 1px solid #ede8e1; font-weight: 600;
         }
         .apf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
         @media (max-width: 600px) { .apf-grid-2 { grid-template-columns: 1fr; } }
         .apf-field { display: flex; flex-direction: column; gap: 6px; }
         .apf-field-full { width: 100%; }
         .apf-field label {
-          font-size: 11px; letter-spacing: 0.15em; color: #7a8a72;
+          font-size: 11px; letter-spacing: 0.15em; color: #9a8e82;
           font-family: Arial, sans-serif; text-transform: uppercase;
         }
-        .req { color: #c07a6a; }
+        .req { color: #b85a4a; }
         .apf-field input, .apf-field select, .apf-field textarea {
-          background: #1e241b; border: 1px solid #2a3026;
-          border-radius: 3px; color: #d4c9b0; font-size: 14px;
+          background: #faf8f5; border: 1px solid #ddd7ce;
+          border-radius: 4px; color: #1a1612; font-size: 14px;
           padding: 10px 12px; outline: none; font-family: Arial, sans-serif;
-          transition: border-color 0.2s; resize: vertical;
+          transition: border-color 0.2s, box-shadow 0.2s; resize: vertical;
         }
-        .apf-field input:focus, .apf-field select:focus, .apf-field textarea:focus { border-color: #c9b89a; }
-        .apf-field input::placeholder, .apf-field textarea::placeholder { color: #3a4036; }
-        .apf-field select option { background: #1e241b; }
-        .apf-hint { font-size: 12px; color: #5a6354; font-family: Arial, sans-serif; margin: 0 0 12px 0; }
+        .apf-field input:focus, .apf-field select:focus, .apf-field textarea:focus {
+          border-color: #7a6245; box-shadow: 0 0 0 3px rgba(122,98,69,0.08);
+        }
+        .apf-field input::placeholder, .apf-field textarea::placeholder { color: #c8c0b5; }
+        .apf-field select option { background: #ffffff; color: #1a1612; }
+        .apf-hint { font-size: 12px; color: #b0a498; font-family: Arial, sans-serif; margin: 0 0 12px 0; }
         .apf-error {
-          background: #2a1515; border: 1px solid #5a2020; border-radius: 3px;
-          color: #c07a6a; font-size: 13px; font-family: Arial, sans-serif;
+          background: #fdf0ee; border: 1px solid #e8b5ad; border-radius: 4px;
+          color: #b85a4a; font-size: 13px; font-family: Arial, sans-serif;
           padding: 10px 14px; margin-bottom: 16px;
         }
         .apf-materials-input { display: flex; gap: 8px; }
         .apf-materials-input input {
-          flex: 1; background: #1e241b; border: 1px solid #2a3026;
-          border-radius: 3px; color: #d4c9b0; font-size: 14px;
+          flex: 1; background: #faf8f5; border: 1px solid #ddd7ce;
+          border-radius: 4px; color: #1a1612; font-size: 14px;
           padding: 10px 12px; outline: none; font-family: Arial, sans-serif;
-          transition: border-color 0.2s;
+          transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .apf-materials-input input:focus { border-color: #c9b89a; }
+        .apf-materials-input input:focus { border-color: #7a6245; box-shadow: 0 0 0 3px rgba(122,98,69,0.08); }
         .apf-add-btn {
           display: flex; align-items: center; gap: 6px;
-          background: #2a3026; border: 1px solid #3a4036;
-          color: #c9b89a; border-radius: 3px; padding: 0 16px;
+          background: #f0ebe3; border: 1px solid #ddd7ce;
+          color: #7a6245; border-radius: 4px; padding: 0 16px;
           font-size: 13px; font-family: Arial, sans-serif; cursor: pointer;
           white-space: nowrap; transition: background 0.2s;
         }
-        .apf-add-btn:hover { background: #333d2e; }
+        .apf-add-btn:hover { background: #e8e0d5; }
         .apf-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
         .apf-tag {
           display: flex; align-items: center; gap: 6px;
-          background: #2a3026; border: 1px solid #3a4036;
-          color: #c9b89a; border-radius: 20px;
+          background: #f0ebe3; border: 1px solid #ddd7ce;
+          color: #7a6245; border-radius: 20px;
           padding: 4px 12px 4px 14px; font-size: 13px;
           font-family: Arial, sans-serif;
         }
         .apf-tag button {
-          background: none; border: none; color: #7a8a72;
+          background: none; border: none; color: #b0a498;
           cursor: pointer; padding: 0; display: flex; align-items: center;
           transition: color 0.2s;
         }
-        .apf-tag button:hover { color: #c07a6a; }
+        .apf-tag button:hover { color: #b85a4a; }
         .apf-upload-zone {
-          border: 2px dashed #2a3026; border-radius: 4px;
+          border: 2px dashed #ddd7ce; border-radius: 6px;
           padding: 32px; text-align: center;
-          color: #5a6354; font-family: Arial, sans-serif; font-size: 14px;
-          cursor: pointer; transition: border-color 0.2s, color 0.2s;
+          color: #b0a498; font-family: Arial, sans-serif; font-size: 14px;
+          cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
           display: flex; align-items: center; justify-content: center; gap: 10px;
+          background: #faf8f5;
         }
-        .apf-upload-zone:hover { border-color: #c9b89a; color: #c9b89a; }
+        .apf-upload-zone:hover { border-color: #7a6245; color: #7a6245; background: #f5f0e8; }
         .apf-spin { animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .apf-cover-preview { position: relative; display: inline-block; margin-top: 0; }
         .apf-cover-preview img {
-          width: 100%; max-width: 320px; border-radius: 4px;
-          border: 1px solid #2a2f26; display: block; object-fit: cover; height: 180px;
+          width: 100%; max-width: 320px; border-radius: 6px;
+          border: 1px solid #e2d9ce; display: block; object-fit: cover; height: 180px;
         }
         .apf-cover-remove {
           position: absolute; top: 8px; right: 8px;
-          background: rgba(0,0,0,0.7); border: none; color: #c07a6a;
-          border-radius: 3px; padding: 4px 10px; font-size: 12px;
+          background: rgba(255,255,255,0.9); border: 1px solid #e2d9ce; color: #b85a4a;
+          border-radius: 4px; padding: 4px 10px; font-size: 12px;
           cursor: pointer; display: flex; align-items: center; gap: 4px;
           font-family: Arial, sans-serif;
         }
@@ -406,59 +409,60 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
           gap: 12px; margin-top: 16px;
         }
         .apf-gallery-item {
-          position: relative; border-radius: 4px; overflow: hidden;
-          border: 1px solid #2a2f26; aspect-ratio: 4/3;
+          position: relative; border-radius: 6px; overflow: hidden;
+          border: 1px solid #e2d9ce; aspect-ratio: 4/3;
         }
         .apf-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .apf-gallery-overlay {
-          position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+          position: absolute; inset: 0; background: rgba(26,22,18,0.5);
           display: flex; align-items: center; justify-content: center; gap: 8px;
           opacity: 0; transition: opacity 0.2s;
         }
         .apf-gallery-item:hover .apf-gallery-overlay { opacity: 1; }
         .apf-gal-btn {
-          background: rgba(201,184,154,0.9); color: #0e110d;
-          border: none; border-radius: 3px; padding: 4px 10px;
+          background: rgba(255,255,255,0.92); color: #7a6245;
+          border: none; border-radius: 4px; padding: 4px 10px;
           font-size: 11px; font-family: Arial, sans-serif; cursor: pointer;
           font-weight: 600; transition: background 0.2s;
           display: flex; align-items: center; gap: 4px;
         }
-        .apf-gal-btn:hover { background: #d4c9b0; }
-        .apf-gal-btn-del { background: rgba(192,122,106,0.9); color: #fff; }
-        .apf-gal-btn-del:hover { background: rgba(192,122,106,1); }
+        .apf-gal-btn:hover { background: #ffffff; }
+        .apf-gal-btn-del { background: rgba(184,90,74,0.9); color: #fff; }
+        .apf-gal-btn-del:hover { background: rgba(184,90,74,1); }
         .apf-gallery-order {
           position: absolute; bottom: 4px; left: 4px; display: flex; gap: 4px;
         }
         .apf-ord-btn {
-          background: rgba(0,0,0,0.6); color: #c9b89a;
+          background: rgba(255,255,255,0.85); color: #7a6245;
           border: none; border-radius: 2px; padding: 2px 6px;
           font-size: 12px; cursor: pointer; transition: background 0.2s;
         }
-        .apf-ord-btn:hover { background: rgba(0,0,0,0.9); }
+        .apf-ord-btn:hover { background: rgba(255,255,255,1); }
         .apf-gallery-num {
           position: absolute; top: 6px; left: 6px;
-          background: rgba(0,0,0,0.65); color: #c9b89a;
+          background: rgba(26,22,18,0.6); color: #f5f0e8;
           font-size: 10px; font-family: Arial, sans-serif;
           padding: 2px 7px; border-radius: 10px; letter-spacing: 0.05em;
         }
         .apf-footer {
           display: flex; justify-content: flex-end; gap: 12px;
-          padding: 20px 32px; border-top: 1px solid #2a2f26;
+          padding: 20px 32px; border-top: 1px solid #ede8e1;
+          background: #faf8f5; border-radius: 0 0 8px 8px;
         }
         .apf-btn-ghost {
-          background: none; border: 1px solid #2a3026; color: #7a8a72;
-          border-radius: 3px; padding: 10px 24px; font-size: 13px;
+          background: none; border: 1px solid #ddd7ce; color: #9a8e82;
+          border-radius: 4px; padding: 10px 24px; font-size: 13px;
           font-family: Arial, sans-serif; cursor: pointer; transition: all 0.2s;
         }
-        .apf-btn-ghost:hover { border-color: #7a8a72; color: #c9b89a; }
+        .apf-btn-ghost:hover { border-color: #9a8e82; color: #1a1612; }
         .apf-btn-save {
-          background: #c9b89a; color: #0e110d; border: none;
-          border-radius: 3px; padding: 10px 28px; font-size: 13px;
+          background: #7a6245; color: #ffffff; border: none;
+          border-radius: 4px; padding: 10px 28px; font-size: 13px;
           letter-spacing: 0.1em; font-family: Arial, sans-serif; cursor: pointer;
           font-weight: 600; transition: background 0.2s; text-transform: uppercase;
           display: flex; align-items: center; gap: 8px;
         }
-        .apf-btn-save:hover:not(:disabled) { background: #d4c9b0; }
+        .apf-btn-save:hover:not(:disabled) { background: #6a5438; }
         .apf-btn-save:disabled { opacity: 0.5; cursor: default; }
       `}</style>
     </div>

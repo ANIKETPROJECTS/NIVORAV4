@@ -228,134 +228,135 @@ export default function AdminDashboard() {
         * { box-sizing: border-box; }
         .adm-root {
           min-height: 100vh; display: flex;
-          background: #0e110d; font-family: Arial, sans-serif;
+          background: #f0ebe3; font-family: Arial, sans-serif;
         }
         .adm-sidebar {
           width: 220px; min-height: 100vh; flex-shrink: 0;
-          background: #111510; border-right: 1px solid #1e241b;
+          background: #ffffff; border-right: 1px solid #e2d9ce;
           display: flex; flex-direction: column;
           position: sticky; top: 0; height: 100vh;
         }
-        .adm-sidebar-brand { padding: 28px 24px 20px; border-bottom: 1px solid #1e241b; }
+        .adm-sidebar-brand { padding: 28px 24px 20px; border-bottom: 1px solid #ede8e1; }
         .adm-brand-name {
-          display: block; font-size: 24px; color: #c9b89a;
+          display: block; font-size: 24px; color: #7a6245;
           font-family: Georgia, serif; font-style: italic; letter-spacing: 0.1em;
         }
         .adm-brand-sub {
           display: block; font-size: 9px; letter-spacing: 0.35em;
-          color: #3a4036; text-transform: uppercase; margin-top: 2px;
+          color: #c0b5a8; text-transform: uppercase; margin-top: 2px;
         }
         .adm-nav { flex: 1; padding: 16px 0; }
         .adm-nav-item {
-          padding: 10px 24px; font-size: 13px; color: #5a6354;
+          padding: 10px 24px; font-size: 13px; color: #9a8e82;
           cursor: pointer; transition: all 0.2s;
           border-left: 2px solid transparent;
         }
-        .adm-nav-active { color: #c9b89a; border-left-color: #c9b89a; background: rgba(201,184,154,0.05); }
-        .adm-sidebar-footer { padding: 20px 24px; border-top: 1px solid #1e241b; }
+        .adm-nav-active { color: #7a6245; border-left-color: #7a6245; background: rgba(122,98,69,0.06); }
+        .adm-sidebar-footer { padding: 20px 24px; border-top: 1px solid #ede8e1; }
         .adm-logout {
           display: flex; align-items: center; gap: 8px;
-          background: none; border: none; color: #5a6354;
+          background: none; border: none; color: #9a8e82;
           cursor: pointer; font-size: 13px; padding: 0;
           transition: color 0.2s;
         }
-        .adm-logout:hover { color: #c07a6a; }
+        .adm-logout:hover { color: #b85a4a; }
         .adm-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
         .adm-topbar {
           display: flex; align-items: center; justify-content: space-between;
-          padding: 20px 32px; border-bottom: 1px solid #1e241b;
-          background: #111510; position: sticky; top: 0; z-index: 10;
+          padding: 20px 32px; border-bottom: 1px solid #e2d9ce;
+          background: #ffffff; position: sticky; top: 0; z-index: 10;
+          box-shadow: 0 1px 0 #e2d9ce;
         }
         .adm-topbar-left { display: flex; align-items: baseline; gap: 12px; }
-        .adm-page-title { margin: 0; font-size: 18px; color: #c9b89a; font-weight: normal; letter-spacing: 0.05em; }
-        .adm-count { font-size: 12px; color: #3a4036; }
+        .adm-page-title { margin: 0; font-size: 18px; color: #1a1612; font-weight: normal; letter-spacing: 0.03em; }
+        .adm-count { font-size: 12px; color: #c0b5a8; }
         .adm-topbar-right { display: flex; align-items: center; gap: 10px; }
         .adm-btn-ghost-sm {
-          background: none; border: 1px solid #2a3026; color: #7a8a72;
-          border-radius: 3px; padding: 7px 9px; cursor: pointer;
+          background: none; border: 1px solid #ddd7ce; color: #9a8e82;
+          border-radius: 4px; padding: 7px 9px; cursor: pointer;
           display: flex; align-items: center; transition: all 0.2s;
           text-decoration: none;
         }
-        .adm-btn-ghost-sm:hover { border-color: #c9b89a; color: #c9b89a; }
+        .adm-btn-ghost-sm:hover { border-color: #7a6245; color: #7a6245; }
         .adm-btn-add {
           display: flex; align-items: center; gap: 8px;
-          background: #c9b89a; color: #0e110d; border: none;
-          border-radius: 3px; padding: 9px 18px; font-size: 13px;
+          background: #7a6245; color: #ffffff; border: none;
+          border-radius: 4px; padding: 9px 18px; font-size: 13px;
           letter-spacing: 0.08em; cursor: pointer; font-weight: 600;
           transition: background 0.2s; text-transform: uppercase;
         }
-        .adm-btn-add:hover { background: #d4c9b0; }
+        .adm-btn-add:hover { background: #6a5438; }
         .adm-success {
-          margin: 16px 32px 0; background: #1a2a1a; border: 1px solid #2a5a2a;
-          color: #7ab87a; border-radius: 3px; padding: 10px 16px; font-size: 13px;
+          margin: 16px 32px 0; background: #f0f7f0; border: 1px solid #b5d9b5;
+          color: #3a7a3a; border-radius: 4px; padding: 10px 16px; font-size: 13px;
         }
         .adm-error {
-          margin: 16px 32px 0; background: #2a1515; border: 1px solid #5a2020;
-          color: #c07a6a; border-radius: 3px; padding: 10px 16px; font-size: 13px;
+          margin: 16px 32px 0; background: #fdf0ee; border: 1px solid #e8b5ad;
+          color: #b85a4a; border-radius: 4px; padding: 10px 16px; font-size: 13px;
           display: flex; justify-content: space-between; align-items: center;
         }
-        .adm-error button { background: none; border: none; color: #c07a6a; cursor: pointer; font-size: 18px; }
+        .adm-error button { background: none; border: none; color: #b85a4a; cursor: pointer; font-size: 18px; }
         .adm-content { padding: 24px 32px; flex: 1; }
         .adm-loading, .adm-empty {
           display: flex; align-items: center; justify-content: center;
-          flex-direction: column; gap: 16px; color: #5a6354;
+          flex-direction: column; gap: 16px; color: #b0a498;
           font-size: 14px; padding: 80px 0;
         }
         .adm-spin { animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .adm-table-wrap { overflow-x: auto; border-radius: 4px; border: 1px solid #1e241b; }
+        .adm-table-wrap { overflow-x: auto; border-radius: 6px; border: 1px solid #e2d9ce; background: #fff; }
         .adm-table { width: 100%; border-collapse: collapse; }
-        .adm-table thead tr { background: #111510; }
+        .adm-table thead tr { background: #faf8f5; }
         .adm-table th {
           padding: 12px 16px; font-size: 10px; letter-spacing: 0.2em;
-          text-transform: uppercase; color: #3a4036; font-weight: normal;
-          text-align: left; border-bottom: 1px solid #1e241b; white-space: nowrap;
+          text-transform: uppercase; color: #b0a498; font-weight: 600;
+          text-align: left; border-bottom: 1px solid #ede8e1; white-space: nowrap;
         }
         .adm-table td {
-          padding: 14px 16px; font-size: 13px; color: #c9b89a;
-          border-bottom: 1px solid #1a1e18; vertical-align: middle;
+          padding: 14px 16px; font-size: 13px; color: #2a2218;
+          border-bottom: 1px solid #f0ebe3; vertical-align: middle;
         }
         .adm-table tbody tr:last-child td { border-bottom: none; }
-        .adm-table tbody tr:hover td { background: rgba(201,184,154,0.03); }
+        .adm-table tbody tr:hover td { background: #faf8f5; }
         .adm-thumb {
           width: 56px; height: 38px; object-fit: cover;
-          border-radius: 3px; border: 1px solid #2a2f26; display: block;
+          border-radius: 4px; border: 1px solid #e2d9ce; display: block;
         }
         .adm-thumb-placeholder {
-          width: 56px; height: 38px; background: #1e241b;
-          border-radius: 3px; display: flex; align-items: center; justify-content: center;
-          color: #3a4036; font-size: 12px;
+          width: 56px; height: 38px; background: #f0ebe3;
+          border-radius: 4px; display: flex; align-items: center; justify-content: center;
+          color: #c0b5a8; font-size: 12px;
         }
-        .adm-name { color: #d4c9b0; font-size: 14px; }
-        .adm-slug { color: #3a4036; font-size: 11px; margin-top: 2px; font-family: monospace; }
-        .adm-cell-muted { color: #5a6354; }
+        .adm-name { color: #1a1612; font-size: 14px; font-weight: 500; }
+        .adm-slug { color: #c0b5a8; font-size: 11px; margin-top: 2px; font-family: monospace; }
+        .adm-cell-muted { color: #9a8e82; }
         .adm-badge {
           display: inline-block; padding: 3px 10px; border-radius: 20px;
-          font-size: 11px; text-transform: capitalize; letter-spacing: 0.05em;
+          font-size: 11px; text-transform: capitalize; letter-spacing: 0.05em; font-weight: 500;
         }
-        .adm-badge-residential { background: #1e2a1e; color: #7ab87a; }
-        .adm-badge-commercial { background: #1e2026; color: #7a9ab8; }
-        .adm-badge-architecture { background: #2a201e; color: #b8977a; }
+        .adm-badge-residential { background: #eaf4ea; color: #3a7a3a; }
+        .adm-badge-commercial   { background: #eaf0f8; color: #2a5a8a; }
+        .adm-badge-architecture { background: #f8f0ea; color: #8a4a2a; }
         .adm-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
         .adm-action-btn {
-          background: none; border: 1px solid #2a3026; color: #7a8a72;
-          border-radius: 3px; padding: 6px 8px; cursor: pointer;
+          background: none; border: 1px solid #ddd7ce; color: #9a8e82;
+          border-radius: 4px; padding: 6px 8px; cursor: pointer;
           display: flex; align-items: center; transition: all 0.2s;
         }
-        .adm-action-btn:hover { border-color: #c9b89a; color: #c9b89a; }
-        .adm-action-del:hover { border-color: #c07a6a; color: #c07a6a; }
+        .adm-action-btn:hover { border-color: #7a6245; color: #7a6245; }
+        .adm-action-del:hover { border-color: #b85a4a; color: #b85a4a; }
         .adm-confirm { display: flex; align-items: center; gap: 6px; }
-        .adm-confirm span { font-size: 12px; color: #c07a6a; }
+        .adm-confirm span { font-size: 12px; color: #b85a4a; }
         .adm-confirm-yes {
-          background: #c07a6a; color: #fff; border: none; border-radius: 3px;
+          background: #b85a4a; color: #fff; border: none; border-radius: 4px;
           padding: 4px 10px; font-size: 12px; cursor: pointer;
           display: flex; align-items: center; gap: 4px;
         }
         .adm-confirm-no {
-          background: none; border: 1px solid #2a3026; color: #5a6354;
-          border-radius: 3px; padding: 4px 10px; font-size: 12px; cursor: pointer;
+          background: none; border: 1px solid #ddd7ce; color: #9a8e82;
+          border-radius: 4px; padding: 4px 10px; font-size: 12px; cursor: pointer;
         }
-        .adm-confirm-no:hover { color: #c9b89a; }
+        .adm-confirm-no:hover { color: #7a6245; border-color: #7a6245; }
       `}</style>
     </div>
   )
