@@ -39,6 +39,24 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
   const coverRef = useRef<HTMLInputElement>(null)
   const galleryRef = useRef<HTMLInputElement>(null)
 
+  // URL paste state
+  const [coverUrlInput, setCoverUrlInput] = useState('')
+  const [galleryUrlInput, setGalleryUrlInput] = useState('')
+
+  const applyCoverUrl = () => {
+    const url = coverUrlInput.trim()
+    if (!url) return
+    set('coverImage', url)
+    setCoverUrlInput('')
+  }
+
+  const addGalleryUrl = () => {
+    const url = galleryUrlInput.trim()
+    if (!url) return
+    set('images', [...(form.images || []), url])
+    setGalleryUrlInput('')
+  }
+
   const set = (key: keyof FormData, value: unknown) =>
     setForm(f => ({ ...f, [key]: value }))
 
@@ -243,9 +261,31 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
               </div>
             )}
             <input ref={coverRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleCoverUpload} />
+            {/* URL paste option for cover */}
+            {!form.coverImage && (
+              <div className="apf-url-row" style={{ marginTop: 10 }}>
+                <span className="apf-url-label">Or paste URL:</span>
+                <input
+                  className="apf-url-input"
+                  type="url"
+                  value={coverUrlInput}
+                  onChange={e => setCoverUrlInput(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); applyCoverUrl() } }}
+                  placeholder="https://example.com/cover.jpg"
+                />
+                <button
+                  type="button"
+                  className="apf-url-btn"
+                  onClick={applyCoverUrl}
+                  disabled={!coverUrlInput.trim()}
+                >
+                  Use URL
+                </button>
+              </div>
+            )}
             {/* Allow picking from gallery too */}
             {(form.images || []).length > 0 && !form.coverImage && (
-              <p className="apf-hint" style={{ marginTop: 8 }}>Or pick from gallery images below.</p>
+              <p className="apf-hint" style={{ marginTop: 6 }}>Or click any gallery image below to set it as cover.</p>
             )}
           </section>
 
@@ -260,6 +300,26 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
                 : <><Upload size={24} /> Click to upload gallery images (multiple allowed)</>}
             </div>
             <input ref={galleryRef} type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={handleGalleryUpload} />
+            {/* URL paste option for gallery */}
+            <div className="apf-url-row" style={{ marginTop: 10 }}>
+              <span className="apf-url-label">Or paste URL:</span>
+              <input
+                className="apf-url-input"
+                type="url"
+                value={galleryUrlInput}
+                onChange={e => setGalleryUrlInput(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addGalleryUrl() } }}
+                placeholder="https://example.com/image.jpg"
+              />
+              <button
+                type="button"
+                className="apf-url-btn"
+                onClick={addGalleryUrl}
+                disabled={!galleryUrlInput.trim()}
+              >
+                Add URL
+              </button>
+            </div>
 
             {(form.images || []).length > 0 && (
               <div className="apf-gallery-grid">
@@ -464,6 +524,30 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
         }
         .apf-btn-save:hover:not(:disabled) { background: #6a5438; }
         .apf-btn-save:disabled { opacity: 0.5; cursor: default; }
+        .apf-url-row {
+          display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+        }
+        .apf-url-label {
+          font-size: 11px; color: #b0a498; font-family: Arial, sans-serif;
+          white-space: nowrap;
+        }
+        .apf-url-input {
+          flex: 1; min-width: 160px;
+          background: #faf8f5; border: 1px solid #ddd7ce;
+          border-radius: 4px; color: #1a1612; font-size: 12px;
+          padding: 6px 10px; outline: none; font-family: Arial, sans-serif;
+          transition: border-color 0.2s;
+        }
+        .apf-url-input:focus { border-color: #7a6245; }
+        .apf-url-input::placeholder { color: #c8c0b5; }
+        .apf-url-btn {
+          background: none; border: 1px solid #c8bfb2; color: #7a6245;
+          border-radius: 4px; padding: 6px 14px; font-size: 11px;
+          font-family: Arial, sans-serif; cursor: pointer; white-space: nowrap;
+          letter-spacing: 0.04em; transition: all 0.2s;
+        }
+        .apf-url-btn:hover:not(:disabled) { border-color: #7a6245; background: #f5f0e8; }
+        .apf-url-btn:disabled { opacity: 0.4; cursor: default; }
       `}</style>
     </div>
   )
