@@ -223,7 +223,7 @@ export default function Footer() {
                   alt="Nivora Interiors"
                   style={{
                     display: 'block',
-                    width: 200,
+                    width: settings?.footerLogoSize ?? 200,
                     height: 'auto',
                     objectFit: 'contain',
                     opacity: 0.95,

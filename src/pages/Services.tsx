@@ -34,7 +34,9 @@ const FALLBACK_SERVICE_CARDS = [
 
 const STAGGER = [100, 200, 300, 400]
 
-function ServiceCard({ card, index, onCardClick }: { card: typeof serviceCards[0]; index: number; onCardClick: () => void }) {
+interface ServiceCardData { num: string; title: string; desc: string; img: string }
+
+function ServiceCard({ card, index, onCardClick }: { card: ServiceCardData; index: number; onCardClick: () => void }) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)

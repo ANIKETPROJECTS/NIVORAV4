@@ -12,7 +12,6 @@ export type SettingsSection =
   | 'expertise'     // Home Page → Our Expertise
   | 'highlights'    // Home Page → Portfolio Highlights
   | 'footer'        // Home Page → Footer logo
-  | 'service-hero'  // Service Page → Page Hero
   | 'services'      // Service Page → Services list
 
 const GOLD = '#7a6245'
@@ -24,6 +23,7 @@ function ImageUploadField({
 }: { label: string; hint?: string; currentUrl: string; onUploaded: (url: string) => void }) {
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
+  const [urlInput, setUrlInput] = useState('')
   const ref = useRef<HTMLInputElement>(null)
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +40,13 @@ function ImageUploadField({
       setUploading(false)
       if (ref.current) ref.current.value = ''
     }
+  }
+
+  const applyUrl = () => {
+    const trimmed = urlInput.trim()
+    if (!trimmed) return
+    onUploaded(trimmed)
+    setUrlInput('')
   }
 
   return (
@@ -67,6 +74,30 @@ function ImageUploadField({
           </button>
           {currentUrl && <p style={{ fontSize: 11, color: '#c0b5a8', marginTop: 5 }}>Served from Cloudinary CDN</p>}
         </div>
+      </div>
+      {/* URL paste option */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10 }}>
+        <span style={{ fontSize: 11, color: '#c0b5a8', whiteSpace: 'nowrap' }}>Or paste URL:</span>
+        <input
+          type="url"
+          value={urlInput}
+          onChange={e => setUrlInput(e.target.value)}
+          placeholder="https://example.com/image.jpg"
+          onKeyDown={e => { if (e.key === 'Enter') applyUrl() }}
+          style={{ ...inputStyle, fontSize: 12, padding: '5px 9px', flex: 1, minWidth: 0 }}
+        />
+        <button
+          onClick={applyUrl}
+          disabled={!urlInput.trim()}
+          style={{
+            ...uploadBtnStyle, padding: '5px 12px', fontSize: 11,
+            opacity: urlInput.trim() ? 1 : 0.5,
+            cursor: urlInput.trim() ? 'pointer' : 'default',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Use URL
+        </button>
       </div>
       {error && <p style={{ color: '#b85a4a', fontSize: 12, marginTop: 6 }}>{error}</p>}
     </div>
@@ -131,29 +162,67 @@ function SaveBar({ saving, onSave, success, error, onClearError }: {
 // ── Section Panels ────────────────────────────────────────────────────────────
 
 function HeaderPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
+  const size = settings.logoSize ?? 38
   return (
     <div>
       <p style={descStyle}>The logo shown in the top navigation bar across the entire website.</p>
       <ImageUploadField
         label="Navbar Logo"
-        hint="Displayed at 38px height. Works best as a wide PNG with transparent background."
+        hint="Works best as a wide PNG with transparent background."
         currentUrl={settings.logoUrl}
         onUploaded={url => onChange({ ...settings, logoUrl: url })}
       />
+      <div style={{ marginBottom: 24 }}>
+        <label style={labelStyle}>Logo Size (height in px)</label>
+        <p style={{ fontSize: 12, color: '#b0a498', margin: '0 0 8px' }}>
+          Current: <strong>{size}px</strong> height. Drag or type to resize.
+        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <input
+            type="range" min={20} max={100} step={1} value={size}
+            onChange={e => onChange({ ...settings, logoSize: Number(e.target.value) })}
+            style={{ flex: 1, accentColor: GOLD }}
+          />
+          <input
+            type="number" min={20} max={100} value={size}
+            onChange={e => onChange({ ...settings, logoSize: Number(e.target.value) })}
+            style={{ ...inputStyle, width: 72, textAlign: 'center' }}
+          />
+        </div>
+      </div>
     </div>
   )
 }
 
 function FooterPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
+  const size = settings.footerLogoSize ?? 200
   return (
     <div>
       <p style={descStyle}>The logo shown in the footer. A version with a light/transparent background works best on the dark footer.</p>
       <ImageUploadField
         label="Footer Logo"
-        hint="Displayed at 200px wide."
+        hint="Works best as a wide PNG with transparent or dark background."
         currentUrl={settings.footerLogoUrl}
         onUploaded={url => onChange({ ...settings, footerLogoUrl: url })}
       />
+      <div style={{ marginBottom: 24 }}>
+        <label style={labelStyle}>Logo Size (width in px)</label>
+        <p style={{ fontSize: 12, color: '#b0a498', margin: '0 0 8px' }}>
+          Current: <strong>{size}px</strong> wide. Drag or type to resize.
+        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <input
+            type="range" min={80} max={400} step={4} value={size}
+            onChange={e => onChange({ ...settings, footerLogoSize: Number(e.target.value) })}
+            style={{ flex: 1, accentColor: GOLD }}
+          />
+          <input
+            type="number" min={80} max={400} value={size}
+            onChange={e => onChange({ ...settings, footerLogoSize: Number(e.target.value) })}
+            style={{ ...inputStyle, width: 72, textAlign: 'center' }}
+          />
+        </div>
+      </div>
     </div>
   )
 }
@@ -253,32 +322,6 @@ function HighlightsPanel({ settings, onChange }: { settings: SiteSettings; onCha
   )
 }
 
-function ServiceHeroPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
-  const hero: ServicePageHero = settings.servicePageHero ?? { backgroundImage: '', headline: '', subheadline: '' }
-  const update = (patch: Partial<ServicePageHero>) => onChange({ ...settings, servicePageHero: { ...hero, ...patch } })
-
-  return (
-    <div>
-      <p style={descStyle}>The banner at the top of the Services page — background image, headline, and subheadline.</p>
-      <ImageUploadField
-        label="Background Image"
-        hint="Full-width banner image for the services page header."
-        currentUrl={hero.backgroundImage}
-        onUploaded={url => update({ backgroundImage: url })}
-      />
-      <div style={{ marginBottom: 12 }}>
-        <TextField label="Headline" value={hero.headline} placeholder="e.g. Our Services" onChange={v => update({ headline: v })} />
-      </div>
-      <TextField
-        label="Subheadline"
-        value={hero.subheadline}
-        placeholder="e.g. Comprehensive interior design solutions tailored to your vision."
-        onChange={v => update({ subheadline: v })}
-        multiline
-      />
-    </div>
-  )
-}
 
 function ServicesPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
   const items: ServiceItem[] = settings.servicesList ?? []
@@ -340,7 +383,8 @@ interface Props {
 }
 
 const EMPTY_SETTINGS: SiteSettings = {
-  logoUrl: '', footerLogoUrl: '',
+  logoUrl: '', logoSize: 38,
+  footerLogoUrl: '', footerLogoSize: 200,
   homeHero: { backgroundImage: '', headline: '', subheadline: '', ctaText: '', ctaLink: '' },
   serviceCards: [],
   homePortfolio: [],
@@ -403,13 +447,12 @@ export default function AdminSiteSettings({ section }: Props) {
     <div>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
-      {section === 'header'      && <HeaderPanel      settings={settings} onChange={setSettings} />}
-      {section === 'hero'        && <HeroPanel        settings={settings} onChange={setSettings} />}
-      {section === 'expertise'   && <ExpertisePanel   settings={settings} onChange={setSettings} />}
-      {section === 'highlights'  && <HighlightsPanel  settings={settings} onChange={setSettings} />}
-      {section === 'footer'      && <FooterPanel      settings={settings} onChange={setSettings} />}
-      {section === 'service-hero'&& <ServiceHeroPanel settings={settings} onChange={setSettings} />}
-      {section === 'services'    && <ServicesPanel    settings={settings} onChange={setSettings} />}
+      {section === 'header'     && <HeaderPanel     settings={settings} onChange={setSettings} />}
+      {section === 'hero'       && <HeroPanel       settings={settings} onChange={setSettings} />}
+      {section === 'expertise'  && <ExpertisePanel  settings={settings} onChange={setSettings} />}
+      {section === 'highlights' && <HighlightsPanel settings={settings} onChange={setSettings} />}
+      {section === 'footer'     && <FooterPanel     settings={settings} onChange={setSettings} />}
+      {section === 'services'   && <ServicesPanel   settings={settings} onChange={setSettings} />}
 
       <SaveBar saving={saving} onSave={save} success={success} error={error} onClearError={() => setError('')} />
     </div>

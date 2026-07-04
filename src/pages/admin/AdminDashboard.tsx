@@ -9,7 +9,7 @@ import AdminSiteSettings, { SettingsSection } from './AdminSiteSettings'
 import {
   Plus, Pencil, Trash2, LogOut, RefreshCw, ExternalLink, Loader2,
   LayoutTemplate, Image, AlignLeft, Grid2X2, Layers, Home, Briefcase,
-  ChevronDown, ChevronRight, Sparkles, Columns, FileImage, List,
+  ChevronDown, ChevronRight, Sparkles, Columns, List,
 } from 'lucide-react'
 
 type ProjectSummary = Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage'>
@@ -58,8 +58,7 @@ const SIDEBAR_PAGES: SidebarPage[] = [
     label: 'Service Page',
     icon: Briefcase,
     items: [
-      { tab: 'settings/service-hero', label: 'Page Hero',  icon: FileImage, hint: 'Banner at top of services page' },
-      { tab: 'settings/services',     label: 'Services',   icon: List,      hint: 'Individual service listings' },
+      { tab: 'settings/services', label: 'Services', icon: List, hint: 'Individual service listings' },
     ],
   },
 ]

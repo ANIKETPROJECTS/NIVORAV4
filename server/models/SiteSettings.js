@@ -42,7 +42,9 @@ const siteSettingsSchema = new mongoose.Schema({
 
   // ── Header / Footer ──────────────────────────────────────────────────────────
   logoUrl: { type: String, default: '' },
+  logoSize: { type: Number, default: 38, min: 20, max: 100 },
   footerLogoUrl: { type: String, default: '' },
+  footerLogoSize: { type: Number, default: 200, min: 80, max: 400 },
 
   // ── Home Page ────────────────────────────────────────────────────────────────
   homeHero: { type: homeHeroSchema, default: () => ({}) },

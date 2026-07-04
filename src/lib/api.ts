@@ -64,7 +64,9 @@ export interface ServiceItem {
 
 export interface SiteSettings {
   logoUrl: string
+  logoSize: number
   footerLogoUrl: string
+  footerLogoSize: number
   homeHero: HomeHero
   serviceCards: ServiceCard[]
   homePortfolio: HomePortfolioItem[]
