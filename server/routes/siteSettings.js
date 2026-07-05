@@ -70,7 +70,11 @@ router.put('/', requireAdmin, async (req, res) => {
       { $set: update },
       { new: true, upsert: true, runValidators: true }
     )
-    res.json(doc)
+    // Use same toObject() pattern as GET so all fields are always serialized
+    const plain = doc.toObject({ versionKey: false })
+    if (plain.logoSize == null)       plain.logoSize       = 38
+    if (plain.footerLogoSize == null) plain.footerLogoSize = 200
+    res.json(plain)
   } catch (err) {
     console.error(err)
     res.status(400).json({ error: err.message })

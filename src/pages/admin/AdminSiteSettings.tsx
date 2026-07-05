@@ -23,7 +23,11 @@ function ImageUploadField({
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
   const [urlInput, setUrlInput] = useState('')
+  const [copied, setCopied] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
+
+  const isCloudinary = currentUrl?.includes('cloudinary.com')
+  const isLocalPath  = currentUrl && !currentUrl.startsWith('http')
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -46,6 +50,14 @@ function ImageUploadField({
     if (!trimmed) return
     onUploaded(trimmed)
     setUrlInput('')
+  }
+
+  const copyUrl = () => {
+    if (!currentUrl) return
+    navigator.clipboard.writeText(currentUrl).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
   }
 
   return (
@@ -71,11 +83,36 @@ function ImageUploadField({
             {uploading ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Upload size={13} />}
             {uploading ? 'Uploading…' : currentUrl ? 'Replace Image' : 'Upload Image'}
           </button>
-          {currentUrl && <p style={{ fontSize: 11, color: '#c0b5a8', marginTop: 5 }}>Served from Cloudinary CDN</p>}
+          {currentUrl && (
+            <p style={{ fontSize: 11, marginTop: 5, color: isCloudinary ? '#7aab7a' : '#c0b5a8' }}>
+              {isCloudinary ? '✓ Stored on Cloudinary CDN' : isLocalPath ? '⚠ Local file path — upload to use CDN' : '✓ External URL'}
+            </p>
+          )}
         </div>
       </div>
+
+      {/* Current URL display — shown whenever an image is set */}
+      {currentUrl && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+          <span style={{ fontSize: 11, color: '#b0a498', whiteSpace: 'nowrap' }}>Image URL:</span>
+          <input
+            type="text"
+            readOnly
+            value={currentUrl}
+            style={{ ...inputStyle, fontSize: 11, padding: '4px 8px', flex: 1, minWidth: 0, color: '#7a6245', background: '#f5f0e8', cursor: 'text' }}
+            onFocus={e => e.target.select()}
+          />
+          <button
+            onClick={copyUrl}
+            style={{ ...uploadBtnStyle, padding: '4px 10px', fontSize: 11, whiteSpace: 'nowrap', color: copied ? '#3a7a3a' : undefined }}
+          >
+            {copied ? '✓ Copied' : 'Copy'}
+          </button>
+        </div>
+      )}
+
       {/* URL paste option */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
         <span style={{ fontSize: 11, color: '#c0b5a8', whiteSpace: 'nowrap' }}>Or paste URL:</span>
         <input
           type="url"
