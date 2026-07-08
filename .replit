@@ -62,5 +62,4 @@ publicDir = "dist"
 [userenv]
 
 [userenv.shared]
-ADMIN_PASSWORD = "admin@123"
 ADMIN_USERNAME = "admin"
