@@ -1976,7 +1976,9 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
   const [animKey, setAnimKey] = useState(0)
   const philosophySectionRef = useRef<HTMLElement>(null)
   const philosophyImgRef = useRef<HTMLImageElement>(null)
+  const quoteCardRef = useRef<HTMLDivElement>(null)
   const [philosophyInView, setPhilosophyInView] = useState(false)
+  const [quoteCardInView, setQuoteCardInView] = useState(false)
 
   const philEl = (delay: number): React.CSSProperties => ({
     opacity: philosophyInView ? 1 : 0,
@@ -1992,6 +1994,17 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     )
     observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const card = quoteCardRef.current
+    if (!card) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { setQuoteCardInView(entry.isIntersecting) },
+      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+    )
+    observer.observe(card)
     return () => observer.disconnect()
   }, [])
 
@@ -2186,8 +2199,9 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 />
               </div>
 
-              {/* Gold quote card — overlaps bottom-left corner of image */}
+              {/* Glass quote card — overlaps bottom-left corner of image */}
               <div
+                ref={quoteCardRef}
                 className="philosophy-quote-card"
                 style={{
                   position: 'absolute',
@@ -2195,14 +2209,15 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   bottom: -32,
                   zIndex: 2,
                   maxWidth: 260,
-                  backgroundColor: '#C9A96E',
+                  backgroundColor: 'rgba(0,0,0,0.45)',
+                  backdropFilter: 'blur(6px)',
+                  WebkitBackdropFilter: 'blur(6px)',
+                  border: '1.5px solid #C9A96E',
                   padding: '28px 26px 24px',
-                  boxShadow: '0 18px 40px rgba(60,45,20,0.28)',
-                  opacity: philosophyInView ? 1 : 0,
-                  transform: philosophyInView ? 'translateY(0)' : 'translateY(16px)',
-                  transition: philosophyInView
-                    ? 'opacity 700ms ease-out 650ms, transform 700ms ease-out 650ms'
-                    : 'none',
+                  boxShadow: '0 18px 40px rgba(0,0,0,0.28)',
+                  opacity: quoteCardInView ? 1 : 0,
+                  transform: quoteCardInView ? 'translateY(0)' : 'translateY(30px)',
+                  transition: 'opacity 700ms ease-out, transform 700ms ease-out',
                 }}
               >
                 <div style={{
@@ -2210,9 +2225,9 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   fontStyle: 'italic',
                   fontSize: 52,
                   lineHeight: 0.6,
-                  color: '#f7f4ef',
+                  color: '#C9A96E',
                   marginBottom: 14,
-                  opacity: 0.85,
+                  opacity: 0.9,
                 }}>
                   "
                 </div>
@@ -2222,7 +2237,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   fontWeight: 400,
                   fontSize: 18,
                   lineHeight: 1.5,
-                  color: '#2f2418',
+                  color: '#ffffff',
                   margin: 0,
                 }}>
                   We don't just design spaces, we create legacies.
@@ -2233,7 +2248,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   fontSize: 11,
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
-                  color: '#4a3a24',
+                  color: '#C9A96E',
                   marginTop: 12,
                   marginBottom: 0,
                 }}>
