@@ -1,0 +1,114 @@
+# Replit Prompt — About Page: Replace Founder Image + Add Animation
+
+## TASK
+Replace the current placeholder/stock photo of the founder (right side of "The Founder" section on About page) with the newly uploaded image file.
+
+---
+
+## STEP 1 — FIND THE UPLOADED IMAGE
+
+The user has uploaded a new photo. Find it in the project uploads or assets folder. It will be the most recently added image file. Save/move it to your assets or public/images folder with the name:
+
+```
+shweta-mahadik.jpg
+```
+(or .png / .webp depending on the uploaded format)
+
+---
+
+## STEP 2 — REPLACE THE IMAGE
+
+Find the founder image in the About page component. It will look something like:
+
+```jsx
+<img src="/images/founder-placeholder.jpg" alt="Shweta Mahadik" />
+// or
+<img src="https://..." alt="founder" />
+```
+
+Replace the `src` with the new uploaded image:
+
+```jsx
+<img src="/images/shweta-mahadik.jpg" alt="Shweta Mahadik, Founder & Principal Designer" />
+```
+
+Keep all existing CSS classes, width, height, object-fit, and container styling exactly the same — only the image source changes.
+
+---
+
+## STEP 3 — ADD ANIMATIONS (scroll-triggered)
+
+When the founder section scrolls into view (IntersectionObserver threshold: 0.15), add these animations:
+
+### Left side (text column) — stagger fade + slide up:
+Elements animate in sequence with 130ms gap between each:
+1. "THE FOUNDER" label
+2. "Shweta Mahadik" heading
+3. "FOUNDER & PRINCIPAL DESIGNER" subtitle
+4. First paragraph
+5. Second paragraph
+6. Third paragraph
+7. Quote blockquote
+
+Each element:
+- `opacity: 0 → 1`
+- `transform: translateY(24px) → translateY(0)`
+- Duration: `650ms ease-out`
+- Delays: 0ms, 130ms, 260ms, 390ms, 520ms, 650ms, 780ms
+
+### Right side (founder image) — fade + scale in:
+- `opacity: 0 → 1`
+- `transform: scale(0.96) → scale(1)`
+- Duration: `900ms ease-out`
+- Delay: `200ms`
+
+### CSS:
+
+```css
+.founder-animate {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 650ms ease-out, transform 650ms ease-out;
+}
+.founder-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.founder-image-wrap {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 900ms ease-out 200ms, transform 900ms ease-out 200ms;
+}
+.founder-image-wrap.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+```
+
+### IntersectionObserver:
+
+```js
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.founder-animate, .founder-image-wrap')
+  .forEach(el => observer.observe(el));
+```
+
+Apply `founder-animate` class to every left-column text element, and `founder-image-wrap` to the image container div.
+
+---
+
+## DO NOT CHANGE
+- Any text content (name, bio paragraphs, quote — keep exactly as written)
+- Image size, shape, or container layout
+- Section background color
+- Any other section on the About page
+- Any other page
