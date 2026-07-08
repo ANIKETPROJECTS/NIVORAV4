@@ -1,0 +1,100 @@
+# Replit Prompt — Splash Screen: Fix Logo Centering on Mobile
+
+## PROBLEM
+The intro/splash screen logo is properly centered on desktop but appears off-center or misaligned on mobile devices.
+
+## FIX
+Make the splash screen and logo perfectly centered on all screen sizes.
+
+```css
+/* Splash screen container */
+.splash-screen,
+.intro-screen,
+.loader-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  /* background stays as-is (dark green) */
+}
+
+/* Logo container inside splash */
+.logo-container,
+.splash-logo,
+.intro-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* Remove any left/right margin or transform that offsets it */
+  margin: 0 auto;
+  left: auto;
+  transform: none; /* override any translateX that might exist */
+  text-align: center;
+}
+
+/* Glow div — must also be centered correctly */
+.logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* width/height stays same */
+}
+
+/* Mobile specific overrides */
+@media (max-width: 768px) {
+  .splash-screen,
+  .intro-screen,
+  .loader-screen {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+
+  .logo-container,
+  .splash-logo,
+  .intro-logo {
+    width: auto;
+    max-width: 80vw;  /* prevent logo from touching screen edges */
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    transform: none;
+  }
+
+  /* Scale down logo image/text if it's too large on mobile */
+  .logo-container img,
+  .splash-logo img {
+    width: clamp(160px, 50vw, 280px);
+    height: auto;
+  }
+
+  /* If logo is SVG text-based, scale the font */
+  .splash-logo-text {
+    font-size: clamp(32px, 12vw, 60px);
+  }
+}
+```
+
+## ALSO CHECK
+1. The splash screen must use `position: fixed` (not absolute) with `width: 100vw` and `height: 100vh` — this ensures it covers the full mobile viewport including address bar area
+2. There must be no `padding-left` or `margin-left` on the splash container that could offset it on mobile
+3. If the logo uses absolute positioning with `left: 50%` + `transform: translateX(-50%)`, keep that — it works. If it's using a fixed pixel `left` value, replace it with the percentage approach
+
+## DO NOT CHANGE
+- Logo image, colors, or text
+- Splash background color (dark green)
+- Existing fade-in animation
+- Glow animation
+- Golden ring animations
+- Splash exit transition to main site
+- Desktop layout (all above 768px stays same)

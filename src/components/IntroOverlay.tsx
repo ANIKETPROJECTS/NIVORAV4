@@ -48,6 +48,50 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
           70%  { opacity: 1; transform: translate(-50%, -50%) scale(1.05);}
           100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
         }
+
+        /* Keep the splash screen and logo perfectly centered on all screen sizes */
+        .splash-screen {
+          position: fixed !important;
+          top: 0; left: 0; right: 0; bottom: 0;
+          width: 100vw;
+          height: 100vh;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+        }
+        .logo-container {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto;
+          left: auto;
+          text-align: center;
+        }
+        .logo-glow {
+          top: 50%;
+          left: 50%;
+        }
+
+        @media (max-width: 768px) {
+          .splash-screen {
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+          }
+          .logo-container {
+            width: auto;
+            max-width: 80vw;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+          }
+        }
       `}</style>
 
       <AnimatePresence onExitComplete={onExitComplete}>
@@ -58,6 +102,7 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
+            className="splash-screen"
             style={{
               position: 'fixed',
               inset: 0,
@@ -78,6 +123,7 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
                   onAnimationComplete={() => {
                     setTimeout(() => setVisible(false), 900)
                   }}
+                  className="logo-container"
                   style={{
                     position: 'relative',
                     display: 'flex',
@@ -86,6 +132,7 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
                   }}
                 >
                   <div
+                    className="logo-glow"
                     style={{
                       position: 'absolute',
                       top: '50%',
