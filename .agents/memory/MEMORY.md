@@ -1,2 +1,3 @@
 - [MongoDB + Cloudinary setup](mongo-cloudinary-setup.md) — Express API on port 3001 proxied via Vite; Mongoose model in server/models/Project.js; pre-save async hooks (not next-style) required for Mongoose v9.
 - [SiteSettings pattern](site-settings-pattern.md) — singleton MongoDB model for logo/service-cards/homePortfolio; GET public, PUT admin; React hook with listener-based cache invalidation; seeded via server/seedSiteSettings.js.
+- [Secret hygiene when user types values in chat](secret-hygiene-chat-values.md) — if a user pastes a password/connection string as plain chat text instead of via the secret form, setEnvVars still writes it into .replit in plaintext; must delete and re-request via requestSecrets.
