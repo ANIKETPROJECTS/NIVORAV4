@@ -2185,30 +2185,62 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   loading="lazy"
                 />
               </div>
-            </div>
 
-            {/* Quote caption — below the image, no overlap */}
-            <p
-              className="philosophy-quote-caption"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 17,
-                fontWeight: 300,
-                fontStyle: 'italic',
-                color: '#a8854f',
-                lineHeight: 1.7,
-                textAlign: 'center',
-                margin: '28px 0 0',
-                opacity: philosophyInView ? 1 : 0,
-                transform: philosophyInView ? 'translateY(0)' : 'translateY(12px)',
-                transition: philosophyInView
-                  ? 'opacity 600ms ease-out 700ms, transform 600ms ease-out 700ms'
-                  : 'none',
-              }}
-            >
-              "We don't just design spaces, we create legacies."<br />
-              <span style={{ fontSize: 13, color: '#7a6142' }}>— Shweta, Founder</span>
-            </p>
+              {/* Gold quote card — overlaps bottom-left corner of image */}
+              <div
+                className="philosophy-quote-card"
+                style={{
+                  position: 'absolute',
+                  left: -32,
+                  bottom: -32,
+                  zIndex: 2,
+                  maxWidth: 260,
+                  backgroundColor: '#C9A96E',
+                  padding: '28px 26px 24px',
+                  boxShadow: '0 18px 40px rgba(60,45,20,0.28)',
+                  opacity: philosophyInView ? 1 : 0,
+                  transform: philosophyInView ? 'translateY(0)' : 'translateY(16px)',
+                  transition: philosophyInView
+                    ? 'opacity 700ms ease-out 650ms, transform 700ms ease-out 650ms'
+                    : 'none',
+                }}
+              >
+                <div style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontStyle: 'italic',
+                  fontSize: 52,
+                  lineHeight: 0.6,
+                  color: '#f7f4ef',
+                  marginBottom: 14,
+                  opacity: 0.85,
+                }}>
+                  "
+                </div>
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontStyle: 'italic',
+                  fontWeight: 400,
+                  fontSize: 18,
+                  lineHeight: 1.5,
+                  color: '#2f2418',
+                  margin: 0,
+                }}>
+                  We don't just design spaces, we create legacies.
+                </p>
+                <p style={{
+                  fontFamily: "'Jost', sans-serif",
+                  fontWeight: 400,
+                  fontSize: 11,
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase',
+                  color: '#4a3a24',
+                  marginTop: 12,
+                  marginBottom: 0,
+                }}>
+                  — Shweta, Founder
+                </p>
+              </div>
+            </div>
           </div>
 
         </div>
