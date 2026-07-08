@@ -2121,7 +2121,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
                   fontWeight: 400,
-                  fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)',
+                  fontSize: '0.9375rem',
                   color: '#C9A96E',
                   textDecoration: 'none',
                   letterSpacing: '0.06em',
