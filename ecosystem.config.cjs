@@ -8,7 +8,7 @@ module.exports = {
       watch: false,
       env: {
         NODE_ENV: 'production',
-        API_PORT: 4011,
+        API_PORT: 3001,
         // All secrets are injected from environment variables / Replit Secrets.
         // Do NOT hardcode credentials here.
       },
