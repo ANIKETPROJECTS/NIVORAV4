@@ -2759,15 +2759,22 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
 
           {/* Heading */}
           <FadeIn className="text-center" style={{ marginBottom: 40 }}>
-            <p style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontWeight: 400,
-              fontSize: 11,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: '#a18661',
-              marginBottom: 14,
-            }}>@NivoraInteriors</p>
+            <a
+              href="https://www.instagram.com/nivora.interiors"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontWeight: 400,
+                fontSize: 11,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#a18661',
+                marginBottom: 14,
+                display: 'inline-block',
+                textDecoration: 'none',
+              }}
+            >@NivoraInteriors</a>
             <h2 style={{
               fontFamily: "'Playfair Display', serif",
               fontWeight: 400,

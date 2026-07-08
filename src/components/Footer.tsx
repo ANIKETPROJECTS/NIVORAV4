@@ -403,24 +403,31 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Instagram"
                 style={{
-                  color: 'rgba(245,242,237,0.6)',
-                  display: 'inline-block',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 9,
                   marginTop: 4,
+                  fontFamily: "'Jost', sans-serif",
+                  fontSize: 13,
+                  fontWeight: 300,
+                  color: 'rgba(245,242,237,0.5)',
+                  textDecoration: 'none',
                   opacity: 0.7,
-                  transition: 'opacity 0.3s ease, transform 0.3s ease',
+                  transition: 'opacity 0.3s ease, color 0.25s ease',
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement
                   el.style.opacity = '1'
-                  el.style.transform = 'rotate(15deg) scale(1.1)'
+                  el.style.textDecoration = 'underline'
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement
                   el.style.opacity = '0.7'
-                  el.style.transform = 'rotate(0deg) scale(1)'
+                  el.style.textDecoration = 'none'
                 }}
               >
-                <Instagram size={18} />
+                <Instagram size={16} color="#a18661" style={{ flexShrink: 0 }} />
+                <span>nivora.interiors</span>
               </a>
             </div>
           </motion.div>
