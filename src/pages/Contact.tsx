@@ -11,40 +11,42 @@ const fadeUp = {
   }),
 }
 
+const SPACE_TYPES = ['Residential', 'Commercial', 'Office', 'Retail', 'Villa/Bungalow', 'Other']
+const REFERRAL_OPTIONS = ['Instagram', 'Google', 'Word of Mouth', 'Facebook', 'Other']
+const LOCATIONS = ['Ambernath', 'Kalyan', 'Pune', 'Mumbai', 'Other']
+const PROJECT_TYPES = ['1BHK/2BHK', '3BHK+', 'Villa/Bungalow', 'Office', 'Retail/Commercial']
+const BUDGETS = ['₹5L–₹10L', '₹10L–₹20L', '₹20L+']
+
 export default function Contact() {
   const [form, setForm] = useState({
     fullName: '',
-    phone: '',
+    phone: '+91 ',
     email: '',
-    city: '',
     spaceType: '',
+    location: '',
+    projectType: '',
+    budget: '',
     referral: '',
-    description: '',
+    requirements: '',
   })
 
   const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [field]: e.target.value }))
 
+  const toggle = (field: 'location' | 'projectType' | 'budget') => (value: string) =>
+    setForm(f => ({ ...f, [field]: f[field] === value ? '' : value }))
+
   return (
-    <div>
+    <div className="contact-page" style={{ background: '#F5F0E8' }}>
       <style>{`
-        /* ── page bg ── */
-        .contact-page { background-color: #F5F0E8; }
-
-        /* ── form card ── */
-        .contact-form-card {
-          background-color: #FFFFFF;
-          border: 1px solid #E8E0D0;
-          border-radius: 16px;
-          padding: 40px;
-        }
-        .contact-info-card {
+        .contact-form-card, .contact-info-card {
           background-color: #FFFFFF;
           border: 1px solid #E8E0D0;
           border-radius: 16px;
         }
+        .contact-form-card { padding: 40px; box-shadow: 0 4px 24px rgba(60,50,30,0.05); }
+        .contact-info-card { box-shadow: 0 4px 24px rgba(60,50,30,0.05); }
 
-        /* ── labels ── */
         .form-label {
           display: block;
           font-family: 'Jost', sans-serif;
@@ -56,7 +58,6 @@ export default function Contact() {
           margin-bottom: 8px;
         }
 
-        /* ── inputs ── */
         .form-input, .form-select {
           border: none;
           border-bottom: 1px solid #C8C0B0;
@@ -81,7 +82,6 @@ export default function Contact() {
         }
         .form-select option[value=''] { color: #AAAAAA; }
 
-        /* ── animated underline: expands from center on focus ── */
         .form-field-wrap {
           position: relative;
           padding-bottom: 0;
@@ -101,7 +101,6 @@ export default function Contact() {
           width: 100%;
         }
 
-        /* ── textarea ── */
         .form-textarea {
           border: 1px solid #C8C0B0;
           border-radius: 8px;
@@ -119,13 +118,38 @@ export default function Contact() {
         .form-textarea:focus { border-color: #C9A96E; }
         .form-textarea::placeholder { color: #AAAAAA; }
 
-        /* ── grid ── */
         .form-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 32px 40px;
         }
         .form-field-full { grid-column: 1 / -1; }
+
+        /* ── chip / toggle buttons ── */
+        .chip-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .chip-btn {
+          font-family: 'Jost', sans-serif;
+          font-size: 12.5px;
+          letter-spacing: 0.03em;
+          color: #6b6258;
+          background: #FBF9F5;
+          border: 1px solid #DDD3C0;
+          border-radius: 999px;
+          padding: 9px 18px;
+          cursor: pointer;
+          transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+        }
+        .chip-btn:hover { border-color: #C9A96E; color: #2C2C2A; }
+        .chip-btn.selected {
+          background: #C9A96E;
+          border-color: #C9A96E;
+          color: #FFFFFF;
+          transform: translateY(-1px);
+        }
 
         @media (max-width: 640px) {
           .form-grid { grid-template-columns: 1fr; }
@@ -136,7 +160,6 @@ export default function Contact() {
           .contact-two-col { grid-template-columns: 1fr !important; }
         }
 
-        /* ── WhatsApp button ── */
         .contact-wa-btn {
           display: inline-flex;
           align-items: center;
@@ -154,8 +177,6 @@ export default function Contact() {
           transition: background 0.25s ease, color 0.25s ease;
         }
         .contact-wa-btn:hover { background: #25D366; color: #fff; }
-
-        /* ── WhatsApp pulse ring ── */
         .contact-wa-btn::before {
           content: '';
           position: absolute;
@@ -171,57 +192,45 @@ export default function Contact() {
         }
       `}</style>
 
-      {/* ── 1. "Let's Talk" hero — STAYS at top, dark green ── */}
-      <div style={{ background: '#2D3B2D', paddingTop: 80 }}>
-        <section style={{ padding: '80px 24px 80px', textAlign: 'center', maxWidth: 720, margin: '0 auto' }}>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-          >
-            <motion.p variants={fadeUp} custom={0}
-              style={{ fontFamily: "'Jost', sans-serif", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#C9A96E', marginBottom: 16 }}>
-              Reach Out
-            </motion.p>
-            <motion.h1 variants={fadeUp} custom={0.1}
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.9rem, 4vw, 3.2rem)', color: '#f5f0e8', margin: '0 0 16px', lineHeight: 1.1 }}>
-              Let's Talk
-            </motion.h1>
-            <motion.p variants={fadeUp} custom={0.2}
-              style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300, fontSize: 15, color: 'rgba(245,240,232,0.55)', lineHeight: 1.8, maxWidth: 500, margin: '0 auto' }}>
-              Every great project begins with a conversation. Reach out and let's explore what's possible for your space.
-            </motion.p>
-          </motion.div>
-        </section>
-      </div>
+      {/* ── Header ── */}
+      <section style={{ padding: '104px 24px 48px', textAlign: 'center', maxWidth: 720, margin: '0 auto' }}>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.4 }}>
+          <motion.p variants={fadeUp} custom={0}
+            style={{ fontFamily: "'Jost', sans-serif", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#C9A96E', marginBottom: 16 }}>
+            Reach Out
+          </motion.p>
+          <motion.h1 variants={fadeUp} custom={0.1}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.9rem, 4vw, 3.2rem)', color: '#21291a', margin: '0 0 16px', lineHeight: 1.1 }}>
+            Let's Talk
+          </motion.h1>
+          <motion.p variants={fadeUp} custom={0.2}
+            style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300, fontSize: 15, color: '#7a7268', lineHeight: 1.8, maxWidth: 500, margin: '0 auto' }}>
+            Every great project begins with a conversation. Tell us about your space and let's explore what's possible.
+          </motion.p>
+        </motion.div>
+      </section>
 
-      {/* ── 2. Form + Sidebar ── */}
-      <section className="contact-page" style={{ padding: '72px 24px 96px' }}>
+      {/* ── Form + Info card ── */}
+      <section style={{ padding: '0 24px 96px' }}>
         <div
           className="contact-two-col"
           style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 380px', gap: 40, alignItems: 'start' }}
         >
 
-          {/* LEFT — Form card */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeUp}
-            custom={0}
-          >
+          {/* LEFT — Enquiry Form */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp} custom={0}>
             <div className="contact-form-card">
               <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#888880', marginBottom: 32 }}>
-                Send Us a Message
+                Enquiry Form
               </p>
 
               <form
                 onSubmit={e => { e.preventDefault(); window.location.href = '/thank-you' }}
                 style={{ display: 'flex', flexDirection: 'column', gap: 0 }}
               >
-                <div className="form-grid" style={{ marginBottom: 40 }}>
+                <div className="form-grid" style={{ marginBottom: 36 }}>
 
-                  {/* Row 1 */}
+                  {/* Full Name / Phone */}
                   <div>
                     <label className="form-label">Full Name <span style={{ color: '#C9A96E' }}>*</span></label>
                     <div className="form-field-wrap">
@@ -235,7 +244,7 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Row 2 */}
+                  {/* Email / Type of Space */}
                   <div>
                     <label className="form-label">Email Address <span style={{ color: '#C9A96E' }}>*</span></label>
                     <div className="form-field-wrap">
@@ -243,60 +252,90 @@ export default function Contact() {
                     </div>
                   </div>
                   <div>
-                    <label className="form-label">City <span style={{ color: '#C9A96E' }}>*</span></label>
-                    <div className="form-field-wrap">
-                      <input className="form-input" type="text" required placeholder="Mumbai" value={form.city} onChange={set('city')} />
-                    </div>
-                  </div>
-
-                  {/* Row 3 */}
-                  <div>
                     <label className="form-label">Type of Space <span style={{ color: '#C9A96E' }}>*</span></label>
                     <div className="form-field-wrap">
                       <select className="form-select" required value={form.spaceType} onChange={set('spaceType')} style={{ color: form.spaceType === '' ? '#AAAAAA' : '#2C2C2A' }}>
                         <option value="" disabled>Select a space type</option>
-                        <option value="Residential — Apartment">Residential — Apartment</option>
-                        <option value="Residential — Villa / Bungalow">Residential — Villa / Bungalow</option>
-                        <option value="Residential — Penthouse">Residential — Penthouse</option>
-                        <option value="Commercial — Office">Commercial — Office</option>
-                        <option value="Commercial — Retail Store">Commercial — Retail Store</option>
-                        <option value="Commercial — Restaurant / Café">Commercial — Restaurant / Café</option>
-                        <option value="Commercial — Hospitality">Commercial — Hospitality</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="form-label">How Did You Hear About Us? <span style={{ color: '#C9A96E' }}>*</span></label>
-                    <div className="form-field-wrap">
-                      <select className="form-select" required value={form.referral} onChange={set('referral')} style={{ color: form.referral === '' ? '#AAAAAA' : '#2C2C2A' }}>
-                        <option value="" disabled>Select an option</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Google Search">Google Search</option>
-                        <option value="Word of Mouth / Referral">Word of Mouth / Referral</option>
-                        <option value="Houzz">Houzz</option>
-                        <option value="Pinterest">Pinterest</option>
-                        <option value="LinkedIn">LinkedIn</option>
-                        <option value="A Previous Client">A Previous Client</option>
-                        <option value="Other">Other</option>
+                        {SPACE_TYPES.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                       </select>
                     </div>
                   </div>
 
-                  {/* Row 4 — full width */}
+                  {/* Project Location — chips */}
                   <div className="form-field-full">
-                    <label className="form-label">Project Description</label>
+                    <label className="form-label">Project Location</label>
+                    <div className="chip-group">
+                      {LOCATIONS.map(opt => (
+                        <button
+                          type="button"
+                          key={opt}
+                          className={`chip-btn${form.location === opt ? ' selected' : ''}`}
+                          onClick={() => toggle('location')(opt)}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Project Type — chips */}
+                  <div className="form-field-full">
+                    <label className="form-label">Project Type</label>
+                    <div className="chip-group">
+                      {PROJECT_TYPES.map(opt => (
+                        <button
+                          type="button"
+                          key={opt}
+                          className={`chip-btn${form.projectType === opt ? ' selected' : ''}`}
+                          onClick={() => toggle('projectType')(opt)}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Estimated Budget — chips */}
+                  <div className="form-field-full">
+                    <label className="form-label">Estimated Budget</label>
+                    <div className="chip-group">
+                      {BUDGETS.map(opt => (
+                        <button
+                          type="button"
+                          key={opt}
+                          className={`chip-btn${form.budget === opt ? ' selected' : ''}`}
+                          onClick={() => toggle('budget')(opt)}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* How Did You Hear About Us */}
+                  <div className="form-field-full" style={{ maxWidth: 340 }}>
+                    <label className="form-label">How Did You Hear About Us?</label>
+                    <div className="form-field-wrap">
+                      <select className="form-select" value={form.referral} onChange={set('referral')} style={{ color: form.referral === '' ? '#AAAAAA' : '#2C2C2A' }}>
+                        <option value="" disabled>Select an option</option>
+                        {REFERRAL_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Brief Requirements */}
+                  <div className="form-field-full">
+                    <label className="form-label">Brief Requirements</label>
                     <textarea
                       className="form-textarea"
                       placeholder="Tell us about your project, style preferences, timeline..."
-                      value={form.description}
-                      onChange={set('description')}
+                      value={form.requirements}
+                      onChange={set('requirements')}
                     />
                   </div>
 
                 </div>
 
-                {/* Submit button with hover + press animation */}
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.03, boxShadow: '0 8px 28px rgba(45,59,45,0.22)' }}
@@ -321,20 +360,25 @@ export default function Contact() {
                     borderRadius: 8,
                   }}
                 >
-                  Send Message <ArrowRight size={14} />
+                  Claim My Free Layout Design <ArrowRight size={14} />
                 </motion.button>
+
+                <p style={{
+                  fontFamily: "'Jost', sans-serif",
+                  fontSize: 12,
+                  color: '#9a9186',
+                  textAlign: 'center',
+                  marginTop: 16,
+                  marginBottom: 0,
+                }}>
+                  We respect your privacy. No spam, just great design.
+                </p>
               </form>
             </div>
           </motion.div>
 
-          {/* RIGHT — Sidebar */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeUp}
-            custom={0.15}
-          >
+          {/* RIGHT — Info Card */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp} custom={0.15}>
             <div className="contact-info-card" style={{ padding: '36px 32px' }}>
               <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 26, color: '#21291a', margin: '0 0 4px' }}>
                 Nivora Interiors
@@ -343,10 +387,8 @@ export default function Contact() {
                 From Vision to Execution
               </p>
 
-              {/* Contact detail rows */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
-                {/* Location */}
                 <ContactRow icon={<MapPin size={13} />}>
                   <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888880', margin: '0 0 4px' }}>Location</p>
                   <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 14, color: '#2C2C2A', margin: 0, lineHeight: 1.5 }}>
@@ -354,7 +396,6 @@ export default function Contact() {
                   </p>
                 </ContactRow>
 
-                {/* Phone */}
                 <ContactRow icon={<Phone size={13} />}>
                   <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888880', margin: '0 0 4px' }}>Phone</p>
                   <a href="tel:+917276687805" style={{ fontFamily: "'Jost', sans-serif", fontSize: 14, color: '#2C2C2A', textDecoration: 'none' }}>
@@ -362,7 +403,6 @@ export default function Contact() {
                   </a>
                 </ContactRow>
 
-                {/* Email */}
                 <ContactRow icon={<Mail size={13} />}>
                   <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888880', margin: '0 0 4px' }}>Email</p>
                   <a href="mailto:nivora.inbox@gmail.com" style={{ fontFamily: "'Jost', sans-serif", fontSize: 14, color: '#2C2C2A', textDecoration: 'none' }}>
@@ -372,7 +412,6 @@ export default function Contact() {
 
               </div>
 
-              {/* WhatsApp CTA */}
               <div style={{ borderTop: '1px solid #E8E0D0', marginTop: 28, paddingTop: 28 }}>
                 <a
                   href="https://wa.me/917276687805?text=Hello%2C%20I%20am%20interested%20in%20your%20interior%20design%20services."
@@ -385,7 +424,6 @@ export default function Contact() {
                 </a>
               </div>
 
-              {/* Studio Hours */}
               <div style={{ borderTop: '1px solid #E8E0D0', marginTop: 28, paddingTop: 28 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
                   <Clock size={13} style={{ color: '#C9A96E', flexShrink: 0 }} />
@@ -403,7 +441,6 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Privacy quote box */}
               <div style={{
                 marginTop: 24,
                 padding: '14px 18px',
@@ -428,34 +465,6 @@ export default function Contact() {
 
         </div>
       </section>
-
-      {/* ── 3. "Ready to Begin?" — below the form ── */}
-      <div style={{ background: '#2D3B2D' }}>
-        <section style={{ padding: '80px 24px 96px', textAlign: 'center', maxWidth: 720, margin: '0 auto' }}>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.p variants={fadeUp} custom={0}
-              style={{ fontFamily: "'Jost', sans-serif", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#C9A96E', marginBottom: 16 }}>
-              Reach Out
-            </motion.p>
-            <motion.h2 variants={fadeUp} custom={0.1}
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(2.2rem, 5.5vw, 3.6rem)', color: '#f5f0e8', margin: '0 0 12px', lineHeight: 1.1 }}>
-              Ready to Begin?
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={0.2}
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 17, color: '#C9A96E', margin: '0 0 20px' }}>
-              Not sure where to start?
-            </motion.p>
-            <motion.p variants={fadeUp} custom={0.3}
-              style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300, fontSize: 15, color: 'rgba(245,240,232,0.5)', lineHeight: 1.8, maxWidth: 500, margin: '0 auto' }}>
-              Every great project begins with a conversation. Fill in the form above and we'll get back to you within 24 hours.
-            </motion.p>
-          </motion.div>
-        </section>
-      </div>
 
     </div>
   )
