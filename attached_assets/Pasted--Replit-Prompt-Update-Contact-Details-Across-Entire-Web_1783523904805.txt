@@ -1,0 +1,69 @@
+# Replit Prompt — Update Contact Details Across Entire Website
+
+## TASK
+Search the entire codebase for any existing phone numbers, email addresses, office addresses, Instagram handles, and website URLs — and replace them all with the correct details below. This applies to EVERY page, component, and file.
+
+---
+
+## CORRECT CONTACT DETAILS (use exactly as written)
+
+| Field | Value |
+|---|---|
+| Phone | +91 72766 87805 |
+| Email | nivora.inbox@gmail.com |
+| Address | Shop No. 01, New Dhavalgiri Building, above Hindustan Co-Op Bank, Ambernath East, Maharashtra 421501 |
+| Instagram | @nivora.interiors |
+| Instagram URL | https://www.instagram.com/nivora.interiors |
+| Website | www.nivorainteriors.com |
+| Website URL | https://www.nivorainteriors.com |
+
+---
+
+## WHERE TO SEARCH AND REPLACE
+
+Check and update ALL of the following places:
+
+### Pages
+- Home page (footer, contact section, any info cards)
+- About page (footer, team/contact info)
+- Contact page (right sidebar info card, any hardcoded details)
+- Services page (footer)
+- Portfolio page (footer)
+- Testimonials page (footer)
+
+### Components
+- Footer component — phone, email, address, social links
+- Navbar — if any contact info exists
+- Contact info card / sidebar component
+- WhatsApp button (bottom-right floating button) — update the phone number in the wa.me link
+- Any "Chat on WhatsApp" button links — format must be: `https://wa.me/917276687805` (91 + number without spaces or dashes)
+- Social media icon links (Instagram)
+
+### Common placeholder values to search for and replace:
+Search for these old/placeholder values and replace with correct ones above:
+- `99999 99999` or `+91 99999 99999`
+- `hello@nivorainteriors.com` or any other old email
+- `Suite 405` or `The Design Hub` or `Bandra West` or any old address
+- `nivora.interiors` Instagram link if pointing to wrong URL
+- Any `wa.me` link with wrong phone number
+
+---
+
+## WHATSAPP LINK FORMAT (important)
+
+The WhatsApp floating button and any "Chat on WhatsApp" links must use:
+```
+https://wa.me/917276687805
+```
+No spaces, no dashes, no `+` sign — just `91` followed by the 10-digit number.
+
+If there is a pre-filled message in the WhatsApp link, keep it as-is — only update the phone number part.
+
+---
+
+## DO NOT CHANGE
+- Any styling, layout, fonts, colors
+- Button shapes or sizes
+- Icon designs
+- Any non-contact text content
+- Page structure or animations

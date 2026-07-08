@@ -350,7 +350,7 @@ export default function Contact() {
                 <ContactRow icon={<MapPin size={13} />}>
                   <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888880', margin: '0 0 4px' }}>Location</p>
                   <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 14, color: '#2C2C2A', margin: 0, lineHeight: 1.5 }}>
-                    Ambernath,<br />Maharashtra 421505
+                    Shop No. 01, New Dhavalgiri Building,<br />above Hindustan Co-Op Bank,<br />Ambernath East, Maharashtra 421501
                   </p>
                 </ContactRow>
 
@@ -365,8 +365,8 @@ export default function Contact() {
                 {/* Email */}
                 <ContactRow icon={<Mail size={13} />}>
                   <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888880', margin: '0 0 4px' }}>Email</p>
-                  <a href="mailto:hello@nivorainteriors.com" style={{ fontFamily: "'Jost', sans-serif", fontSize: 14, color: '#2C2C2A', textDecoration: 'none' }}>
-                    hello@nivorainteriors.com
+                  <a href="mailto:nivora.inbox@gmail.com" style={{ fontFamily: "'Jost', sans-serif", fontSize: 14, color: '#2C2C2A', textDecoration: 'none' }}>
+                    nivora.inbox@gmail.com
                   </a>
                 </ContactRow>
 

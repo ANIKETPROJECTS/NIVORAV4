@@ -355,13 +355,13 @@ export default function Footer() {
                   lineHeight: 1.7,
                   margin: 0,
                 }}>
-                  Ambernath,<br />Maharashtra 421505
+                  Shop No. 01, New Dhavalgiri Building,<br />above Hindustan Co-Op Bank,<br />Ambernath East, Maharashtra 421501
                 </p>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <a
-                  href="mailto:hello@nivorainteriors.com"
+                  href="mailto:nivora.inbox@gmail.com"
                   style={{
                     display: 'flex', alignItems: 'center', gap: 9,
                     fontFamily: "'Jost', sans-serif",
@@ -375,7 +375,7 @@ export default function Footer() {
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = '1' }}
                 >
                   <Mail size={16} color="#a18661" style={{ flexShrink: 0 }} />
-                  hello@nivorainteriors.com
+                  nivora.inbox@gmail.com
                 </a>
                 <a
                   href="tel:+917276687805"
@@ -398,7 +398,7 @@ export default function Footer() {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com/NivoraInteriors"
+                href="https://www.instagram.com/nivora.interiors"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
