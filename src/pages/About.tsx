@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import FadeIn from '../components/FadeIn'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Lightbulb, Gem, Heart, Wrench, ShieldCheck, Target, Compass } from 'lucide-react'
+import founderPhoto from '@assets/WhatsApp_Image_2026-07-08_at_20.50.13_1783534790416.jpeg'
 
 /* ─── DATA ──────────────────────────────────────────────── */
 const values = [
@@ -27,7 +28,7 @@ const offerings = [
   'Cafés and hospitality interiors',
 ]
 
-const founderImg = '/images/shweta-mahadik.png'
+const founderImg = founderPhoto
 const studioImg  = 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=80'
 
 /* ─── TYPOGRAPHY — matches Services page ────────────────── */
