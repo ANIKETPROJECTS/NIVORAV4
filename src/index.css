@@ -175,6 +175,13 @@ h3 { font-size: clamp(1.1rem, 2.2vw, 1.85rem); }
   transform: scale(1);
 }
 
+@media (max-width: 1023.98px) {
+  .founder-image-wrap {
+    height: auto !important;
+    aspect-ratio: 3 / 4;
+  }
+}
+
 @layer utilities {
   .text-gold        { color: var(--gold); }
   .text-gold-light  { color: var(--gold-light); }

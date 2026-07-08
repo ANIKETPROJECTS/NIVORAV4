@@ -111,7 +111,7 @@ function FounderSection({ founderImg }: { founderImg: string }) {
 
   return (
     <section className="py-24" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
-      <div ref={sectionRef} className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+      <div ref={sectionRef} className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-stretch">
         <div>
           <p className="founder-animate" style={{ ...LABEL, transitionDelay: `${FOUNDER_TEXT_DELAYS[0]}ms` }}>The Founder</p>
           <h2 className="founder-animate" style={{ ...H2, transitionDelay: `${FOUNDER_TEXT_DELAYS[1]}ms` }}>Shweta Mahadik</h2>
@@ -130,8 +130,8 @@ function FounderSection({ founderImg }: { founderImg: string }) {
             <cite style={{ ...LABEL, fontStyle: 'normal', marginBottom: 0, display: 'block', color: '#a18661' }}>— Shweta Mahadik</cite>
           </blockquote>
         </div>
-        <div className="founder-image-wrap overflow-hidden" style={{ borderRadius: 4 }}>
-          <img src={founderImg} alt="Shweta Mahadik — Founder, NIVORA Interiors" className="w-full aspect-[3/4] object-cover object-top hover:scale-105 transition-transform duration-700" loading="lazy" />
+        <div className="founder-image-wrap overflow-hidden" style={{ borderRadius: 4, height: '100%' }}>
+          <img src={founderImg} alt="Shweta Mahadik — Founder, NIVORA Interiors" className="w-full h-full object-cover object-bottom hover:scale-105 transition-transform duration-700" loading="lazy" />
         </div>
       </div>
     </section>
