@@ -476,7 +476,7 @@ export default function About() {
             Book a free consultation and let's start with a conversation.
           </p>
           <Link
-            to="/quote"
+            to="/contact"
             className="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase px-12 py-5 hover:bg-[#d4b896] transition-all duration-300 font-medium"
             style={{ background: '#C9A96E', color: '#21291a' }}
           >

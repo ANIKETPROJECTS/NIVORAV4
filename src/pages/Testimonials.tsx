@@ -395,7 +395,7 @@ export default function Testimonials() {
             Claim your Free Layout Consultation today and let us start building your dream.
           </p>
           <Link
-            to="/quote"
+            to="/contact"
             style={{
               display: 'inline-block',
               background: '#21291a',

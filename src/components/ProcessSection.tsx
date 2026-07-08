@@ -387,7 +387,7 @@ export default function ProcessSection() {
           End-to-End &nbsp;·&nbsp; Transparent &nbsp;·&nbsp; Hassle-Free
         </p>
         <Link
-          to="/quote"
+          to="/contact"
           style={{
             display: 'inline-block',
             fontFamily: "'Inter', sans-serif",

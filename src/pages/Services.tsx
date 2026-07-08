@@ -399,7 +399,7 @@ export default function Services() {
             Book a free consultation and we'll guide you through the best approach for your project.
           </p>
           <Link
-            to="/quote"
+            to="/contact"
             style={{
               display: 'inline-flex',
               alignItems: 'center',

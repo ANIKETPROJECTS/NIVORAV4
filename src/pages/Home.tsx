@@ -1344,7 +1344,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         >
           <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.25 }}>
             <Link
-              to="/quote"
+              to="/contact"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -2895,7 +2895,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               A complimentary consultation. No pressure, just possibilities.
             </p>
             <Link
-              to="/quote"
+              to="/contact"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',

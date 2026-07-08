@@ -424,7 +424,7 @@ export default function ProjectDetail() {
               Ready to design your space?
             </h2>
             <Link
-              to="/quote"
+              to="/contact"
               className="inline-flex items-center gap-2 transition-all duration-300 font-medium text-xs tracking-[0.2em] uppercase px-10 py-4"
               style={{
                 background: '#D4B483',

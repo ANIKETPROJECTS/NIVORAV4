@@ -114,7 +114,7 @@ export default function Navbar() {
 
           {/* Enquire Now */}
           <Link
-            to="/quote"
+            to="/contact"
             className="hidden lg:inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase px-6 py-3 transition-all duration-300"
             style={{
               background: `linear-gradient(135deg, #E0C38A 0%, #C8A46A 50%, #A8854F 100%)`,
@@ -169,7 +169,7 @@ export default function Navbar() {
           </Link>
         ))}
         <Link
-          to="/quote"
+          to="/contact"
           className="mt-4 text-xs tracking-[0.2em] uppercase px-10 py-4 transition-all duration-300"
           style={{
             background: 'linear-gradient(135deg, #E0C38A 0%, #C8A46A 50%, #A8854F 100%)',

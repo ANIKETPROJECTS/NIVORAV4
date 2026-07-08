@@ -334,7 +334,7 @@ export default function Portfolio() {
             Ready to create a space that tells your story?
           </motion.p>
           <Link
-            to="/quote"
+            to="/contact"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 12,
               fontFamily: "'Inter', sans-serif",
