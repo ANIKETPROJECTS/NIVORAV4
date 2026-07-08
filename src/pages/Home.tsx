@@ -2185,73 +2185,30 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   loading="lazy"
                 />
               </div>
-
-              {/* Floating quote card — stamp pop-in */}
-              <div
-                className="philosophy-quote-card"
-                style={{
-                  position: 'absolute',
-                  bottom: -32,
-                  left: -28,
-                  zIndex: 6,
-                  width: 212,
-                  padding: '24px 24px 22px',
-                  background: 'linear-gradient(135deg, #E0C38A 0%, #C8A46A 50%, #A8854F 100%)',
-                  borderRadius: 11,
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
-                  cursor: 'default',
-                  opacity: philosophyInView ? 1 : 0,
-                  transform: philosophyInView ? 'scale(1)' : 'scale(0.9)',
-                  transition: philosophyInView
-                    ? 'opacity 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms, transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms'
-                    : 'none',
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLDivElement
-                  el.style.transition = 'transform 0.35s ease, box-shadow 0.35s ease'
-                  el.style.transform = 'translateY(-5px) scale(1)'
-                  el.style.boxShadow = '0 20px 52px rgba(0,0,0,0.38)'
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLDivElement
-                  el.style.transition = 'transform 0.35s ease, box-shadow 0.35s ease'
-                  el.style.transform = 'scale(1)'
-                  el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.25)'
-                }}
-              >
-                {/* Large decorative quotation mark */}
-                <div style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 52,
-                  lineHeight: 0.75,
-                  color: '#21291a',
-                  marginBottom: 10,
-                  fontWeight: 300,
-                  userSelect: 'none',
-                }}>"</div>
-                <p style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 16.5,
-                  fontWeight: 300,
-                  fontStyle: 'italic',
-                  color: '#21291a',
-                  lineHeight: 1.75,
-                  margin: 0,
-                }}>
-                  We don't just design spaces, we create legacies.
-                </p>
-                {/* Founder signature */}
-                <p style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 12,
-                  fontStyle: 'italic',
-                  color: '#4a3520',
-                  marginTop: 12,
-                  marginBottom: 0,
-                  lineHeight: 1.4,
-                }}>— Shweta, Founder</p>
-              </div>
             </div>
+
+            {/* Quote caption — below the image, no overlap */}
+            <p
+              className="philosophy-quote-caption"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 17,
+                fontWeight: 300,
+                fontStyle: 'italic',
+                color: '#a8854f',
+                lineHeight: 1.7,
+                textAlign: 'center',
+                margin: '28px 0 0',
+                opacity: philosophyInView ? 1 : 0,
+                transform: philosophyInView ? 'translateY(0)' : 'translateY(12px)',
+                transition: philosophyInView
+                  ? 'opacity 600ms ease-out 700ms, transform 600ms ease-out 700ms'
+                  : 'none',
+              }}
+            >
+              "We don't just design spaces, we create legacies."<br />
+              <span style={{ fontSize: 13, color: '#7a6142' }}>— Shweta, Founder</span>
+            </p>
           </div>
 
         </div>
