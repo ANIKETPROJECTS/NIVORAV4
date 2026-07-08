@@ -1978,33 +1978,32 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
   const philosophyImgRef = useRef<HTMLImageElement>(null)
   const quoteCardRef = useRef<HTMLDivElement>(null)
   const [philosophyInView, setPhilosophyInView] = useState(false)
-  const [quoteCardInView, setQuoteCardInView] = useState(false)
 
-  const philEl = (delay: number): React.CSSProperties => ({
+  /* Left column — fade in + slide in from the left, staggered 0.2s apart */
+  const leftEl = (delay: number): React.CSSProperties => ({
     opacity: philosophyInView ? 1 : 0,
-    transform: philosophyInView ? 'translateY(0)' : 'translateY(20px)',
+    transform: philosophyInView ? 'translateX(0)' : 'translateX(-40px)',
     transition: `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`,
+  })
+
+  /* Timeless / Functional / Personal icons — fade in from bottom, staggered */
+  const iconEl = (index: number): React.CSSProperties => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    opacity: philosophyInView ? 1 : 0,
+    transform: philosophyInView ? 'translateY(0)' : 'translateY(14px)',
+    transition: `opacity 500ms ease-out ${700 + index * 150}ms, transform 500ms ease-out ${700 + index * 150}ms`,
   })
 
   useEffect(() => {
     const section = philosophySectionRef.current
     if (!section) return
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setPhilosophyInView(true); observer.disconnect() } },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      ([entry]) => { setPhilosophyInView(entry.isIntersecting) },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
     )
     observer.observe(section)
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    const card = quoteCardRef.current
-    if (!card) return
-    const observer = new IntersectionObserver(
-      ([entry]) => { setQuoteCardInView(entry.isIntersecting) },
-      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
-    )
-    observer.observe(card)
     return () => observer.disconnect()
   }, [])
 
@@ -2049,7 +2048,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
           >
 
             {/* Label with flanking rules */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: '2.5rem', ...philEl(0) }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: '2.5rem', ...leftEl(0) }}>
               <div style={{ height: '0.5px', backgroundColor: '#b8966a', width: 60 }} />
               <span style={{
                 fontFamily: "'Jost', sans-serif",
@@ -2071,7 +2070,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               lineHeight: 1.25,
               color: '#3b2f1e',
               marginBottom: '1.75rem',
-              ...philEl(120),
+              ...leftEl(200),
             }}>
               "Design is not just seen —{' '}
               <em style={{ color: '#8b6914', fontStyle: 'italic' }}>it is experienced.</em>"
@@ -2085,23 +2084,23 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               lineHeight: 1.85,
               color: '#6b5240',
               marginBottom: '2.5rem',
-              ...philEl(240),
+              ...leftEl(400),
             }}>
               At NIVORA, every project begins with understanding — how you move through a space, what you need from it, and what makes it feel unmistakably yours. We work with refined materials, considered proportions, and timeless palettes to create interiors that hold their beauty for years, not seasons.
             </p>
 
             {/* Divider + brand values */}
-            <div style={{ ...philEl(360) }}>
+            <div style={{ ...leftEl(600) }}>
               {/* Animated divider draw */}
               <div style={{ overflow: 'hidden', marginBottom: '1.5rem' }}>
                 <div style={{
                   height: '0.5px',
                   backgroundColor: '#c9b99a',
                   width: philosophyInView ? '100%' : '0%',
-                  transition: 'width 800ms ease-out 400ms',
+                  transition: 'width 800ms ease-out 600ms',
                 }} />
               </div>
-              <p style={{
+              <div style={{
                 fontFamily: "'Jost', sans-serif",
                 fontWeight: 300,
                 fontSize: 11,
@@ -2115,22 +2114,34 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 gap: 8,
                 margin: 0,
               }}>
-                <Clock size={14} color="#C9A96E" strokeWidth={1.5} />
-                Timeless
+                <span style={iconEl(0)}>
+                  <Clock size={14} color="#C9A96E" strokeWidth={1.5} />
+                  Timeless
+                </span>
                 <span style={{ fontSize: 8, opacity: 0.5 }}>◆</span>
-                <Settings size={14} color="#C9A96E" strokeWidth={1.5} />
-                Functional
+                <span style={iconEl(1)}>
+                  <Settings size={14} color="#C9A96E" strokeWidth={1.5} />
+                  Functional
+                </span>
                 <span style={{ fontSize: 8, opacity: 0.5 }}>◆</span>
-                <Heart size={14} color="#C9A96E" strokeWidth={1.5} />
-                Personal
-              </p>
+                <span style={iconEl(2)}>
+                  <Heart size={14} color="#C9A96E" strokeWidth={1.5} />
+                  Personal
+                </span>
+              </div>
             </div>
 
-            {/* Discover Our Story link */}
-            <div style={{ marginTop: 28, ...philEl(480) }}>
+            {/* Discover Our Story link — fades in last, underline draws itself */}
+            <div style={{
+              marginTop: 28,
+              opacity: philosophyInView ? 1 : 0,
+              transform: philosophyInView ? 'translateX(0)' : 'translateX(-40px)',
+              transition: 'opacity 600ms ease-out 1150ms, transform 600ms ease-out 1150ms',
+            }}>
               <Link
                 to="/about"
                 style={{
+                  position: 'relative',
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
                   fontWeight: 400,
@@ -2139,20 +2150,22 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   textDecoration: 'none',
                   letterSpacing: '0.06em',
                   display: 'inline-block',
-                  borderBottom: '1px solid #C9A96E',
                   paddingBottom: 3,
-                  transition: 'color 0.2s ease, border-color 0.2s ease',
+                  transition: 'color 0.2s ease',
                 }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.color = '#A07840'
-                  e.currentTarget.style.borderBottomColor = '#A07840'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.color = '#C9A96E'
-                  e.currentTarget.style.borderBottomColor = '#C9A96E'
-                }}
+                onMouseEnter={e => { e.currentTarget.style.color = '#A07840' }}
+                onMouseLeave={e => { e.currentTarget.style.color = '#C9A96E' }}
               >
                 Discover Our Story →
+                <span style={{
+                  position: 'absolute',
+                  left: 0,
+                  bottom: 0,
+                  height: 1,
+                  backgroundColor: 'currentColor',
+                  width: philosophyInView ? '100%' : '0%',
+                  transition: 'width 700ms ease-out 1550ms, background-color 0.2s ease',
+                }} />
               </Link>
             </div>
 
@@ -2166,8 +2179,8 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               minWidth: 240,
               alignSelf: 'stretch',
               opacity: philosophyInView ? 1 : 0,
-              transform: philosophyInView ? 'scale(1)' : 'scale(0.95)',
-              transition: 'opacity 800ms ease-out 200ms, transform 800ms ease-out 200ms',
+              transform: philosophyInView ? 'translateX(0)' : 'translateX(60px)',
+              transition: 'opacity 900ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 900ms cubic-bezier(0.22,1,0.36,1) 150ms',
             }}
           >
             <div className="philosophy-image-wrap" style={{ position: 'relative', display: 'block', width: '100%', height: '100%' }}>
@@ -2215,9 +2228,9 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   border: '1.5px solid #C9A96E',
                   padding: '28px 26px 24px',
                   boxShadow: '0 18px 40px rgba(0,0,0,0.28)',
-                  opacity: quoteCardInView ? 1 : 0,
-                  transform: quoteCardInView ? 'translateY(0)' : 'translateY(30px)',
-                  transition: 'opacity 700ms ease-out, transform 700ms ease-out',
+                  opacity: philosophyInView ? 1 : 0,
+                  transform: philosophyInView ? 'scale(1)' : 'scale(0.4)',
+                  transition: 'opacity 500ms ease-out 950ms, transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1) 950ms',
                 }}
               >
                 <div style={{
