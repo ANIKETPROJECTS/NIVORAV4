@@ -1,0 +1,108 @@
+# Replit Prompt — Splash Screen: Add Golden Glow Effect on Logo
+
+## WHAT TO ADD
+In the existing splash/intro screen, add a golden radial glow that pulses behind the logo before the splash exits. Everything else stays exactly the same.
+
+## CURRENT SEQUENCE (do not break this)
+1. Dark green screen appears
+2. Logo fades in centered
+3. Splash fades out → main website loads
+
+## NEW SEQUENCE (add glow between step 2 and 3)
+1. Dark green screen appears
+2. Logo fades in centered ← keep as-is
+3. **NEW: Golden radial glow blooms behind the logo** — builds up, holds briefly, then fades out
+4. Splash fades out → main website loads ← keep as-is
+
+---
+
+## HOW TO IMPLEMENT THE GLOW
+
+Add a `div` as a sibling BEHIND the logo (lower z-index) inside the splash container:
+
+```html
+<div class="splash-screen">
+  <div class="logo-glow"></div>        <!-- NEW: add this BEFORE the logo -->
+  <div class="logo-container">
+    <!-- existing logo here -->
+  </div>
+</div>
+```
+
+```css
+.logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(185, 148, 90, 0.35) 0%,
+    rgba(185, 148, 90, 0.15) 35%,
+    rgba(185, 148, 90, 0.04) 60%,
+    transparent 75%
+  );
+  pointer-events: none;
+  z-index: 0; /* behind logo which should be z-index 1 or higher */
+  opacity: 0;
+  animation: glowPulse 2000ms ease-in-out forwards;
+  /* Start glow AFTER logo has appeared — adjust delay to match logo fade-in duration */
+  animation-delay: 600ms; /* change this to match when logo finishes fading in */
+}
+
+/* Logo container must be above glow */
+.logo-container {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes glowPulse {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+```
+
+## TIMING COORDINATION
+
+The glow animation duration is 2000ms. After the glow finishes (animation-delay + 2000ms), the splash should begin its exit fade.
+
+Update the splash exit timer to account for this:
+
+```js
+// Example: if logo fades in over 600ms, and glow runs for 2000ms after that:
+// Total before exit = 600ms (logo) + 600ms (glow delay) + 2000ms (glow) = 3200ms
+// Add a small buffer: exit at ~3400ms
+
+setTimeout(() => {
+  // trigger splash exit fade-out
+  splashElement.classList.add('fade-out');
+}, 3400); // adjust this number based on your existing logo animation duration
+```
+
+If the splash already has a timer controlling when it exits, simply increase that timer value by ~2600ms (glow delay 600ms + glow duration 2000ms) to give the glow time to play before exit.
+
+---
+
+## DO NOT CHANGE
+- Logo image, size, color, or position
+- Splash background color (dark green)
+- Existing logo fade-in animation
+- The transition from splash to main website
+- Anything in the main website (navbar, hero, any page)

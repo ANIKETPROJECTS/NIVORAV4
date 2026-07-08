@@ -42,9 +42,11 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
   return (
     <>
       <style>{`
-        @keyframes glowBreathe {
-          0%, 100% { transform: scale(0.85); opacity: 0.35; }
-          50%       { transform: scale(1.1);  opacity: 0.55; }
+        @keyframes glowPulse {
+          0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+          40%  { opacity: 1; transform: translate(-50%, -50%) scale(1);   }
+          70%  { opacity: 1; transform: translate(-50%, -50%) scale(1.05);}
+          100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
         }
       `}</style>
 
@@ -86,12 +88,17 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
                   <div
                     style={{
                       position: 'absolute',
-                      inset: '-70% -50%',
-                      background:
-                        'radial-gradient(ellipse at center, rgba(201,166,107,0.28) 0%, rgba(201,166,107,0.08) 50%, transparent 72%)',
-                      filter: 'blur(24px)',
+                      top: '50%',
+                      left: '50%',
+                      width: '600px',
+                      height: '600px',
+                      borderRadius: '50%',
+                      background: 'radial-gradient(circle, rgba(185,148,90,0.35) 0%, rgba(185,148,90,0.15) 35%, rgba(185,148,90,0.04) 60%, transparent 75%)',
                       pointerEvents: 'none',
-                      animation: 'glowBreathe 2.2s ease-in-out infinite',
+                      zIndex: 0,
+                      opacity: 0,
+                      animation: 'glowPulse 2000ms ease-in-out forwards',
+                      animationDelay: '600ms',
                     }}
                   />
                   <img
