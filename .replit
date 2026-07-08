@@ -58,3 +58,9 @@ externalPort = 80
 deploymentTarget = "static"
 build = ["npm", "run", "build"]
 publicDir = "dist"
+
+[userenv]
+
+[userenv.shared]
+ADMIN_PASSWORD = "admin@123"
+ADMIN_USERNAME = "admin"
