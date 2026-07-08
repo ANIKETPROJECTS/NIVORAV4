@@ -27,7 +27,7 @@ const offerings = [
   'Cafés and hospitality interiors',
 ]
 
-const founderImg = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80'
+const founderImg = '/images/shweta-mahadik.png'
 const studioImg  = 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=80'
 
 /* ─── TYPOGRAPHY — matches Services page ────────────────── */
@@ -83,6 +83,59 @@ const mvContainerVariants = {
 const mvBoxVariants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] } },
+}
+
+/* ─── FOUNDER SECTION — scroll-triggered stagger animation ─ */
+const FOUNDER_TEXT_DELAYS = [0, 130, 260, 390, 520, 650, 780]
+
+function FounderSection({ founderImg }: { founderImg: string }) {
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.15 })
+
+    el.querySelectorAll('.founder-animate, .founder-image-wrap')
+      .forEach(node => observer.observe(node))
+
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <section className="py-24" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
+      <div ref={sectionRef} className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+        <div>
+          <p className="founder-animate" style={{ ...LABEL, transitionDelay: `${FOUNDER_TEXT_DELAYS[0]}ms` }}>The Founder</p>
+          <h2 className="founder-animate" style={{ ...H2, transitionDelay: `${FOUNDER_TEXT_DELAYS[1]}ms` }}>Shweta Mahadik</h2>
+          <p className="founder-animate" style={{ ...LABEL, letterSpacing: '0.2em', marginBottom: 32, color: 'rgba(33,41,26,0.45)', transitionDelay: `${FOUNDER_TEXT_DELAYS[2]}ms` }}>
+            Founder & Principal Designer
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18, marginBottom: 40 }}>
+            <p className="founder-animate" style={{ ...BODY, transitionDelay: `${FOUNDER_TEXT_DELAYS[3]}ms` }}>Shweta brings a rare combination of civil engineering precision and interior design sensibility to every project. Her background in construction gives her an instinctive understanding of how spaces are built — not just how they look — which translates into designs that are both beautiful and structurally sound.</p>
+            <p className="founder-animate" style={{ ...BODY, transitionDelay: `${FOUNDER_TEXT_DELAYS[4]}ms` }}>Her approach is hands-on and deeply personal. She visits every project site herself, works closely with craftspeople, and maintains direct communication with clients throughout the process.</p>
+            <p className="founder-animate" style={{ ...BODY, transitionDelay: `${FOUNDER_TEXT_DELAYS[5]}ms` }}>For Shweta, good design is not about decoration. It is about creating environments that make everyday life calmer, more considered, and more enjoyable.</p>
+          </div>
+          <blockquote className="founder-animate" style={{ borderLeft: '2px solid #a18661', background: 'rgba(161,134,97,0.06)', borderRadius: '0 6px 6px 0', padding: '20px 24px', transitionDelay: `${FOUNDER_TEXT_DELAYS[6]}ms` }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontWeight: 300, fontSize: '1.2rem', color: '#2c2c2c', lineHeight: 1.65, marginBottom: 12 }}>
+              "For me, design is not about decoration. It is about creating spaces that feel calm, meaningful, and effortless to live in."
+            </p>
+            <cite style={{ ...LABEL, fontStyle: 'normal', marginBottom: 0, display: 'block', color: '#a18661' }}>— Shweta Mahadik</cite>
+          </blockquote>
+        </div>
+        <div className="founder-image-wrap overflow-hidden" style={{ borderRadius: 4 }}>
+          <img src={founderImg} alt="Shweta Mahadik — Founder, NIVORA Interiors" className="w-full aspect-[3/4] object-cover object-top hover:scale-105 transition-transform duration-700" loading="lazy" />
+        </div>
+      </div>
+    </section>
+  )
 }
 
 /* ─── STATS COUNTER — clean count-up, no dip ────────────── */
@@ -409,33 +462,7 @@ export default function About() {
       </section>
 
       {/* THE FOUNDER */}
-      <section className="py-24" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
-          <FadeIn delay={0.2}>
-            <p style={LABEL}>The Founder</p>
-            <h2 style={H2}>Shweta Mahadik</h2>
-            <p style={{ ...LABEL, letterSpacing: '0.2em', marginBottom: 32, color: 'rgba(33,41,26,0.45)' }}>
-              Founder & Principal Designer
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18, marginBottom: 40 }}>
-              <p style={BODY}>Shweta brings a rare combination of civil engineering precision and interior design sensibility to every project. Her background in construction gives her an instinctive understanding of how spaces are built — not just how they look — which translates into designs that are both beautiful and structurally sound.</p>
-              <p style={BODY}>Her approach is hands-on and deeply personal. She visits every project site herself, works closely with craftspeople, and maintains direct communication with clients throughout the process.</p>
-              <p style={BODY}>For Shweta, good design is not about decoration. It is about creating environments that make everyday life calmer, more considered, and more enjoyable.</p>
-            </div>
-            <blockquote style={{ borderLeft: '2px solid #a18661', background: 'rgba(161,134,97,0.06)', borderRadius: '0 6px 6px 0', padding: '20px 24px' }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontWeight: 300, fontSize: '1.2rem', color: '#2c2c2c', lineHeight: 1.65, marginBottom: 12 }}>
-                "For me, design is not about decoration. It is about creating spaces that feel calm, meaningful, and effortless to live in."
-              </p>
-              <cite style={{ ...LABEL, fontStyle: 'normal', marginBottom: 0, display: 'block', color: '#a18661' }}>— Shweta Mahadik</cite>
-            </blockquote>
-          </FadeIn>
-          <FadeIn direction="left">
-            <div className="overflow-hidden" style={{ borderRadius: 4 }}>
-              <img src={founderImg} alt="Shweta Mahadik — Founder, NIVORA Interiors" className="w-full aspect-[3/4] object-cover object-top hover:scale-105 transition-transform duration-700" loading="lazy" />
-            </div>
-          </FadeIn>
-        </div>
-      </section>
+      <FounderSection founderImg={founderImg} />
 
       {/* CTA */}
       <section className="py-20 px-6 text-center" style={{ background: '#21291a' }}>

@@ -154,6 +154,27 @@ h3 { font-size: clamp(1.1rem, 2.2vw, 1.85rem); }
 .whatsapp-pulse { animation: whatsapp-pulse 3s ease-in-out infinite; }
 .whatsapp-pulse:hover { animation: none; transform: scale(1.1); }
 
+/* ── Founder section scroll-triggered animations ──────────────────── */
+.founder-animate {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 650ms ease-out, transform 650ms ease-out;
+}
+.founder-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.founder-image-wrap {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 900ms ease-out 200ms, transform 900ms ease-out 200ms;
+}
+.founder-image-wrap.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
 @layer utilities {
   .text-gold        { color: var(--gold); }
   .text-gold-light  { color: var(--gold-light); }

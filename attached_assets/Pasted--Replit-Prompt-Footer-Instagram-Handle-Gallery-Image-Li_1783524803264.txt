@@ -1,0 +1,71 @@
+# Replit Prompt — Footer Instagram Handle + Gallery Image Links
+
+## TWO QUICK FIXES
+
+---
+
+## FIX 1 — FOOTER: ADD "nivora.interiors" TEXT NEXT TO INSTAGRAM ICON
+
+In the footer, under "FIND US" section, there is an Instagram icon with no text next to it.
+
+Add the handle text right next to the icon:
+
+```jsx
+// Current (icon only):
+<a href="..."><InstagramIcon /></a>
+
+// Change to (icon + handle text):
+<a href="https://www.instagram.com/nivora.interiors" target="_blank" rel="noopener noreferrer">
+  <InstagramIcon />
+  <span>nivora.interiors</span>
+</a>
+```
+
+Style the text to match the existing email and phone text in the same column:
+- Same font size and color as `nivora.inbox@gmail.com` and `+91 72766 87805`
+- No underline by default, underline on hover
+- Icon and text vertically centered, same gap as other rows
+
+---
+
+## FIX 2 — "FOLLOW OUR JOURNEY" GALLERY: ALL IMAGES LINK TO INSTAGRAM
+
+In the "Follow Our Journey" / "@NIVORAINTERIORS" section on the Home page, there are 6 interior photos in a row.
+
+Currently clicking on them does nothing (or goes somewhere wrong).
+
+Wrap every single image in an anchor tag pointing to the Nivora Interiors Instagram profile:
+
+```jsx
+// Each image should be wrapped like this:
+<a
+  href="https://www.instagram.com/nivora.interiors"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Follow Nivora Interiors on Instagram"
+>
+  <img src="..." alt="..." />
+</a>
+```
+
+Do this for ALL 6 images in the gallery grid.
+
+Also update the "SEE MORE ON INSTAGRAM →" button/link below the gallery to point to the same URL if it doesn't already:
+```
+https://www.instagram.com/nivora.interiors
+```
+
+Also update the `@NIVORAINTERIORS` label above the heading — make it a clickable link too:
+```jsx
+<a href="https://www.instagram.com/nivora.interiors" target="_blank" rel="noopener noreferrer">
+  @NIVORAINTERIORS
+</a>
+```
+
+---
+
+## DO NOT CHANGE
+- Image sources, sizes, layout, or styling
+- Footer layout or any other footer content
+- Any text content on the page
+- Any other section or page
