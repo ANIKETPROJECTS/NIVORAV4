@@ -1,0 +1,140 @@
+# Replit Prompt — Home Page "What Clients Say": Fix Mobile View
+
+## SECTION
+The "What Clients Say" carousel on the Home page. Desktop looks correct (Image 2). Mobile is broken (Image 1) — the dark green left panel and white review card are stacked awkwardly, text overflows, and overall layout looks messy.
+
+## DO NOT CHANGE
+- Desktop layout (anything above 768px) — leave completely untouched
+- Card content, text, names, star ratings
+- Auto-scroll, animations, progress bar already implemented
+- Any other section or page
+
+---
+
+## MOBILE FIX (apply only at max-width: 768px)
+
+### Problem 1 — Dark green left panel should be hidden on mobile
+The left dark green panel ("THE WORD ON THE STREET / Hear what our clients have said about us!") is decorative on desktop but takes up too much space on mobile and pushes the actual review card down.
+
+**Fix:** Hide the left panel entirely on mobile:
+
+```css
+@media (max-width: 768px) {
+  .testimonial-left-panel,
+  .testimonial-intro-card,
+  .testimonial-green-card {
+    display: none;
+  }
+}
+```
+(Use whatever class/selector targets that dark green left block)
+
+---
+
+### Problem 2 — Review card should be full width on mobile
+
+```css
+@media (max-width: 768px) {
+  .testimonial-card,
+  .testimonial-review-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 24px 20px;
+    border-radius: 8px;
+  }
+
+  .testimonial-carousel-track,
+  .testimonial-cards-wrapper {
+    width: 100%;
+  }
+}
+```
+
+---
+
+### Problem 3 — Section padding too large on mobile
+
+```css
+@media (max-width: 768px) {
+  .testimonials-section {
+    padding: 40px 16px;
+  }
+
+  .testimonials-section h2 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .testimonials-section .subtitle {
+    font-size: 14px;
+    text-align: center;
+    padding: 0 8px;
+  }
+}
+```
+
+---
+
+### Problem 4 — Review text font size too large on mobile
+
+```css
+@media (max-width: 768px) {
+  .testimonial-quote-text,
+  .testimonial-review-text {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .testimonial-author-name {
+    font-size: 13px;
+  }
+
+  .testimonial-author-location {
+    font-size: 11px;
+  }
+}
+```
+
+---
+
+### Problem 5 — Navigation arrows on mobile
+
+Keep arrows visible but reduce size and reposition them closer to the card:
+
+```css
+@media (max-width: 768px) {
+  .carousel-arrow-left,
+  .carousel-arrow-right,
+  .testimonial-arrow {
+    width: 36px;
+    height: 36px;
+    /* Position them at sides of the card, vertically centered */
+  }
+}
+```
+
+---
+
+### Problem 6 — Progress bar full width on mobile
+
+```css
+@media (max-width: 768px) {
+  .testimonial-progress-bar-wrapper {
+    width: 90%;
+    margin: 16px auto 0;
+  }
+}
+```
+
+---
+
+## FINAL MOBILE RESULT SHOULD LOOK LIKE:
+- Section heading "What Clients Say" centered, readable size
+- Italic subtitle below it
+- Single white review card full width with padding
+- Stars, quote text, author name + location all fitting cleanly
+- Left/right arrows at sides
+- Gold progress bar below card
+- "READ ALL CLIENT STORIES →" link below that
+- No overflow, no awkward stacking, no dark green panel visible

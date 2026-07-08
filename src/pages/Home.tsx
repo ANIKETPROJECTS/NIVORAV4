@@ -1573,6 +1573,7 @@ function TestimonialsCarousel() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="testimonials-section"
       style={{ background: '#f5f2ed', padding: '80px 0' }}
     >
       <style>{`
@@ -1654,10 +1655,38 @@ function TestimonialsCarousel() {
         }
         .t-read-more:hover { color: #21291a; }
         .t-read-more:hover::after { width: 100%; }
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
           .t-card-split { flex-direction: column !important; min-height: unset !important; }
-          .t-panel-left { border-radius: 10px 10px 0 0 !important; min-height: unset !important; }
-          .t-panel-right { border-radius: 0 0 10px 10px !important; }
+
+          /* Problem 1 — hide the decorative dark green left panel on mobile */
+          .t-panel-left { display: none !important; }
+
+          /* Problem 2 — review card full width on mobile */
+          .t-panel-right {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 24px 20px !important;
+            border-radius: 8px !important;
+          }
+          .testimonials-arrow-row { width: 100% !important; }
+
+          /* Problem 3 — section padding + heading sizing on mobile */
+          .testimonials-section { padding: 40px 16px !important; }
+          .testimonials-heading h2 { font-size: 32px !important; text-align: center !important; }
+          .testimonials-subtitle { font-size: 14px !important; text-align: center !important; padding: 0 8px !important; }
+
+          /* Problem 4 — review text sizing on mobile */
+          .testimonial-quote-text { font-size: 14px !important; line-height: 1.7 !important; }
+          .testimonial-author-name { font-size: 13px !important; }
+          .testimonial-author-location { font-size: 11px !important; }
+
+          /* Problem 5 — smaller nav arrows, closer to the card */
+          .t-nav-btn { width: 36px !important; height: 36px !important; }
+          .testimonials-arrow-row { gap: 10px !important; }
+
+          /* Problem 6 — progress bar full-ish width, centered */
+          .testimonial-progress-bar-wrapper { width: 90% !important; margin: 16px auto 0 !important; }
         }
       `}</style>
 
@@ -1669,6 +1698,7 @@ function TestimonialsCarousel() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="testimonials-heading"
           style={{ textAlign: 'center', marginBottom: 56 }}
         >
           <p style={{
@@ -1682,7 +1712,7 @@ function TestimonialsCarousel() {
             color: '#21291a', lineHeight: 1.15,
             margin: '0 0 18px', letterSpacing: '-0.01em',
           }}>What Clients Say</h2>
-          <p style={{
+          <p className="testimonials-subtitle" style={{
             fontFamily: "'Lora', serif", fontWeight: 300, fontStyle: 'italic',
             fontSize: 15, lineHeight: 1.75,
             color: 'rgba(33,41,26,0.55)', maxWidth: 500, margin: '0 auto',
@@ -1693,6 +1723,7 @@ function TestimonialsCarousel() {
 
         {/* Arrow + Card + Arrow */}
         <div
+          className="testimonials-arrow-row"
           style={{ display: 'flex', alignItems: 'center', gap: 20 }}
           onMouseEnter={() => { setIsPaused(true); if (autoScrollRef.current) clearInterval(autoScrollRef.current) }}
           onMouseLeave={() => { setIsPaused(false); startAutoScroll() }}
@@ -1822,6 +1853,7 @@ function TestimonialsCarousel() {
 
               <p
                 key={`quote-${slideKey}`}
+                className="testimonial-quote-text"
                 style={{
                   fontFamily: "'Lora', serif", fontStyle: 'italic',
                   fontSize: 16, lineHeight: 1.8,
@@ -1861,6 +1893,7 @@ function TestimonialsCarousel() {
                 <div>
                   <p
                     key={`name-${slideKey}`}
+                    className="testimonial-author-name"
                     style={{
                       fontFamily: "'Montserrat', sans-serif", fontWeight: 500,
                       fontSize: 12, letterSpacing: '0.14em',
@@ -1870,6 +1903,7 @@ function TestimonialsCarousel() {
                   >{t.name}</p>
                   <p
                     key={`loc-${slideKey}`}
+                    className="testimonial-author-location"
                     style={{
                       fontFamily: "'Montserrat', sans-serif", fontWeight: 300,
                       fontSize: 10, letterSpacing: '0.1em',
@@ -1891,7 +1925,7 @@ function TestimonialsCarousel() {
         </div>
 
         {/* Progress bar — syncs with auto-scroll interval, resets on each slide change */}
-        <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center' }}>
+        <div className="testimonial-progress-bar-wrapper" style={{ marginTop: 24, display: 'flex', justifyContent: 'center' }}>
           <div style={{
             width: '100%',
             height: 3, background: '#e0d9cf',
