@@ -1,0 +1,32 @@
+I want to fix the splash/logo animation on the Home page. Currently the glowing radial light effect behind the "nivora interiors" logo is missing. Here is the exact sequence I want:
+1. Background and glow effect:
+
+Splash screen background color: #21291a (dark forest green, NOT black).
+Behind the logo, add a radial gradient glow — a warm golden/amber soft light that radiates outward from the center of the logo, like a spotlight or halo effect.
+Implement this as a radial-gradient CSS background on the splash container:
+
+cssbackground: radial-gradient(ellipse at center, #6b5a30 0%, #3a3318 25%, #21291a 65%, #1a2114 100%);
+
+The glow should feel warm and soft — not harsh or bright — just a subtle golden ambient light glowing from behind the logo text, fading into the dark green edges.
+
+2. Logo entrance animation sequence (in this exact order):
+
+Phase 1 (0-0.5s): Splash screen appears instantly with the dark green + radial glow background. Logo starts invisible (opacity: 0, scale: 0.85).
+Phase 2 (0.5s-1.5s): Logo fades in and scales up to normal size (opacity: 1, scale: 1) with a smooth ease-out — logo "emerges" from the glow.
+Phase 3 (1.5s-2.5s): Logo holds visible for about 1 second so the user can see it clearly.
+Phase 4 (2.5s-3.2s): Entire splash screen (background + logo together) slides out to the LEFT (translateX(0) → translateX(-100%)) with a smooth ease-in-out transition — revealing the main website from the right side underneath.
+
+3. Implementation notes:
+
+Use Framer Motion if already installed: use motion.div for the splash container with animate and exit props, and AnimatePresence to handle the unmount slide-out.
+Or with CSS: use @keyframes for the logo fade-in, and a separate @keyframes slideOutLeft (transform: translateX(-100%)) triggered after a 2.5s delay.
+After the splash slides out, call onAnimationComplete callback (or set splashDone = true state) to trigger the hero text entrance animation on the Home page.
+Make sure the radial glow is part of the splash container's background CSS — NOT a separate image file — so it always renders correctly regardless of screen size.
+
+4. Timing summary:
+
+0s: Splash appears with glow background
+0.5s: Logo starts fading in
+1.5s: Logo fully visible, holds
+2.5s: Slide-out begins (right to left)
+3.2s: Splash fully gone, website visible, hero text animation begins

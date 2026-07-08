@@ -40,78 +40,51 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
   const logoSrc = useTransparentLogo(nivoraLogo)
 
   return (
-    <>
-      <style>{`
-        @keyframes glowBreathe {
-          0%, 100% { transform: scale(0.85); opacity: 0.35; }
-          50%       { transform: scale(1.1);  opacity: 0.55; }
-        }
-      `}</style>
-
-      <AnimatePresence onExitComplete={onExitComplete}>
-        {visible && (
-          <motion.div
-            key="intro-overlay"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 9999,
-              backgroundColor: '#21291a',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+    <AnimatePresence onExitComplete={onExitComplete}>
+      {visible && (
+        <motion.div
+          key="intro-overlay"
+          initial={{ x: 0 }}
+          animate={{ x: 0 }}
+          exit={{ x: '-100%' }}
+          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            // Phase 1: radial glow background — warm golden ambient light fading to dark green edges
+            background: 'radial-gradient(ellipse at center, #6b5a30 0%, #3a3318 25%, #21291a 65%, #1a2114 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {/* Phase 2 & 3: Logo fades in after 0.5s delay, holds, then container slides out */}
+          <motion.img
+            key={logoSrc ?? 'placeholder'}
+            src={logoSrc ?? undefined}
+            alt="Nivora Interiors"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={logoSrc ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
+            transition={{
+              delay: 0.5,       // Phase 2 starts at 0.5s
+              duration: 1.0,    // fades in over 1s → fully visible at 1.5s
+              ease: [0.22, 1, 0.36, 1],
             }}
-          >
-            <AnimatePresence>
-              {logoSrc && (
-                <motion.div
-                  key="logo"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-                  onAnimationComplete={() => {
-                    setTimeout(() => setVisible(false), 900)
-                  }}
-                  style={{
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: '-70% -50%',
-                      background:
-                        'radial-gradient(ellipse at center, rgba(201,166,107,0.28) 0%, rgba(201,166,107,0.08) 50%, transparent 72%)',
-                      filter: 'blur(24px)',
-                      pointerEvents: 'none',
-                      animation: 'glowBreathe 2.2s ease-in-out infinite',
-                    }}
-                  />
-                  <img
-                    src={logoSrc}
-                    alt="Nivora Interiors"
-                    style={{
-                      width: 'clamp(220px, 30vw, 320px)',
-                      height: 'auto',
-                      display: 'block',
-                      position: 'relative',
-                      zIndex: 1,
-                      filter: 'drop-shadow(0 0 20px rgba(201,166,107,0.28))',
-                    }}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            onAnimationComplete={() => {
+              if (!logoSrc) return
+              // Phase 3: hold for 1s (1.5s → 2.5s), then Phase 4: slide-out
+              setTimeout(() => setVisible(false), 1000)
+            }}
+            style={{
+              width: 'clamp(220px, 30vw, 320px)',
+              height: 'auto',
+              display: 'block',
+              filter: 'drop-shadow(0 0 28px rgba(180,148,80,0.35))',
+            }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
