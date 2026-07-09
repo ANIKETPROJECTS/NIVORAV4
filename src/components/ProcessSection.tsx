@@ -53,12 +53,15 @@ function AnimatedCheckmark({ active }: { active: boolean }) {
   )
 }
 
-function DiamondNode({ active }: { active: boolean }) {
+function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) {
   return (
     <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={active ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      className="process-diamond-outer"
+      initial={{ scale: mobile ? 0 : 0.8, opacity: 0 }}
+      animate={active ? { scale: 1, opacity: 1 } : { scale: mobile ? 0 : 0.8, opacity: 0 }}
+      transition={mobile
+        ? { duration: 0.6, type: 'spring', stiffness: 260, damping: 14 }
+        : { duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
       style={{
         width: 52,
         height: 52,
@@ -87,6 +90,7 @@ function DiamondNode({ active }: { active: boolean }) {
       />
       {/* Diamond */}
       <motion.div
+        className="process-diamond-inner"
         animate={active
           ? { background: '#2A3926', borderColor: '#C9A96E' }
           : { background: '#F5F2ED', borderColor: 'rgba(201,169,110,0.4)' }
@@ -169,6 +173,7 @@ function StepContent({
       >{step.num}</motion.p>
 
       <motion.h3
+        className="process-title"
         initial={{ opacity: 0, y: 14 }}
         animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
@@ -184,6 +189,7 @@ function StepContent({
       >{step.title}</motion.h3>
 
       <motion.p
+        className="process-desc"
         initial={{ opacity: 0, y: 10 }}
         animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
@@ -203,17 +209,20 @@ function StepContent({
 function StepRow({
   step,
   index,
+  isMobile,
   onVisible,
 }: {
   step: typeof STEPS[0]
   index: number
-  onVisible: (i: number) => void
+  isMobile: boolean
+  onVisible: (i: number, visible: boolean) => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-60px 0px' })
+  // Desktop: animate once. Mobile: replay every time the step re-enters the viewport.
+  const inView = useInView(ref, { once: !isMobile, margin: '-60px 0px', amount: 0.25 })
 
   useEffect(() => {
-    if (inView) onVisible(index)
+    onVisible(index, inView)
   }, [inView, index, onVisible])
 
   const isLeft = step.side === 'left'
@@ -238,6 +247,7 @@ function StepRow({
       <div style={{ paddingRight: 48, display: 'flex', justifyContent: 'flex-end' }} className="tl-left-cell">
         {isLeft ? (
           <motion.div
+            className="process-content-box"
             variants={slideVariants('left')}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
@@ -252,12 +262,13 @@ function StepRow({
       </div>
 
       {/* Center node */}
-      <DiamondNode active={inView} />
+      <DiamondNode active={inView} mobile={isMobile} />
 
       {/* Right panel */}
       <div style={{ paddingLeft: 48 }} className="tl-right-cell">
         {!isLeft ? (
           <motion.div
+            className="process-content-box"
             variants={slideVariants('right')}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
@@ -276,13 +287,29 @@ function StepRow({
 
 export default function ProcessSection() {
   const [visibleSet, setVisibleSet] = useState<Set<number>>(new Set())
+  const [isMobile, setIsMobile] = useState(false)
 
-  const handleVisible = useCallback((i: number) => {
-    setVisibleSet(prev => {
-      if (prev.has(i)) return prev
-      return new Set([...prev, i])
-    })
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
   }, [])
+
+  const handleVisible = useCallback((i: number, visible: boolean) => {
+    setVisibleSet(prev => {
+      const has = prev.has(i)
+      if (visible && !has) return new Set([...prev, i])
+      // Only allow un-marking (for replay) on mobile — desktop stays "once visible, stays visible".
+      if (!visible && has && isMobile) {
+        const next = new Set(prev)
+        next.delete(i)
+        return next
+      }
+      return prev
+    })
+  }, [isMobile])
 
   return (
     <section style={{ background: '#F5F2ED', padding: '120px 0' }}>
@@ -359,7 +386,7 @@ export default function ProcessSection() {
       >
         {STEPS.map((step, i) => (
           <div key={step.num}>
-            <StepRow step={step} index={i} onVisible={handleVisible} />
+            <StepRow step={step} index={i} isMobile={isMobile} onVisible={handleVisible} />
             {i < STEPS.length - 1 && (
               <LineSegment active={visibleSet.has(i)} />
             )}
@@ -417,26 +444,46 @@ export default function ProcessSection() {
       </motion.div>
 
       <style>{`
-        /* Mobile: shift to left-anchored single column */
-        @media (max-width: 640px) {
+        /* Mobile: keep the zig-zag layout, scaled down — center gold line, alternating sides */
+        @media (max-width: 768px) {
           .tl-container {
-            padding: 0 20px !important;
+            padding: 0 12px !important;
           }
           .timeline-step-row {
-            grid-template-columns: 36px 1fr !important;
+            grid-template-columns: 1fr 40px 1fr !important;
             gap: 0 !important;
           }
           .tl-left-cell {
-            display: none !important;
+            padding-right: 12px !important;
+            display: flex !important;
           }
           .tl-right-cell {
-            padding-left: 20px !important;
+            padding-left: 12px !important;
             display: block !important;
+          }
+          .process-content-box {
+            max-width: 45% !important;
+          }
+          .process-diamond-outer {
+            width: 40px !important;
+            height: 40px !important;
+          }
+          .process-diamond-inner {
+            width: 28px !important;
+            height: 28px !important;
+          }
+          .process-title {
+            font-size: 20px !important;
+            margin: 0 0 8px !important;
+          }
+          .process-desc {
+            font-size: 12px !important;
+            line-height: 1.6 !important;
           }
         }
 
         /* Tablet: tighten padding */
-        @media (max-width: 1024px) and (min-width: 641px) {
+        @media (max-width: 1024px) and (min-width: 769px) {
           .timeline-step-row {
             grid-template-columns: 1fr 52px 1fr !important;
           }
