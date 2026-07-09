@@ -1114,7 +1114,6 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
   const rawY = useTransform(scrollYProgress, [0, 1], ['0%', '22%'])
   const parallaxY = useSpring(rawY, { stiffness: 60, damping: 20 })
-  const [activeCity, setActiveCity] = useState<'Mumbai' | 'Pune'>('Mumbai')
   const [heroInView, setHeroInView] = useState(false)
 
   const heroBg = heroSettings?.homeHero?.backgroundImage || heroImg
@@ -1228,7 +1227,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         }}
         className="hidden lg:block"
       >
-        Mumbai &nbsp;&amp;&nbsp; Pune
+        Mumbai
       </motion.div>
 
       {/* Centre content — staggered entrance, starts after intro overlay is fully gone */}
@@ -1240,33 +1239,33 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         className="hero-content-wrap"
       >
 
-        {/* 1. Location tabs */}
+        {/* 1. Location indicator */}
         <motion.div
           variants={heroTopVariants}
-          className="hero-city-tabs"
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 28, marginBottom: 32 }}
+          className="hero-city-tabs hero-location-tag"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 32 }}
         >
-          {(['Mumbai', 'Pune'] as const).map(city => (
-            <button
-              key={city}
-              onClick={() => setActiveCity(city)}
-              style={{
-                background: 'none',
-                border: 'none',
-                borderBottom: activeCity === city ? '2px solid #C9A96E' : '2px solid transparent',
-                paddingBottom: 6,
-                fontFamily: "'Cinzel', serif",
-                fontSize: 10,
-                letterSpacing: '0.45em',
-                textTransform: 'uppercase',
-                color: activeCity === city ? '#ffffff' : 'rgba(255,255,255,0.5)',
-                cursor: 'pointer',
-                transition: 'color 0.3s ease, border-color 0.3s ease',
-              }}
-            >
-              {city}
-            </button>
-          ))}
+          <svg
+            className="hero-location-pin"
+            width="12" height="12" viewBox="0 0 24 24"
+            fill="none" stroke="#C9A96E" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span
+            className="hero-location-text"
+            style={{
+              fontFamily: "'Cinzel', serif",
+              fontSize: 11,
+              letterSpacing: '0.35em',
+              textTransform: 'uppercase',
+              color: 'rgba(245,240,232,0.85)',
+            }}
+          >
+            Mumbai
+          </span>
         </motion.div>
 
         {/* 2. "Thoughtfully Designed" */}
@@ -1557,6 +1556,13 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
           /* 6. City tabs — compact margin */
           .hero-city-tabs {
             margin-bottom: 20px !important;
+          }
+          .hero-location-text {
+            font-size: 10px !important;
+          }
+          .hero-location-pin {
+            width: 11px !important;
+            height: 11px !important;
           }
 
           /* 7. Heading lines — tighter vertical spacing */
