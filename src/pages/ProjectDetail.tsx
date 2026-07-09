@@ -345,15 +345,15 @@ export default function ProjectDetail() {
             .gallery-grid {
               display: grid;
               grid-template-columns: repeat(3, 1fr);
+              grid-auto-rows: 260px;
               gap: 10px;
             }
             .gallery-item-wide { grid-column: span 2; }
             .gallery-item-normal { grid-column: span 1; }
-            .gallery-img-wide { aspect-ratio: 16/9; }
-            .gallery-img-normal { aspect-ratio: 4/3; }
             .gallery-thumb {
               display: block;
               width: 100%;
+              height: 100%;
               cursor: pointer;
               transition: transform 0.4s ease, opacity 0.3s ease;
             }
@@ -361,15 +361,17 @@ export default function ProjectDetail() {
             @media (max-width: 767px) {
               .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 180px;
                 gap: 7px;
               }
               .gallery-item-wide { grid-column: span 2; }
-              .gallery-img-wide { aspect-ratio: 16/9; }
             }
             @media (max-width: 480px) {
               .gallery-item-wide { grid-column: span 1; }
-              .gallery-img-wide { aspect-ratio: 4/3; }
-              .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+              .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 150px;
+              }
             }
           `}</style>
           <div className="max-w-7xl mx-auto px-6 py-14">
@@ -400,7 +402,7 @@ export default function ProjectDetail() {
                       <img
                         src={img}
                         alt={`${project.name} — view ${i + 2}`}
-                        className={`gallery-thumb object-cover ${isFeatured ? 'gallery-img-wide' : 'gallery-img-normal'}`}
+                        className="gallery-thumb object-cover"
                         style={{ display: 'block' }}
                         loading="lazy"
                       />
