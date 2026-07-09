@@ -2032,7 +2032,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
       <HeroSection key={animKey} splashDone={splashDone} />
 
       {/* Philosophy */}
-      <section ref={philosophySectionRef} className="philosophy-section" style={{ backgroundColor: '#f7f4ef', padding: '60px 1.5rem 60px' }}>
+      <section ref={philosophySectionRef} className={`philosophy-section${philosophyInView ? ' philosophy-in-view' : ''}`} style={{ backgroundColor: '#f7f4ef', padding: '60px 1.5rem 60px' }}>
         <div className="philosophy-flex" style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', gap: '4rem', alignItems: 'center', flexWrap: 'wrap' }}>
 
           {/* Left — text block (55%) */}
