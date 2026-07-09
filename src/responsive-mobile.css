@@ -78,11 +78,35 @@
 
   /* ── HERO SECTION ───────────────────────────────────────── */
 
+  /* 85vh height, no minimum — beats inline height:100vh + minHeight:700 */
   .hero-section {
-    height: 100svh;
+    height: 85vh !important;
+    min-height: 0 !important;
   }
 
-  /* Heading font-size override — !important needed to beat inline style */
+  /* Background image — centred, full cover, no empty bands */
+  .hero-bg-img {
+    object-position: center center !important;
+  }
+
+  /* Gradient — stronger bottom-to-top so text always readable on mobile */
+  .hero-gradient-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(12, 20, 10, 0.96) 0%,
+      rgba(18, 28, 16, 0.72) 40%,
+      rgba(20, 32, 18, 0.40) 70%,
+      rgba(20, 32, 18, 0.18) 100%
+    ) !important;
+  }
+
+  /* Content wrapper — tighter side padding, slight upward nudge */
+  .hero-content-wrap {
+    padding: 0 20px !important;
+    margin-top: -24px !important;
+  }
+
+  /* Heading font-size — beats inline clamp(36px…68px) */
   .hero-h1 {
     font-size: clamp(2rem, 8.5vw, 2.5rem) !important;
     line-height: 1.15 !important;
@@ -98,25 +122,21 @@
     line-height: 1.2;
   }
 
-  /* Content wrapper — tighter side padding on narrow screens */
-  .hero-content-wrap {
-    padding: 0 16px !important;
-  }
-
+  /* Subtext — compact bottom margin so buttons stay in frame */
   .hero-body {
     font-size: 14px !important;
     padding: 0 !important;
-    margin-bottom: 36px !important;
+    margin-bottom: 24px !important;
   }
 
-  /* City tabs — centered with tighter gap */
+  /* City tabs — minimal spacing, sit snug above heading */
   .hero-city-tabs {
     gap: 20px !important;
-    margin-bottom: 24px !important;
+    margin-bottom: 14px !important;
     justify-content: center !important;
   }
 
-  /* CTA buttons — stack vertically, full width */
+  /* CTA buttons — stacked full-width, 12px gap */
   .hero-cta-group {
     flex-direction: column !important;
     width: 100% !important;
@@ -124,7 +144,7 @@
     align-items: stretch !important;
   }
 
-  /* Each motion.div wrapper also stretches */
+  /* Each motion.div wrapper stretches too */
   .hero-cta-group > div {
     width: 100% !important;
   }
@@ -134,7 +154,7 @@
     width: 100% !important;
     min-width: unset !important;
     justify-content: center !important;
-    padding: 16px 24px !important;
+    padding: 15px 24px !important;
   }
 
   .hero-location-tabs {
@@ -142,8 +162,14 @@
     gap: 16px;
   }
 
+  /* Hide stats strip + scroll indicator — free up vertical space for buttons */
+  .hero-stats {
+    display: none !important;
+  }
+
+  .scroll-indicator-bounce,
   .hero-scroll-indicator {
-    display: none;
+    display: none !important;
   }
 
 

@@ -1156,6 +1156,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
   return (
     <section
       ref={sectionRef}
+      className="hero-section"
       style={{ position: 'relative', height: '100vh', minHeight: 700, overflow: 'hidden', clipPath: 'inset(0)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
     >
       {/* Parallax background */}
@@ -1172,10 +1173,13 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
       </motion.div>
 
       {/* Layered gradient overlay */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(20,32,18,0.35) 0%, rgba(20,32,18,0.55) 40%, rgba(20,32,18,0.78) 75%, rgba(20,32,18,0.92) 100%)',
-      }} />
+      <div
+        className="hero-gradient-overlay"
+        style={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: 'linear-gradient(to bottom, rgba(20,32,18,0.35) 0%, rgba(20,32,18,0.55) 40%, rgba(20,32,18,0.78) 75%, rgba(20,32,18,0.92) 100%)',
+        }}
+      />
 
       {/* Subtle vignette — edges */}
       <div style={{
