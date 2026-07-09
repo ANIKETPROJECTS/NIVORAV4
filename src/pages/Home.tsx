@@ -2658,35 +2658,35 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 <div style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
-                  fontSize: 24,
+                  fontSize: 28,
                   lineHeight: 0.6,
                   color: '#C9A96E',
                   marginBottom: 14,
                   opacity: 0.9,
-                }}>
+                }} className="philosophy-quote-mark">
                   "
                 </div>
                 <p style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
                   fontWeight: 400,
-                  fontSize: 13,
+                  fontSize: 15,
                   lineHeight: 1.5,
                   color: '#ffffff',
                   margin: 0,
-                }}>
+                }} className="philosophy-quote-text">
                   We don't just design spaces, we create legacies.
                 </p>
                 <p style={{
                   fontFamily: "'Jost', sans-serif",
                   fontWeight: 400,
-                  fontSize: 10,
+                  fontSize: 12,
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
                   color: '#C9A96E',
                   marginTop: 12,
                   marginBottom: 0,
-                }}>
+                }} className="philosophy-quote-author">
                   — Shweta, Founder
                 </p>
               </div>
@@ -2699,52 +2699,60 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
           @media (max-width: 768px) {
             .philosophy-flex {
               flex-direction: column !important;
-              gap: 24px !important;
+              gap: 0 !important;
             }
             .philosophy-text-block {
               flex: 1 1 100% !important;
               min-width: 100% !important;
-              order: 2 !important;
+              order: 1 !important;
+              margin-bottom: 24px !important;
             }
             .philosophy-image-col {
               flex: 1 1 100% !important;
               min-width: 100% !important;
               width: 100% !important;
-              order: 1 !important;
+              order: 2 !important;
               align-self: auto !important;
+              margin: 0 !important;
             }
             .philosophy-image-wrap {
-              display: flex !important;
-              flex-direction: column !important;
+              display: block !important;
+              position: relative !important;
               height: auto !important;
             }
             .philosophy-frame {
               display: none !important;
             }
             .philosophy-photo-inner {
-              height: 260px !important;
+              height: 320px !important;
               border-radius: 12px !important;
             }
             .philosophy-photo-inner .philosophy-photo {
               border-radius: 12px !important;
             }
             .philosophy-quote-card {
-              position: static !important;
-              left: auto !important;
-              bottom: auto !important;
+              position: absolute !important;
+              left: 0 !important;
+              bottom: 0 !important;
               right: auto !important;
               top: auto !important;
-              width: 100% !important;
-              max-width: 100% !important;
-              margin-top: 16px !important;
-              padding: 20px 18px !important;
-              transform: translateX(-60px) !important;
+              width: 62% !important;
+              max-width: 62% !important;
+              margin-top: 0 !important;
+              padding: 16px 14px !important;
+              transform: scale(0.4) !important;
               opacity: 0 !important;
-              transition: opacity 600ms ease-out 300ms, transform 600ms cubic-bezier(0.22,1,0.36,1) 300ms !important;
+              transition: opacity 500ms ease-out 950ms, transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1) 950ms !important;
             }
             .philosophy-quote-card[data-inview="true"] {
-              transform: translateX(0) !important;
+              transform: scale(1) !important;
               opacity: 1 !important;
+            }
+            .philosophy-quote-text {
+              font-size: 13px !important;
+            }
+            .philosophy-quote-author {
+              font-size: 11px !important;
             }
           }
         `}</style>
