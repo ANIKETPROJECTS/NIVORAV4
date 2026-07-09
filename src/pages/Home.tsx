@@ -2640,17 +2640,19 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               <div
                 ref={quoteCardRef}
                 className="philosophy-quote-card"
+                data-inview={philosophyInView ? 'true' : 'false'}
                 style={{
                   position: 'absolute',
                   left: -32,
                   bottom: -32,
                   zIndex: 2,
-                  maxWidth: 260,
+                  width: '45%',
+                  maxWidth: '45%',
                   backgroundColor: 'rgba(0,0,0,0.45)',
                   backdropFilter: 'blur(6px)',
                   WebkitBackdropFilter: 'blur(6px)',
                   border: '1.5px solid #C9A96E',
-                  padding: '28px 26px 24px',
+                  padding: '16px',
                   boxShadow: '0 18px 40px rgba(0,0,0,0.28)',
                   opacity: philosophyInView ? 1 : 0,
                   transform: philosophyInView ? 'scale(1)' : 'scale(0.4)',
@@ -2660,7 +2662,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 <div style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
-                  fontSize: 52,
+                  fontSize: 24,
                   lineHeight: 0.6,
                   color: '#C9A96E',
                   marginBottom: 14,
@@ -2672,7 +2674,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
                   fontWeight: 400,
-                  fontSize: 18,
+                  fontSize: 13,
                   lineHeight: 1.5,
                   color: '#ffffff',
                   margin: 0,
@@ -2682,7 +2684,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 <p style={{
                   fontFamily: "'Jost', sans-serif",
                   fontWeight: 400,
-                  fontSize: 11,
+                  fontSize: 10,
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
                   color: '#C9A96E',
@@ -2696,6 +2698,60 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
           </div>
 
         </div>
+
+        <style>{`
+          @media (max-width: 768px) {
+            .philosophy-flex {
+              flex-direction: column !important;
+              gap: 24px !important;
+            }
+            .philosophy-text-block {
+              flex: 1 1 100% !important;
+              min-width: 100% !important;
+              order: 2 !important;
+            }
+            .philosophy-image-col {
+              flex: 1 1 100% !important;
+              min-width: 100% !important;
+              width: 100% !important;
+              order: 1 !important;
+              align-self: auto !important;
+            }
+            .philosophy-image-wrap {
+              display: flex !important;
+              flex-direction: column !important;
+              height: auto !important;
+            }
+            .philosophy-frame {
+              display: none !important;
+            }
+            .philosophy-photo-inner {
+              height: 260px !important;
+              border-radius: 12px !important;
+            }
+            .philosophy-photo-inner .philosophy-photo {
+              border-radius: 12px !important;
+            }
+            .philosophy-quote-card {
+              position: static !important;
+              left: auto !important;
+              bottom: auto !important;
+              right: auto !important;
+              top: auto !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              margin-top: 16px !important;
+              padding: 20px 18px !important;
+              transform: translateX(-60px) !important;
+              opacity: 0 !important;
+              transition: opacity 600ms ease-out 300ms, transform 600ms cubic-bezier(0.22,1,0.36,1) 300ms !important;
+            }
+            .philosophy-quote-card[data-inview="true"] {
+              transform: translateX(0) !important;
+              opacity: 1 !important;
+            }
+          }
+        `}</style>
       </section>
 
       {/* Stats strip — desktop grid */}
