@@ -140,7 +140,7 @@ export default function IntroOverlay({ onExitComplete }: { onExitComplete?: () =
                       width: '600px',
                       height: '600px',
                       borderRadius: '50%',
-                      background: 'radial-gradient(circle, rgba(185,148,90,0.35) 0%, rgba(185,148,90,0.15) 35%, rgba(185,148,90,0.04) 60%, transparent 75%)',
+                      background: '#21291a',
                       pointerEvents: 'none',
                       zIndex: 0,
                       opacity: 0,
