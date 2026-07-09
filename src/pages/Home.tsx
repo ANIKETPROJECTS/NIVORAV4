@@ -1961,6 +1961,341 @@ function TestimonialsCarousel() {
   )
 }
 
+// ─── Mobile Services Section ─────────────────────────────────────────────────
+function MobileServicesSection() {
+  const [inView, setInView] = useState(false)
+  const [animKey, setAnimKey] = useState(0)
+  const [tappedIdx, setTappedIdx] = useState<number | null>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAnimKey(k => k + 1)
+          setInView(true)
+          setTappedIdx(null)
+        } else {
+          setInView(false)
+        }
+      },
+      { threshold: 0.05 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const featuredSvc = services[0]
+  const gridSvcs = services.slice(1)
+  const FeatIcon = featuredSvc.icon
+
+  return (
+    <div ref={rootRef} className="mob-svc-root">
+      <style>{`
+        .mob-svc-root { display: none; }
+
+        @media (max-width: 767px) {
+          /* Hide desktop layout */
+          .hsvc-desktop-header,
+          .hsvc-desktop-cards { display: none !important; }
+
+          .mob-svc-root { display: block; }
+
+          /* ── Heading ── */
+          .mob-svc-heading {
+            text-align: center;
+            margin-bottom: 1.75rem;
+            opacity: 0;
+            transform: translateY(-28px);
+            transition: opacity 0.55s ease-out 0s, transform 0.55s ease-out 0s;
+          }
+          .mob-svc-heading.msv-in {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          /* ── Featured card ── */
+          .mob-svc-featured {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          .mob-svc-featured.msv-feat-in {
+            animation: msvFeatIn 0.55s cubic-bezier(0.22,1,0.36,1) 0.15s forwards;
+          }
+          .mob-svc-featured.msv-tapped {
+            animation-name: none !important;
+            transform: scale(1.03) !important;
+            transition: transform 280ms cubic-bezier(0.22,1,0.36,1);
+          }
+
+          /* ── 2-col grid ── */
+          .mob-svc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+          }
+
+          /* ── Grid card ── */
+          .mob-svc-gcard {
+            position: relative;
+            height: 160px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          .mob-svc-gcard.msv-card-in {
+            animation: msvCardIn 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
+          }
+          .mob-svc-gcard.msv-tapped {
+            animation-name: none !important;
+            transform: scale(1.03) !important;
+            transition: transform 280ms cubic-bezier(0.22,1,0.36,1);
+          }
+
+          /* ── Image ── */
+          .mob-svc-img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+          }
+
+          /* ── Dark overlay ── */
+          .mob-svc-overlay {
+            position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(
+              to bottom,
+              rgba(0,0,0,0.06) 0%,
+              rgba(0,0,0,0.52) 52%,
+              rgba(0,0,0,0.90) 100%
+            );
+            transition: background 280ms ease;
+          }
+          .msv-tapped .mob-svc-overlay {
+            background: linear-gradient(
+              to bottom,
+              rgba(0,0,0,0.18) 0%,
+              rgba(0,0,0,0.70) 45%,
+              rgba(0,0,0,0.95) 100%
+            );
+          }
+
+          /* ── Bottom-left: icon + title ── */
+          .mob-svc-bottom {
+            position: absolute;
+            left: 14px; bottom: 14px; right: 14px;
+            z-index: 3;
+            transition: transform 280ms cubic-bezier(0.22,1,0.36,1);
+          }
+          .mob-svc-featured .mob-svc-bottom { left: 16px; bottom: 16px; right: 16px; }
+
+          .msv-tapped .mob-svc-bottom { transform: translateY(-56px); }
+          .mob-svc-featured.msv-tapped .mob-svc-bottom { transform: translateY(-70px); }
+
+          .mob-svc-icon-wrap {
+            width: 28px; height: 28px; border-radius: 7px;
+            background: rgba(200,165,106,0.18);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 5px;
+          }
+          .mob-svc-featured .mob-svc-icon-wrap {
+            width: 36px; height: 36px; border-radius: 10px;
+          }
+
+          .mob-svc-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 0.875rem;
+            color: #f5f0e8;
+            line-height: 1.2;
+            margin: 0;
+          }
+          .mob-svc-featured .mob-svc-title { font-size: 1.2rem; }
+
+          /* ── Detail layer — fades in on tap ── */
+          .mob-svc-detail {
+            position: absolute;
+            left: 14px; right: 14px; bottom: 14px;
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+            transition: opacity 260ms ease 40ms, transform 260ms ease 40ms;
+          }
+          .mob-svc-featured .mob-svc-detail { left: 16px; right: 16px; bottom: 16px; }
+          .msv-tapped .mob-svc-detail {
+            opacity: 1; transform: translateY(0); pointer-events: auto;
+          }
+
+          .mob-svc-goldline {
+            width: 0; height: 1.5px;
+            background: #C8A56A; border-radius: 2px;
+            margin-bottom: 6px;
+            transition: width 320ms cubic-bezier(0.22,1,0.36,1) 60ms;
+          }
+          .msv-tapped .mob-svc-goldline { width: 26px; }
+
+          .mob-svc-desc {
+            font-family: 'Jost', sans-serif; font-weight: 300;
+            font-size: 10.5px; color: rgba(245,240,232,0.82);
+            line-height: 1.65; margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .mob-svc-featured .mob-svc-desc {
+            font-size: 12px; -webkit-line-clamp: 3;
+          }
+
+          .mob-svc-explore {
+            display: inline-flex; align-items: center; gap: 4px;
+            margin-top: 6px;
+            font-family: 'Jost', sans-serif; font-weight: 300;
+            font-size: 9px; letter-spacing: 0.2em;
+            text-transform: uppercase; color: #C8A56A;
+            text-decoration: none;
+          }
+
+          /* ── Shimmer sweep ── */
+          .mob-svc-shimmer {
+            position: absolute; inset: 0; z-index: 5; pointer-events: none;
+            overflow: hidden; border-radius: 16px;
+          }
+          .mob-svc-shimmer::after {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 55%; height: 100%;
+            background: linear-gradient(
+              105deg,
+              transparent 20%,
+              rgba(255,255,255,0.11) 50%,
+              transparent 80%
+            );
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+            animation-duration: 0.75s;
+            animation-delay: var(--msv-shimmer-delay, 0.2s);
+          }
+          .mob-svc-shimmer.msv-shimmer-run::after {
+            animation-name: msvShimmer;
+          }
+
+          /* ── Keyframes ── */
+          @keyframes msvFeatIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to   { opacity: 1; transform: scale(1); }
+          }
+          @keyframes msvCardIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes msvShimmer {
+            0%   { left: -100%; }
+            100% { left: 200%; }
+          }
+        }
+      `}</style>
+
+      {/* Section heading — slides down from top */}
+      <div className={`mob-svc-heading${inView ? ' msv-in' : ''}`}>
+        <p style={{
+          fontFamily: "'Jost', sans-serif", fontWeight: 300,
+          fontSize: 10, letterSpacing: '0.45em',
+          textTransform: 'uppercase', color: '#C8A56A', marginBottom: '0.75rem',
+        }}>Our Services</p>
+        <h2 style={{
+          fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
+          fontSize: 'clamp(1.75rem, 7vw, 2.5rem)',
+          color: '#262421', lineHeight: 1.1, marginBottom: '0.75rem',
+          letterSpacing: '-0.01em',
+        }}>Spaces Designed Across<br />Every Experience</h2>
+        <p style={{
+          fontFamily: "'Jost', sans-serif", fontWeight: 300,
+          fontSize: 13, color: 'rgba(38,36,33,0.5)', lineHeight: 1.8, margin: 0,
+        }}>
+          From private residences to large-scale environments, we design spaces that balance beauty, function and identity.
+        </p>
+      </div>
+
+      {/* Featured card — Residential Interiors */}
+      <div
+        key={`mfeat-${animKey}`}
+        className={`mob-svc-featured${inView ? ' msv-feat-in' : ''}${tappedIdx === 0 ? ' msv-tapped' : ''}`}
+        onClick={() => setTappedIdx(v => v === 0 ? null : 0)}
+      >
+        <img src={featuredSvc.img} alt={featuredSvc.title} className="mob-svc-img" loading="lazy" />
+        <div className="mob-svc-overlay" />
+        <div
+          className={`mob-svc-shimmer${inView ? ' msv-shimmer-run' : ''}`}
+          key={`mfshim-${animKey}`}
+          style={{ '--msv-shimmer-delay': '0.3s' } as React.CSSProperties}
+        />
+        <div className="mob-svc-bottom">
+          <div className="mob-svc-icon-wrap">
+            <FeatIcon size={18} color="#C8A56A" strokeWidth={1.4} />
+          </div>
+          <h3 className="mob-svc-title">{featuredSvc.title}</h3>
+        </div>
+        <div className="mob-svc-detail">
+          <div className="mob-svc-goldline" />
+          <p className="mob-svc-desc">{featuredSvc.desc}</p>
+          <Link to={featuredSvc.href} className="mob-svc-explore">
+            Explore <ArrowRight size={9} strokeWidth={1.5} />
+          </Link>
+        </div>
+      </div>
+
+      {/* 2-col grid — remaining 6 cards */}
+      <div className="mob-svc-grid">
+        {gridSvcs.map((s, i) => {
+          const Icon = s.icon
+          const idx = i + 1
+          const cardDelay = 0.2 + i * 0.1
+          const shimDelay = cardDelay + 0.18
+          return (
+            <div
+              key={`mgc-${animKey}-${i}`}
+              className={`mob-svc-gcard${inView ? ' msv-card-in' : ''}${tappedIdx === idx ? ' msv-tapped' : ''}`}
+              style={{ animationDelay: inView ? `${cardDelay}s` : '0s' }}
+              onClick={() => setTappedIdx(v => v === idx ? null : idx)}
+            >
+              <img src={s.img} alt={s.title} className="mob-svc-img" loading="lazy" />
+              <div className="mob-svc-overlay" />
+              <div
+                className={`mob-svc-shimmer${inView ? ' msv-shimmer-run' : ''}`}
+                key={`mgshim-${animKey}-${i}`}
+                style={{ '--msv-shimmer-delay': `${shimDelay}s` } as React.CSSProperties}
+              />
+              <div className="mob-svc-bottom">
+                <div className="mob-svc-icon-wrap">
+                  <Icon size={13} color="#C8A56A" strokeWidth={1.4} />
+                </div>
+                <h3 className="mob-svc-title">{s.title}</h3>
+              </div>
+              <div className="mob-svc-detail">
+                <div className="mob-svc-goldline" />
+                <p className="mob-svc-desc">{s.desc}</p>
+                <Link to={s.href} className="mob-svc-explore">
+                  Explore <ArrowRight size={8} strokeWidth={1.5} />
+                </Link>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 const DEFAULT_SERVICE_CARDS = [
   { img: '/living-room-design.jpg', title: 'Living Room Design', desc: 'Sophisticated and welcoming living spaces designed for comfort, conversation, and everyday luxury.' },
   { img: '/modular-kitchen.jpg', title: 'Modular Kitchen', desc: 'Smart, elegant kitchens with seamless storage solutions, premium finishes, and functional layouts.' },
@@ -2423,49 +2758,49 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             .hsvc-card { height: 360px !important; }
             .hsvc-mid-layer { bottom: 160px !important; }
           }
-          @media (max-width: 639px) {
-            .hsvc-grid-r1, .hsvc-grid-r2 { grid-template-columns: 1fr !important; max-width: 100% !important; }
-            .hsvc-card { height: 320px !important; }
-            .hsvc-mid-layer { bottom: 152px !important; }
+          @media (max-width: 767px) {
+            .hsvc-grid-r1, .hsvc-grid-r2 { display: none !important; }
           }
         `}</style>
 
-        {/* Header */}
-        <FadeIn>
-          <div style={{ textAlign: 'center', marginBottom: '4.5rem', maxWidth: 640, margin: '0 auto 4.5rem' }}>
-            <p style={{
-              fontFamily: "'Jost', sans-serif",
-              fontWeight: 300,
-              fontSize: 10,
-              letterSpacing: '0.45em',
-              textTransform: 'uppercase',
-              color: '#C8A56A',
-              marginBottom: '1rem',
-            }}>Our Services</p>
-            <h2 style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 300,
-              fontSize: 'clamp(2rem, 4vw, 3.25rem)',
-              color: '#262421',
-              lineHeight: 1.1,
-              marginBottom: '1.1rem',
-              letterSpacing: '-0.01em',
-            }}>Spaces Designed Across<br />Every Experience</h2>
-            <p className="svc-header-desc" style={{
-              fontFamily: "'Jost', sans-serif",
-              fontWeight: 300,
-              fontSize: 14,
-              color: 'rgba(38,36,33,0.5)',
-              lineHeight: 1.85,
-              margin: 0,
-            }}>
-              From private residences to large-scale environments, we design spaces that balance beauty, function and identity.
-            </p>
-          </div>
-        </FadeIn>
+        {/* Header — desktop only */}
+        <div className="hsvc-desktop-header">
+          <FadeIn>
+            <div style={{ textAlign: 'center', marginBottom: '4.5rem', maxWidth: 640, margin: '0 auto 4.5rem' }}>
+              <p style={{
+                fontFamily: "'Jost', sans-serif",
+                fontWeight: 300,
+                fontSize: 10,
+                letterSpacing: '0.45em',
+                textTransform: 'uppercase',
+                color: '#C8A56A',
+                marginBottom: '1rem',
+              }}>Our Services</p>
+              <h2 style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontWeight: 300,
+                fontSize: 'clamp(2rem, 4vw, 3.25rem)',
+                color: '#262421',
+                lineHeight: 1.1,
+                marginBottom: '1.1rem',
+                letterSpacing: '-0.01em',
+              }}>Spaces Designed Across<br />Every Experience</h2>
+              <p className="svc-header-desc" style={{
+                fontFamily: "'Jost', sans-serif",
+                fontWeight: 300,
+                fontSize: 14,
+                color: 'rgba(38,36,33,0.5)',
+                lineHeight: 1.85,
+                margin: 0,
+              }}>
+                From private residences to large-scale environments, we design spaces that balance beauty, function and identity.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
 
-        {/* Cards */}
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        {/* Cards — desktop only */}
+        <div className="hsvc-desktop-cards" style={{ maxWidth: 1200, margin: '0 auto' }}>
           {/* Row 1 — 4 cards */}
           <div className="hsvc-grid-r1">
             {services.slice(0, 4).map((s, i) => {
@@ -2537,6 +2872,9 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             })}
           </div>
         </div>
+
+        {/* Mobile layout — shown only below 768px */}
+        <MobileServicesSection />
       </section>
 
       {/* Process — Light Editorial Rebuild */}
