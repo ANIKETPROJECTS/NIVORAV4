@@ -350,7 +350,7 @@ export default function About() {
     <div style={{ background: '#f5f2ed' }} className="pt-20">
 
       {/* HERO */}
-      <section className="relative py-24 px-6 overflow-hidden" style={{ background: '#f5f2ed' }}>
+      <section className="relative py-24 px-6 overflow-hidden" style={{ background: '#2A3926' }}>
         <div className="absolute inset-0 opacity-[0.07]">
           <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #a18661 0%, transparent 60%)' }} />
         </div>
