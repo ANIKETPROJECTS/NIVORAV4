@@ -263,56 +263,51 @@ function MvBox({ type, text }: { type: 'mission' | 'vision'; text: string }) {
 }
 
 /* ─── SINGLE VALUE ITEM — flex layout, no overlap ───────── */
-function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
+function ValueItem({ v }: { v: typeof values[0] }) {
   const [hovered, setHovered] = useState(false)
-  const num = String(index + 1).padStart(2, '0')
 
   return (
     <motion.div
       variants={valueItemVariants}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ display: 'flex', gap: 0, alignItems: 'flex-start', paddingBottom: 28 }}
+      style={{ display: 'flex', gap: 20, alignItems: 'flex-start', paddingBottom: 28 }}
     >
-      {/* Left column — large number */}
+      {/* Left column — large line-art icon */}
       <div
-        className="value-num-col"
+        className="value-icon-col"
         style={{
           flexShrink: 0,
-          width: 52,
-          paddingTop: 4,
+          width: 40,
+          paddingTop: 2,
         }}
       >
-        <span
-          className="value-num"
+        <v.Icon
+          size={40}
+          color="#a18661"
+          strokeWidth={1.25}
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            lineHeight: 1,
-            color: '#a18661',
-            opacity: hovered ? 0.35 : 0.18,
-            userSelect: 'none',
-            transition: 'opacity 0.25s ease',
+            flexShrink: 0,
             display: 'block',
+            opacity: hovered ? 1 : 0.85,
+            transition: 'opacity 0.25s ease, transform 0.25s ease',
+            transform: hovered ? 'scale(1.05)' : 'scale(1)',
           }}
-        >{num}</span>
+        />
       </div>
 
-      {/* Right column — icon + title + desc + divider */}
+      {/* Right column — title + desc + divider */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 8 }}>
-          <v.Icon size={14} color="#a18661" strokeWidth={1.5} style={{ flexShrink: 0 }} />
-          <h4 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            fontSize: '1.2rem',
-            letterSpacing: '0.01em',
-            color: hovered ? '#a18661' : '#21291a',
-            transition: 'color 0.25s ease',
-            margin: 0,
-            lineHeight: 1.3,
-          }}>{v.title}</h4>
-        </div>
+        <h4 style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontWeight: 600,
+          fontSize: '1.2rem',
+          letterSpacing: '0.01em',
+          color: hovered ? '#a18661' : '#21291a',
+          transition: 'color 0.25s ease',
+          margin: '0 0 8px',
+          lineHeight: 1.3,
+        }}>{v.title}</h4>
         <p style={{ ...BODY, fontSize: 13, marginBottom: 20 }}>{v.desc}</p>
         {/* Hover-draw divider */}
         <div style={{ position: 'relative', height: 1, background: 'rgba(161,134,97,0.18)', borderRadius: 1, overflow: 'hidden' }}>
@@ -327,17 +322,16 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
         </div>
       </div>
 
-      {/* Responsive number sizing */}
+      {/* Responsive icon sizing */}
       <style>{`
-        .value-num { font-size: 56px; }
-        .value-num-col { width: 52px; }
+        .value-icon-col { width: 40px; }
         @media (max-width: 768px) {
-          .value-num { font-size: 38px !important; }
-          .value-num-col { width: 40px !important; }
+          .value-icon-col { width: 34px !important; }
+          .value-icon-col svg { width: 34px !important; height: 34px !important; }
         }
         @media (max-width: 480px) {
-          .value-num { font-size: 32px !important; }
-          .value-num-col { width: 36px !important; }
+          .value-icon-col { width: 30px !important; }
+          .value-icon-col svg { width: 30px !important; height: 30px !important; }
         }
       `}</style>
     </motion.div>
@@ -436,7 +430,7 @@ export default function About() {
                 viewport={{ once: true, margin: '-60px' }}
                 style={{ display: 'flex', flexDirection: 'column' }}
               >
-                {values.map((v, i) => <ValueItem key={i} v={v} index={i} />)}
+                {values.map((v, i) => <ValueItem key={i} v={v} />)}
               </motion.div>
             </div>
           </div>
