@@ -2389,33 +2389,6 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
 
       {/* Philosophy */}
       <section ref={philosophySectionRef} className={`philosophy-section${philosophyInView ? ' philosophy-in-view' : ''}`} style={{ backgroundColor: '#f7f4ef', padding: '60px 1.5rem 60px' }}>
-        <style>{`
-          @media (max-width: 767px) {
-            .philosophy-section { padding-bottom: 72px !important; }
-            .philosophy-text-block { flex: 0 0 100% !important; min-width: unset !important; }
-            .philosophy-image-col {
-              flex: 0 0 100% !important; min-width: unset !important;
-              height: 280px !important; align-self: unset !important; margin-top: 2rem !important;
-            }
-            .philosophy-image-wrap { height: 280px !important; overflow: visible !important; }
-            .philosophy-frame { display: none !important; }
-            .philosophy-photo-inner {
-              height: 280px !important; border-radius: 12px !important; overflow: hidden !important;
-            }
-            .philosophy-quote-card {
-              left: 12px !important; bottom: -28px !important;
-              width: 65% !important; max-width: unset !important;
-              background-color: rgba(30,40,25,0.92) !important;
-              backdrop-filter: blur(4px) !important; -webkit-backdrop-filter: blur(4px) !important;
-              border: 1px solid #C9A96E !important;
-              padding: 14px 16px 12px !important;
-              box-shadow: 0 10px 28px rgba(0,0,0,0.38) !important;
-            }
-            .phil-quote-mark { font-size: 36px !important; margin-bottom: 8px !important; line-height: 0.7 !important; }
-            .phil-quote-text { font-size: 12px !important; line-height: 1.55 !important; }
-            .phil-quote-author { font-size: 10px !important; margin-top: 8px !important; }
-          }
-        `}</style>
         <div className="philosophy-flex" style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', gap: '4rem', alignItems: 'center', flexWrap: 'wrap' }}>
 
           {/* Left — text block (55%) */}
@@ -2615,7 +2588,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   transition: 'opacity 500ms ease-out 950ms, transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1) 950ms',
                 }}
               >
-                <div className="phil-quote-mark" style={{
+                <div style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
                   fontSize: 52,
@@ -2626,7 +2599,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 }}>
                   "
                 </div>
-                <p className="phil-quote-text" style={{
+                <p style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
                   fontWeight: 400,
@@ -2637,7 +2610,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 }}>
                   We don't just design spaces, we create legacies.
                 </p>
-                <p className="phil-quote-author" style={{
+                <p style={{
                   fontFamily: "'Jost', sans-serif",
                   fontWeight: 400,
                   fontSize: 11,
