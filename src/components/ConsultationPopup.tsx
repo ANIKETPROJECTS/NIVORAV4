@@ -165,8 +165,43 @@ export default function ConsultationPopup() {
           background: #8d7250;
           transform: translateY(-1px);
         }
-        @media (max-width: 480px) {
-          .cpopup-card { padding: 40px 24px 32px; }
+        @media (max-width: 768px) {
+          .cpopup-overlay {
+            padding: 0 16px;
+          }
+          .cpopup-card {
+            width: 90%;
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 28px;
+          }
+          .cpopup-sub {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+          }
+          .cpopup-heading {
+            font-size: 28px;
+            margin: 0 0 24px;
+          }
+          .cpopup-stats {
+            margin: 0 0 20px;
+          }
+          .cpopup-stat {
+            padding: 16px 8px;
+          }
+          .cpopup-stat-value {
+            font-size: 36px;
+          }
+          .cpopup-stat-label {
+            font-size: 11px;
+          }
+          .cpopup-tagline {
+            margin: 0 0 24px;
+          }
+          .cpopup-btn {
+            padding: 16px 20px;
+            white-space: nowrap;
+          }
         }
       `}</style>
 
@@ -184,7 +219,7 @@ export default function ConsultationPopup() {
 
           <div className="cpopup-stats">
             <div className="cpopup-stat">
-              <p className="cpopup-stat-value">8+</p>
+              <p className="cpopup-stat-value">2+</p>
               <p className="cpopup-stat-label">Years Experience</p>
             </div>
             <div className="cpopup-stat">
