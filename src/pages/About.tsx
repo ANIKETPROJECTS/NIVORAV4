@@ -357,10 +357,10 @@ export default function About() {
         <div className="max-w-4xl mx-auto text-center relative">
           <FadeIn>
             <p style={LABEL}>Our Story</p>
-            <h1 style={{ ...H2, fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24 }}>
+            <h1 style={{ ...H2, color: '#f5f2ed', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24 }}>
               Design With<br /><em style={{ color: '#a18661', fontStyle: 'italic' }}>Purpose & Craft</em>
             </h1>
-            <p style={{ ...BODY, maxWidth: 560, margin: '0 auto', fontSize: 15 }}>
+            <p style={{ ...BODY, color: 'rgba(245,242,237,0.72)', maxWidth: 560, margin: '0 auto', fontSize: 15 }}>
               NIVORA is a boutique interior design studio creating thoughtful, refined spaces that balance elegance with everyday functionality.
             </p>
           </FadeIn>
