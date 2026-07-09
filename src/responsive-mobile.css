@@ -162,7 +162,7 @@
     display: none !important;
   }
 
-  /* Single column — image first (order: -1), text block below */
+  /* Single column — text first, image below */
   .philosophy-flex {
     flex-direction: column !important;
     gap: 0 !important;
@@ -173,13 +173,18 @@
     margin: 0 !important;
   }
 
-  /* Image column — full width; bottom gap separates it from text block */
+  /* Text block — comes first in DOM, stays first visually */
+  .philosophy-text-block {
+    order: 1 !important;
+  }
+
+  /* Image column — flows after text */
   .philosophy-image-col {
-    order: -1;
+    order: 2 !important;
     width: 100% !important;
     min-width: 0 !important;
     flex: none !important;
-    margin-bottom: 36px !important;
+    margin-top: 36px !important;
     opacity: 1 !important;
     transform: none !important;
   }
@@ -197,12 +202,12 @@
     overflow: visible !important;
   }
 
-  /* Photo container clips the image at a clean 4:3 proportion */
+  /* Photo container — 4:3 proportion, rounded corners */
   .philosophy-photo-inner {
     position: relative !important;
     overflow: hidden !important;
-    /* aspect-ratio height for each screen: 320→240px, 375→281px, 414→311px */
-    height: clamp(240px, 75vw, 320px) !important;
+    height: clamp(240px, 75vw, 340px) !important;
+    border-radius: 12px !important;
   }
 
   /* Photo: fills the container, focuses on the upper interior */
@@ -216,32 +221,29 @@
     max-width: 100% !important;
   }
 
-  /* ── Quote card — flows naturally below the image ─────────
-     position: relative pulls it OUT of the absolute stack.
-     margin-top: -16px gives the single subtle overlap pixel
-     the design calls for; the rest of the card sits below
-     the image in open cream space, centred horizontally.    */
+  /* ── Quote card — solid dark card sits cleanly below the image ── */
   .philosophy-quote-card {
     position: relative !important;
     top: auto !important;
     left: auto !important;
     right: auto !important;
     bottom: auto !important;
-    /* Subtle 16 px overlap with the image bottom edge */
-    margin-top: -16px !important;
-    /* Centred, 88 % of container, max capped for readability */
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: 88% !important;
-    max-width: 360px !important;
-    padding: 22px 24px 20px !important;
-    border-radius: 14px !important;
-    z-index: 6 !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 24px 20px 22px !important;
+    border-radius: 0 0 12px 12px !important;
+    background: rgba(22, 34, 20, 0.94) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    z-index: 2 !important;
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
     display: block !important;
-    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22) !important;
   }
 
   /* Opening quotation mark — scaled for mobile */
@@ -312,42 +314,41 @@
 
   /* ── STATS SECTION ──────────────────────────────────────── */
 
-  /* Hide the desktop grid card on mobile */
+  /* Show the desktop 2×2 grid on mobile (hide the old carousel) */
   .stats-wrapper {
+    padding: 0 20px 48px !important;
+    margin-top: 0 !important;
+  }
+
+  /* Hide the single-card carousel */
+  .mobile-stats-carousel {
     display: none !important;
   }
 
-  /* Show the mobile carousel — consistent 1.5rem gutters, tighter spacing */
-  .mobile-stats-carousel {
-    display: block !important;
-    background: #F7F4EF;
-    padding: 20px 1.5rem 40px !important;
-  }
-
-  /* Card — full-width inside the 1rem side gutters */
+  /* Card — 2×2 grid via flex-wrap already set at ≤640px inside StatsSection */
   .stat-float-card {
     border-radius: 20px !important;
     width: 100% !important;
   }
 
-  /* Each stat cell — balanced vertical padding */
+  /* Each cell — tighter vertical padding for 2×2 layout */
   .stat-float-item {
-    padding: 32px 12px 28px !important;
+    padding: 32px 16px 28px !important;
   }
 
-  /* Stat number — bolder, larger, commanding presence */
+  /* Stat number — 2.8rem as requested */
   .stat-float-num {
-    font-size: clamp(3rem, 13vw, 4.25rem) !important;
-    font-weight: 500 !important;
-    margin-bottom: 12px !important;
-    letter-spacing: -0.03em !important;
+    font-size: 2.8rem !important;
+    font-weight: 400 !important;
+    margin-bottom: 10px !important;
+    letter-spacing: -0.02em !important;
     color: #f5f0e8 !important;
   }
 
-  /* Stat label — lifted contrast, legible tracking */
+  /* Stat label — compact tracking */
   .stat-float-label {
-    font-size: 9px !important;
-    letter-spacing: 2.5px !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.18em !important;
     color: rgba(201, 169, 110, 0.80) !important;
   }
 

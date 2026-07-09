@@ -202,90 +202,61 @@ const statsData = [
 function StatsSection() {
   const [counts, setCounts] = useState(statsData.map(() => 0))
   const [shimmer, setShimmer] = useState(statsData.map(() => false))
-  const startedRef = useRef(false)   // ref, not state — prevents re-render killing in-flight RAFs
+  const [inView, setInView] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
+  const timersRef = useRef<(() => void)[]>([])
 
+  // IntersectionObserver — toggles inView on every enter/exit
   useEffect(() => {
     const el = cardRef.current
     if (!el) return
-    const cleanups: (() => void)[] = []
-
-    const startCounting = () => {
-      if (startedRef.current) return
-      startedRef.current = true
-      statsData.forEach((stat, i) => {
-        const startTime = performance.now()
-        const tick = (now: number) => {
-          const progress = Math.min((now - startTime) / stat.duration, 1)
-          const eased = 1 - Math.pow(1 - progress, 4)
-          const val = Math.floor(stat.from + (stat.value - stat.from) * eased)
-          setCounts(prev => { const n = [...prev]; n[i] = val; return n })
-          if (progress < 1) {
-            requestAnimationFrame(tick)
-          } else {
-            setCounts(prev => { const n = [...prev]; n[i] = stat.value; return n })
-
-            const cycleInterval = 4200 + i * 1100
-            const dip = Math.min(2, stat.value)
-
-            const runCycle = () => {
-              setShimmer(prev => { const n = [...prev]; n[i] = true; return n })
-              const shimmerOff = setTimeout(() => {
-                setShimmer(prev => { const n = [...prev]; n[i] = false; return n })
-              }, 900)
-              cleanups.push(() => clearTimeout(shimmerOff))
-
-              const totalSteps = 28
-              let s = 0
-              const dipTimer = setInterval(() => {
-                s++
-                const p = s / totalSteps
-                let v: number
-                if (p < 0.35) {
-                  const down = p / 0.35
-                  v = Math.round(stat.value - dip * (1 - Math.pow(1 - down, 2)))
-                } else {
-                  const up = (p - 0.35) / 0.65
-                  const easedUp = 1 - Math.pow(1 - up, 3)
-                  v = Math.round((stat.value - dip) + dip * easedUp)
-                }
-                v = Math.min(Math.max(v, stat.value - dip), stat.value)
-                setCounts(prev => { const n = [...prev]; n[i] = v; return n })
-                if (s >= totalSteps) {
-                  clearInterval(dipTimer)
-                  setCounts(prev => { const n = [...prev]; n[i] = stat.value; return n })
-                }
-              }, 38)
-              cleanups.push(() => clearInterval(dipTimer))
-            }
-
-            const startDelay = setTimeout(() => {
-              runCycle()
-              const loop = setInterval(runCycle, cycleInterval)
-              cleanups.push(() => clearInterval(loop))
-            }, 3200 + i * 900)
-            cleanups.push(() => clearTimeout(startDelay))
-          }
-        }
-        requestAnimationFrame(tick)
-      })
-    }
-
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) startCounting() },
-      { threshold: 0.3 }
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.25 }
     )
     observer.observe(el)
-
-    // Trigger immediately if already in viewport on mount
     const rect = el.getBoundingClientRect()
-    if (rect.top < window.innerHeight && rect.bottom > 0) startCounting()
+    if (rect.top < window.innerHeight && rect.bottom > 0) setInView(true)
+    return () => observer.disconnect()
+  }, [])
 
-    return () => {
-      observer.disconnect()
-      cleanups.forEach(fn => fn())
+  // Count-up + shimmer — re-runs every time inView flips to true
+  useEffect(() => {
+    timersRef.current.forEach(fn => fn())
+    timersRef.current = []
+
+    if (!inView) {
+      setCounts(statsData.map(() => 0))
+      setShimmer(statsData.map(() => false))
+      return
     }
-  }, [])   // run once — startedRef prevents double-start
+
+    statsData.forEach((stat, i) => {
+      const startTime = performance.now()
+      let rafId = 0
+      const tick = (now: number) => {
+        const progress = Math.min((now - startTime) / stat.duration, 1)
+        const eased = 1 - Math.pow(1 - progress, 4)
+        const val = Math.floor(stat.from + (stat.value - stat.from) * eased)
+        setCounts(prev => { const n = [...prev]; n[i] = val; return n })
+        if (progress < 1) {
+          rafId = requestAnimationFrame(tick)
+        } else {
+          setCounts(prev => { const n = [...prev]; n[i] = stat.value; return n })
+          const shimmerStart = setTimeout(() => {
+            setShimmer(prev => { const n = [...prev]; n[i] = true; return n })
+            const shimmerOff = setTimeout(() => {
+              setShimmer(prev => { const n = [...prev]; n[i] = false; return n })
+            }, 900)
+            timersRef.current.push(() => clearTimeout(shimmerOff))
+          }, 350 + i * 180)
+          timersRef.current.push(() => clearTimeout(shimmerStart))
+        }
+      }
+      rafId = requestAnimationFrame(tick)
+      timersRef.current.push(() => cancelAnimationFrame(rafId))
+    })
+  }, [inView])
 
   return (
     <div className="stats-wrapper" style={{
