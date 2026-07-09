@@ -2487,7 +2487,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
           >
 
             {/* Label with flanking rules */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: '2.5rem', ...leftEl(0) }}>
+            <div className="philosophy-mobile-fade" style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: '2.5rem', ...leftEl(0) }}>
               <div style={{ height: '0.5px', backgroundColor: '#b8966a', width: 60 }} />
               <span style={{
                 fontFamily: "'Jost', sans-serif",
@@ -2502,7 +2502,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             </div>
 
             {/* Quote */}
-            <p style={{
+            <p className="philosophy-mobile-fade" style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: 'clamp(1.8rem, 3.2vw, 2.75rem)',
               fontWeight: 300,
@@ -2516,7 +2516,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             </p>
 
             {/* Body */}
-            <p style={{
+            <p className="philosophy-mobile-fade" style={{
               fontFamily: "'Jost', sans-serif",
               fontWeight: 300,
               fontSize: '0.9375rem',
@@ -2529,7 +2529,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             </p>
 
             {/* Divider + brand values */}
-            <div style={{ ...leftEl(600) }}>
+            <div className="philosophy-mobile-fade" style={{ ...leftEl(600) }}>
               {/* Animated divider draw */}
               <div style={{ overflow: 'hidden', marginBottom: '1.5rem' }}>
                 <div style={{
@@ -2571,7 +2571,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             </div>
 
             {/* Discover Our Story link — fades in last, underline draws itself */}
-            <div style={{
+            <div className="philosophy-mobile-fade" style={{
               marginTop: 28,
               opacity: philosophyInView ? 1 : 0,
               transform: philosophyInView ? 'translateX(0)' : 'translateX(-40px)',
@@ -2738,40 +2738,63 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               display: block !important;
               position: relative !important;
               height: auto !important;
+              overflow: visible !important;
+              margin-bottom: 50px !important;
             }
             .philosophy-frame {
               display: none !important;
             }
             .philosophy-photo-inner {
-              height: 320px !important;
+              height: 280px !important;
+              width: 100% !important;
               border-radius: 12px !important;
+              overflow: hidden !important;
             }
             .philosophy-photo-inner .philosophy-photo {
+              width: 100% !important;
+              height: 100% !important;
+              object-fit: cover !important;
               border-radius: 12px !important;
             }
             .philosophy-quote-card {
               position: absolute !important;
-              left: 0 !important;
-              bottom: 0 !important;
+              bottom: -30px !important;
+              left: 16px !important;
               right: auto !important;
               top: auto !important;
-              width: 62% !important;
-              max-width: 62% !important;
+              width: 75% !important;
+              max-width: 75% !important;
               margin-top: 0 !important;
-              padding: 16px 14px !important;
-              transform: scale(0.4) !important;
+              background-color: rgba(28,38,26,0.93) !important;
+              backdrop-filter: none !important;
+              -webkit-backdrop-filter: none !important;
+              border: 1px solid rgba(180,150,80,0.5) !important;
+              border-radius: 10px !important;
+              padding: 16px !important;
+              box-shadow: 0 14px 30px rgba(0,0,0,0.3) !important;
+              transform: translateX(-40px) !important;
               opacity: 0 !important;
-              transition: opacity 500ms ease-out 950ms, transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1) 950ms !important;
+              transition: opacity 500ms ease-out 300ms, transform 500ms ease-out 300ms !important;
             }
-            .philosophy-quote-card[data-inview="true"] {
-              transform: scale(1) !important;
+            .philosophy-in-view .philosophy-quote-card {
+              transform: translateX(0) !important;
               opacity: 1 !important;
+            }
+            .philosophy-quote-mark {
+              font-size: 24px !important;
             }
             .philosophy-quote-text {
               font-size: 13px !important;
             }
             .philosophy-quote-author {
-              font-size: 11px !important;
+              font-size: 10px !important;
+              letter-spacing: 1.5px !important;
+            }
+            .philosophy-mobile-fade {
+              transform: translateY(20px) !important;
+            }
+            .philosophy-in-view .philosophy-mobile-fade {
+              transform: translateY(0) !important;
             }
           }
         `}</style>
