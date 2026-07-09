@@ -1648,6 +1648,28 @@ function TestimonialsCarousel() {
   const prev = () => { retreat(); startAutoScroll() }
   const next = () => { advance(); startAutoScroll() }
 
+  const touchStartX = useRef<number | null>(null)
+  const touchDeltaX = useRef(0)
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchDeltaX.current = 0
+  }
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    touchDeltaX.current = e.touches[0].clientX - touchStartX.current
+  }
+  const handleTouchEnd = () => {
+    const SWIPE_THRESHOLD = 40
+    if (touchDeltaX.current > SWIPE_THRESHOLD) {
+      prev()
+    } else if (touchDeltaX.current < -SWIPE_THRESHOLD) {
+      next()
+    }
+    touchStartX.current = null
+    touchDeltaX.current = 0
+  }
+
   const t = testimonials[current]
   const cardAnim = direction === 'next' ? 'tCardInRight' : 'tCardInLeft'
 
@@ -1740,41 +1762,74 @@ function TestimonialsCarousel() {
         .t-read-more:hover { color: #21291a; }
         .t-read-more:hover::after { width: 100%; }
         @media (max-width: 768px) {
-          .t-card-split { flex-direction: column !important; min-height: unset !important; }
-
-          /* Problem 1 — hide the decorative dark green left panel on mobile */
-          .t-panel-left { display: none !important; }
-
-          /* Problem 2 — review card full width on mobile */
-          .t-panel-right {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
-            padding: 24px 20px !important;
-            border-radius: 8px !important;
+          /* Keep the two-tone split layout — just shrink it to fit mobile */
+          .testimonials-container { padding: 0 16px !important; }
+          .t-card-split {
+            flex-direction: row !important;
+            min-height: unset !important;
+            border-radius: 16px !important;
           }
-          .testimonials-arrow-row { width: 100% !important; }
 
-          /* Problem 3 — section padding + heading sizing on mobile */
-          .testimonials-section { padding: 40px 16px !important; }
+          /* Left panel — dark olive/green, 40% width */
+          .t-panel-left {
+            display: flex !important;
+            flex: 0 0 40% !important;
+            max-width: 40% !important;
+            padding: 20px 14px !important;
+          }
+          .t-panel-label { font-size: 7.5px !important; letter-spacing: 0.16em !important; margin-bottom: 10px !important; }
+          .t-panel-heading { font-size: 15px !important; line-height: 1.3 !important; margin-bottom: 16px !important; }
+
+          /* Right panel — cream, 60% width */
+          .t-panel-right {
+            flex: 0 0 60% !important;
+            max-width: 60% !important;
+            width: auto !important;
+            padding: 20px 16px !important;
+            border-radius: 0 !important;
+          }
+          .testimonials-arrow-row {
+            width: 100% !important;
+            gap: 0 !important;
+            position: relative !important;
+          }
+          .testimonials-arrow-row .t-nav-btn {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 5 !important;
+            background: rgba(245,242,237,0.9) !important;
+            box-shadow: 0 2px 10px rgba(33,41,26,0.18) !important;
+          }
+          .testimonials-arrow-row .t-nav-btn:first-child { left: -6px !important; }
+          .testimonials-arrow-row .t-nav-btn:last-child { right: -6px !important; }
+          .t-card-split { width: 100% !important; }
+
+          /* Section padding + heading sizing on mobile */
+          .testimonials-section { padding: 40px 0 !important; }
           .testimonials-heading h2 { font-size: 32px !important; text-align: center !important; }
           .testimonials-subtitle { font-size: 14px !important; text-align: center !important; padding: 0 8px !important; }
 
-          /* Problem 4 — review text sizing on mobile */
-          .testimonial-quote-text { font-size: 14px !important; line-height: 1.7 !important; }
-          .testimonial-author-name { font-size: 13px !important; }
-          .testimonial-author-location { font-size: 11px !important; }
+          /* Review text sizing on mobile */
+          .testimonial-quote-text { font-size: 13px !important; line-height: 1.65 !important; margin-bottom: 16px !important; }
+          .testimonial-author-name { font-size: 11px !important; }
+          .testimonial-author-location { font-size: 10px !important; }
 
-          /* Problem 5 — smaller nav arrows, closer to the card */
-          .t-nav-btn { width: 36px !important; height: 36px !important; }
-          .testimonials-arrow-row { gap: 10px !important; }
+          /* Smaller nav arrows, closer to the card */
+          .t-nav-btn { width: 32px !important; height: 32px !important; }
 
-          /* Problem 6 — progress bar full-ish width, centered */
+          /* Right panel decorative + meta elements sized down for mobile */
+          .t-quote-icon { font-size: 60px !important; top: 2px !important; right: 10px !important; }
+          .t-stars-row { margin-bottom: 10px !important; }
+          .t-stars-row span { font-size: 12px !important; }
+          .t-avatar { width: 30px !important; height: 30px !important; font-size: 9px !important; }
+
+          /* Progress bar full-ish width, centered */
           .testimonial-progress-bar-wrapper { width: 90% !important; margin: 16px auto 0 !important; }
         }
       `}</style>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' }}>
+      <div className="testimonials-container" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' }}>
 
         {/* Section heading */}
         <motion.div
@@ -1831,7 +1886,10 @@ function TestimonialsCarousel() {
               animation: `${cardAnim} 500ms cubic-bezier(0.22,1,0.36,1) both`,
               minHeight: 280,
             }}
-            className="t-card-split t-card-split"
+            className="t-card-split"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {/* LEFT PANEL — dark green */}
             <div
@@ -1855,6 +1913,7 @@ function TestimonialsCarousel() {
 
               <p
                 key={`label-${slideKey}`}
+                className="t-panel-label"
                 style={{
                   fontFamily: "'Montserrat', sans-serif", fontWeight: 400,
                   fontSize: 9, letterSpacing: '0.38em', textTransform: 'uppercase',
@@ -1866,6 +1925,7 @@ function TestimonialsCarousel() {
 
               <h3
                 key={`heading-${slideKey}`}
+                className="t-panel-heading"
                 style={{
                   fontFamily: "'Playfair Display', serif", fontWeight: 400,
                   fontSize: 'clamp(1.4rem, 2.4vw, 2rem)',
@@ -1904,6 +1964,7 @@ function TestimonialsCarousel() {
               {/* Decorative closing quote — animated on slide change */}
               <motion.span
                 key={`quoteicon-${slideKey}`}
+                className="t-quote-icon"
                 aria-hidden="true"
                 initial={{ opacity: 0.1, scale: 0.8, rotate: -10 }}
                 animate={{ opacity: 0.25, scale: 1, rotate: 0 }}
@@ -1921,6 +1982,7 @@ function TestimonialsCarousel() {
               {/* Stars — staggered fill on each slide change */}
               <motion.div
                 key={`stars-${slideKey}`}
+                className="t-stars-row"
                 variants={starContainerVariants}
                 initial="hidden"
                 animate="visible"
@@ -1955,6 +2017,7 @@ function TestimonialsCarousel() {
                 {/* Avatar circle — animates in on each slide change */}
                 <motion.div
                   key={`avatar-${slideKey}`}
+                  className="t-avatar"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.35, delay: 0.44, ease: [0.22, 1, 0.36, 1] }}
