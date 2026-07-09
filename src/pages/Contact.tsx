@@ -520,6 +520,20 @@ export default function Contact() {
                 </p>
               </div>
 
+              {/* Google Maps embed — fills remaining card height */}
+              <div style={{ flex: 1, minHeight: 220, borderRadius: 12, overflow: 'hidden', marginTop: 8 }}>
+                <iframe
+                  title="Nivora Interiors Location"
+                  src="https://maps.google.com/maps?q=New+Dhavalgiri+Building,+Ambernath+East,+Maharashtra+421501,+India&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, display: 'block', minHeight: 220 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+
             </div>
           </div>
 
