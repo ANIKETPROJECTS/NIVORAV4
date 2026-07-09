@@ -1376,11 +1376,19 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
             </Link>
           </motion.div>
 
-          <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.25 }} className="hero-btn-wrap">
+          <motion.div
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 1.03 }}
+            transition={{ duration: 0.25 }}
+            className="hero-btn-wrap"
+          >
             <Link
               to="/portfolio"
-              className="hero-btn-secondary"
+              className="hero-btn-secondary hero-btn-sweep"
               style={{
+                position: 'relative',
+                overflow: 'hidden',
+                zIndex: 0,
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 10,
@@ -1391,21 +1399,9 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
                 background: 'transparent',
                 color: '#D4C0A1',
                 padding: '16px 40px',
-                border: '1px solid rgba(212,192,161,0.45)',
+                border: '1px solid rgba(245,240,232,0.55)',
                 textDecoration: 'none',
                 transition: 'border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease',
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.borderColor = '#C8A46A'
-                el.style.color = '#C8A46A'
-                el.style.boxShadow = '0 0 18px rgba(200,164,106,0.15)'
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.borderColor = 'rgba(212,192,161,0.45)'
-                el.style.color = '#D4C0A1'
-                el.style.boxShadow = 'none'
               }}
             >
               View Projects <ArrowRight size={13} strokeWidth={1.5} />
@@ -1413,6 +1409,29 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
           </motion.div>
         </motion.div>
       </motion.div>
+
+      <style>{`
+        .hero-btn-sweep::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, #E0C38A 0%, #C8A46A 50%, #A8854F 100%);
+          transform: scaleX(0);
+          transform-origin: left center;
+          transition: transform 0.3s ease;
+          z-index: -1;
+        }
+        .hero-btn-sweep:hover,
+        .hero-btn-sweep:active {
+          border-color: #C8A46A !important;
+          color: #2D3E29 !important;
+          box-shadow: 0 8px 24px rgba(168,133,79,0.35);
+        }
+        .hero-btn-sweep:hover::before,
+        .hero-btn-sweep:active::before {
+          transform: scaleX(1);
+        }
+      `}</style>
 
       {/* Stats strip */}
       <motion.div
