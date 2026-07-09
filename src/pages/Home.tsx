@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useSiteSettings } from '../hooks/useSiteSettings'
 import { ArrowRight, Home as HomeIcon, Building2, Coffee, Layers, Monitor, Gem, Wrench, Clock, Settings, Heart } from 'lucide-react'
@@ -2048,8 +2048,9 @@ function TestimonialsCarousel() {
 function MobileServicesSection() {
   const [inView, setInView] = useState(false)
   const [animKey, setAnimKey] = useState(0)
-  const [tappedIdx, setTappedIdx] = useState<number | null>(null)
+  const [pressedIdx, setPressedIdx] = useState<number | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const el = rootRef.current
@@ -2059,7 +2060,6 @@ function MobileServicesSection() {
         if (entry.isIntersecting) {
           setAnimKey(k => k + 1)
           setInView(true)
-          setTappedIdx(null)
         } else {
           setInView(false)
         }
@@ -2073,6 +2073,15 @@ function MobileServicesSection() {
   const featuredSvc = services[0]
   const gridSvcs = services.slice(1)
   const FeatIcon = featuredSvc.icon
+
+  // Brief press flash then navigate — no expand
+  const handleTap = (href: string, idx: number) => {
+    setPressedIdx(idx)
+    setTimeout(() => {
+      setPressedIdx(null)
+      navigate(href)
+    }, 200)
+  }
 
   return (
     <div ref={rootRef} className="mob-svc-root">
@@ -2114,10 +2123,14 @@ function MobileServicesSection() {
           .mob-svc-featured.msv-feat-in {
             animation: msvFeatIn 0.55s cubic-bezier(0.22,1,0.36,1) 0.15s forwards;
           }
-          .mob-svc-featured.msv-tapped {
+
+          /* ── Press feedback (200ms flash, no expand) ── */
+          .mob-svc-featured.msv-pressed,
+          .mob-svc-gcard.msv-pressed {
             animation-name: none !important;
-            transform: scale(1.03) !important;
-            transition: transform 280ms cubic-bezier(0.22,1,0.36,1);
+            transform: scale(1.02) !important;
+            filter: brightness(1.14);
+            transition: transform 120ms ease, filter 120ms ease;
           }
 
           /* ── 2-col grid ── */
@@ -2140,11 +2153,6 @@ function MobileServicesSection() {
           .mob-svc-gcard.msv-card-in {
             animation: msvCardIn 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
           }
-          .mob-svc-gcard.msv-tapped {
-            animation-name: none !important;
-            transform: scale(1.03) !important;
-            transition: transform 280ms cubic-bezier(0.22,1,0.36,1);
-          }
 
           /* ── Image ── */
           .mob-svc-img {
@@ -2160,28 +2168,15 @@ function MobileServicesSection() {
               rgba(0,0,0,0.52) 52%,
               rgba(0,0,0,0.90) 100%
             );
-            transition: background 280ms ease;
-          }
-          .msv-tapped .mob-svc-overlay {
-            background: linear-gradient(
-              to bottom,
-              rgba(0,0,0,0.18) 0%,
-              rgba(0,0,0,0.70) 45%,
-              rgba(0,0,0,0.95) 100%
-            );
           }
 
-          /* ── Bottom-left: icon + title ── */
+          /* ── Bottom-left: icon + title — always visible, never moves ── */
           .mob-svc-bottom {
             position: absolute;
             left: 14px; bottom: 14px; right: 14px;
             z-index: 3;
-            transition: transform 280ms cubic-bezier(0.22,1,0.36,1);
           }
           .mob-svc-featured .mob-svc-bottom { left: 16px; bottom: 16px; right: 16px; }
-
-          .msv-tapped .mob-svc-bottom { transform: translateY(-56px); }
-          .mob-svc-featured.msv-tapped .mob-svc-bottom { transform: translateY(-70px); }
 
           .mob-svc-icon-wrap {
             width: 28px; height: 28px; border-radius: 7px;
@@ -2202,51 +2197,6 @@ function MobileServicesSection() {
             margin: 0;
           }
           .mob-svc-featured .mob-svc-title { font-size: 1.2rem; }
-
-          /* ── Detail layer — fades in on tap ── */
-          .mob-svc-detail {
-            position: absolute;
-            left: 14px; right: 14px; bottom: 14px;
-            z-index: 3;
-            opacity: 0;
-            transform: translateY(8px);
-            pointer-events: none;
-            transition: opacity 260ms ease 40ms, transform 260ms ease 40ms;
-          }
-          .mob-svc-featured .mob-svc-detail { left: 16px; right: 16px; bottom: 16px; }
-          .msv-tapped .mob-svc-detail {
-            opacity: 1; transform: translateY(0); pointer-events: auto;
-          }
-
-          .mob-svc-goldline {
-            width: 0; height: 1.5px;
-            background: #C8A56A; border-radius: 2px;
-            margin-bottom: 6px;
-            transition: width 320ms cubic-bezier(0.22,1,0.36,1) 60ms;
-          }
-          .msv-tapped .mob-svc-goldline { width: 26px; }
-
-          .mob-svc-desc {
-            font-family: 'Jost', sans-serif; font-weight: 300;
-            font-size: 10.5px; color: rgba(245,240,232,0.82);
-            line-height: 1.65; margin: 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-          .mob-svc-featured .mob-svc-desc {
-            font-size: 12px; -webkit-line-clamp: 3;
-          }
-
-          .mob-svc-explore {
-            display: inline-flex; align-items: center; gap: 4px;
-            margin-top: 6px;
-            font-family: 'Jost', sans-serif; font-weight: 300;
-            font-size: 9px; letter-spacing: 0.2em;
-            text-transform: uppercase; color: #C8A56A;
-            text-decoration: none;
-          }
 
           /* ── Shimmer sweep ── */
           .mob-svc-shimmer {
@@ -2312,8 +2262,8 @@ function MobileServicesSection() {
       {/* Featured card — Residential Interiors */}
       <div
         key={`mfeat-${animKey}`}
-        className={`mob-svc-featured${inView ? ' msv-feat-in' : ''}${tappedIdx === 0 ? ' msv-tapped' : ''}`}
-        onClick={() => setTappedIdx(v => v === 0 ? null : 0)}
+        className={`mob-svc-featured${inView ? ' msv-feat-in' : ''}${pressedIdx === 0 ? ' msv-pressed' : ''}`}
+        onClick={() => handleTap(featuredSvc.href, 0)}
       >
         <img src={featuredSvc.img} alt={featuredSvc.title} className="mob-svc-img" loading="lazy" />
         <div className="mob-svc-overlay" />
@@ -2328,13 +2278,6 @@ function MobileServicesSection() {
           </div>
           <h3 className="mob-svc-title">{featuredSvc.title}</h3>
         </div>
-        <div className="mob-svc-detail">
-          <div className="mob-svc-goldline" />
-          <p className="mob-svc-desc">{featuredSvc.desc}</p>
-          <Link to={featuredSvc.href} className="mob-svc-explore">
-            Explore <ArrowRight size={9} strokeWidth={1.5} />
-          </Link>
-        </div>
       </div>
 
       {/* 2-col grid — remaining 6 cards */}
@@ -2347,9 +2290,9 @@ function MobileServicesSection() {
           return (
             <div
               key={`mgc-${animKey}-${i}`}
-              className={`mob-svc-gcard${inView ? ' msv-card-in' : ''}${tappedIdx === idx ? ' msv-tapped' : ''}`}
+              className={`mob-svc-gcard${inView ? ' msv-card-in' : ''}${pressedIdx === idx ? ' msv-pressed' : ''}`}
               style={{ animationDelay: inView ? `${cardDelay}s` : '0s' }}
-              onClick={() => setTappedIdx(v => v === idx ? null : idx)}
+              onClick={() => handleTap(s.href, idx)}
             >
               <img src={s.img} alt={s.title} className="mob-svc-img" loading="lazy" />
               <div className="mob-svc-overlay" />
@@ -2363,13 +2306,6 @@ function MobileServicesSection() {
                   <Icon size={13} color="#C8A56A" strokeWidth={1.4} />
                 </div>
                 <h3 className="mob-svc-title">{s.title}</h3>
-              </div>
-              <div className="mob-svc-detail">
-                <div className="mob-svc-goldline" />
-                <p className="mob-svc-desc">{s.desc}</p>
-                <Link to={s.href} className="mob-svc-explore">
-                  Explore <ArrowRight size={8} strokeWidth={1.5} />
-                </Link>
               </div>
             </div>
           )
