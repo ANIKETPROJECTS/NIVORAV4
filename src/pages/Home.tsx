@@ -1161,6 +1161,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
     >
       {/* Parallax background */}
       <motion.div
+        className="hero-parallax-wrap"
         style={{ y: parallaxY, position: 'absolute', inset: '-12% 0', zIndex: 0 }}
       >
         <img
@@ -1341,9 +1342,10 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
           className="hero-cta-group"
           style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}
         >
-          <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.25 }}>
+          <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.25 }} className="hero-btn-wrap">
             <Link
               to="/contact"
+              className="hero-btn-primary"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -1375,9 +1377,10 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
             </Link>
           </motion.div>
 
-          <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.25 }}>
+          <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.25 }} className="hero-btn-wrap">
             <Link
               to="/portfolio"
+              className="hero-btn-secondary"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -1513,6 +1516,86 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         }
         .scroll-indicator-bounce {
           animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        /* ── Hero mobile fixes (below 768px) ── */
+        @media (max-width: 767px) {
+          /* 1. Full-screen height — dvh for address-bar awareness */
+          .hero-section {
+            height: 100dvh !important;
+            min-height: unset !important;
+          }
+
+          /* 2. Parallax container — reset inset so image starts at top edge */
+          .hero-parallax-wrap {
+            inset: -8% 0 !important;
+          }
+
+          /* 3. Ensure image centers properly */
+          .hero-parallax-wrap img {
+            object-position: center center !important;
+          }
+
+          /* 4. Stronger dark overlay for readability in sunlight */
+          .hero-gradient-overlay {
+            background: linear-gradient(
+              to bottom,
+              rgba(10,18,9,0.45) 0%,
+              rgba(10,18,9,0.62) 35%,
+              rgba(10,18,9,0.82) 68%,
+              rgba(10,18,9,0.95) 100%
+            ) !important;
+          }
+
+          /* 5. Content wrapper — tighter horizontal padding */
+          .hero-content-wrap {
+            padding: 0 20px !important;
+          }
+
+          /* 6. City tabs — compact margin */
+          .hero-city-tabs {
+            margin-bottom: 20px !important;
+          }
+
+          /* 7. Heading lines — tighter vertical spacing */
+          .hero-h1 {
+            margin-bottom: 4px !important;
+          }
+
+          /* 8. Body copy — reduce bottom gap */
+          .hero-body {
+            margin-bottom: 28px !important;
+            font-size: 13px !important;
+          }
+
+          /* 9. CTA group — vertical stack, full width */
+          .hero-cta-group {
+            flex-direction: column !important;
+            gap: 10px !important;
+            align-items: stretch !important;
+            width: 100% !important;
+          }
+
+          /* 10. Button wrappers — full width */
+          .hero-btn-wrap {
+            width: 100% !important;
+          }
+
+          /* 11. Primary button — full width, readable size */
+          .hero-btn-primary {
+            width: 100% !important;
+            justify-content: center !important;
+            padding: 14px 20px !important;
+            font-size: 12px !important;
+          }
+
+          /* 12. Secondary button — full width, readable size */
+          .hero-btn-secondary {
+            width: 100% !important;
+            justify-content: center !important;
+            padding: 14px 20px !important;
+            font-size: 12px !important;
+          }
         }
       `}</style>
     </section>
