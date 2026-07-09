@@ -1520,20 +1520,22 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
 
         /* ── Hero mobile fixes (below 768px) ── */
         @media (max-width: 767px) {
-          /* 1. Full-screen height — dvh for address-bar awareness */
+          /* 1. Compact height + vertically centred content */
           .hero-section {
-            height: 100dvh !important;
+            height: 90dvh !important;
             min-height: unset !important;
+            justify-content: center !important;
+            padding-top: 20px !important;
           }
 
-          /* 2. Parallax container — reset inset so image starts at top edge */
+          /* 2. Parallax container — keep slight buffer for the effect */
           .hero-parallax-wrap {
             inset: -8% 0 !important;
           }
 
-          /* 3. Ensure image centers properly */
+          /* 3. Show the interesting mid-section of the building, not the dark tree tops */
           .hero-parallax-wrap img {
-            object-position: center center !important;
+            object-position: center 30% !important;
           }
 
           /* 4. Stronger dark overlay for readability in sunlight */
