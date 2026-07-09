@@ -2141,17 +2141,15 @@ function MobileServicesSection() {
     return () => observer.disconnect()
   }, [])
 
-  const featuredSvc = services[0]
-  const gridSvcs = services.slice(1)
-  const FeatIcon = featuredSvc.icon
+  const gridSvcs = services.slice(0, 4)
 
-  // Brief press flash then navigate — no expand
-  const handleTap = (href: string, idx: number) => {
+  // Brief press flash + description reveal, then navigate
+  const handleTap = (idx: number) => {
     setPressedIdx(idx)
     setTimeout(() => {
       setPressedIdx(null)
-      navigate(href)
-    }, 200)
+      navigate('/services')
+    }, 350)
   }
 
   return (
@@ -2179,24 +2177,7 @@ function MobileServicesSection() {
             transform: translateY(0);
           }
 
-          /* ── Featured card ── */
-          .mob-svc-featured {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 10px;
-            cursor: pointer;
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          .mob-svc-featured.msv-feat-in {
-            animation: msvFeatIn 0.55s cubic-bezier(0.22,1,0.36,1) 0.15s forwards;
-          }
-
-          /* ── Press feedback (200ms flash, no expand) ── */
-          .mob-svc-featured.msv-pressed,
+          /* ── Press feedback (scale + brief description reveal, no expand) ── */
           .mob-svc-gcard.msv-pressed {
             animation-name: none !important;
             transform: scale(1.02) !important;
@@ -2204,7 +2185,7 @@ function MobileServicesSection() {
             transition: transform 120ms ease, filter 120ms ease;
           }
 
-          /* ── 2-col grid ── */
+          /* ── 2x2 grid — 4 cards, equal size ── */
           .mob-svc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -2214,7 +2195,7 @@ function MobileServicesSection() {
           /* ── Grid card ── */
           .mob-svc-gcard {
             position: relative;
-            height: 160px;
+            height: 190px;
             border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
@@ -2223,6 +2204,37 @@ function MobileServicesSection() {
           }
           .mob-svc-gcard.msv-card-in {
             animation: msvCardIn 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
+          }
+
+          /* ── Description — hidden by default, briefly revealed on press ── */
+          .mob-svc-detail {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 150ms ease, max-height 150ms ease;
+            margin-top: 4px;
+          }
+          .mob-svc-gcard.msv-pressed .mob-svc-detail {
+            opacity: 1;
+            max-height: 70px;
+          }
+          .mob-svc-desc {
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            font-size: 10.5px;
+            line-height: 1.4;
+            color: rgba(245,240,232,0.85);
+            margin: 0 0 4px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .mob-svc-explore {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-family: 'Jost', sans-serif; font-weight: 300;
+            font-size: 9px; letter-spacing: 0.18em;
+            text-transform: uppercase; color: #C8A56A;
           }
 
           /* ── Image ── */
@@ -2330,40 +2342,18 @@ function MobileServicesSection() {
         </p>
       </div>
 
-      {/* Featured card — Residential Interiors */}
-      <div
-        key={`mfeat-${animKey}`}
-        className={`mob-svc-featured${inView ? ' msv-feat-in' : ''}${pressedIdx === 0 ? ' msv-pressed' : ''}`}
-        onClick={() => handleTap(featuredSvc.href, 0)}
-      >
-        <img src={featuredSvc.img} alt={featuredSvc.title} className="mob-svc-img" loading="lazy" />
-        <div className="mob-svc-overlay" />
-        <div
-          className={`mob-svc-shimmer${inView ? ' msv-shimmer-run' : ''}`}
-          key={`mfshim-${animKey}`}
-          style={{ '--msv-shimmer-delay': '0.3s' } as React.CSSProperties}
-        />
-        <div className="mob-svc-bottom">
-          <div className="mob-svc-icon-wrap">
-            <FeatIcon size={18} color="#C8A56A" strokeWidth={1.4} />
-          </div>
-          <h3 className="mob-svc-title">{featuredSvc.title}</h3>
-        </div>
-      </div>
-
-      {/* 2-col grid — remaining 6 cards */}
+      {/* 2x2 grid — 4 cards, equal size */}
       <div className="mob-svc-grid">
         {gridSvcs.map((s, i) => {
           const Icon = s.icon
-          const idx = i + 1
-          const cardDelay = 0.2 + i * 0.1
+          const cardDelay = i * 0.1
           const shimDelay = cardDelay + 0.18
           return (
             <div
               key={`mgc-${animKey}-${i}`}
-              className={`mob-svc-gcard${inView ? ' msv-card-in' : ''}${pressedIdx === idx ? ' msv-pressed' : ''}`}
+              className={`mob-svc-gcard${inView ? ' msv-card-in' : ''}${pressedIdx === i ? ' msv-pressed' : ''}`}
               style={{ animationDelay: inView ? `${cardDelay}s` : '0s' }}
-              onClick={() => handleTap(s.href, idx)}
+              onClick={() => handleTap(i)}
             >
               <img src={s.img} alt={s.title} className="mob-svc-img" loading="lazy" />
               <div className="mob-svc-overlay" />
@@ -2377,6 +2367,12 @@ function MobileServicesSection() {
                   <Icon size={13} color="#C8A56A" strokeWidth={1.4} />
                 </div>
                 <h3 className="mob-svc-title">{s.title}</h3>
+                <div className="mob-svc-detail">
+                  <p className="mob-svc-desc">{s.desc}</p>
+                  <span className="mob-svc-explore">
+                    Explore <ArrowRight size={9} strokeWidth={1.5} />
+                  </span>
+                </div>
               </div>
             </div>
           )
@@ -2953,7 +2949,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               const Icon = s.icon
               return (
                 <FadeIn key={s.title} delay={i * 0.09}>
-                  <Link to={s.href} className="hsvc-card">
+                  <Link to="/services" className="hsvc-card">
                     {/* Image */}
                     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: 24 }}>
                       <img src={s.img} alt={s.title} className="hsvc-img"
@@ -2972,39 +2968,6 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                       <h3 className="hsvc-title">{s.title}</h3>
                     </div>
                     {/* Detail layer: fades in on hover, positioned below mid-layer */}
-                    <div className="hsvc-detail-layer">
-                      <div className="hsvc-gold-line" />
-                      <p className="hsvc-desc">{s.desc}</p>
-                      <span className="hsvc-explore">
-                        Explore <ArrowRight size={10} strokeWidth={1.5} />
-                      </span>
-                    </div>
-                  </Link>
-                </FadeIn>
-              )
-            })}
-          </div>
-
-          {/* Row 2 — 3 cards centered */}
-          <div className="hsvc-grid-r2">
-            {services.slice(4).map((s, i) => {
-              const Icon = s.icon
-              return (
-                <FadeIn key={s.title} delay={i * 0.09}>
-                  <Link to={s.href} className="hsvc-card">
-                    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: 24 }}>
-                      <img src={s.img} alt={s.title} className="hsvc-img"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                        loading="lazy" />
-                    </div>
-                    <div className="hsvc-overlay" />
-                    <p className="hsvc-num">{s.num}</p>
-                    <div className="hsvc-mid-layer">
-                      <div className="hsvc-icon-wrap">
-                        <Icon size={18} color="#C8A56A" strokeWidth={1.4} />
-                      </div>
-                      <h3 className="hsvc-title">{s.title}</h3>
-                    </div>
                     <div className="hsvc-detail-layer">
                       <div className="hsvc-gold-line" />
                       <p className="hsvc-desc">{s.desc}</p>
