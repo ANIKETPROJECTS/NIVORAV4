@@ -82,32 +82,59 @@
     height: 100svh;
   }
 
+  /* Heading font-size override — !important needed to beat inline style */
+  .hero-h1 {
+    font-size: clamp(2rem, 8.5vw, 2.5rem) !important;
+    line-height: 1.15 !important;
+  }
+
   .hero-headline {
-    font-size: clamp(32px, 8vw, 48px);
-    line-height: 1.2;
+    font-size: clamp(2rem, 8.5vw, 2.5rem);
+    line-height: 1.15;
   }
 
   .hero-subheadline {
-    font-size: clamp(28px, 7vw, 42px);
+    font-size: clamp(1.6rem, 7vw, 2rem);
     line-height: 1.2;
   }
 
-  .hero-body {
-    font-size: 14px;
-    padding: 0 16px;
+  /* Content wrapper — tighter side padding on narrow screens */
+  .hero-content-wrap {
+    padding: 0 16px !important;
   }
 
+  .hero-body {
+    font-size: 14px !important;
+    padding: 0 !important;
+    margin-bottom: 36px !important;
+  }
+
+  /* City tabs — centered with tighter gap */
+  .hero-city-tabs {
+    gap: 20px !important;
+    margin-bottom: 24px !important;
+    justify-content: center !important;
+  }
+
+  /* CTA buttons — stack vertically, full width */
   .hero-cta-group {
-    flex-direction: column;
-    width: 100%;
-    gap: 12px;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+  }
+
+  /* Each motion.div wrapper also stretches */
+  .hero-cta-group > div {
+    width: 100% !important;
   }
 
   .hero-cta-group a,
   .hero-cta-group button {
-    width: 100%;
-    height: 50px;
-    min-width: unset;
+    width: 100% !important;
+    min-width: unset !important;
+    justify-content: center !important;
+    padding: 16px 24px !important;
   }
 
   .hero-location-tabs {

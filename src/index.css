@@ -146,6 +146,15 @@ h3 { font-size: clamp(1.1rem, 2.2vw, 1.85rem); }
   box-shadow: var(--shadow-hover);
 }
 
+/* ── Hero background Ken Burns slow zoom ─────────────────────────── */
+@keyframes heroKenBurns {
+  0%   { transform: scale(1.0); }
+  100% { transform: scale(1.05); }
+}
+.hero-bg-img {
+  animation: heroKenBurns 6s ease-in-out infinite alternate;
+}
+
 /* ── WhatsApp pulse animation ─────────────────────────────────────── */
 @keyframes whatsapp-pulse {
   0%, 100% { transform: scale(1); }

@@ -1144,9 +1144,21 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
   const rawY = useTransform(scrollYProgress, [0, 1], ['0%', '22%'])
   const parallaxY = useSpring(rawY, { stiffness: 60, damping: 20 })
   const [activeCity, setActiveCity] = useState<'Mumbai' | 'Pune'>('Mumbai')
+  const [heroInView, setHeroInView] = useState(false)
 
   const heroBg = heroSettings?.homeHero?.backgroundImage || heroImg
   const heroSubheadline = heroSettings?.homeHero?.subheadline || 'We design homes and workspaces that are beautiful, functional, and built for everyday living.'
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0.2 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
 
   const heroContainerVariants = {
     hidden: {},
@@ -1165,6 +1177,10 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
     hidden: { opacity: 0, y: 24, scale: 0.95 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.25, 0.1, 0.25, 1] } },
   }
+  const heroTopVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] } },
+  }
 
   return (
     <section
@@ -1178,6 +1194,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         <img
           src={heroBg}
           alt="NIVORA Interiors"
+          className="hero-bg-img"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
           loading="eager"
         />
@@ -1242,13 +1259,15 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
       <motion.div
         variants={heroContainerVariants}
         initial="hidden"
-        animate={splashDone ? 'visible' : 'hidden'}
+        animate={splashDone && heroInView ? 'visible' : 'hidden'}
         style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 24px', maxWidth: 860, margin: '0 auto', width: '100%' }}
+        className="hero-content-wrap"
       >
 
         {/* 1. Location tabs */}
         <motion.div
-          variants={heroItemVariants}
+          variants={heroTopVariants}
+          className="hero-city-tabs"
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 28, marginBottom: 32 }}
         >
           {(['Mumbai', 'Pune'] as const).map(city => (
@@ -1277,6 +1296,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         {/* 2. "Thoughtfully Designed" */}
         <motion.h1
           variants={heroItemVariants}
+          className="hero-h1"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 300,
@@ -1293,6 +1313,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         {/* 3. "Interiors —" */}
         <motion.h1
           variants={heroItemVariants}
+          className="hero-h1"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 300,
@@ -1309,6 +1330,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         {/* 4. "That Feel Effortless" — fade + slide + scale 0.95→1 */}
         <motion.h1
           variants={heroItalicVariants}
+          className="hero-h1"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 300,
@@ -1324,6 +1346,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         {/* 5. Supporting copy */}
         <motion.p
           variants={heroItemVariants}
+          className="hero-body"
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
@@ -1340,6 +1363,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         {/* 6. CTA buttons */}
         <motion.div
           variants={heroItemVariants}
+          className="hero-cta-group"
           style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}
         >
           <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.25 }}>
