@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 
 const STEPS = [
   {
@@ -73,13 +73,16 @@ function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) 
         zIndex: 2,
       }}
     >
-      {/* Outer glow ring */}
+      {/* Outer glow ring — pulses on mobile once active, static fade on desktop (unchanged) */}
       <motion.div
-        animate={active
-          ? { opacity: 1, scale: 1 }
-          : { opacity: 0, scale: 0.8 }
+        animate={mobile
+          ? (active ? { opacity: [0.4, 1, 0.4], scale: [0.9, 1.25, 0.9] } : { opacity: 0, scale: 0.8 })
+          : (active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 })
         }
-        transition={{ duration: 0.7, delay: 0.3 }}
+        transition={mobile
+          ? (active ? { duration: 1.4, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.4 })
+          : { duration: 0.7, delay: 0.3 }
+        }
         style={{
           position: 'absolute',
           inset: 0,
@@ -117,13 +120,13 @@ function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) 
 
 function LineSegment({ active }: { active: boolean }) {
   return (
-    <div style={{
+    <div className="process-line-outer" style={{
       display: 'flex',
       justifyContent: 'center',
       position: 'relative',
       zIndex: 1,
     }}>
-      <div style={{
+      <div className="process-line-track" style={{
         width: 1,
         height: 90,
         background: 'rgba(201,169,110,0.14)',
@@ -150,11 +153,25 @@ function StepContent({
   step,
   active,
   align,
+  mobile,
+  side,
 }: {
   step: typeof STEPS[0]
   active: boolean
   align: 'left' | 'right'
+  mobile?: boolean
+  side?: 'left' | 'right'
 }) {
+  const titleInitial = mobile
+    ? { opacity: 0, x: side === 'left' ? -36 : 36 }
+    : { opacity: 0, y: 14 }
+  const titleAnimate = active
+    ? (mobile ? { opacity: 1, x: 0 } : { opacity: 1, y: 0 })
+    : titleInitial
+  const titleTransition = mobile
+    ? { type: 'spring' as const, stiffness: 300, damping: 12, delay: 0.1 }
+    : { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.15 }
+
   return (
     <div style={{ textAlign: align }}>
       <motion.p
@@ -174,9 +191,9 @@ function StepContent({
 
       <motion.h3
         className="process-title"
-        initial={{ opacity: 0, y: 14 }}
-        animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        initial={titleInitial}
+        animate={titleAnimate}
+        transition={titleTransition}
         style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontStyle: 'italic',
@@ -192,7 +209,7 @@ function StepContent({
         className="process-desc"
         initial={{ opacity: 0, y: 10 }}
         animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: mobile ? 0.2 : 0.25 }}
         style={{
           fontFamily: "'Inter', sans-serif",
           fontWeight: 300,
@@ -254,7 +271,7 @@ function StepRow({
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             style={{ maxWidth: 320, width: '100%' }}
           >
-            <StepContent step={step} active={inView} align="right" />
+            <StepContent step={step} active={inView} align="right" mobile={isMobile} side="left" />
           </motion.div>
         ) : (
           <div />
@@ -275,7 +292,7 @@ function StepRow({
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             style={{ maxWidth: 320, width: '100%' }}
           >
-            <StepContent step={step} active={inView} align="left" />
+            <StepContent step={step} active={inView} align="left" mobile={isMobile} side="right" />
           </motion.div>
         ) : (
           <div />
@@ -285,9 +302,116 @@ function StepRow({
   )
 }
 
+/* Section header — desktop keeps its original single-block fade; mobile gets a
+   word-by-word rotateX flip-in for the heading, plus replay-capable fades for
+   the label/subheading/divider. Desktop JSX/props are untouched. */
+function ProcessHeader({ isMobile }: { isMobile: boolean }) {
+  const headingRef = useRef<HTMLDivElement>(null)
+  const headingInView = useInView(headingRef, { once: !isMobile, amount: 0.5 })
+  const words = 'Our Process'.split(' ')
+
+  return (
+    <div style={{ textAlign: 'center', marginBottom: 88, padding: '0 24px' }} className="process-header">
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={isMobile ? { once: false, amount: 0.4 } : { once: true }}
+        transition={{ duration: 0.6 }}
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: 300,
+          fontSize: 10,
+          letterSpacing: '0.44em',
+          textTransform: 'uppercase',
+          color: '#9B7D4E',
+          margin: '0 0 14px',
+        }}
+      >How We Do It</motion.p>
+
+      <div ref={headingRef}>
+        {/* Desktop heading — unchanged */}
+        <motion.h2
+          className="process-heading-desktop"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 300,
+            fontSize: 'clamp(1.9rem, 3.5vw, 3rem)',
+            color: '#1C2818',
+            lineHeight: 1.04,
+            margin: '0 0 18px',
+            letterSpacing: '-0.01em',
+          }}
+        >Our Process</motion.h2>
+
+        {/* Mobile heading — words flip in one by one (replays every time it re-enters view) */}
+        <h2
+          className="process-heading-mobile"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 300,
+            fontSize: 'clamp(1.9rem, 3.5vw, 3rem)',
+            color: '#1C2818',
+            lineHeight: 1.04,
+            margin: '0 0 18px',
+            letterSpacing: '-0.01em',
+            justifyContent: 'center',
+            gap: '0.35em',
+            perspective: 500,
+          }}
+        >
+          {words.map((w, i) => (
+            <motion.span
+              key={i}
+              style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}
+              initial={{ opacity: 0, rotateX: -90 }}
+              animate={headingInView ? { opacity: 1, rotateX: 0 } : { opacity: 0, rotateX: -90 }}
+              transition={{ duration: 0.55, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            >{w}</motion.span>
+          ))}
+        </h2>
+      </div>
+
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={isMobile ? { once: false, amount: 0.4 } : { once: true }}
+        transition={{ duration: 0.7, delay: 0.25 }}
+        style={{
+          width: 44,
+          height: 1,
+          background: 'linear-gradient(90deg, transparent, #C9A96E, transparent)',
+          margin: '0 auto 18px',
+          transformOrigin: 'center',
+        }}
+      />
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={isMobile ? { once: false, amount: 0.4 } : { once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: 300,
+          fontSize: 14,
+          color: 'rgba(28,40,24,0.44)',
+          lineHeight: 1.8,
+        }}
+      >
+        From first conversation to final reveal — a seamless, end-to-end journey.
+      </motion.p>
+    </div>
+  )
+}
+
 export default function ProcessSection() {
   const [visibleSet, setVisibleSet] = useState<Set<number>>(new Set())
   const [isMobile, setIsMobile] = useState(false)
+  const timelineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
@@ -311,79 +435,47 @@ export default function ProcessSection() {
     })
   }, [isMobile])
 
+  // Mobile-only: one continuous gold line spanning the timeline, drawn by scroll
+  // progress (0% -> 100% height) with a subtle parallax offset (moves slower than scroll).
+  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ['start 88%', 'end 40%'] })
+  const mobileLineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+  const mobileLineParallaxY = useTransform(scrollYProgress, [0, 1], [0, -24])
+
   return (
     <section style={{ background: '#F5F2ED', padding: '120px 0' }}>
 
-      {/* Section header */}
-      <div style={{ textAlign: 'center', marginBottom: 88, padding: '0 24px' }}>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 300,
-            fontSize: 10,
-            letterSpacing: '0.44em',
-            textTransform: 'uppercase',
-            color: '#9B7D4E',
-            margin: '0 0 14px',
-          }}
-        >How We Do It</motion.p>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
-            fontSize: 'clamp(1.9rem, 3.5vw, 3rem)',
-            color: '#1C2818',
-            lineHeight: 1.04,
-            margin: '0 0 18px',
-            letterSpacing: '-0.01em',
-          }}
-        >Our Process</motion.h2>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.25 }}
-          style={{
-            width: 44,
-            height: 1,
-            background: 'linear-gradient(90deg, transparent, #C9A96E, transparent)',
-            margin: '0 auto 18px',
-            transformOrigin: 'center',
-          }}
-        />
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 300,
-            fontSize: 14,
-            color: 'rgba(28,40,24,0.44)',
-            lineHeight: 1.8,
-          }}
-        >
-          From first conversation to final reveal — a seamless, end-to-end journey.
-        </motion.p>
-      </div>
+      <ProcessHeader isMobile={isMobile} />
 
       {/* Timeline */}
       <div
-        style={{ maxWidth: 860, margin: '0 auto', padding: '0 24px' }}
+        ref={timelineRef}
+        style={{ maxWidth: 860, margin: '0 auto', padding: '0 24px', position: 'relative' }}
         className="tl-container"
       >
+        {/* Continuous scroll-drawn line — mobile only (desktop keeps per-segment LineSegment draws) */}
+        <div className="process-mobile-line-outer" style={{
+          position: 'absolute',
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 1,
+          height: '100%',
+          background: 'rgba(201,169,110,0.14)',
+          overflow: 'hidden',
+          zIndex: 3,
+          pointerEvents: 'none',
+        }}>
+          <motion.div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: mobileLineHeight,
+            y: mobileLineParallaxY,
+            background: 'linear-gradient(to bottom, #C9A96E 0%, rgba(201,169,110,0.45) 100%)',
+          }} />
+        </div>
+
         {STEPS.map((step, i) => (
           <div key={step.num}>
             <StepRow step={step} index={i} isMobile={isMobile} onVisible={handleVisible} />
@@ -444,42 +536,69 @@ export default function ProcessSection() {
       </motion.div>
 
       <style>{`
+        .process-heading-mobile { display: none; }
+
         /* Mobile: keep the zig-zag layout, scaled down — center gold line, alternating sides */
         @media (max-width: 768px) {
+          .process-header {
+            margin-bottom: 40px !important;
+            padding: 24px 24px 0 !important;
+          }
+          .process-heading-desktop {
+            display: none !important;
+          }
+          .process-heading-mobile {
+            display: flex !important;
+          }
           .tl-container {
-            padding: 0 12px !important;
+            padding: 0 !important;
           }
           .timeline-step-row {
-            grid-template-columns: 1fr 40px 1fr !important;
+            grid-template-columns: 1fr 36px 1fr !important;
             gap: 0 !important;
           }
           .tl-left-cell {
-            padding-right: 12px !important;
+            padding-left: 12px !important;
+            padding-right: 8px !important;
             display: flex !important;
           }
           .tl-right-cell {
-            padding-left: 12px !important;
+            padding-right: 12px !important;
+            padding-left: 8px !important;
             display: block !important;
           }
           .process-content-box {
-            max-width: 45% !important;
+            max-width: 100% !important;
+            width: 100% !important;
           }
           .process-diamond-outer {
-            width: 40px !important;
-            height: 40px !important;
+            width: 36px !important;
+            height: 36px !important;
           }
           .process-diamond-inner {
-            width: 28px !important;
-            height: 28px !important;
+            width: 26px !important;
+            height: 26px !important;
           }
           .process-title {
-            font-size: 20px !important;
+            font-size: 18px !important;
             margin: 0 0 8px !important;
           }
           .process-desc {
             font-size: 12px !important;
             line-height: 1.6 !important;
           }
+          .process-line-outer .process-line-track {
+            width: 1px !important;
+            height: 32px !important;
+          }
+          .process-mobile-line-outer {
+            display: block !important;
+          }
+        }
+
+        /* Desktop/tablet: hide the mobile-only continuous scroll line */
+        .process-mobile-line-outer {
+          display: none;
         }
 
         /* Tablet: tighten padding */
