@@ -343,35 +343,34 @@ export default function ProjectDetail() {
         <div style={{ background: '#F7F2EA' }}>
           <style>{`
             .gallery-grid {
-              display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              grid-auto-rows: 260px;
-              gap: 10px;
+              column-count: 3;
+              column-gap: 10px;
             }
-            .gallery-item-wide { grid-column: span 2; }
-            .gallery-item-normal { grid-column: span 1; }
+            .gallery-item {
+              break-inside: avoid;
+              margin-bottom: 10px;
+            }
+            .gallery-thumb-wrap {
+              border-radius: 12px;
+              overflow: hidden;
+              border: 1px solid #E9DED0;
+              box-shadow: 0 2px 12px rgba(46,42,38,0.06);
+              cursor: pointer;
+              line-height: 0;
+            }
             .gallery-thumb {
               display: block;
               width: 100%;
-              height: 100%;
-              cursor: pointer;
+              height: auto;
               transition: transform 0.4s ease, opacity 0.3s ease;
             }
             .gallery-thumb:hover { transform: scale(1.03); opacity: 0.88; }
             @media (max-width: 767px) {
-              .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 180px;
-                gap: 7px;
-              }
-              .gallery-item-wide { grid-column: span 2; }
+              .gallery-grid { column-count: 2; column-gap: 7px; }
+              .gallery-item { margin-bottom: 7px; }
             }
             @media (max-width: 480px) {
-              .gallery-item-wide { grid-column: span 1; }
-              .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 150px;
-              }
+              .gallery-grid { column-count: 1; }
             }
           `}</style>
           <div className="max-w-7xl mx-auto px-6 py-14">
@@ -381,35 +380,25 @@ export default function ProjectDetail() {
               </p>
             </FadeIn>
             <div className="gallery-grid">
-              {galleryImages.map((img, i) => {
-                const isFeatured = [0, 5, 11].includes(i)
-                return (
-                  <FadeIn
-                    key={`${i}-${img}`}
-                    delay={Math.min(i * 0.07, 0.5)}
-                    className={isFeatured ? 'gallery-item-wide' : 'gallery-item-normal'}
+              {galleryImages.map((img, i) => (
+                <FadeIn
+                  key={`${i}-${img}`}
+                  delay={Math.min(i * 0.07, 0.5)}
+                  className="gallery-item"
+                >
+                  <div
+                    className="gallery-thumb-wrap"
+                    onClick={() => openLightbox(i)}
                   >
-                    <div
-                      style={{
-                        borderRadius: 12,
-                        overflow: 'hidden',
-                        border: '1px solid #E9DED0',
-                        boxShadow: '0 2px 12px rgba(46,42,38,0.06)',
-                        height: '100%',
-                      }}
-                      onClick={() => openLightbox(i)}
-                    >
-                      <img
-                        src={img}
-                        alt={`${project.name} — view ${i + 2}`}
-                        className="gallery-thumb object-cover"
-                        style={{ display: 'block' }}
-                        loading="lazy"
-                      />
-                    </div>
-                  </FadeIn>
-                )
-              })}
+                    <img
+                      src={img}
+                      alt={`${project.name} — view ${i + 2}`}
+                      className="gallery-thumb"
+                      loading="lazy"
+                    />
+                  </div>
+                </FadeIn>
+              ))}
             </div>
           </div>
         </div>
