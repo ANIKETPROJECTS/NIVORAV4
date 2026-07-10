@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 
 const STEPS = [
   {
@@ -60,7 +60,7 @@ function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) 
       initial={{ scale: mobile ? 0 : 0.8, opacity: 0 }}
       animate={active ? { scale: 1, opacity: 1 } : { scale: mobile ? 0 : 0.8, opacity: 0 }}
       transition={mobile
-        ? { duration: 0.6, type: 'spring', stiffness: 260, damping: 14 }
+        ? { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }
         : { duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
       style={{
         width: 52,
@@ -71,16 +71,17 @@ function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) 
         justifyContent: 'center',
         position: 'relative',
         zIndex: 2,
+        willChange: 'transform, opacity',
       }}
     >
-      {/* Outer glow ring — pulses on mobile once active, static fade on desktop (unchanged) */}
+      {/* Outer glow ring — pulses on mobile once active (every 2s), static fade on desktop (unchanged) */}
       <motion.div
         animate={mobile
           ? (active ? { opacity: [0.4, 1, 0.4], scale: [0.9, 1.25, 0.9] } : { opacity: 0, scale: 0.8 })
           : (active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 })
         }
         transition={mobile
-          ? (active ? { duration: 1.4, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.4 })
+          ? (active ? { duration: 2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.4 })
           : { duration: 0.7, delay: 0.3 }
         }
         style={{
@@ -89,6 +90,7 @@ function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) 
           borderRadius: 2,
           background: 'radial-gradient(ellipse at center, rgba(201,169,110,0.18) 0%, transparent 70%)',
           transform: 'rotate(45deg)',
+          willChange: 'transform, opacity',
         }}
       />
       {/* Diamond */}
@@ -142,6 +144,7 @@ function LineSegment({ active }: { active: boolean }) {
             inset: 0,
             background: 'linear-gradient(to bottom, #C9A96E 0%, rgba(201,169,110,0.45) 100%)',
             transformOrigin: 'top',
+            willChange: 'transform',
           }}
         />
       </div>
@@ -172,13 +175,12 @@ function StepContent({
     ? { type: 'spring' as const, stiffness: 300, damping: 12, delay: 0.1 }
     : { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.15 }
 
+  const numChars = step.num.split('')
+
   return (
     <div style={{ textAlign: align }}>
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={active ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        style={{
+      {mobile ? (
+        <p style={{
           fontFamily: "'Inter', sans-serif",
           fontWeight: 300,
           fontSize: 10,
@@ -186,8 +188,33 @@ function StepContent({
           color: '#C9A96E',
           textTransform: 'uppercase',
           margin: '0 0 10px',
-        }}
-      >{step.num}</motion.p>
+        }}>
+          {numChars.map((ch, i) => (
+            <motion.span
+              key={i}
+              style={{ display: 'inline-block', willChange: 'transform, opacity' }}
+              initial={{ opacity: 0 }}
+              animate={active ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.2, delay: active ? i * 0.08 : 0 }}
+            >{ch}</motion.span>
+          ))}
+        </p>
+      ) : (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={active ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 300,
+            fontSize: 10,
+            letterSpacing: '0.4em',
+            color: '#C9A96E',
+            textTransform: 'uppercase',
+            margin: '0 0 10px',
+          }}
+        >{step.num}</motion.p>
+      )}
 
       <motion.h3
         className="process-title"
@@ -202,14 +229,37 @@ function StepContent({
           color: '#1C2818',
           margin: '0 0 12px',
           lineHeight: 1.1,
+          position: mobile ? 'relative' : undefined,
+          display: mobile ? 'inline-block' : undefined,
+          willChange: 'transform, opacity',
         }}
-      >{step.title}</motion.h3>
+      >
+        {step.title}
+        {mobile && (
+          <motion.span
+            aria-hidden="true"
+            initial={{ backgroundPositionX: '-150%' }}
+            animate={active ? { backgroundPositionX: '250%' } : { backgroundPositionX: '-150%' }}
+            transition={{ duration: 1, delay: 0.55, ease: 'easeInOut' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: 'linear-gradient(100deg, transparent 35%, rgba(201,169,110,0.9) 50%, transparent 65%)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent',
+              pointerEvents: 'none',
+            }}
+          >{step.title}</motion.span>
+        )}
+      </motion.h3>
 
       <motion.p
         className="process-desc"
-        initial={{ opacity: 0, y: 10 }}
-        animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: mobile ? 0.2 : 0.25 }}
+        initial={{ opacity: 0, y: mobile ? 20 : 10 }}
+        animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: mobile ? 20 : 10 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: mobile ? 0.3 : 0.25 }}
         style={{
           fontFamily: "'Inter', sans-serif",
           fontWeight: 300,
@@ -217,6 +267,7 @@ function StepContent({
           color: 'rgba(28,40,24,0.52)',
           lineHeight: 1.8,
           margin: 0,
+          willChange: 'transform, opacity',
         }}
       >{step.text}</motion.p>
     </div>
@@ -235,8 +286,8 @@ function StepRow({
   onVisible: (i: number, visible: boolean) => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  // Desktop: animate once. Mobile: replay every time the step re-enters the viewport.
-  const inView = useInView(ref, { once: !isMobile, margin: '-60px 0px', amount: 0.25 })
+  // Desktop: animate once. Mobile: replay every time the step re-enters the viewport (threshold 0.2).
+  const inView = useInView(ref, { once: !isMobile, margin: '-60px 0px', amount: isMobile ? 0.2 : 0.25 })
 
   useEffect(() => {
     onVisible(index, inView)
@@ -244,10 +295,14 @@ function StepRow({
 
   const isLeft = step.side === 'left'
 
+  // Mobile: bigger slide distance (60px), snappier ease-out. Desktop: original 32px curve, unchanged.
   const slideVariants = (dir: 'left' | 'right') => ({
-    hidden: { opacity: 0, x: dir === 'left' ? -32 : 32 },
+    hidden: { opacity: 0, x: dir === 'left' ? (isMobile ? -60 : -32) : (isMobile ? 60 : 32) },
     visible: { opacity: 1, x: 0 },
   })
+  const contentTransition = isMobile
+    ? { duration: 0.5, ease: 'easeOut' as const }
+    : { duration: 0.65, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 
   return (
     <div
@@ -268,8 +323,8 @@ function StepRow({
             variants={slideVariants('left')}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            style={{ maxWidth: 320, width: '100%' }}
+            transition={contentTransition}
+            style={{ maxWidth: 320, width: '100%', willChange: 'transform, opacity' }}
           >
             <StepContent step={step} active={inView} align="right" mobile={isMobile} side="left" />
           </motion.div>
@@ -289,8 +344,8 @@ function StepRow({
             variants={slideVariants('right')}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            style={{ maxWidth: 320, width: '100%' }}
+            transition={contentTransition}
+            style={{ maxWidth: 320, width: '100%', willChange: 'transform, opacity' }}
           >
             <StepContent step={step} active={inView} align="left" mobile={isMobile} side="right" />
           </motion.div>
@@ -313,8 +368,8 @@ function ProcessHeader({ isMobile }: { isMobile: boolean }) {
   return (
     <div style={{ textAlign: 'center', marginBottom: 88, padding: '0 24px' }} className="process-header">
       <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 10, scale: isMobile ? 0.8 : 1 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={isMobile ? { once: false, amount: 0.4 } : { once: true }}
         transition={{ duration: 0.6 }}
         style={{
@@ -325,6 +380,7 @@ function ProcessHeader({ isMobile }: { isMobile: boolean }) {
           textTransform: 'uppercase',
           color: '#9B7D4E',
           margin: '0 0 14px',
+          willChange: 'transform, opacity',
         }}
       >How We Do It</motion.p>
 
@@ -366,9 +422,9 @@ function ProcessHeader({ isMobile }: { isMobile: boolean }) {
           {words.map((w, i) => (
             <motion.span
               key={i}
-              style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}
-              initial={{ opacity: 0, rotateX: -90 }}
-              animate={headingInView ? { opacity: 1, rotateX: 0 } : { opacity: 0, rotateX: -90 }}
+              style={{ display: 'inline-block', transformStyle: 'preserve-3d', willChange: 'transform, opacity' }}
+              initial={{ opacity: 0, rotateX: 90 }}
+              animate={headingInView ? { opacity: 1, rotateX: 0 } : { opacity: 0, rotateX: 90 }}
               transition={{ duration: 0.55, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
             >{w}</motion.span>
           ))}
@@ -412,6 +468,8 @@ export default function ProcessSection() {
   const [visibleSet, setVisibleSet] = useState<Set<number>>(new Set())
   const [isMobile, setIsMobile] = useState(false)
   const timelineRef = useRef<HTMLDivElement>(null)
+  // Mobile-only: continuous gold line, section-triggered scaleY draw (threshold 0.2), replays on re-entry.
+  const timelineInView = useInView(timelineRef, { once: false, amount: 0.2 })
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
@@ -435,12 +493,6 @@ export default function ProcessSection() {
     })
   }, [isMobile])
 
-  // Mobile-only: one continuous gold line spanning the timeline, drawn by scroll
-  // progress (0% -> 100% height) with a subtle parallax offset (moves slower than scroll).
-  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ['start 88%', 'end 40%'] })
-  const mobileLineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
-  const mobileLineParallaxY = useTransform(scrollYProgress, [0, 1], [0, -24])
-
   return (
     <section style={{ background: '#F5F2ED', padding: '120px 0' }}>
 
@@ -452,7 +504,8 @@ export default function ProcessSection() {
         style={{ maxWidth: 860, margin: '0 auto', padding: '0 24px', position: 'relative' }}
         className="tl-container"
       >
-        {/* Continuous scroll-drawn line — mobile only (desktop keeps per-segment LineSegment draws) */}
+        {/* Continuous gold line — mobile only. ScaleY 0->1 from top, replays every time the
+            section enters/leaves the viewport (desktop keeps per-segment LineSegment draws). */}
         <div className="process-mobile-line-outer" style={{
           position: 'absolute',
           top: 0,
@@ -465,15 +518,18 @@ export default function ProcessSection() {
           zIndex: 3,
           pointerEvents: 'none',
         }}>
-          <motion.div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: mobileLineHeight,
-            y: mobileLineParallaxY,
-            background: 'linear-gradient(to bottom, #C9A96E 0%, rgba(201,169,110,0.45) 100%)',
-          }} />
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={timelineInView ? { scaleY: 1 } : { scaleY: 0 }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              transformOrigin: 'top',
+              background: 'linear-gradient(to bottom, #C9A96E 0%, rgba(201,169,110,0.45) 100%)',
+              willChange: 'transform',
+            }}
+          />
         </div>
 
         {STEPS.map((step, i) => (
@@ -593,6 +649,9 @@ export default function ProcessSection() {
           }
           .process-mobile-line-outer {
             display: block !important;
+          }
+          .process-line-outer {
+            display: none !important;
           }
         }
 
