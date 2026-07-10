@@ -283,7 +283,7 @@ export default function Contact() {
           <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#C9A96E', marginBottom: 16 }}>
             Reach Out
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.9rem, 4vw, 3.2rem)', color: '#21291a', margin: '0 0 16px', lineHeight: 1.1 }}>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(1.9rem, 4vw, 3.2rem)', color: '#262421', margin: '0 0 16px', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
             Let's Talk
           </h1>
           <p style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300, fontSize: 15, color: '#7a7268', lineHeight: 1.8, maxWidth: 500, margin: '0 auto' }}>
@@ -490,7 +490,7 @@ export default function Contact() {
 
               {/* top section */}
               <div>
-                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 26, color: '#21291a', margin: '0 0 4px' }}>
+                <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 26, color: '#262421', margin: '0 0 4px', letterSpacing: '-0.01em' }}>
                   Nivora Interiors
                 </h2>
                 <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 14, color: '#C9A96E', margin: '0 0 32px' }}>

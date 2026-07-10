@@ -258,10 +258,10 @@ export default function Testimonials() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Playfair Display', serif",
             fontWeight: 400,
             fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-            color: '#21291a',
+            color: '#262421',
             margin: '0 0 20px',
             lineHeight: 1.1,
           }}
@@ -377,11 +377,12 @@ export default function Testimonials() {
           viewport={{ once: true, amount: 0.4 }}
         >
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Playfair Display', serif",
             fontWeight: 400,
             fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
-            color: '#21291a',
+            color: '#262421',
             margin: '0 0 16px',
+            letterSpacing: '-0.01em',
           }}>Ready to transform your space?</h2>
           <p style={{
             fontFamily: "'Cormorant Garamond', serif",

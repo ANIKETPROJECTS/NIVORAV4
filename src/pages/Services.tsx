@@ -331,8 +331,8 @@ export default function Services() {
             marginBottom: '0.9rem',
           }}>What We Offer</p>
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(2rem, 3.5vw, 3.25rem)',
             color: '#1C2818',
             lineHeight: 1.06,
@@ -397,8 +397,8 @@ export default function Services() {
             marginBottom: '1rem',
           }}>Ready to Begin?</p>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(2rem, 4vw, 3.5rem)',
             color: '#f5f0e8',
             fontStyle: 'italic',

@@ -30,7 +30,7 @@ export default function Quote() {
         <div className="max-w-3xl mx-auto text-center relative">
           <FadeIn>
             <p className="text-[#b8966a] text-[10px] tracking-[0.4em] uppercase mb-4">Free Consultation</p>
-            <h1 className="font-serif text-5xl md:text-6xl text-[#f5f0e8] font-light leading-tight mb-6">
+            <h1 className="font-serif text-5xl md:text-6xl text-[#f5f0e8] font-light leading-tight mb-6" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}>
               Let's Design Your Space<br />
               <em className="text-[#b8966a]">— The Right Way</em>
             </h1>

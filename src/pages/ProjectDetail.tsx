@@ -281,7 +281,7 @@ export default function ProjectDetail() {
             <p style={{ color: '#D4B483', fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
               {project.badge || `${project.category} · ${project.year}`}
             </p>
-            <h1 className="font-serif font-light mb-2" style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: '#f5f0e8', lineHeight: 1.1 }}>
+            <h1 className="font-serif font-light mb-2" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: '#f5f0e8', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
               {project.name}
             </h1>
             <p style={{ color: 'rgba(245,240,232,0.7)', letterSpacing: '0.08em' }}>{project.location}</p>
@@ -310,7 +310,7 @@ export default function ProjectDetail() {
               <p style={{ color: '#D4B483', fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
                 {project.conceptLabel || 'The Concept'}
               </p>
-              <h2 className="font-serif font-light mb-6 leading-snug" style={{ fontSize: '1.875rem', color: '#2E2A26' }}>
+              <h2 className="font-serif font-light mb-6 leading-snug" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: '1.875rem', color: '#262421', letterSpacing: '-0.01em' }}>
                 {project.concept}
               </h2>
               <p style={{ color: '#2E2A26', opacity: 0.6, lineHeight: '1.9', fontWeight: 300 }}>{project.description}</p>
@@ -411,7 +411,7 @@ export default function ProjectDetail() {
             <p style={{ color: '#D4B483', fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: '1rem' }}>
               Start Your Project
             </p>
-            <h2 className="font-serif font-light mb-8" style={{ fontSize: '2.5rem', color: '#2E2A26' }}>
+            <h2 className="font-serif font-light mb-8" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: '2.5rem', color: '#262421', letterSpacing: '-0.01em' }}>
               Ready to design your space?
             </h2>
             <Link

@@ -240,11 +240,11 @@ function StepContent({
         animate={titleAnimate}
         transition={titleTransition}
         style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "'Playfair Display', serif",
           fontStyle: 'italic',
-          fontWeight: 300,
+          fontWeight: 400,
           fontSize: 'clamp(1.6rem, 2.5vw, 2.1rem)',
-          color: '#1C2818',
+          color: '#262421',
           margin: '0 0 12px',
           lineHeight: 1.1,
           position: mobile ? 'relative' : undefined,
@@ -411,10 +411,10 @@ function ProcessHeader({ isMobile }: { isMobile: boolean }) {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1 }}
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(1.9rem, 3.5vw, 3rem)',
-            color: '#1C2818',
+            color: '#262421',
             lineHeight: 1.04,
             margin: '0 0 18px',
             letterSpacing: '-0.01em',
@@ -425,10 +425,10 @@ function ProcessHeader({ isMobile }: { isMobile: boolean }) {
         <h2
           className="process-heading-mobile"
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(1.9rem, 3.5vw, 3rem)',
-            color: '#1C2818',
+            color: '#262421',
             lineHeight: 1.04,
             margin: '0 0 18px',
             letterSpacing: '-0.01em',

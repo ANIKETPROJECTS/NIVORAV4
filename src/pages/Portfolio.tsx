@@ -248,10 +248,10 @@ export default function Portfolio() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(2.8rem, 7vw, 5.5rem)',
-            color: '#1C2818',
+            color: '#262421',
             lineHeight: 1.05,
             marginBottom: 32,
             letterSpacing: '-0.01em',

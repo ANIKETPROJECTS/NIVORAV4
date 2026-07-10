@@ -20,7 +20,7 @@ export default function ThankYou() {
 
         <FadeIn delay={0.3}>
           <p className="text-[#b8966a] text-[10px] tracking-[0.4em] uppercase mb-6">Enquiry Received</p>
-          <h1 className="font-serif text-5xl md:text-6xl text-[#f5f0e8] font-light leading-tight mb-6">
+          <h1 className="font-serif text-5xl md:text-6xl text-[#f5f0e8] font-light leading-tight mb-6" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}>
             Success! Your Vision<br />
             <em className="text-[#b8966a]">Is in Good Hands.</em>
           </h1>

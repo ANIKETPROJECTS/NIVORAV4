@@ -1263,8 +1263,8 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
           variants={heroItemVariants}
           className="hero-h1"
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(36px, 5vw, 68px)',
             lineHeight: 1.05,
             color: '#f5f0e8',
@@ -1280,8 +1280,8 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
           variants={heroItemVariants}
           className="hero-h1"
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(36px, 5vw, 68px)',
             lineHeight: 1.05,
             color: '#f5f0e8',
@@ -1297,8 +1297,8 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
           variants={heroItalicVariants}
           className="hero-h1"
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
             fontSize: 'clamp(36px, 5vw, 68px)',
             lineHeight: 1.05,
             letterSpacing: '-0.01em',
@@ -2338,7 +2338,7 @@ function MobileServicesSection() {
           textTransform: 'uppercase', color: '#C8A56A', marginBottom: '0.75rem',
         }}>Our Services</p>
         <h2 style={{
-          fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
+          fontFamily: "'Playfair Display', serif", fontWeight: 400,
           fontSize: 'clamp(1.75rem, 7vw, 2.5rem)',
           color: '#262421', lineHeight: 1.1, marginBottom: '0.75rem',
           letterSpacing: '-0.01em',
@@ -2959,8 +2959,8 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 marginBottom: '1rem',
               }}>Our Services</p>
               <h2 style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 300,
+                fontFamily: "'Playfair Display', serif",
+                fontWeight: 400,
                 fontSize: 'clamp(2rem, 4vw, 3.25rem)',
                 color: '#262421',
                 lineHeight: 1.1,
@@ -3374,7 +3374,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
           <FadeIn>
             <div style={{ width: 80, height: 1, backgroundColor: '#C9A96E', margin: '0 auto 24px' }} />
             <p className="text-[#b8966a] text-[10px] tracking-[0.4em] uppercase mb-6">Currently Accepting Projects</p>
-            <h2 className="font-serif text-4xl md:text-6xl text-[#f5f0e8] font-light leading-tight mb-6">
+            <h2 className="font-serif text-4xl md:text-6xl text-[#f5f0e8] font-light leading-tight mb-6" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}>
               Ready to Transform<br />Your Space?
             </h2>
             <p className="text-[#f5f0e8]/50 font-light mb-10 max-w-lg mx-auto leading-relaxed">

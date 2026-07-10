@@ -56,11 +56,11 @@ const LABEL: React.CSSProperties = {
 }
 
 const H2: React.CSSProperties = {
-  fontFamily: "'Cormorant Garamond', serif",
-  fontWeight: 300,
+  fontFamily: "'Playfair Display', serif",
+  fontWeight: 400,
   fontSize: 'clamp(2rem, 3.5vw, 3.25rem)',
   letterSpacing: '-0.01em',
-  color: '#21291a',
+  color: '#262421',
   lineHeight: 1.2,
   marginBottom: 32,
 }
@@ -686,7 +686,7 @@ export default function About() {
       {/* CTA */}
       <section className="py-20 px-6 text-center about-section-pad" style={{ background: '#2A3926' }}>
         <FadeIn>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#f5f0e8', marginBottom: 20, letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#f5f0e8', marginBottom: 20, letterSpacing: '-0.01em', lineHeight: 1.2 }}>
             Let's design something<br />
             <em style={{ color: '#C9A96E' }}>meaningful together.</em>
           </h2>
