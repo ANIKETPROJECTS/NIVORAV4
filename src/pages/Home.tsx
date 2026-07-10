@@ -2478,8 +2478,8 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
           >
 
             {/* Label with flanking rules */}
-            <div className="philosophy-mobile-fade" style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: '2.5rem', ...leftEl(0) }}>
-              <div style={{ height: '0.5px', backgroundColor: '#b8966a', width: 60 }} />
+            <div className="philosophy-mobile-fade philosophy-label-row" style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: '2.5rem', ...leftEl(0) }}>
+              <div className="philosophy-label-rule" style={{ height: '0.5px', backgroundColor: '#b8966a', width: 60 }} />
               <span style={{
                 fontFamily: "'Jost', sans-serif",
                 fontWeight: 300,
@@ -2489,7 +2489,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 textTransform: 'uppercase',
                 whiteSpace: 'nowrap',
               }}>Our Philosophy</span>
-              <div style={{ height: '0.5px', backgroundColor: '#b8966a', width: 60 }} />
+              <div className="philosophy-label-rule" style={{ height: '0.5px', backgroundColor: '#b8966a', width: 60 }} />
             </div>
 
             {/* Quote */}
@@ -2706,81 +2706,114 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
         </div>
 
         <style>{`
-          @media (max-width: 768px) {
+          @media (max-width: 767px) {
+
+            /* ── Layout: stack text → image ─────────────────────────── */
             .philosophy-flex {
               flex-direction: column !important;
               gap: 0 !important;
             }
             .philosophy-text-block {
               flex: 1 1 100% !important;
-              min-width: 100% !important;
+              min-width: 0 !important;
+              width: 100% !important;
+              box-sizing: border-box !important;
               order: 1 !important;
-              margin-bottom: 24px !important;
+              margin-bottom: 28px !important;
             }
             .philosophy-image-col {
               flex: 1 1 100% !important;
-              min-width: 100% !important;
+              min-width: 0 !important;
               width: 100% !important;
               order: 2 !important;
               align-self: auto !important;
               margin: 0 !important;
             }
+
+            /* ── Heading — reduce size on narrow screens ─────────────── */
+            .philosophy-text-block > p:first-of-type {
+              font-size: clamp(1.35rem, 6vw, 1.8rem) !important;
+              line-height: 1.35 !important;
+            }
+
+            /* ── Label with flanking rules ───────────────────────────── */
+            .philosophy-label-row {
+              gap: 10px !important;
+            }
+            .philosophy-label-rule {
+              width: 36px !important;
+              flex-shrink: 0 !important;
+            }
+
+            /* ── Image: full-width, natural aspect ratio ─────────────── */
             .philosophy-image-wrap {
               display: block !important;
               position: relative !important;
               height: auto !important;
-              overflow: visible !important;
-              margin-bottom: 30px !important;
+              overflow: hidden !important;
+              margin-bottom: 0 !important;
+              border-radius: 12px !important;
             }
             .philosophy-frame {
               display: none !important;
             }
             .philosophy-photo-inner {
-              height: 340px !important;
+              height: auto !important;
               width: 100% !important;
               border-radius: 12px !important;
               overflow: hidden !important;
+              position: relative !important;
             }
             .philosophy-photo-inner .philosophy-photo {
               width: 100% !important;
-              height: 100% !important;
-              object-fit: cover !important;
-              border-radius: 12px !important;
+              height: auto !important;
+              object-fit: unset !important;
+              display: block !important;
+              border-radius: 0 !important;
             }
+
+            /* ── Quote card: anchored inside image, full span ─────────── */
             .philosophy-quote-card {
               position: absolute !important;
-              bottom: -20px !important;
-              left: 0px !important;
-              right: auto !important;
+              bottom: 14px !important;
+              left: 12px !important;
+              right: 12px !important;
               top: auto !important;
-              width: 60% !important;
-              max-width: 60% !important;
+              width: auto !important;
+              max-width: none !important;
               margin-top: 0 !important;
-              background-color: rgba(28,38,26,0.93) !important;
-              backdrop-filter: none !important;
-              -webkit-backdrop-filter: none !important;
-              border: 1px solid rgba(180,150,80,0.5) !important;
-              border-radius: 8px !important;
-              padding: 14px !important;
-              box-shadow: 0 14px 30px rgba(0,0,0,0.3) !important;
-              transform: translateX(-40px) !important;
+              background-color: rgba(18,28,18,0.88) !important;
+              backdrop-filter: blur(8px) !important;
+              -webkit-backdrop-filter: blur(8px) !important;
+              border: 1px solid rgba(201,169,110,0.55) !important;
+              border-radius: 10px !important;
+              padding: 14px 16px !important;
+              box-shadow: 0 12px 32px rgba(0,0,0,0.32) !important;
+              transform: translateY(16px) !important;
               opacity: 0 !important;
               transition: opacity 500ms ease-out 300ms, transform 500ms ease-out 300ms !important;
             }
             .philosophy-in-view .philosophy-quote-card {
-              transform: translateX(0) !important;
+              transform: translateY(0) !important;
               opacity: 1 !important;
             }
+
+            /* ── Quote card typography ───────────────────────────────── */
             .philosophy-quote-mark {
-              font-size: 22px !important;
+              font-size: 24px !important;
+              margin-bottom: 10px !important;
             }
             .philosophy-quote-text {
-              font-size: 12px !important;
+              font-size: 13px !important;
+              line-height: 1.55 !important;
             }
             .philosophy-quote-author {
               font-size: 10px !important;
               letter-spacing: 1.5px !important;
+              margin-top: 10px !important;
             }
+
+            /* ── Text animations (slide up instead of left) ──────────── */
             .philosophy-mobile-fade {
               transform: translateY(20px) !important;
             }
