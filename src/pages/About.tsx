@@ -410,7 +410,7 @@ function HeroSection() {
   const words = ['Design', 'With']
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden about-hero" style={{ background: '#2A3926' }}>
+    <section className="relative py-24 px-6 overflow-hidden about-hero" style={{ background: '#f5f2ed' }}>
       <div className="absolute inset-0 opacity-[0.07]">
         <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #a18661 0%, transparent 60%)' }} />
       </div>
@@ -420,13 +420,13 @@ function HeroSection() {
         </FadeIn>
 
         <div ref={headingRef}>
-          <h1 className="about-hero-heading-desktop" style={{ ...H2, color: '#f5f2ed', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24 }}>
+          <h1 className="about-hero-heading-desktop" style={{ ...H2, color: '#2A3926', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24 }}>
             Design With<br /><em style={{ color: '#a18661', fontStyle: 'italic' }}>Purpose & Craft</em>
           </h1>
 
           <h1
             className="about-hero-heading-mobile"
-            style={{ ...H2, color: '#f5f2ed', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24, justifyContent: 'center', flexWrap: 'wrap', gap: '0.3em', perspective: 500 }}
+            style={{ ...H2, color: '#2A3926', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24, justifyContent: 'center', flexWrap: 'wrap', gap: '0.3em', perspective: 500 }}
           >
             {words.map((w, i) => (
               <motion.span
@@ -447,7 +447,7 @@ function HeroSection() {
         </div>
 
         <FadeIn direction="up" delay={0.15}>
-          <p style={{ ...BODY, color: 'rgba(245,242,237,0.72)', maxWidth: 560, margin: '0 auto', fontSize: 15 }}>
+          <p style={{ ...BODY, color: 'rgba(42,57,38,0.65)', maxWidth: 560, margin: '0 auto', fontSize: 15 }}>
             NIVORA is a boutique interior design studio creating thoughtful, refined spaces that balance elegance with everyday functionality.
           </p>
         </FadeIn>
@@ -457,7 +457,7 @@ function HeroSection() {
         /* Mobile: force the same dark olive background/text, tighter padding, word-flip heading */
         @media (max-width: 768px) {
           .about-hero {
-            background: #2A3926 !important;
+            background: #f5f2ed !important;
             padding-top: 48px !important;
             padding-bottom: 48px !important;
             padding-left: 24px !important;
@@ -612,7 +612,7 @@ export default function About() {
       <FounderSection founderImg={founderImg} />
 
       {/* CTA */}
-      <section className="py-20 px-6 text-center about-section-pad" style={{ background: '#21291a' }}>
+      <section className="py-20 px-6 text-center about-section-pad" style={{ background: '#2A3926' }}>
         <FadeIn>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#f5f0e8', marginBottom: 20, letterSpacing: '-0.01em', lineHeight: 1.2 }}>
             Let's design something<br />
