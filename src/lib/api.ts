@@ -24,6 +24,7 @@ export interface Project {
 
   // Images
   coverImage: string
+  heroImage: string
   images: string[]
 }
 
@@ -166,7 +167,7 @@ export async function adminLogin(username: string, password: string): Promise<vo
 }
 
 // ── Portfolio grid ────────────────────────────────────────────────────────────
-export function fetchProjects(): Promise<Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage' | 'order'>[]> {
+export function fetchProjects(): Promise<Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage' | 'heroImage' | 'order'>[]> {
   return request('/projects')
 }
 

@@ -45,7 +45,7 @@ router.get('/', async (_req, res) => {
   try {
     const projects = await Project.find(
       {},
-      'id name location category year badge concept coverImage order'
+      'id name location category year badge concept coverImage heroImage order'
     ).sort({ order: 1, createdAt: -1 })
     res.json(projects)
   } catch (err) {

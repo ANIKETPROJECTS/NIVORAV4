@@ -259,8 +259,8 @@ export default function ProjectDetail() {
     )
   }
 
-  // Gallery images: only the real images stored in MongoDB (skip the hero at index 0)
-  const galleryImages = project.images.slice(1).filter(img => img && img.trim() !== '')
+  // Gallery images: all images stored in MongoDB (the hero banner is a separate field)
+  const galleryImages = project.images.filter(img => img && img.trim() !== '')
 
   return (
     <div style={{ background: '#FFFCF7' }} className="pt-20">
@@ -268,7 +268,7 @@ export default function ProjectDetail() {
       {/* Hero */}
       <div className="relative overflow-hidden" style={{ height: '70vh' }}>
         <img
-          src={project.images[0] || project.coverImage}
+          src={project.heroImage || project.images[0] || project.coverImage}
           alt={project.name}
           className="w-full h-full object-cover"
           style={{ filter: 'contrast(1.07) saturate(1.05)' }}

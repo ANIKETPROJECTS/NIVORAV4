@@ -48,10 +48,13 @@ const projectSchema = new mongoose.Schema(
     materials: [{ type: String, trim: true }],
 
     // ── Images ───────────────────────────────────────────────────────────────
-    // Cloudinary URL for the card thumbnail / hero background
+    // Cloudinary URL for the Portfolio page card thumbnail
     coverImage: { type: String, default: '' },
 
-    // Ordered array of Cloudinary URLs — first item is the hero image on the detail page
+    // Cloudinary URL for the large banner image at the top of the project detail page
+    heroImage: { type: String, default: '' },
+
+    // Ordered array of Cloudinary URLs shown in the project detail page gallery
     images: [{ type: String }],
   },
   { timestamps: true }

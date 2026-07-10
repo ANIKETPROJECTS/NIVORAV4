@@ -1,6 +1,6 @@
 import { useState, useRef, ChangeEvent } from 'react'
 import { Project, uploadImages } from '../../lib/api'
-import { X, Plus, Upload, Loader2, GripVertical, Star } from 'lucide-react'
+import { X, Plus, Upload, Loader2, GripVertical } from 'lucide-react'
 
 type FormData = Omit<Project, 'badge'>
 
@@ -24,6 +24,7 @@ const DEFAULT: Partial<FormData> = {
   designIntent: '',
   materials: [],
   coverImage: '',
+  heroImage: '',
   images: [],
 }
 
@@ -35,12 +36,15 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
 
   // Image upload state
   const [uploadingCover, setUploadingCover] = useState(false)
+  const [uploadingHero, setUploadingHero] = useState(false)
   const [uploadingGallery, setUploadingGallery] = useState(false)
   const coverRef = useRef<HTMLInputElement>(null)
+  const heroRef = useRef<HTMLInputElement>(null)
   const galleryRef = useRef<HTMLInputElement>(null)
 
   // URL paste state
   const [coverUrlInput, setCoverUrlInput] = useState('')
+  const [heroUrlInput, setHeroUrlInput] = useState('')
   const [galleryUrlInput, setGalleryUrlInput] = useState('')
 
   const applyCoverUrl = () => {
@@ -48,6 +52,13 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
     if (!url) return
     set('coverImage', url)
     setCoverUrlInput('')
+  }
+
+  const applyHeroUrl = () => {
+    const url = heroUrlInput.trim()
+    if (!url) return
+    set('heroImage', url)
+    setHeroUrlInput('')
   }
 
   const addGalleryUrl = () => {
@@ -93,6 +104,21 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
     }
   }
 
+  const handleHeroUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    if (!files.length) return
+    setUploadingHero(true)
+    try {
+      const urls = await uploadImages([files[0]])
+      set('heroImage', urls[0])
+    } catch (err: unknown) {
+      setError((err as Error).message)
+    } finally {
+      setUploadingHero(false)
+      if (heroRef.current) heroRef.current.value = ''
+    }
+  }
+
   const handleGalleryUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
     if (!files.length) return
@@ -117,8 +143,6 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
     imgs.splice(to, 0, item)
     set('images', imgs)
   }
-
-  const setCoverFromGallery = (url: string) => set('coverImage', url)
 
   const handleSubmit = async () => {
     setError('')
@@ -242,13 +266,13 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
             )}
           </section>
 
-          {/* ── Hero Image (portfolio page thumbnail) ── */}
+          {/* ── Cover Image (portfolio page card) ── */}
           <section className="apf-section">
-            <h3 className="apf-section-title">Hero Image</h3>
-            <p className="apf-hint">The image shown on the Portfolio page card and hero background.</p>
+            <h3 className="apf-section-title">Cover Image</h3>
+            <p className="apf-hint">The thumbnail image shown on the Portfolio page card.</p>
             {form.coverImage ? (
               <div className="apf-cover-preview">
-                <img src={form.coverImage} alt="Hero" />
+                <img src={form.coverImage} alt="Cover" />
                 <button className="apf-cover-remove" onClick={() => set('coverImage', '')}>
                   <X size={14} /> Remove
                 </button>
@@ -283,16 +307,55 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
                 </button>
               </div>
             )}
-            {/* Allow picking from gallery too */}
-            {(form.images || []).length > 0 && !form.coverImage && (
-              <p className="apf-hint" style={{ marginTop: 6 }}>Or click any gallery image below to set it as the hero.</p>
+          </section>
+
+          {/* ── Hero Image (project detail page banner) ── */}
+          <section className="apf-section">
+            <h3 className="apf-section-title">Hero Image</h3>
+            <p className="apf-hint">The large banner image shown at the top of the project detail page.</p>
+            {form.heroImage ? (
+              <div className="apf-cover-preview">
+                <img src={form.heroImage} alt="Hero" />
+                <button className="apf-cover-remove" onClick={() => set('heroImage', '')}>
+                  <X size={14} /> Remove
+                </button>
+              </div>
+            ) : (
+              <div className="apf-upload-zone" onClick={() => heroRef.current?.click()}>
+                {uploadingHero
+                  ? <><Loader2 size={24} className="apf-spin" /> Uploading…</>
+                  : <><Upload size={24} /> Click to upload hero image</>}
+              </div>
+            )}
+            <input ref={heroRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleHeroUpload} />
+            {/* URL paste option for hero */}
+            {!form.heroImage && (
+              <div className="apf-url-row" style={{ marginTop: 10 }}>
+                <span className="apf-url-label">Or paste URL:</span>
+                <input
+                  className="apf-url-input"
+                  type="url"
+                  value={heroUrlInput}
+                  onChange={e => setHeroUrlInput(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); applyHeroUrl() } }}
+                  placeholder="https://example.com/hero.jpg"
+                />
+                <button
+                  type="button"
+                  className="apf-url-btn"
+                  onClick={applyHeroUrl}
+                  disabled={!heroUrlInput.trim()}
+                >
+                  Use URL
+                </button>
+              </div>
             )}
           </section>
 
           {/* ── Gallery Images ── */}
           <section className="apf-section">
             <h3 className="apf-section-title">Gallery Images</h3>
-            <p className="apf-hint">First image is shown first on the project detail page. Reorder with ↑ ↓, or click "Set Hero" on any image to use it as the Portfolio page hero image.</p>
+            <p className="apf-hint">Shown on the project detail page. Reorder with ↑ ↓.</p>
 
             <div className="apf-upload-zone" onClick={() => galleryRef.current?.click()}>
               {uploadingGallery
@@ -323,31 +386,19 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
 
             {(form.images || []).length > 0 && (
               <div className="apf-gallery-grid">
-                {(form.images || []).map((url, i) => {
-                  const isCover = !!form.coverImage && form.coverImage === url
-                  return (
-                    <div key={i} className={`apf-gallery-item ${isCover ? 'apf-gallery-item-cover' : ''}`}>
-                      <img src={url} alt={`Image ${i + 1}`} />
-                      <div className="apf-gallery-overlay">
-                        <button onClick={() => removeImage(i)} title="Remove" className="apf-gal-btn apf-gal-btn-del"><X size={12} /></button>
-                      </div>
-                      <button
-                        onClick={() => setCoverFromGallery(url)}
-                        title={isCover ? 'This is the Portfolio page hero image' : 'Set as Portfolio page hero image'}
-                        className={`apf-cover-toggle ${isCover ? 'apf-cover-toggle-active' : ''}`}
-                        disabled={isCover}
-                      >
-                        <Star size={12} fill={isCover ? 'currentColor' : 'none'} />
-                        {isCover ? 'Hero' : 'Set Hero'}
-                      </button>
-                      <div className="apf-gallery-order">
-                        {i > 0 && <button onClick={() => moveImage(i, i - 1)} className="apf-ord-btn">↑</button>}
-                        {i < (form.images || []).length - 1 && <button onClick={() => moveImage(i, i + 1)} className="apf-ord-btn">↓</button>}
-                      </div>
-                      <span className="apf-gallery-num">{i === 0 ? 'First' : `#${i + 1}`}</span>
+                {(form.images || []).map((url, i) => (
+                  <div key={i} className="apf-gallery-item">
+                    <img src={url} alt={`Image ${i + 1}`} />
+                    <div className="apf-gallery-overlay">
+                      <button onClick={() => removeImage(i)} title="Remove" className="apf-gal-btn apf-gal-btn-del"><X size={12} /></button>
                     </div>
-                  )
-                })}
+                    <div className="apf-gallery-order">
+                      {i > 0 && <button onClick={() => moveImage(i, i - 1)} className="apf-ord-btn">↑</button>}
+                      {i < (form.images || []).length - 1 && <button onClick={() => moveImage(i, i + 1)} className="apf-ord-btn">↓</button>}
+                    </div>
+                    <span className="apf-gallery-num">#{i + 1}</span>
+                  </div>
+                ))}
               </div>
             )}
           </section>
@@ -484,7 +535,6 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
           border: 1px solid #e2d9ce; aspect-ratio: 4/3;
           box-sizing: border-box;
         }
-        .apf-gallery-item-cover { border-color: #C9A96E; box-shadow: inset 0 0 0 1px #C9A96E, 0 0 0 2px rgba(201,169,110,0.25); }
         .apf-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .apf-gallery-overlay {
           position: absolute; top: 4px; right: 4px;
@@ -502,18 +552,6 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
         .apf-gal-btn:hover { background: #ffffff; }
         .apf-gal-btn-del { background: rgba(184,90,74,0.9); color: #fff; }
         .apf-gal-btn-del:hover { background: rgba(184,90,74,1); }
-        .apf-cover-toggle {
-          position: absolute; bottom: 4px; right: 4px; z-index: 2;
-          display: flex; align-items: center; gap: 4px;
-          background: rgba(26,22,18,0.72); color: #f0ebe3;
-          border: none; border-radius: 20px; padding: 4px 9px;
-          font-size: 10px; font-family: Arial, sans-serif; cursor: pointer;
-          letter-spacing: 0.02em; transition: background 0.2s, color 0.2s;
-        }
-        .apf-cover-toggle:hover:not(:disabled) { background: rgba(26,22,18,0.9); }
-        .apf-cover-toggle-active {
-          background: #C9A96E; color: #2a2218; cursor: default;
-        }
         .apf-gallery-order {
           position: absolute; bottom: 4px; left: 4px; display: flex; gap: 4px;
         }
