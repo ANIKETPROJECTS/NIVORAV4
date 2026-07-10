@@ -294,20 +294,8 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
   const [hovered, setHovered] = useState(false)
   const isMobile = useIsMobile()
   const ref = useRef<HTMLDivElement>(null)
-
-  // Very low threshold (0.05) so even a sliver of the item triggers the animation on mobile.
-  // No negative rootMargin on mobile — don't delay triggering.
-  const inView = useInView(ref, { once: !isMobile, amount: isMobile ? 0.05 : 0.2 })
-
-  // Fallback: if IntersectionObserver hasn't fired within 2s on mobile, force all items visible.
-  const [forcedVisible, setForcedVisible] = useState(false)
-  useEffect(() => {
-    if (!isMobile) return
-    const t = setTimeout(() => setForcedVisible(true), 2000)
-    return () => clearTimeout(t)
-  }, [isMobile])
-
-  const mobileActive = isMobile && (inView || forcedVisible)
+  // Desktop only — framer-motion inView drives variant animation
+  const inView = useInView(ref, { once: true, amount: 0.2 })
   const stagger = index * 0.12
 
   return (
@@ -316,98 +304,108 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
       variants={isMobile ? undefined : valueItemVariants}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="value-item-row"
-      style={{ display: 'flex', gap: 20, alignItems: 'flex-start', paddingBottom: 28 }}
+      // On mobile: CSS animation class drives the entrance (no FM opacity/transform)
+      className={isMobile ? 'value-item-row value-item-mob' : 'value-item-row'}
+      style={{
+        display: 'flex', gap: 20, alignItems: 'flex-start', paddingBottom: 28,
+        // CSS variable consumed by the keyframe animation delay on mobile
+        ...(isMobile ? { '--vi-delay': `${stagger}s` } as React.CSSProperties : {}),
+      }}
     >
       {/* Left column — icon */}
-      <div
-        className="value-icon-col"
-        style={{ flexShrink: 0, width: 40, paddingTop: 2, position: 'relative' }}
-      >
-        {/* Gold glow pulse — mobile only */}
-        {isMobile && (
-          <motion.div
-            aria-hidden="true"
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={mobileActive ? { opacity: [0, 0.9, 0], scale: [0.6, 1.5, 1.9] } : { opacity: 0, scale: 0.6 }}
-            transition={{ duration: 0.9, delay: stagger, ease: 'easeOut' }}
-            style={{ position: 'absolute', inset: -4, borderRadius: '50%', background: 'radial-gradient(circle, rgba(161,134,97,0.55) 0%, transparent 70%)', pointerEvents: 'none' }}
-          />
-        )}
-        {/* Icon — mobile uses only opacity+translateY (no scale: 0) so it's never invisible if animation stalls */}
-        <motion.div
-          initial={isMobile ? { opacity: 0, y: 10 } : undefined}
-          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }) : undefined}
-          transition={isMobile ? { duration: 0.4, ease: 'easeOut', delay: stagger } : undefined}
-        >
+      <div className="value-icon-col" style={{ flexShrink: 0, width: 40, paddingTop: 2 }}>
+        {isMobile ? (
+          /* Mobile: plain element — no FM initial/animate so opacity is never set to 0 by JS */
           <v.Icon
             size={36}
             color="#a18661"
             strokeWidth={1.5}
+            style={{ display: 'block' }}
+          />
+        ) : (
+          /* Desktop: FM wrapper for hover effects (unchanged) */
+          <v.Icon
+            size={36}
+            color="#a18661"
+            strokeWidth={1.25}
             className="value-icon-svg"
             style={{
-              flexShrink: 0,
-              display: 'block',
+              flexShrink: 0, display: 'block',
               opacity: hovered ? 1 : 0.85,
               transition: 'opacity 0.25s ease, transform 0.25s ease',
               transform: hovered ? 'scale(1.05)' : 'scale(1)',
             }}
           />
-        </motion.div>
+        )}
       </div>
 
       {/* Right column — title + desc + divider */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        {/* Title — mobile uses only opacity+translateY (no x slide that can get clipped) */}
-        <motion.h4
-          initial={isMobile ? { opacity: 0, y: 12 } : undefined}
-          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }) : undefined}
-          transition={isMobile ? { duration: 0.4, ease: 'easeOut', delay: stagger + 0.12 } : undefined}
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 600,
-            fontSize: '1.2rem',
-            letterSpacing: '0.01em',
-            color: hovered ? '#a18661' : '#21291a',
-            transition: 'color 0.25s ease',
-            margin: '0 0 8px',
-            lineHeight: 1.3,
-          }}
-        >{v.title}</motion.h4>
-        <motion.p
-          initial={isMobile ? { opacity: 0, y: 12 } : undefined}
-          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }) : undefined}
-          transition={isMobile ? { duration: 0.4, ease: 'easeOut', delay: stagger + 0.22 } : undefined}
-          style={{ ...BODY, fontSize: 13, marginBottom: 20 }}
-        >{v.desc}</motion.p>
-
-        {/* Divider — visible track always rendered; gold fill animates in on mobile */}
-        <div style={{ position: 'relative', height: 1, background: 'rgba(161,134,97,0.18)', borderRadius: 1, overflow: 'hidden' }}>
-          <motion.div
-            initial={isMobile ? { scaleX: 0 } : undefined}
-            animate={isMobile ? (mobileActive ? { scaleX: 1 } : { scaleX: 0 }) : undefined}
-            transition={isMobile ? { duration: 0.45, ease: 'easeOut', delay: stagger + 0.3 } : undefined}
-            style={{
-              position: 'absolute', inset: 0,
-              background: '#a18661',
-              borderRadius: 1,
-              transformOrigin: 'left center',
-              ...(isMobile ? {} : { transform: hovered ? 'scaleX(1)' : 'scaleX(0)', transition: 'transform 0.3s ease' }),
-            }}
-          />
-        </div>
+        {isMobile ? (
+          /* Mobile: plain elements — CSS animation on the row handles entrance */
+          <>
+            <h4 style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600, fontSize: '1.2rem', letterSpacing: '0.01em',
+              color: '#21291a', margin: '0 0 8px', lineHeight: 1.3,
+            }}>{v.title}</h4>
+            <p style={{ ...BODY, fontSize: 13, marginBottom: 20 }}>{v.desc}</p>
+            {/* Divider always visible on mobile */}
+            <div style={{ height: 1, background: '#a18661', borderRadius: 1, opacity: 0.35 }} />
+          </>
+        ) : (
+          /* Desktop: FM-animated elements (unchanged) */
+          <>
+            <motion.h4
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontWeight: 600, fontSize: '1.2rem', letterSpacing: '0.01em',
+                color: hovered ? '#a18661' : '#21291a',
+                transition: 'color 0.25s ease', margin: '0 0 8px', lineHeight: 1.3,
+              }}
+            >{v.title}</motion.h4>
+            <motion.p style={{ ...BODY, fontSize: 13, marginBottom: 20 }}>{v.desc}</motion.p>
+            <div style={{ position: 'relative', height: 1, background: 'rgba(161,134,97,0.18)', borderRadius: 1, overflow: 'hidden' }}>
+              <motion.div
+                style={{
+                  position: 'absolute', inset: 0, background: '#a18661', borderRadius: 1,
+                  transformOrigin: 'left center',
+                  transform: hovered ? 'scaleX(1)' : 'scaleX(0)',
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+            </div>
+          </>
+        )}
       </div>
 
       <style>{`
+        /* Mobile entrance animation — pure CSS, no JS required to trigger */
+        @keyframes vi-fade-up {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: translateY(0);    }
+        }
+
         .value-icon-col { width: 40px; }
+
         @media (max-width: 768px) {
           .value-item-row {
-            gap: 12px !important;
+            gap: 14px !important;
             padding-top: 20px !important;
             padding-bottom: 20px !important;
           }
           .value-icon-col { width: 36px !important; }
-          .value-icon-col svg { width: 36px !important; height: 36px !important; }
+          .value-icon-col svg,
+          .value-item-mob svg {
+            width: 36px !important;
+            height: 36px !important;
+          }
+          /* CSS animation drives entrance — opacity:1 is the settled state.
+             animation-fill-mode: both → starts from 'from' (opacity:0) during delay,
+             settles permanently at 'to' (opacity:1). No JS needed. */
+          .value-item-mob {
+            animation: vi-fade-up 0.5s ease-out calc(var(--vi-delay, 0s)) both;
+          }
         }
       `}</style>
     </motion.div>
@@ -587,15 +585,24 @@ export default function About() {
               <FadeIn delay={0.1}>
                 <p style={LABEL}>Our Values</p>
               </FadeIn>
-              <motion.div
-                variants={valuesContainerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-60px' }}
-                style={{ display: 'flex', flexDirection: 'column' }}
-              >
-                {values.map((v, i) => <ValueItem key={i} v={v} index={i} />)}
-              </motion.div>
+              {/* On mobile: plain div — breaks Framer Motion's "hidden" variant propagation
+                  which was setting opacity:0 inline on children before isMobile could flip.
+                  On desktop: motion.div with stagger variants (unchanged). */}
+              {isMobile ? (
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {values.map((v, i) => <ValueItem key={i} v={v} index={i} />)}
+                </div>
+              ) : (
+                <motion.div
+                  variants={valuesContainerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-60px' }}
+                  style={{ display: 'flex', flexDirection: 'column' }}
+                >
+                  {values.map((v, i) => <ValueItem key={i} v={v} index={i} />)}
+                </motion.div>
+              )}
             </div>
           </div>
         </div>
