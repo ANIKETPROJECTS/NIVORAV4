@@ -31,6 +31,23 @@ app.use('/api/contact', contactRoute)
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
 
+// ── Global error handler ──────────────────────────────────────────────────────
+// Normalises Multer and other route errors to consistent JSON responses.
+app.use((err, _req, res, _next) => {
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(413).json({ error: 'File too large.' })
+  }
+  if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+    return res.status(400).json({ error: 'Unexpected file field.' })
+  }
+  if (err.name === 'MulterError') {
+    return res.status(400).json({ error: err.message })
+  }
+  console.error('[Server] Unhandled error:', err)
+  const status = err.status || err.statusCode || 500
+  res.status(status).json({ error: err.message || 'Internal server error.' })
+})
+
 // ── Start ─────────────────────────────────────────────────────────────────────
 connectDB()
   .then(() => {
