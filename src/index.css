@@ -191,6 +191,24 @@ h3 { font-size: clamp(1.1rem, 2.2vw, 1.85rem); }
   }
 }
 
+/* Mobile: content slides from left, image slides from right, simultaneously; replays on re-entry */
+@media (max-width: 768px) {
+  .founder-mobile .founder-animate {
+    transform: translateX(-30px) !important;
+    transition-delay: 0ms !important;
+  }
+  .founder-mobile .founder-animate.in-view {
+    transform: translateX(0) !important;
+  }
+  .founder-mobile .founder-image-wrap {
+    transform: translateX(30px) !important;
+    transition-delay: 0ms !important;
+  }
+  .founder-mobile .founder-image-wrap.in-view {
+    transform: translateX(0) !important;
+  }
+}
+
 /* ── Philosophy quote card — continuous shimmer/glow on gold border ── */
 @keyframes philosophy-card-glow {
   0%, 100% {

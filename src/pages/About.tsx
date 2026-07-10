@@ -1,9 +1,22 @@
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import FadeIn from '../components/FadeIn'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Lightbulb, Gem, Heart, Wrench, ShieldCheck, Target, Compass } from 'lucide-react'
 import founderPhoto from '@assets/WhatsApp_Image_2026-07-08_at_20.50.13_1783534790416.jpeg'
+
+/* ─── Shared mobile breakpoint hook ─────────────────────── */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return isMobile
+}
 
 /* ─── DATA ──────────────────────────────────────────────── */
 const values = [
@@ -91,6 +104,7 @@ const FOUNDER_TEXT_DELAYS = [0, 130, 260, 390, 520, 650, 780]
 
 function FounderSection({ founderImg }: { founderImg: string }) {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const el = sectionRef.current
@@ -99,7 +113,10 @@ function FounderSection({ founderImg }: { founderImg: string }) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view')
-          observer.unobserve(entry.target)
+          // Desktop: animate once, then stop observing. Mobile: keep observing so it can replay.
+          if (!isMobile) observer.unobserve(entry.target)
+        } else if (isMobile) {
+          entry.target.classList.remove('in-view')
         }
       })
     }, { threshold: 0.15 })
@@ -108,10 +125,10 @@ function FounderSection({ founderImg }: { founderImg: string }) {
       .forEach(node => observer.observe(node))
 
     return () => observer.disconnect()
-  }, [])
+  }, [isMobile])   // re-run when the breakpoint changes so observer/replay mode stays in sync with rendered state
 
   return (
-    <section className="py-24" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
+    <section className={`py-24 about-section-pad${isMobile ? ' founder-mobile' : ''}`} style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
       <div ref={sectionRef} className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-stretch">
         <div>
           <p className="founder-animate" style={{ ...LABEL, transitionDelay: `${FOUNDER_TEXT_DELAYS[0]}ms` }}>The Founder</p>
@@ -142,17 +159,25 @@ function FounderSection({ founderImg }: { founderImg: string }) {
 /* ─── STATS COUNTER — clean count-up, no dip ────────────── */
 function AboutStatsSection() {
   const [counts, setCounts] = useState(statsData.map(() => 0))
-  const startedRef = useRef(false)   // ref, not state — never triggers re-render/cleanup
+  const startedRef = useRef(false)   // desktop: never triggers re-render/cleanup once started
   const sectionRef = useRef<HTMLElement>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
-    const rafIds: number[] = []
+    let rafIds: number[] = []
+
+    const cancelRafs = () => {
+      rafIds.forEach(id => cancelAnimationFrame(id))
+      rafIds = []
+    }
 
     const startCounting = () => {
-      if (startedRef.current) return
+      if (!isMobile && startedRef.current) return
       startedRef.current = true
+      cancelRafs() // guard against overlapping runs (e.g. rapid mobile re-entry)
+      if (isMobile) setCounts(statsData.map(() => 0))
       statsData.forEach((stat, i) => {
         const startTime = performance.now()
         const tick = (now: number) => {
@@ -170,9 +195,10 @@ function AboutStatsSection() {
       })
     }
 
-    // IntersectionObserver for scroll-triggered start
+    // IntersectionObserver for scroll-triggered start. Mobile: replay every re-entry.
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) startCounting()
+      else if (isMobile) { startedRef.current = false; cancelRafs() }
     }, { threshold: 0.2 })
     observer.observe(el)
 
@@ -182,13 +208,14 @@ function AboutStatsSection() {
 
     return () => {
       observer.disconnect()
-      rafIds.forEach(id => cancelAnimationFrame(id))
+      cancelRafs()
     }
-  }, [])   // run once — startedRef prevents double-start
+  }, [isMobile])   // re-run when the breakpoint changes so observer/replay mode stays in sync with rendered state
 
   return (
     <section
       ref={sectionRef}
+      className="about-stats-section"
       style={{
         background: '#f5f2ed',
         borderTop: '1px solid rgba(161,134,97,0.2)',
@@ -263,14 +290,22 @@ function MvBox({ type, text }: { type: 'mission' | 'vision'; text: string }) {
 }
 
 /* ─── SINGLE VALUE ITEM — flex layout, no overlap ───────── */
-function ValueItem({ v }: { v: typeof values[0] }) {
+function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
   const [hovered, setHovered] = useState(false)
+  const isMobile = useIsMobile()
+  const ref = useRef<HTMLDivElement>(null)
+  // Mobile: replay every time the item re-enters the viewport. Desktop: driven by parent's variants (unchanged).
+  const inView = useInView(ref, { once: !isMobile, amount: 0.2 })
+  const mobileActive = isMobile && inView
+  const stagger = index * 0.15
 
   return (
     <motion.div
-      variants={valueItemVariants}
+      ref={ref}
+      variants={isMobile ? undefined : valueItemVariants}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className="value-item-row"
       style={{ display: 'flex', gap: 20, alignItems: 'flex-start', paddingBottom: 28 }}
     >
       {/* Left column — large line-art icon */}
@@ -280,101 +315,206 @@ function ValueItem({ v }: { v: typeof values[0] }) {
           flexShrink: 0,
           width: 40,
           paddingTop: 2,
+          position: 'relative',
         }}
       >
-        <v.Icon
-          size={40}
-          color="#a18661"
-          strokeWidth={1.25}
-          style={{
-            flexShrink: 0,
-            display: 'block',
-            opacity: hovered ? 1 : 0.85,
-            transition: 'opacity 0.25s ease, transform 0.25s ease',
-            transform: hovered ? 'scale(1.05)' : 'scale(1)',
-          }}
-        />
+        {/* Gold glow pulse — mobile only, plays once as the icon enters view */}
+        {isMobile && (
+          <motion.div
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={mobileActive ? { opacity: [0, 0.9, 0], scale: [0.6, 1.5, 1.9] } : { opacity: 0, scale: 0.6 }}
+            transition={{ duration: 0.9, delay: stagger, ease: 'easeOut' }}
+            style={{ position: 'absolute', inset: -4, borderRadius: '50%', background: 'radial-gradient(circle, rgba(161,134,97,0.55) 0%, transparent 70%)', pointerEvents: 'none' }}
+          />
+        )}
+        <motion.div
+          initial={isMobile ? { scale: 0, opacity: 0 } : undefined}
+          animate={isMobile ? (mobileActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }) : undefined}
+          transition={isMobile ? { type: 'spring', stiffness: 300, damping: 12, delay: stagger } : undefined}
+        >
+          <v.Icon
+            size={40}
+            color="#a18661"
+            strokeWidth={isMobile ? 1.5 : 1.25}
+            className="value-icon-svg"
+            style={{
+              flexShrink: 0,
+              display: 'block',
+              opacity: hovered ? 1 : 0.85,
+              transition: 'opacity 0.25s ease, transform 0.25s ease',
+              transform: hovered ? 'scale(1.05)' : 'scale(1)',
+            }}
+          />
+        </motion.div>
       </div>
 
       {/* Right column — title + desc + divider */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <h4 style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontWeight: 600,
-          fontSize: '1.2rem',
-          letterSpacing: '0.01em',
-          color: hovered ? '#a18661' : '#21291a',
-          transition: 'color 0.25s ease',
-          margin: '0 0 8px',
-          lineHeight: 1.3,
-        }}>{v.title}</h4>
-        <p style={{ ...BODY, fontSize: 13, marginBottom: 20 }}>{v.desc}</p>
-        {/* Hover-draw divider */}
+        <motion.h4
+          initial={isMobile ? { opacity: 0, x: -24 } : undefined}
+          animate={isMobile ? (mobileActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }) : undefined}
+          transition={isMobile ? { duration: 0.5, delay: stagger + 0.2, ease: [0.16, 1, 0.3, 1] } : undefined}
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 600,
+            fontSize: '1.2rem',
+            letterSpacing: '0.01em',
+            color: hovered ? '#a18661' : '#21291a',
+            transition: 'color 0.25s ease',
+            margin: '0 0 8px',
+            lineHeight: 1.3,
+          }}
+        >{v.title}</motion.h4>
+        <motion.p
+          initial={isMobile ? { opacity: 0, y: 14 } : undefined}
+          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }) : undefined}
+          transition={isMobile ? { duration: 0.5, delay: stagger + 0.35, ease: [0.16, 1, 0.3, 1] } : undefined}
+          style={{ ...BODY, fontSize: 13, marginBottom: 20 }}
+        >{v.desc}</motion.p>
+        {/* Divider — hover-draw on desktop (unchanged), scroll-draw left-to-right on mobile */}
         <div style={{ position: 'relative', height: 1, background: 'rgba(161,134,97,0.18)', borderRadius: 1, overflow: 'hidden' }}>
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: '#a18661',
-            borderRadius: 1,
-            transform: hovered ? 'scaleX(1)' : 'scaleX(0)',
-            transformOrigin: 'left center',
-            transition: 'transform 0.3s ease',
-          }} />
+          <motion.div
+            initial={isMobile ? { scaleX: 0 } : undefined}
+            animate={isMobile ? (mobileActive ? { scaleX: 1 } : { scaleX: 0 }) : undefined}
+            transition={isMobile ? { duration: 0.5, delay: stagger + 0.5, ease: [0.16, 1, 0.3, 1] } : undefined}
+            style={{
+              position: 'absolute', inset: 0,
+              background: '#a18661',
+              borderRadius: 1,
+              transformOrigin: 'left center',
+              ...(isMobile ? {} : { transform: hovered ? 'scaleX(1)' : 'scaleX(0)', transition: 'transform 0.3s ease' }),
+            }}
+          />
         </div>
       </div>
 
-      {/* Responsive icon sizing */}
+      {/* Responsive icon sizing + spacing */}
       <style>{`
         .value-icon-col { width: 40px; }
         @media (max-width: 768px) {
-          .value-icon-col { width: 34px !important; }
-          .value-icon-col svg { width: 34px !important; height: 34px !important; }
-        }
-        @media (max-width: 480px) {
-          .value-icon-col { width: 30px !important; }
-          .value-icon-col svg { width: 30px !important; height: 30px !important; }
+          .value-item-row { gap: 12px !important; }
+          .value-icon-col { width: 36px !important; }
+          .value-icon-col svg { width: 36px !important; height: 36px !important; stroke-width: 1.5 !important; }
         }
       `}</style>
     </motion.div>
   )
 }
 
+/* ─── HERO SECTION — mobile heading flips in word by word ─ */
+function HeroSection() {
+  const isMobile = useIsMobile()
+  const headingRef = useRef<HTMLDivElement>(null)
+  const headingInView = useInView(headingRef, { once: !isMobile, amount: 0.4 })
+  const words = ['Design', 'With']
+
+  return (
+    <section className="relative py-24 px-6 overflow-hidden about-hero" style={{ background: '#2A3926' }}>
+      <div className="absolute inset-0 opacity-[0.07]">
+        <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #a18661 0%, transparent 60%)' }} />
+      </div>
+      <div className="max-w-4xl mx-auto text-center relative">
+        <FadeIn direction={isMobile ? 'down' : 'up'}>
+          <p style={LABEL}>Our Story</p>
+        </FadeIn>
+
+        <div ref={headingRef}>
+          <h1 className="about-hero-heading-desktop" style={{ ...H2, color: '#f5f2ed', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24 }}>
+            Design With<br /><em style={{ color: '#a18661', fontStyle: 'italic' }}>Purpose & Craft</em>
+          </h1>
+
+          <h1
+            className="about-hero-heading-mobile"
+            style={{ ...H2, color: '#f5f2ed', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24, justifyContent: 'center', flexWrap: 'wrap', gap: '0.3em', perspective: 500 }}
+          >
+            {words.map((w, i) => (
+              <motion.span
+                key={i}
+                style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}
+                initial={{ opacity: 0, rotateX: 90 }}
+                animate={headingInView ? { opacity: 1, rotateX: 0 } : { opacity: 0, rotateX: 90 }}
+                transition={{ duration: 0.5, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              >{w}</motion.span>
+            ))}
+            <motion.span
+              style={{ display: 'block', width: '100%', color: '#a18661', fontStyle: 'italic', transformStyle: 'preserve-3d' }}
+              initial={{ opacity: 0, rotateX: 90 }}
+              animate={headingInView ? { opacity: 1, rotateX: 0 } : { opacity: 0, rotateX: 90 }}
+              transition={{ duration: 0.5, delay: 2 * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            >Purpose & Craft</motion.span>
+          </h1>
+        </div>
+
+        <FadeIn direction="up" delay={0.15}>
+          <p style={{ ...BODY, color: 'rgba(245,242,237,0.72)', maxWidth: 560, margin: '0 auto', fontSize: 15 }}>
+            NIVORA is a boutique interior design studio creating thoughtful, refined spaces that balance elegance with everyday functionality.
+          </p>
+        </FadeIn>
+      </div>
+      <style>{`
+        .about-hero-heading-mobile { display: none; }
+        /* Mobile: force the same dark olive background/text, tighter padding, word-flip heading */
+        @media (max-width: 768px) {
+          .about-hero {
+            background: #2A3926 !important;
+            padding-top: 48px !important;
+            padding-bottom: 48px !important;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
+          }
+          .about-hero-heading-desktop { display: none !important; }
+          .about-hero-heading-mobile { display: flex !important; }
+        }
+      `}</style>
+    </section>
+  )
+}
+
+/* ─── CTA BUTTON — mobile-only shimmer sweep once it enters view ── */
+function CtaButton() {
+  const isMobile = useIsMobile()
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: false, amount: 0.4 })
+
+  return (
+    <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
+      <Link
+        to="/contact"
+        className="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase px-12 py-5 hover:bg-[#d4b896] transition-all duration-300 font-medium"
+        style={{ background: '#C9A96E', color: '#21291a', position: 'relative', overflow: 'hidden' }}
+      >
+        Book Free Consultation <ArrowRight size={13} />
+        {isMobile && (
+          <motion.span
+            aria-hidden="true"
+            initial={{ x: '-120%' }}
+            animate={inView ? { x: '120%' } : { x: '-120%' }}
+            transition={{ duration: 0.9, delay: 0.3, ease: 'easeInOut' }}
+            style={{
+              position: 'absolute', top: 0, left: 0, width: '40%', height: '100%',
+              background: 'linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent)',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+      </Link>
+    </div>
+  )
+}
+
 /* ─── MAIN PAGE ─────────────────────────────────────────── */
 export default function About() {
+  const isMobile = useIsMobile()
+
   return (
-    <div style={{ background: '#f5f2ed' }} className="pt-20">
+    <div style={{ background: '#f5f2ed' }} className="pt-20 about-page-root">
 
       {/* HERO */}
-      <section className="relative py-24 px-6 overflow-hidden about-hero" style={{ background: '#2A3926' }}>
-        <div className="absolute inset-0 opacity-[0.07]">
-          <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #a18661 0%, transparent 60%)' }} />
-        </div>
-        <div className="max-w-4xl mx-auto text-center relative">
-          <FadeIn>
-            <p style={LABEL}>Our Story</p>
-            <h1 style={{ ...H2, color: '#f5f2ed', fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', marginBottom: 24 }}>
-              Design With<br /><em style={{ color: '#a18661', fontStyle: 'italic' }}>Purpose & Craft</em>
-            </h1>
-            <p style={{ ...BODY, color: 'rgba(245,242,237,0.72)', maxWidth: 560, margin: '0 auto', fontSize: 15 }}>
-              NIVORA is a boutique interior design studio creating thoughtful, refined spaces that balance elegance with everyday functionality.
-            </p>
-          </FadeIn>
-        </div>
-        <style>{`
-          /* Mobile: force the same dark olive background/text — no light bleed, tighter padding */
-          @media (max-width: 768px) {
-            .about-hero {
-              background: #2A3926 !important;
-              padding-top: 32px !important;
-              padding-bottom: 32px !important;
-              padding-left: 24px !important;
-              padding-right: 24px !important;
-            }
-          }
-        `}</style>
-      </section>
+      <HeroSection />
 
       {/* WHO WE ARE */}
-      <section className="py-24" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
+      <section className="py-24 about-section-pad" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
           <FadeIn direction="right">
             <div className="overflow-hidden" style={{ borderRadius: 4 }}>
@@ -397,7 +537,7 @@ export default function About() {
       <AboutStatsSection />
 
       {/* WHAT WE DESIGN + OUR VALUES */}
-      <section className="py-28" style={{ background: '#f5f2ed' }}>
+      <section className="py-28 about-section-pad" style={{ background: '#f5f2ed' }}>
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-24 items-start">
 
           {/* Left */}
@@ -410,7 +550,7 @@ export default function About() {
               variants={listContainerVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: '-60px' }}
+              viewport={isMobile ? { once: false, margin: '-40px' } : { once: true, margin: '-60px' }}
               style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 18 }}
             >
               {offerings.map((o, i) => (
@@ -442,7 +582,7 @@ export default function About() {
                 viewport={{ once: true, margin: '-60px' }}
                 style={{ display: 'flex', flexDirection: 'column' }}
               >
-                {values.map((v, i) => <ValueItem key={i} v={v} />)}
+                {values.map((v, i) => <ValueItem key={i} v={v} index={i} />)}
               </motion.div>
             </div>
           </div>
@@ -450,7 +590,7 @@ export default function About() {
       </section>
 
       {/* MISSION & VISION */}
-      <section className="py-24" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
+      <section className="py-24 about-section-pad" style={{ background: '#f5f2ed', borderTop: '1px solid rgba(161,134,97,0.15)' }}>
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn>
             <p style={{ ...LABEL, textAlign: 'center', marginBottom: 48 }}>Our Purpose</p>
@@ -472,7 +612,7 @@ export default function About() {
       <FounderSection founderImg={founderImg} />
 
       {/* CTA */}
-      <section className="py-20 px-6 text-center" style={{ background: '#21291a' }}>
+      <section className="py-20 px-6 text-center about-section-pad" style={{ background: '#21291a' }}>
         <FadeIn>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#f5f0e8', marginBottom: 20, letterSpacing: '-0.01em', lineHeight: 1.2 }}>
             Let's design something<br />
@@ -481,16 +621,23 @@ export default function About() {
           <p style={{ ...BODY, color: 'rgba(245,240,232,0.45)', marginBottom: 40, maxWidth: 360, margin: '0 auto 40px' }}>
             Book a free consultation and let's start with a conversation.
           </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase px-12 py-5 hover:bg-[#d4b896] transition-all duration-300 font-medium"
-            style={{ background: '#C9A96E', color: '#21291a' }}
-          >
-            Book Free Consultation <ArrowRight size={13} />
-          </Link>
+          <CtaButton />
         </FadeIn>
       </section>
 
+      <style>{`
+        /* Mobile: tighten section padding — max 40px top/bottom, adjacent sections total ~48px */
+        @media (max-width: 768px) {
+          .about-section-pad {
+            padding-top: 24px !important;
+            padding-bottom: 24px !important;
+          }
+          .about-stats-section {
+            padding-top: 24px !important;
+            padding-bottom: 24px !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }
