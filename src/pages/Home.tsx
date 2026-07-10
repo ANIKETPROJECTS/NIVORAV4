@@ -2722,7 +2722,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               gap: 0 !important;
             }
             .philosophy-text-block {
-              flex: 1 1 100% !important;
+              flex: none !important;
               min-width: 0 !important;
               width: 100% !important;
               box-sizing: border-box !important;
@@ -2730,11 +2730,12 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               margin-bottom: 28px !important;
             }
             .philosophy-image-col {
-              flex: 1 1 100% !important;
+              flex: none !important;
               min-width: 0 !important;
               width: 100% !important;
+              height: auto !important;
               order: 2 !important;
-              align-self: auto !important;
+              align-self: stretch !important;
               margin: 0 !important;
             }
 
