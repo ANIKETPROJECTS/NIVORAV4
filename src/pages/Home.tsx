@@ -3174,12 +3174,19 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             margin: 0;
             flex: 1;
           }
-          @media (max-width: 1024px) {
-            .oe-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+          @media (max-width: 1023px) {
+            .oe-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 1.5rem; }
           }
-          @media (max-width: 560px) {
-            .oe-grid { grid-template-columns: 1fr; gap: 16px; }
-            .oe-img-wrap { height: 200px; }
+          @media (max-width: 767px) {
+            .oe-grid {
+              grid-template-columns: 1fr;
+              gap: 28px;
+              padding: 0 1.25rem;
+              max-width: 520px;
+              overflow: hidden;
+            }
+            .oe-card { width: 100%; }
+            .oe-img-wrap { height: 220px; }
           }
         `}</style>
 
