@@ -6,6 +6,7 @@ import { connectDB } from './db.js'
 import projectRoutes from './routes/projects.js'
 import adminLoginRoute from './routes/adminLogin.js'
 import siteSettingsRoute from './routes/siteSettings.js'
+import contactRoute from './routes/contact.js'
 
 const app = express()
 const PORT = process.env.API_PORT || 3001
@@ -26,6 +27,7 @@ app.use(express.json({ limit: '10mb' }))
 app.use('/api/admin', adminLoginRoute)
 app.use('/api/projects', projectRoutes)
 app.use('/api/site-settings', siteSettingsRoute)
+app.use('/api/contact', contactRoute)
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
 

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Phone, Mail, MapPin, MessageCircle, ArrowRight, Clock } from 'lucide-react'
+import { Phone, Mail, MapPin, MessageCircle, ArrowRight, Clock, Loader2 } from 'lucide-react'
+import { submitEnquiry } from '../lib/api'
 
 const SPACE_TYPES = ['Residential', 'Commercial', 'Office', 'Retail', 'Villa/Bungalow', 'Other']
 const REFERRAL_OPTIONS = ['Instagram', 'Google', 'Word of Mouth', 'Facebook', 'Other']
@@ -20,6 +21,9 @@ export default function Contact() {
     referral: '',
     requirements: '',
   })
+
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
   const headingRef = useRef<HTMLElement>(null)
   const sectionRef  = useRef<HTMLElement>(null)
@@ -213,6 +217,11 @@ export default function Contact() {
           0%   { left: -80%; }
           100% { left: 120%; }
         }
+        .contact-spin { animation: contactSpin 0.9s linear infinite; }
+        @keyframes contactSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
 
         /* ── WhatsApp button pulse glow ── */
         .contact-wa-btn {
@@ -297,7 +306,22 @@ export default function Contact() {
                 Enquiry Form
               </p>
 
-              <form onSubmit={e => { e.preventDefault(); window.location.href = '/thank-you' }} style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <form
+                onSubmit={async e => {
+                  e.preventDefault()
+                  if (status === 'submitting') return
+                  setStatus('submitting')
+                  setErrorMsg('')
+                  try {
+                    await submitEnquiry(form)
+                    window.location.href = '/thank-you'
+                  } catch (err) {
+                    setStatus('error')
+                    setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+                  }
+                }}
+                style={{ display: 'flex', flexDirection: 'column', gap: 0 }}
+              >
                 <div className="form-grid" style={{ marginBottom: 36 }}>
 
                   {/* Full Name */}
@@ -406,8 +430,9 @@ export default function Contact() {
                   <motion.button
                     type="submit"
                     className="contact-submit-btn"
-                    whileHover={{ scale: 1.02, boxShadow: '0 8px 28px rgba(45,59,45,0.22)' }}
-                    whileTap={{ scale: 0.97 }}
+                    disabled={status === 'submitting'}
+                    whileHover={status === 'submitting' ? {} : { scale: 1.02, boxShadow: '0 8px 28px rgba(45,59,45,0.22)' }}
+                    whileTap={status === 'submitting' ? {} : { scale: 0.97 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
                     style={{
                       width: '100%',
@@ -420,7 +445,8 @@ export default function Contact() {
                       fontWeight: 500,
                       padding: '18px 24px',
                       border: 'none',
-                      cursor: 'pointer',
+                      cursor: status === 'submitting' ? 'not-allowed' : 'pointer',
+                      opacity: status === 'submitting' ? 0.7 : 1,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -428,9 +454,23 @@ export default function Contact() {
                       borderRadius: 8,
                     }}
                   >
-                    Claim My Free Layout Design <ArrowRight size={14} />
+                    {status === 'submitting' ? (
+                      <>
+                        <Loader2 size={14} className="contact-spin" /> Sending...
+                      </>
+                    ) : (
+                      <>
+                        Claim My Free Layout Design <ArrowRight size={14} />
+                      </>
+                    )}
                   </motion.button>
                 </div>
+
+                {status === 'error' && (
+                  <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 12.5, color: '#B85A4A', textAlign: 'center', marginTop: 14, marginBottom: 0 }}>
+                    {errorMsg}
+                  </p>
+                )}
 
                 <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 12, color: '#9a9186', textAlign: 'center', marginTop: 16, marginBottom: 0, ...fieldEl(1080) }}>
                   We respect your privacy. No spam, just great design.

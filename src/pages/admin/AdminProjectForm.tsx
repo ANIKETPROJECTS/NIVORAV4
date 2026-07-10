@@ -373,7 +373,7 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
           background: #ffffff;
           border: 1px solid #e2d9ce;
           border-radius: 8px;
-          width: 100%; max-width: 820px;
+          width: 100%; max-width: 1200px;
           display: flex; flex-direction: column;
           box-shadow: 0 16px 60px rgba(100,70,40,0.18);
         }

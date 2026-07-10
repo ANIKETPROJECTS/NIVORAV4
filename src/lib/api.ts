@@ -27,6 +27,30 @@ export interface Project {
   images: string[]
 }
 
+export interface ContactEnquiry {
+  fullName: string
+  phone: string
+  email: string
+  spaceType: string
+  location: string
+  projectType: string
+  budget: string
+  referral: string
+  requirements: string
+}
+
+export async function submitEnquiry(data: ContactEnquiry): Promise<void> {
+  const res = await fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || 'Failed to send enquiry.')
+  }
+}
+
 export interface ServiceCard {
   img: string
   title: string
