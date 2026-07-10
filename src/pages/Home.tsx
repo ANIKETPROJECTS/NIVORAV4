@@ -2408,6 +2408,13 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
   const philosophyImgRef = useRef<HTMLImageElement>(null)
   const quoteCardRef = useRef<HTMLDivElement>(null)
   const [philosophyInView, setPhilosophyInView] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()                                    // set correct value after mount
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   /* Left column — fade in + slide in from the left, staggered 0.2s apart */
   const leftEl = (delay: number): React.CSSProperties => ({
@@ -2619,7 +2626,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               transition: 'opacity 900ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 900ms cubic-bezier(0.22,1,0.36,1) 150ms',
             }}
           >
-            <div className="philosophy-image-wrap" style={{ position: 'relative', display: 'block', width: '100%', height: '100%' }}>
+            <div className="philosophy-image-wrap" style={{ position: 'relative', display: 'block', width: '100%', height: isMobile ? 'auto' : '100%' }}>
               {/* Offset gold frame */}
               <div className="philosophy-frame" style={{
                 position: 'absolute',
@@ -2632,7 +2639,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                 zIndex: 0,
               }} />
               {/* Photo */}
-              <div className="philosophy-photo-inner" style={{ position: 'relative', zIndex: 1, overflow: 'hidden', height: '100%' }}>
+              <div className="philosophy-photo-inner" style={{ position: 'relative', zIndex: 1, overflow: isMobile ? 'visible' : 'hidden', height: isMobile ? 'auto' : '100%' }}>
                 <img
                   ref={philosophyImgRef}
                   src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=700&q=85"
@@ -2640,8 +2647,8 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   className="philosophy-photo"
                   style={{
                     width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
+                    height: isMobile ? 'auto' : '100%',
+                    objectFit: isMobile ? 'contain' : 'cover',
                     display: 'block',
                   }}
                   loading="lazy"
