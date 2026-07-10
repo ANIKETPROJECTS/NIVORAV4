@@ -2739,13 +2739,13 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               position: relative !important;
               height: auto !important;
               overflow: visible !important;
-              margin-bottom: 50px !important;
+              margin-bottom: 30px !important;
             }
             .philosophy-frame {
               display: none !important;
             }
             .philosophy-photo-inner {
-              height: 280px !important;
+              height: 340px !important;
               width: 100% !important;
               border-radius: 12px !important;
               overflow: hidden !important;
@@ -2758,19 +2758,19 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             }
             .philosophy-quote-card {
               position: absolute !important;
-              bottom: -30px !important;
-              left: 16px !important;
+              bottom: -20px !important;
+              left: 0px !important;
               right: auto !important;
               top: auto !important;
-              width: 75% !important;
-              max-width: 75% !important;
+              width: 60% !important;
+              max-width: 60% !important;
               margin-top: 0 !important;
               background-color: rgba(28,38,26,0.93) !important;
               backdrop-filter: none !important;
               -webkit-backdrop-filter: none !important;
               border: 1px solid rgba(180,150,80,0.5) !important;
-              border-radius: 10px !important;
-              padding: 16px !important;
+              border-radius: 8px !important;
+              padding: 14px !important;
               box-shadow: 0 14px 30px rgba(0,0,0,0.3) !important;
               transform: translateX(-40px) !important;
               opacity: 0 !important;
@@ -2781,10 +2781,10 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               opacity: 1 !important;
             }
             .philosophy-quote-mark {
-              font-size: 24px !important;
+              font-size: 22px !important;
             }
             .philosophy-quote-text {
-              font-size: 13px !important;
+              font-size: 12px !important;
             }
             .philosophy-quote-author {
               font-size: 10px !important;
