@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'fra
 import { useSiteSettings } from '../hooks/useSiteSettings'
 import { ArrowRight, Home as HomeIcon, Building2, Coffee, Layers, Monitor, Gem, Wrench, Clock, Settings, Heart } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
+import { ExpertiseCarousel } from '../components/ExpertiseCarousel'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { projects } from '../data/projects'
 
@@ -3178,16 +3179,11 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             .oe-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 1.5rem; }
           }
           @media (max-width: 767px) {
-            .oe-grid {
-              grid-template-columns: 1fr;
-              gap: 28px;
-              padding: 0 1.25rem;
-              max-width: 520px;
-              overflow: hidden;
-            }
-            .oe-card { width: 100%; }
+            .oe-grid { display: none !important; }
+            .oe-carousel-wrap { display: block !important; }
             .oe-img-wrap { height: 220px; }
           }
+          .oe-carousel-wrap { display: none; }
         `}</style>
 
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 2rem' }}>
@@ -3225,7 +3221,7 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
           </motion.div>
         </div>
 
-        {/* 4-card grid */}
+        {/* 4-card grid — desktop (≥1024px) and tablet (768–1023px) */}
         <div className="oe-grid">
           {serviceCards.map((card, i) => (
             <motion.div
@@ -3246,6 +3242,11 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Autoplay carousel — mobile only (<768px) */}
+        <div className="oe-carousel-wrap">
+          <ExpertiseCarousel cards={serviceCards} />
         </div>
       </section>
 
