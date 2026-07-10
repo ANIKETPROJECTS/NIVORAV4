@@ -22,9 +22,8 @@ description: Architecture and gotchas for the Nivora portfolio backend integrati
 - Otherwise `/:id` swallows static paths
 
 **Auth:**
-- `ADMIN_TOKEN` env var guards all mutating endpoints (POST/PUT/DELETE/upload)
-- If not set, only localhost IPs can mutate (safe for dev)
-- Send token via `x-admin-token` request header
+- `ADMIN_USERNAME` + `ADMIN_PASSWORD` env vars are required — server exits on boot if either is missing
+- Login endpoint validates them and issues a session token (rotates each server restart), sent back via `x-admin-token` header on mutating requests
 
 **Seeding:**
 - `npm run seed` → `server/seed.js` (upserts all projects)
