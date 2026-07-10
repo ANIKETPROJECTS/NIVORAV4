@@ -8,6 +8,7 @@ export interface Project {
   category: 'residential' | 'commercial' | 'architecture'
   year: string
   badge: string
+  order: number
 
   // Concept section
   conceptLabel: string
@@ -141,8 +142,14 @@ export async function adminLogin(username: string, password: string): Promise<vo
 }
 
 // ── Portfolio grid ────────────────────────────────────────────────────────────
-export function fetchProjects(): Promise<Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage'>[]> {
+export function fetchProjects(): Promise<Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage' | 'order'>[]> {
   return request('/projects')
+}
+
+// ── Reorder projects (admin) ───────────────────────────────────────────────────
+// ids: full ordered list of project ids representing the new display order
+export function reorderProjects(ids: string[]): Promise<{ message: string }> {
+  return adminRequest('/projects/reorder', { method: 'PUT', body: JSON.stringify({ order: ids }) })
 }
 
 // ── Project detail ────────────────────────────────────────────────────────────

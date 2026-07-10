@@ -24,6 +24,9 @@ const projectSchema = new mongoose.Schema(
     // Year completed
     year: { type: String, default: '' },
 
+    // Display order on the portfolio page (lower = shown first)
+    order: { type: Number, default: 0 },
+
     // ── Concept section ──────────────────────────────────────────────────────
     // Label above concept heading (e.g. "THE CONCEPT")
     conceptLabel: { type: String, default: 'The Concept' },

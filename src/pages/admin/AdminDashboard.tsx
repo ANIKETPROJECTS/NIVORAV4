@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   fetchProjects, createProject, updateProject,
-  deleteProject, fetchProject, clearAdminToken, Project
+  deleteProject, fetchProject, clearAdminToken, reorderProjects, Project
 } from '../../lib/api'
 import AdminProjectForm from './AdminProjectForm'
 import AdminSiteSettings, { SettingsSection } from './AdminSiteSettings'
 import {
   Plus, Pencil, Trash2, LogOut, RefreshCw, ExternalLink, Loader2,
   LayoutTemplate, Image, AlignLeft, Grid2X2, Home, Briefcase,
-  ChevronDown, ChevronRight, Sparkles, Columns, List,
+  ChevronDown, ChevronRight, Sparkles, Columns, List, GripVertical,
 } from 'lucide-react'
 
-type ProjectSummary = Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage'>
+type ProjectSummary = Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage' | 'order'>
 
 type AdminTab = 'projects' | `settings/${SettingsSection}`
 
@@ -94,6 +94,9 @@ export default function AdminDashboard() {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
   const [successMsg, setSuccessMsg] = useState('')
+  const [dragIndex, setDragIndex] = useState<number | null>(null)
+  const [overIndex, setOverIndex] = useState<number | null>(null)
+  const [savingOrder, setSavingOrder] = useState(false)
 
   const flash = (msg: string) => { setSuccessMsg(msg); setTimeout(() => setSuccessMsg(''), 3000) }
 
@@ -124,6 +127,32 @@ export default function AdminDashboard() {
     try { await deleteProject(id); await load(); flash('Project deleted.') }
     catch (e: unknown) { setError((e as Error).message) }
     finally { setDeletingId(null); setConfirmDelete(null) }
+  }
+
+  // ── Drag-and-drop reordering ─────────────────────────────────────────────────
+  const handleDragStart = (index: number) => { setDragIndex(index) }
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault()
+    if (index !== overIndex) setOverIndex(index)
+  }
+  const handleDragEnd = () => { setDragIndex(null); setOverIndex(null) }
+  const handleDrop = async (index: number) => {
+    if (savingOrder || dragIndex === null || dragIndex === index) { handleDragEnd(); return }
+    const next = [...projects]
+    const [moved] = next.splice(dragIndex, 1)
+    next.splice(index, 0, moved)
+    setProjects(next)
+    handleDragEnd()
+    setSavingOrder(true)
+    try {
+      await reorderProjects(next.map(p => p.id))
+      flash('Portfolio order updated.')
+    } catch (e: unknown) {
+      setError((e as Error).message)
+      await load()
+    } finally {
+      setSavingOrder(false)
+    }
   }
 
   const navigate2 = (newTab: AdminTab) => {
@@ -260,17 +289,30 @@ export default function AdminDashboard() {
             </div>
           ) : (
             <div className="adm-table-wrap">
+              <p className="adm-drag-hint">Drag rows by the <GripVertical size={12} style={{ verticalAlign: '-2px' }} /> handle to change the order projects appear in on the website.{savingOrder && <span className="adm-saving"> Saving…</span>}</p>
               <table className="adm-table">
                 <thead>
                   <tr>
+                    <th style={{ width: 32 }}></th>
                     <th>Cover</th><th>Name</th><th>Location</th>
                     <th>Category</th><th>Year</th><th>Badge</th>
                     <th style={{ textAlign: 'right' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {projects.map(p => (
-                    <tr key={p.id}>
+                  {projects.map((p, i) => (
+                    <tr
+                      key={p.id}
+                      draggable={!savingOrder}
+                      onDragStart={() => handleDragStart(i)}
+                      onDragOver={e => handleDragOver(e, i)}
+                      onDrop={() => handleDrop(i)}
+                      onDragEnd={handleDragEnd}
+                      className={`adm-row-draggable ${dragIndex === i ? 'adm-row-dragging' : ''} ${overIndex === i && dragIndex !== i ? 'adm-row-over' : ''}`}
+                    >
+                      <td className="adm-drag-handle" title="Drag to reorder">
+                        <GripVertical size={16} />
+                      </td>
                       <td>
                         {p.coverImage
                           ? <img src={p.coverImage} alt={p.name} className="adm-thumb" />
@@ -416,7 +458,7 @@ export default function AdminDashboard() {
           display: flex; justify-content: space-between; align-items: center;
         }
         .adm-error button { background: none; border: none; color: #b85a4a; cursor: pointer; font-size: 18px; }
-        .adm-content { padding: 28px 32px; flex: 1; max-width: 820px; }
+        .adm-content { padding: 28px 32px; flex: 1; max-width: 1320px; }
         .adm-loading, .adm-empty {
           display: flex; align-items: center; justify-content: center;
           flex-direction: column; gap: 16px; color: #b0a498;
@@ -424,7 +466,17 @@ export default function AdminDashboard() {
         }
         .adm-spin { animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .adm-drag-hint {
+          margin: 0 0 12px; font-size: 12px; color: #9a8e82;
+          display: flex; align-items: center; gap: 4px;
+        }
+        .adm-saving { color: #7a6245; font-weight: 500; }
         .adm-table-wrap { overflow-x: auto; border-radius: 6px; border: 1px solid #e2d9ce; background: #fff; }
+        .adm-row-draggable { cursor: grab; }
+        .adm-row-dragging { opacity: 0.4; }
+        .adm-row-over td { border-top: 2px solid #7a6245; }
+        .adm-drag-handle { color: #c0b5a8; cursor: grab; width: 32px; text-align: center; }
+        .adm-drag-handle:hover { color: #7a6245; }
         .adm-table { width: 100%; border-collapse: collapse; }
         .adm-table thead tr { background: #faf8f5; }
         .adm-table th {

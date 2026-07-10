@@ -45,12 +45,46 @@ router.get('/', async (_req, res) => {
   try {
     const projects = await Project.find(
       {},
-      'id name location category year badge concept coverImage'
-    ).sort({ createdAt: -1 })
+      'id name location category year badge concept coverImage order'
+    ).sort({ order: 1, createdAt: -1 })
     res.json(projects)
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Failed to fetch projects' })
+  }
+})
+
+// ── PUT /api/projects/reorder (static — must be before /:id) ──────────────────
+// Body: { order: [id1, id2, id3, ...] } — full list of project ids in desired order
+router.put('/reorder', requireAdmin, async (req, res) => {
+  try {
+    const { order } = req.body || {}
+    if (!Array.isArray(order) || order.length === 0) {
+      return res.status(400).json({ error: 'order must be a non-empty array of project ids' })
+    }
+    const uniqueIds = new Set(order)
+    if (uniqueIds.size !== order.length) {
+      return res.status(400).json({ error: 'order contains duplicate ids' })
+    }
+    const existingCount = await Project.countDocuments({ id: { $in: order } })
+    if (existingCount !== order.length) {
+      return res.status(400).json({ error: 'order contains unknown project ids' })
+    }
+    const totalCount = await Project.countDocuments()
+    if (order.length !== totalCount) {
+      return res.status(400).json({ error: 'order must include every project' })
+    }
+    const bulkOps = order.map((id, index) => ({
+      updateOne: { filter: { id }, update: { $set: { order: index } } },
+    }))
+    const result = await Project.bulkWrite(bulkOps, { ordered: true })
+    if (result.matchedCount !== order.length) {
+      return res.status(409).json({ error: 'Some projects could not be reordered' })
+    }
+    res.json({ message: 'Order updated' })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Failed to update order' })
   }
 })
 
@@ -88,7 +122,12 @@ router.post('/upload-images', requireAdmin, upload.array('images', 30), async (r
 // ── POST /api/projects (create — must be before /:id) ────────────────────────
 router.post('/', requireAdmin, async (req, res) => {
   try {
-    const project = new Project(req.body)
+    const body = { ...req.body }
+    if (body.order === undefined) {
+      const count = await Project.countDocuments()
+      body.order = count
+    }
+    const project = new Project(body)
     await project.save()
     res.status(201).json(project)
   } catch (err) {
