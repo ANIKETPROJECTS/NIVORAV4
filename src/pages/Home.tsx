@@ -50,16 +50,6 @@ const transformations = [
     beforeDesc: 'A cluttered, uninspiring workspace with no acoustic treatment, poor ergonomics and no sense of identity.',
     afterDesc: 'Tailored desk setup, concealed storage, warm wood tones and soundproofing for focused, elegant productivity.',
   },
-  {
-    id: 5,
-    title: 'Dining Room Revival',
-    beforeLabel: 'EMPTY DINING',
-    afterLabel: 'CURATED SETTING',
-    beforeImg: 'https://images.unsplash.com/photo-1449247709967-d4461a6a6103?w=800&q=80',
-    afterImg: 'https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?w=800&q=80',
-    beforeDesc: 'A dated dining arrangement with mismatched furniture, poor lighting and no focal point.',
-    afterDesc: 'Statement dining table, pendant lighting, upholstered chairs and a curated art wall that anchors the room.',
-  },
 ]
 
 const igPosts = [
