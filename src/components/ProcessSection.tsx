@@ -60,7 +60,7 @@ function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) 
       initial={{ scale: mobile ? 0 : 0.8, opacity: 0 }}
       animate={active ? { scale: 1, opacity: 1 } : { scale: mobile ? 0 : 0.8, opacity: 0 }}
       transition={mobile
-        ? { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }
+        ? { duration: 0.5, ease: 'easeOut' }
         : { duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
       style={{
         width: 52,
@@ -116,6 +116,24 @@ function DiamondNode({ active, mobile }: { active: boolean; mobile?: boolean }) 
           <AnimatedCheckmark active={active} />
         </div>
       </motion.div>
+
+      {/* Ripple ring — mobile only, expands outward in gold after diamond appears, fades in 1s */}
+      {mobile && (
+        <motion.div
+          initial={{ scale: 1, opacity: 0 }}
+          animate={active ? { scale: 2.6, opacity: [0, 0.65, 0] } : { scale: 1, opacity: 0 }}
+          transition={{ duration: 1, ease: 'easeOut', delay: 0.5 }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            border: '1.5px solid #C9A96E',
+            borderRadius: 2,
+            transform: 'rotate(45deg)',
+            pointerEvents: 'none',
+            willChange: 'transform, opacity',
+          }}
+        />
+      )}
     </motion.div>
   )
 }
@@ -172,7 +190,7 @@ function StepContent({
     ? (mobile ? { opacity: 1, x: 0 } : { opacity: 1, y: 0 })
     : titleInitial
   const titleTransition = mobile
-    ? { type: 'spring' as const, stiffness: 300, damping: 12, delay: 0.1 }
+    ? { duration: 0.6, ease: 'easeOut' as const, delay: 0.2 }
     : { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.15 }
 
   const numChars = step.num.split('')
@@ -180,25 +198,25 @@ function StepContent({
   return (
     <div style={{ textAlign: align }}>
       {mobile ? (
-        <p style={{
-          fontFamily: "'Inter', sans-serif",
-          fontWeight: 300,
-          fontSize: 10,
-          letterSpacing: '0.4em',
-          color: '#C9A96E',
-          textTransform: 'uppercase',
-          margin: '0 0 10px',
-        }}>
-          {numChars.map((ch, i) => (
-            <motion.span
-              key={i}
-              style={{ display: 'inline-block', willChange: 'transform, opacity' }}
-              initial={{ opacity: 0 }}
-              animate={active ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.2, delay: active ? i * 0.08 : 0 }}
-            >{ch}</motion.span>
-          ))}
-        </p>
+        /* Step number — zoom-stamp: scales in from 1.5× with fade, ease-out */
+        <motion.p
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 300,
+            fontSize: 10,
+            letterSpacing: '0.4em',
+            color: '#C9A96E',
+            textTransform: 'uppercase',
+            margin: '0 0 16px',
+            display: 'inline-block',
+            willChange: 'transform, opacity',
+          }}
+          initial={{ opacity: 0, scale: 1.5 }}
+          animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.5 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          {step.num}
+        </motion.p>
       ) : (
         <motion.p
           initial={{ opacity: 0 }}
@@ -257,9 +275,9 @@ function StepContent({
 
       <motion.p
         className="process-desc"
-        initial={{ opacity: 0, y: mobile ? 20 : 10 }}
-        animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: mobile ? 20 : 10 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: mobile ? 0.3 : 0.25 }}
+        initial={{ opacity: 0, y: mobile ? 20 : 10, filter: mobile ? 'blur(4px)' : 'blur(0px)' }}
+        animate={active ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: mobile ? 20 : 10, filter: mobile ? 'blur(4px)' : 'blur(0px)' }}
+        transition={{ duration: mobile ? 0.4 : 0.6, ease: 'easeOut' as const, delay: mobile ? 0.4 : 0.25 }}
         style={{
           fontFamily: "'Inter', sans-serif",
           fontWeight: 300,
@@ -286,8 +304,8 @@ function StepRow({
   onVisible: (i: number, visible: boolean) => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  // Desktop: animate once. Mobile: replay every time the step re-enters the viewport (threshold 0.2).
-  const inView = useInView(ref, { once: !isMobile, margin: '-60px 0px', amount: isMobile ? 0.2 : 0.25 })
+  // Desktop: animate once. Mobile: higher threshold + late rootMargin so step is well visible before triggering.
+  const inView = useInView(ref, { once: !isMobile, margin: isMobile ? '0px 0px -80px 0px' : '-60px 0px', amount: isMobile ? 0.4 : 0.25 })
 
   useEffect(() => {
     onVisible(index, inView)
@@ -530,6 +548,23 @@ export default function ProcessSection() {
               willChange: 'transform',
             }}
           />
+          {/* Gold shimmer — travels down continuously while section is in viewport */}
+          <motion.div
+            animate={timelineInView ? { y: ['-100%', '110%'] } : { y: '-100%' }}
+            transition={timelineInView
+              ? { duration: 2.5, ease: 'linear', repeat: Infinity, repeatDelay: 0.3 }
+              : { duration: 0 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '25%',
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(201,169,110,0.7) 50%, transparent 100%)',
+              pointerEvents: 'none',
+              willChange: 'transform',
+            }}
+          />
         </div>
 
         {STEPS.map((step, i) => (
@@ -598,7 +633,7 @@ export default function ProcessSection() {
         @media (max-width: 768px) {
           .process-header {
             margin-bottom: 40px !important;
-            padding: 24px 24px 0 !important;
+            padding: 32px 24px 0 !important;
           }
           .process-heading-desktop {
             display: none !important;
@@ -626,6 +661,7 @@ export default function ProcessSection() {
           .process-content-box {
             max-width: 100% !important;
             width: 100% !important;
+            padding: 12px !important;
           }
           .process-diamond-outer {
             width: 36px !important;
@@ -637,7 +673,7 @@ export default function ProcessSection() {
           }
           .process-title {
             font-size: 18px !important;
-            margin: 0 0 8px !important;
+            margin: 0 0 12px !important;
           }
           .process-desc {
             font-size: 12px !important;
@@ -645,7 +681,7 @@ export default function ProcessSection() {
           }
           .process-line-outer .process-line-track {
             width: 1px !important;
-            height: 32px !important;
+            height: 48px !important;
           }
           .process-mobile-line-outer {
             display: block !important;
