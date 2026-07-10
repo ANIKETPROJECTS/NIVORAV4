@@ -1,6 +1,6 @@
 import { useState, useRef, ChangeEvent } from 'react'
 import { Project, uploadImages } from '../../lib/api'
-import { X, Plus, Upload, Loader2, GripVertical } from 'lucide-react'
+import { X, Plus, Upload, Loader2, GripVertical, Star } from 'lucide-react'
 
 type FormData = Omit<Project, 'badge'>
 
@@ -292,7 +292,7 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
           {/* ── Gallery Images ── */}
           <section className="apf-section">
             <h3 className="apf-section-title">Gallery Images</h3>
-            <p className="apf-hint">First image is used as the hero on the project detail page. Drag order by clicking ↑ ↓. Click any image to set it as the cover.</p>
+            <p className="apf-hint">First image is used as the hero on the project detail page. Reorder with ↑ ↓, or click "Set Cover" on any image to use it as the cover.</p>
 
             <div className="apf-upload-zone" onClick={() => galleryRef.current?.click()}>
               {uploadingGallery
@@ -323,20 +323,31 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
 
             {(form.images || []).length > 0 && (
               <div className="apf-gallery-grid">
-                {(form.images || []).map((url, i) => (
-                  <div key={i} className="apf-gallery-item">
-                    <img src={url} alt={`Image ${i + 1}`} />
-                    <div className="apf-gallery-overlay">
-                      <button onClick={() => setCoverFromGallery(url)} title="Set as cover" className="apf-gal-btn">Cover</button>
-                      <button onClick={() => removeImage(i)} title="Remove" className="apf-gal-btn apf-gal-btn-del"><X size={12} /></button>
+                {(form.images || []).map((url, i) => {
+                  const isCover = !!form.coverImage && form.coverImage === url
+                  return (
+                    <div key={i} className={`apf-gallery-item ${isCover ? 'apf-gallery-item-cover' : ''}`}>
+                      <img src={url} alt={`Image ${i + 1}`} />
+                      <div className="apf-gallery-overlay">
+                        <button onClick={() => removeImage(i)} title="Remove" className="apf-gal-btn apf-gal-btn-del"><X size={12} /></button>
+                      </div>
+                      <button
+                        onClick={() => setCoverFromGallery(url)}
+                        title={isCover ? 'This is the cover image' : 'Set as cover image'}
+                        className={`apf-cover-toggle ${isCover ? 'apf-cover-toggle-active' : ''}`}
+                        disabled={isCover}
+                      >
+                        <Star size={12} fill={isCover ? 'currentColor' : 'none'} />
+                        {isCover ? 'Cover' : 'Set Cover'}
+                      </button>
+                      <div className="apf-gallery-order">
+                        {i > 0 && <button onClick={() => moveImage(i, i - 1)} className="apf-ord-btn">↑</button>}
+                        {i < (form.images || []).length - 1 && <button onClick={() => moveImage(i, i + 1)} className="apf-ord-btn">↓</button>}
+                      </div>
+                      <span className="apf-gallery-num">{i === 0 ? 'Hero' : `#${i + 1}`}</span>
                     </div>
-                    <div className="apf-gallery-order">
-                      {i > 0 && <button onClick={() => moveImage(i, i - 1)} className="apf-ord-btn">↑</button>}
-                      {i < (form.images || []).length - 1 && <button onClick={() => moveImage(i, i + 1)} className="apf-ord-btn">↓</button>}
-                    </div>
-                    <span className="apf-gallery-num">{i === 0 ? 'Hero' : `#${i + 1}`}</span>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </section>
@@ -471,17 +482,19 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
         .apf-gallery-item {
           position: relative; border-radius: 6px; overflow: hidden;
           border: 1px solid #e2d9ce; aspect-ratio: 4/3;
+          box-sizing: border-box;
         }
+        .apf-gallery-item-cover { border-color: #C9A96E; box-shadow: inset 0 0 0 1px #C9A96E, 0 0 0 2px rgba(201,169,110,0.25); }
         .apf-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .apf-gallery-overlay {
-          position: absolute; inset: 0; background: rgba(26,22,18,0.5);
-          display: flex; align-items: center; justify-content: center; gap: 8px;
+          position: absolute; top: 4px; right: 4px;
+          display: flex; align-items: center; justify-content: flex-end; gap: 8px;
           opacity: 0; transition: opacity 0.2s;
         }
         .apf-gallery-item:hover .apf-gallery-overlay { opacity: 1; }
         .apf-gal-btn {
           background: rgba(255,255,255,0.92); color: #7a6245;
-          border: none; border-radius: 4px; padding: 4px 10px;
+          border: none; border-radius: 4px; padding: 4px 6px;
           font-size: 11px; font-family: Arial, sans-serif; cursor: pointer;
           font-weight: 600; transition: background 0.2s;
           display: flex; align-items: center; gap: 4px;
@@ -489,6 +502,18 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
         .apf-gal-btn:hover { background: #ffffff; }
         .apf-gal-btn-del { background: rgba(184,90,74,0.9); color: #fff; }
         .apf-gal-btn-del:hover { background: rgba(184,90,74,1); }
+        .apf-cover-toggle {
+          position: absolute; bottom: 4px; right: 4px; z-index: 2;
+          display: flex; align-items: center; gap: 4px;
+          background: rgba(26,22,18,0.72); color: #f0ebe3;
+          border: none; border-radius: 20px; padding: 4px 9px;
+          font-size: 10px; font-family: Arial, sans-serif; cursor: pointer;
+          letter-spacing: 0.02em; transition: background 0.2s, color 0.2s;
+        }
+        .apf-cover-toggle:hover:not(:disabled) { background: rgba(26,22,18,0.9); }
+        .apf-cover-toggle-active {
+          background: #C9A96E; color: #2a2218; cursor: default;
+        }
         .apf-gallery-order {
           position: absolute; bottom: 4px; left: 4px; display: flex; gap: 4px;
         }
