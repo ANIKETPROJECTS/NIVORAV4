@@ -242,13 +242,13 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
             )}
           </section>
 
-          {/* ── Cover Image ── */}
+          {/* ── Hero Image (portfolio page thumbnail) ── */}
           <section className="apf-section">
-            <h3 className="apf-section-title">Cover Image</h3>
-            <p className="apf-hint">The thumbnail shown on portfolio cards and the hero background.</p>
+            <h3 className="apf-section-title">Hero Image</h3>
+            <p className="apf-hint">The image shown on the Portfolio page card and hero background.</p>
             {form.coverImage ? (
               <div className="apf-cover-preview">
-                <img src={form.coverImage} alt="Cover" />
+                <img src={form.coverImage} alt="Hero" />
                 <button className="apf-cover-remove" onClick={() => set('coverImage', '')}>
                   <X size={14} /> Remove
                 </button>
@@ -285,14 +285,14 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
             )}
             {/* Allow picking from gallery too */}
             {(form.images || []).length > 0 && !form.coverImage && (
-              <p className="apf-hint" style={{ marginTop: 6 }}>Or click any gallery image below to set it as cover.</p>
+              <p className="apf-hint" style={{ marginTop: 6 }}>Or click any gallery image below to set it as the hero.</p>
             )}
           </section>
 
           {/* ── Gallery Images ── */}
           <section className="apf-section">
             <h3 className="apf-section-title">Gallery Images</h3>
-            <p className="apf-hint">First image is used as the hero on the project detail page. Reorder with ↑ ↓, or click "Set Cover" on any image to use it as the cover.</p>
+            <p className="apf-hint">First image is shown first on the project detail page. Reorder with ↑ ↓, or click "Set Hero" on any image to use it as the Portfolio page hero image.</p>
 
             <div className="apf-upload-zone" onClick={() => galleryRef.current?.click()}>
               {uploadingGallery
@@ -333,18 +333,18 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
                       </div>
                       <button
                         onClick={() => setCoverFromGallery(url)}
-                        title={isCover ? 'This is the cover image' : 'Set as cover image'}
+                        title={isCover ? 'This is the Portfolio page hero image' : 'Set as Portfolio page hero image'}
                         className={`apf-cover-toggle ${isCover ? 'apf-cover-toggle-active' : ''}`}
                         disabled={isCover}
                       >
                         <Star size={12} fill={isCover ? 'currentColor' : 'none'} />
-                        {isCover ? 'Cover' : 'Set Cover'}
+                        {isCover ? 'Hero' : 'Set Hero'}
                       </button>
                       <div className="apf-gallery-order">
                         {i > 0 && <button onClick={() => moveImage(i, i - 1)} className="apf-ord-btn">↑</button>}
                         {i < (form.images || []).length - 1 && <button onClick={() => moveImage(i, i + 1)} className="apf-ord-btn">↓</button>}
                       </div>
-                      <span className="apf-gallery-num">{i === 0 ? 'Hero' : `#${i + 1}`}</span>
+                      <span className="apf-gallery-num">{i === 0 ? 'First' : `#${i + 1}`}</span>
                     </div>
                   )
                 })}
