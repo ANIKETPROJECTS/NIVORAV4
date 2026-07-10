@@ -294,10 +294,21 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
   const [hovered, setHovered] = useState(false)
   const isMobile = useIsMobile()
   const ref = useRef<HTMLDivElement>(null)
-  // Mobile: replay every time the item re-enters the viewport. Desktop: driven by parent's variants (unchanged).
-  const inView = useInView(ref, { once: !isMobile, amount: 0.2 })
-  const mobileActive = isMobile && inView
-  const stagger = index * 0.15
+
+  // Very low threshold (0.05) so even a sliver of the item triggers the animation on mobile.
+  // No negative rootMargin on mobile — don't delay triggering.
+  const inView = useInView(ref, { once: !isMobile, amount: isMobile ? 0.05 : 0.2 })
+
+  // Fallback: if IntersectionObserver hasn't fired within 2s on mobile, force all items visible.
+  const [forcedVisible, setForcedVisible] = useState(false)
+  useEffect(() => {
+    if (!isMobile) return
+    const t = setTimeout(() => setForcedVisible(true), 2000)
+    return () => clearTimeout(t)
+  }, [isMobile])
+
+  const mobileActive = isMobile && (inView || forcedVisible)
+  const stagger = index * 0.12
 
   return (
     <motion.div
@@ -308,17 +319,12 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
       className="value-item-row"
       style={{ display: 'flex', gap: 20, alignItems: 'flex-start', paddingBottom: 28 }}
     >
-      {/* Left column — large line-art icon */}
+      {/* Left column — icon */}
       <div
         className="value-icon-col"
-        style={{
-          flexShrink: 0,
-          width: 40,
-          paddingTop: 2,
-          position: 'relative',
-        }}
+        style={{ flexShrink: 0, width: 40, paddingTop: 2, position: 'relative' }}
       >
-        {/* Gold glow pulse — mobile only, plays once as the icon enters view */}
+        {/* Gold glow pulse — mobile only */}
         {isMobile && (
           <motion.div
             aria-hidden="true"
@@ -328,15 +334,16 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
             style={{ position: 'absolute', inset: -4, borderRadius: '50%', background: 'radial-gradient(circle, rgba(161,134,97,0.55) 0%, transparent 70%)', pointerEvents: 'none' }}
           />
         )}
+        {/* Icon — mobile uses only opacity+translateY (no scale: 0) so it's never invisible if animation stalls */}
         <motion.div
-          initial={isMobile ? { scale: 0, opacity: 0 } : undefined}
-          animate={isMobile ? (mobileActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }) : undefined}
-          transition={isMobile ? { type: 'spring', stiffness: 300, damping: 12, delay: stagger } : undefined}
+          initial={isMobile ? { opacity: 0, y: 10 } : undefined}
+          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }) : undefined}
+          transition={isMobile ? { duration: 0.4, ease: 'easeOut', delay: stagger } : undefined}
         >
           <v.Icon
-            size={40}
+            size={36}
             color="#a18661"
-            strokeWidth={isMobile ? 1.5 : 1.25}
+            strokeWidth={1.5}
             className="value-icon-svg"
             style={{
               flexShrink: 0,
@@ -351,10 +358,11 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
 
       {/* Right column — title + desc + divider */}
       <div style={{ flex: 1, minWidth: 0 }}>
+        {/* Title — mobile uses only opacity+translateY (no x slide that can get clipped) */}
         <motion.h4
-          initial={isMobile ? { opacity: 0, x: -24 } : undefined}
-          animate={isMobile ? (mobileActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }) : undefined}
-          transition={isMobile ? { duration: 0.5, delay: stagger + 0.2, ease: [0.16, 1, 0.3, 1] } : undefined}
+          initial={isMobile ? { opacity: 0, y: 12 } : undefined}
+          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }) : undefined}
+          transition={isMobile ? { duration: 0.4, ease: 'easeOut', delay: stagger + 0.12 } : undefined}
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 600,
@@ -367,17 +375,18 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
           }}
         >{v.title}</motion.h4>
         <motion.p
-          initial={isMobile ? { opacity: 0, y: 14 } : undefined}
-          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }) : undefined}
-          transition={isMobile ? { duration: 0.5, delay: stagger + 0.35, ease: [0.16, 1, 0.3, 1] } : undefined}
+          initial={isMobile ? { opacity: 0, y: 12 } : undefined}
+          animate={isMobile ? (mobileActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }) : undefined}
+          transition={isMobile ? { duration: 0.4, ease: 'easeOut', delay: stagger + 0.22 } : undefined}
           style={{ ...BODY, fontSize: 13, marginBottom: 20 }}
         >{v.desc}</motion.p>
-        {/* Divider — hover-draw on desktop (unchanged), scroll-draw left-to-right on mobile */}
+
+        {/* Divider — visible track always rendered; gold fill animates in on mobile */}
         <div style={{ position: 'relative', height: 1, background: 'rgba(161,134,97,0.18)', borderRadius: 1, overflow: 'hidden' }}>
           <motion.div
             initial={isMobile ? { scaleX: 0 } : undefined}
             animate={isMobile ? (mobileActive ? { scaleX: 1 } : { scaleX: 0 }) : undefined}
-            transition={isMobile ? { duration: 0.5, delay: stagger + 0.5, ease: [0.16, 1, 0.3, 1] } : undefined}
+            transition={isMobile ? { duration: 0.45, ease: 'easeOut', delay: stagger + 0.3 } : undefined}
             style={{
               position: 'absolute', inset: 0,
               background: '#a18661',
@@ -389,13 +398,16 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
         </div>
       </div>
 
-      {/* Responsive icon sizing + spacing */}
       <style>{`
         .value-icon-col { width: 40px; }
         @media (max-width: 768px) {
-          .value-item-row { gap: 12px !important; }
+          .value-item-row {
+            gap: 12px !important;
+            padding-top: 20px !important;
+            padding-bottom: 20px !important;
+          }
           .value-icon-col { width: 36px !important; }
-          .value-icon-col svg { width: 36px !important; height: 36px !important; stroke-width: 1.5 !important; }
+          .value-icon-col svg { width: 36px !important; height: 36px !important; }
         }
       `}</style>
     </motion.div>
