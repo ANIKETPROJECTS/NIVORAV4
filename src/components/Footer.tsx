@@ -142,54 +142,153 @@ export default function Footer() {
           pointer-events: none;
         }
 
-        /* ── Mobile footer: 2-column link grid ── */
+        /* ─────────────────────────────────────────────────────────
+           MOBILE FOOTER  (≤ 768 px)
+           Row 1 : logo (70px) + tagline  — same line
+           Row 2 : Navigate (left) | What We Do (right)
+           Row 3 : Find Us heading full-width,
+                   address (left) | email+phone+instagram (right)
+           Row 4 : © left  |  Designed with intention right
+        ───────────────────────────────────────────────────────── */
         @media (max-width: 768px) {
-          .footer-main-grid {
-            grid-template-columns: 1fr 1fr !important;
+
+          /* Tight outer padding */
+          .footer-inner {
+            padding-top: 20px !important;
+            padding-bottom: 10px !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
           }
+
+          /* 2-col grid; rows driven by explicit grid-column/row on children */
+          .footer-main-grid {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            row-gap: 16px !important;
+            column-gap: 0 !important;
+          }
+
+          /* ── ROW 1 : brand (full width, flex row) ── */
           .footer-brand-col {
             grid-column: 1 / -1 !important;
-            border-right: none !important;
-            padding-right: 0 !important;
+            grid-row: 1 !important;
+            flex-direction: row !important;
             align-items: center !important;
-            padding-bottom: 28px !important;
+            gap: 12px !important;
+            padding: 0 !important;
+            border: none !important;
           }
+          /* logo */
+          .footer-brand-col > a {
+            flex-shrink: 0 !important;
+            margin-bottom: 0 !important;
+          }
+          .footer-brand-col > a img,
+          .footer-brand-col > a > div {
+            width: 70px !important;
+            max-width: 70px !important;
+            height: auto !important;
+          }
+          /* tagline */
+          .footer-brand-col > p {
+            margin-bottom: 0 !important;
+            max-width: none !important;
+            font-size: 10px !important;
+            line-height: 1.5 !important;
+          }
+
+          /* ── ROW 2 : Navigate left, What We Do right ── */
           .footer-nav-col {
             grid-column: 1 !important;
             grid-row: 2 !important;
-            border-right: none !important;
-            padding-left: 0 !important;
-            padding-right: 8px !important;
-            padding-bottom: 0 !important;
+            padding: 0 !important;
+            border: none !important;
           }
           .footer-services-col {
             grid-column: 2 !important;
-            grid-row: 2 / 4 !important;
+            grid-row: 2 !important;
+            padding: 0 0 0 12px !important;
             border-right: none !important;
-            padding-left: 16px !important;
-            padding-right: 0 !important;
-            padding-bottom: 24px !important;
-            border-left: 1px solid rgba(255,255,255,0.06);
+            border-left: 1px solid rgba(255,255,255,0.06) !important;
           }
+          .footer-nav-col h4,
+          .footer-services-col h4 {
+            font-size: 10px !important;
+            margin-bottom: 10px !important;
+          }
+          .footer-nav-col ul,
+          .footer-services-col ul {
+            gap: 7px !important;
+          }
+          .footer-nav-col li a,
+          .footer-services-col li a {
+            font-size: 11px !important;
+            letter-spacing: 0.02em !important;
+          }
+
+          /* ── ROW 3 : Find Us (full width) ── */
           .footer-findus-col {
-            grid-column: 1 !important;
+            grid-column: 1 / -1 !important;
             grid-row: 3 !important;
-            padding-left: 0 !important;
-            padding-right: 8px !important;
-            padding-bottom: 0 !important;
-            padding-top: 28px;
+            padding: 0 !important;
+            border: none !important;
           }
+          .footer-findus-col h4 {
+            font-size: 10px !important;
+            margin-bottom: 10px !important;
+          }
+          /* Split inner content: address left | email+phone+instagram right */
+          .footer-findus-col > div {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 0 12px !important;
+            align-items: start !important;
+          }
+          /* address — spans all right-column rows so it doesn't push instagram down */
+          .footer-findus-col > div > *:first-child {
+            grid-column: 1 !important;
+            grid-row: 1 / 3 !important;
+          }
+          /* email + phone block */
+          .footer-findus-col > div > *:nth-child(2) {
+            grid-column: 2 !important;
+            grid-row: 1 !important;
+          }
+          /* instagram link */
+          .footer-findus-col > div > *:nth-child(3) {
+            grid-column: 2 !important;
+            grid-row: 2 !important;
+            margin-top: 8px !important;
+          }
+          .footer-findus-col p {
+            font-size: 11px !important;
+          }
+          .footer-findus-col a {
+            font-size: 11px !important;
+          }
+
+          /* ── Divider ── */
+          .footer-divider {
+            margin: 12px 0 0 !important;
+          }
+
+          /* ── ROW 4 : © left | Designed right ── */
           .footer-bottom-bar {
-            flex-direction: column !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
             align-items: center !important;
-            text-align: center;
+            padding-top: 10px !important;
+            text-align: left !important;
             gap: 4px !important;
+          }
+          .footer-bottom-bar p {
+            font-size: 10px !important;
           }
         }
       `}</style>
 
       <div
-        className="max-w-7xl mx-auto px-6 lg:px-12"
+        className="footer-inner max-w-7xl mx-auto px-6 lg:px-12"
         style={{ paddingTop: 56, paddingBottom: 28 }}
       >
         <div className="footer-main-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
@@ -403,6 +502,7 @@ export default function Footer() {
 
         {/* Gold divider */}
         <motion.div
+          className="footer-divider"
           initial={{ scaleX: 0 }}
           animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
