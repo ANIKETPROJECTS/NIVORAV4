@@ -29,8 +29,10 @@ export default function BackToTopButton() {
         width: 56,
         height: 56,
         borderRadius: '50%',
-        backgroundColor: hovered ? '#3a5e3c' : '#2C3B2D',
-        border: '1px solid rgba(180,150,80,0.4)',
+        background: hovered
+          ? 'linear-gradient(135deg, #EDD09A 0%, #D4B07A 50%, #B89260 100%)'
+          : 'linear-gradient(135deg, #E0C38A 0%, #C8A46A 50%, #A8854F 100%)',
+        border: '1px solid rgba(168,133,79,0.5)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -52,7 +54,7 @@ export default function BackToTopButton() {
       >
         <path
           d="M10 15V5M10 5L5 10M10 5L15 10"
-          stroke="#C9A96E"
+          stroke="#2A3926"
           strokeWidth="1.6"
           strokeLinecap="round"
           strokeLinejoin="round"
