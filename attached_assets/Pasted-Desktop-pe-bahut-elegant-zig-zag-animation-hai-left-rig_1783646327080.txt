@@ -1,0 +1,82 @@
+Desktop pe bahut elegant zig-zag animation hai — left right alternating! Mobile pe bilkul same chahiye.
+
+Replit Prompt:
+"In the Our Process section on the Services page, fix the mobile view (below 768px) to match the desktop zig-zag animation style:
+Mobile Layout:
+
+Keep the vertical gold line in the center of the screen running top to bottom
+Each step alternates left and right — odd steps (01, 03, 05) show content on the LEFT side of the center line, even steps (02, 04) show content on the RIGHT side — exactly like desktop
+The diamond/check icon stays centered on the gold line for each step
+Step number (01, 02, 03...) in small gold text above each title
+Title in italic serif font, description text below it — font sizes reduced to fit mobile (title 20px, description 12px)
+Each side content box should be max 45% width so both sides have breathing room
+
+Mobile Animations (IntersectionObserver, replay every time):
+
+Gold vertical line draws itself downward progressively as user scrolls
+Odd steps — content slides in from LEFT with fade
+Even steps — content slides in from RIGHT with fade
+Diamond icon scales up from 0 to 1 with a bounce when that step enters viewport
+Each step animates only when it enters the viewport — staggered, not all at once
+All animations reset and replay every time user scrolls back to this section
+
+Keep desktop layout and animations completely unchanged."
+
+Mobile pe bilkul desktop jaisa cinematic zig-zag reveal effect aayega! ✨😊ismein jo symbols hai for process in about section ... i want for my about page our values section ...... and our values ka numbering nikaal do bas icons bade kar do please jaise 1st image mein hai waisaReplit Prompt:
+"In the About page, Our Values section, make these changes:
+
+Remove numbering — Remove 01, 02, 03, 04, 05 large background numbers completely from all value items
+Replace icons — Replace the current small icons with larger, more detailed line-art style icons (like the ones used in the process section) for each value:
+
+Thoughtful Design → lightbulb icon (💡 style line art)
+Timeless Elegance → diamond/gem icon
+Personal Connection → heart icon
+Quality & Craftsmanship → tools/wrench & screwdriver crossed icon
+Trust & Transparency → shield icon
+
+
+Icon size — Make icons large, around 40px x 40px, stroke style (not filled), gold/olive color matching the website theme
+Layout — Each value item: large icon on left, then title in serif font bold, then description below title. No numbering anywhere. Clean divider line between each item remains
+Icon style — Should match the aesthetic of the first image shown — outline/sketch style, not emoji or flat filled icons
+
+Keep all other styling, fonts, colors and layout of the Our Values section unchanged."
+
+Numbering hata ke bade beautiful icons aayenge — bilkul first image jaisa feel! 😊abhi bahut jagah le raha hai mobile view mein likha hua left most ya right most tak bhi jaayega toh chalega and start heading mein bhi zyada jagah le raha hai unwanted nikaal do space please and aur zyada animations daal sakte ho toh please daal doReplit Prompt:
+"In the Our Process section on the Services page, fix the mobile view (below 768px):
+Layout fixes:
+
+Reduce the top section heading area padding — remove extra space above and below 'HOW WE DO IT' label and 'Our Process' heading, max 24px padding top
+Each step content box — extend text all the way to screen edges with only 12px padding on outer sides, so text uses full screen width
+Reduce font size of step titles to 18px and description to 12px on mobile
+Reduce gap between each step — max 32px between steps
+Diamond icon should be smaller on mobile — 36px size
+Gold vertical line should be thinner — 1px on mobile
+
+Additional animations (IntersectionObserver, replay every time):
+
+'HOW WE DO IT' label — fade in from top
+'Our Process' heading — each word flips in one by one (rotateX animation)
+Subheading — fade in with slight delay
+Gold vertical line — draws itself downward smoothly as user scrolls using height animation from 0% to 100%
+Each diamond icon — pulse glow effect in gold when it enters viewport
+Step titles — slide in from their respective side (left or right) with a slight bounce
+Description text — fade in upward after title appears, 0.2s delay
+Add a subtle parallax effect on the gold line — it moves slightly slower than scroll speed for depth effect
+
+Keep desktop completely unchanged."
+
+Compact layout + cinematic animations — mobile pe bilkul premium process section dikhega! ✨😊about page ka starting ka pehle kaise light shade tha waise hi rakho and for above header section of about page jaise color theme in desktop view same i want for mobile view tooReplit Prompt:
+"In the About page hero/header section:
+
+Desktop — keep the current dark olive green background exactly as it is
+Mobile view (below 768px) — apply the exact same dark olive green background color (#2C3B2D or whatever color is currently on desktop) to the About page hero section on mobile too. Currently mobile may be showing a different light/cream color — replace it with the same dark green
+Also make sure the About page hero section on mobile has:
+
+Same text colors (white heading, gold italic subheading, cream paragraph)
+Proper padding (32px top, 24px sides)
+Text centered
+No white or light background bleeding through
+
+
+
+Keep desktop unchanged."

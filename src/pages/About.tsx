@@ -344,7 +344,7 @@ export default function About() {
     <div style={{ background: '#f5f2ed' }} className="pt-20">
 
       {/* HERO */}
-      <section className="relative py-24 px-6 overflow-hidden" style={{ background: '#2A3926' }}>
+      <section className="relative py-24 px-6 overflow-hidden about-hero" style={{ background: '#2A3926' }}>
         <div className="absolute inset-0 opacity-[0.07]">
           <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #a18661 0%, transparent 60%)' }} />
         </div>
@@ -359,6 +359,18 @@ export default function About() {
             </p>
           </FadeIn>
         </div>
+        <style>{`
+          /* Mobile: force the same dark olive background/text — no light bleed, tighter padding */
+          @media (max-width: 768px) {
+            .about-hero {
+              background: #2A3926 !important;
+              padding-top: 32px !important;
+              padding-bottom: 32px !important;
+              padding-left: 24px !important;
+              padding-right: 24px !important;
+            }
+          }
+        `}</style>
       </section>
 
       {/* WHO WE ARE */}
