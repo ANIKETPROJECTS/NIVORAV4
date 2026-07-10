@@ -47,12 +47,12 @@ const navLinks = [
 ]
 
 const serviceLinks = [
-  { to: '/services/residential', label: 'Residential Interiors' },
-  { to: '/services/commercial', label: 'Commercial Interiors' },
-  { to: '/services/hospitality', label: 'Hospitality Interiors' },
-  { to: '/services/architecture', label: 'Architecture & Space Planning' },
-  { to: '/services/visualization', label: '2D & 3D Visualization' },
-  { to: '/services/renovation', label: 'Renovation & Makeovers' },
+  { to: '/services', label: 'Residential Interiors' },
+  { to: '/services', label: 'Commercial Interiors' },
+  { to: '/services', label: 'Hospitality Interiors' },
+  { to: '/services', label: 'Architecture & Space Planning' },
+  { to: '/services', label: '2D & 3D Visualization' },
+  { to: '/services', label: 'Renovation & Makeovers' },
 ]
 
 function FooterLink({ to, label }: { to: string; label: string }) {
@@ -71,6 +71,8 @@ function FooterLink({ to, label }: { to: string; label: string }) {
           position: 'relative',
           paddingBottom: 2,
           transition: 'color 0.3s ease',
+          touchAction: 'manipulation',
+          WebkitTapHighlightColor: 'transparent',
         }}
         onMouseEnter={e => {
           const el = e.currentTarget as HTMLElement
@@ -83,6 +85,18 @@ function FooterLink({ to, label }: { to: string; label: string }) {
           el.style.color = '#f5f2ed'
           const bar = el.querySelector('.link-bar') as HTMLElement | null
           if (bar) bar.style.width = '0%'
+        }}
+        onTouchStart={e => {
+          const el = e.currentTarget as HTMLElement
+          const bar = el.querySelector('.link-bar') as HTMLElement | null
+          if (!bar) return
+          // Draw underline in immediately
+          bar.style.transition = 'width 0.3s ease'
+          bar.style.width = '100%'
+          // After 1 second, retract it
+          setTimeout(() => {
+            bar.style.width = '0%'
+          }, 1000)
         }}
       >
         {label}
@@ -185,15 +199,15 @@ export default function Footer() {
           }
           .footer-brand-col > a img,
           .footer-brand-col > a > div {
-            width: 70px !important;
-            max-width: 70px !important;
+            width: 100px !important;
+            max-width: 100px !important;
             height: auto !important;
           }
           /* tagline */
           .footer-brand-col > p {
             margin-bottom: 0 !important;
             max-width: none !important;
-            font-size: 10px !important;
+            font-size: 13px !important;
             line-height: 1.5 !important;
           }
 
@@ -390,7 +404,7 @@ export default function Footer() {
               fontWeight: 400,
             }}>What We Do</h4>
             <ul style={{ padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {serviceLinks.map(l => <FooterLink key={l.to} to={l.to} label={l.label} />)}
+              {serviceLinks.map(l => <FooterLink key={l.label} to={l.to} label={l.label} />)}
             </ul>
           </motion.div>
 
