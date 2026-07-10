@@ -290,7 +290,14 @@ function MvBox({ type, text }: { type: 'mission' | 'vision'; text: string }) {
 }
 
 /* ─── SINGLE VALUE ITEM — flex layout, no overlap ───────── */
-function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
+function ValueItem({
+  v, index, isTapped, onTap,
+}: {
+  v: typeof values[0]
+  index: number
+  isTapped?: boolean
+  onTap?: () => void
+}) {
   const [hovered, setHovered] = useState(false)
   const isMobile = useIsMobile()
   const ref = useRef<HTMLDivElement>(null)
@@ -302,28 +309,33 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
     <motion.div
       ref={ref}
       variants={isMobile ? undefined : valueItemVariants}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      // On mobile: CSS animation class drives the entrance (no FM opacity/transform)
-      className={isMobile ? 'value-item-row value-item-mob' : 'value-item-row'}
+      onMouseEnter={() => !isMobile && setHovered(true)}
+      onMouseLeave={() => !isMobile && setHovered(false)}
+      onClick={() => isMobile && onTap?.()}
+      className={
+        isMobile
+          ? `value-item-row value-item-mob${isTapped ? ' vi-mob-active' : ''}`
+          : 'value-item-row'
+      }
       style={{
         display: 'flex', gap: 20, alignItems: 'flex-start', paddingBottom: 28,
-        // CSS variable consumed by the keyframe animation delay on mobile
         ...(isMobile ? { '--vi-delay': `${stagger}s` } as React.CSSProperties : {}),
       }}
     >
       {/* Left column — icon */}
       <div className="value-icon-col" style={{ flexShrink: 0, width: 40, paddingTop: 2 }}>
         {isMobile ? (
-          /* Mobile: plain element — no FM initial/animate so opacity is never set to 0 by JS */
-          <v.Icon
-            size={36}
-            color="#a18661"
-            strokeWidth={1.5}
-            style={{ display: 'block' }}
-          />
+          /* Mobile: wrap in a div for pulse/tap animation */
+          <div className={`vi-mob-icon-wrap${isTapped ? ' vi-tapped' : ''}`}>
+            <v.Icon
+              size={36}
+              color={isTapped ? '#C4A35A' : '#a18661'}
+              strokeWidth={1.5}
+              style={{ display: 'block', transition: 'color 0.3s ease' }}
+            />
+          </div>
         ) : (
-          /* Desktop: FM wrapper for hover effects (unchanged) */
+          /* Desktop: unchanged hover effects */
           <v.Icon
             size={36}
             color="#a18661"
@@ -342,15 +354,15 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
       {/* Right column — title + desc + divider */}
       <div style={{ flex: 1, minWidth: 0 }}>
         {isMobile ? (
-          /* Mobile: plain elements — CSS animation on the row handles entrance */
           <>
             <h4 style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontWeight: 600, fontSize: '1.2rem', letterSpacing: '0.01em',
-              color: '#21291a', margin: '0 0 8px', lineHeight: 1.3,
+              color: isTapped ? '#C4A35A' : '#21291a',
+              transition: 'color 0.3s ease',
+              margin: '0 0 8px', lineHeight: 1.3,
             }}>{v.title}</h4>
             <p style={{ ...BODY, fontSize: 13, marginBottom: 20 }}>{v.desc}</p>
-            {/* Divider always visible on mobile */}
             <div style={{ height: 1, background: '#a18661', borderRadius: 1, opacity: 0.35 }} />
           </>
         ) : (
@@ -380,10 +392,16 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
       </div>
 
       <style>{`
-        /* Mobile entrance animation — pure CSS, no JS required to trigger */
+        /* ── Entrance animation ── */
         @keyframes vi-fade-up {
           from { opacity: 0; transform: translateY(16px); }
           to   { opacity: 1; transform: translateY(0);    }
+        }
+
+        /* ── Icon gentle pulse (mobile idle) ── */
+        @keyframes vi-icon-pulse {
+          0%, 100% { transform: scale(1.0); }
+          50%       { transform: scale(1.05); }
         }
 
         .value-icon-col { width: 40px; }
@@ -400,11 +418,38 @@ function ValueItem({ v, index }: { v: typeof values[0]; index: number }) {
             width: 36px !important;
             height: 36px !important;
           }
-          /* CSS animation drives entrance — opacity:1 is the settled state.
-             animation-fill-mode: both → starts from 'from' (opacity:0) during delay,
-             settles permanently at 'to' (opacity:1). No JS needed. */
+
+          /* Entrance animation */
           .value-item-mob {
             animation: vi-fade-up 0.5s ease-out calc(var(--vi-delay, 0s)) both;
+            /* Tap feel */
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            /* Reserve border-left space always so layout never shifts on tap */
+            border-left: 3px solid transparent;
+            padding-left: 8px !important;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+          }
+
+          /* Tapped state */
+          .value-item-mob.vi-mob-active {
+            background-color: rgba(196, 163, 90, 0.1);
+            border-left-color: #C4A35A;
+          }
+
+          /* Icon pulse wrapper — slow idle pulse, starts after entrance */
+          .vi-mob-icon-wrap {
+            display: inline-block;
+            animation: vi-icon-pulse 3s ease-in-out infinite;
+            animation-delay: calc(var(--vi-delay, 0s) + 0.6s);
+            transition: transform 0.3s ease;
+          }
+
+          /* Tapped: freeze pulse, hold at scale 1.2 */
+          .vi-mob-icon-wrap.vi-tapped {
+            animation: none;
+            transform: scale(1.2);
           }
         }
       `}</style>
@@ -516,6 +561,8 @@ function CtaButton() {
 /* ─── MAIN PAGE ─────────────────────────────────────────── */
 export default function About() {
   const isMobile = useIsMobile()
+  // Mobile-only: tracks which value item is currently tapped (one at a time)
+  const [activeTapIndex, setActiveTapIndex] = useState<number | null>(null)
 
   return (
     <div style={{ background: '#f5f2ed' }} className="pt-20 about-page-root">
@@ -590,7 +637,13 @@ export default function About() {
                   On desktop: motion.div with stagger variants (unchanged). */}
               {isMobile ? (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {values.map((v, i) => <ValueItem key={i} v={v} index={i} />)}
+                  {values.map((v, i) => (
+                    <ValueItem
+                      key={i} v={v} index={i}
+                      isTapped={activeTapIndex === i}
+                      onTap={() => setActiveTapIndex(activeTapIndex === i ? null : i)}
+                    />
+                  ))}
                 </div>
               ) : (
                 <motion.div
