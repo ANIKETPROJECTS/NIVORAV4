@@ -30,6 +30,26 @@ const transformations = [
     beforeDesc: 'A plain living area with minimal décor, bare walls and a basic TV unit lacking character.',
     afterDesc: 'A statement TV wall in marble-finish panels, warm ambient lighting, slatted wood accents and a floating media unit.',
   },
+  {
+    id: 3,
+    title: 'Office Reception Design',
+    beforeLabel: 'BARE SHELL',
+    afterLabel: 'PREMIUM WORKSPACE',
+    beforeImg: '/before-3.jpg',
+    afterImg: '/after-3.jpg',
+    beforeDesc: 'An unfinished commercial space with raw drywall, exposed wiring and construction debris throughout.',
+    afterDesc: 'A striking reception with a marble front desk, warm wood-slatted walls, statement chandelier and polished stone flooring.',
+  },
+  {
+    id: 4,
+    title: 'Double-Height Hall & Balcony',
+    beforeLabel: 'RAW STRUCTURE',
+    afterLabel: 'GRAND LIVING',
+    beforeImg: '/before-4.jpg',
+    afterImg: '/after-4.jpg',
+    beforeDesc: 'A bare double-height shell with exposed concrete, raw brick balcony railing and no finishes in place.',
+    afterDesc: 'A grand open living hall with a cascading chandelier, glass balcony railing, velvet sofas and warm ambient lighting.',
+  },
 ]
 
 const igPosts = [
