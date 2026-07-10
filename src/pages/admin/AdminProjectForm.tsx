@@ -4,6 +4,14 @@ import { X, Plus, Upload, Loader2, GripVertical, Star } from 'lucide-react'
 
 type FormData = Omit<Project, 'badge'>
 
+// Request a small, compressed rendition from Cloudinary for gallery thumbnails so the
+// browser doesn't have to decode dozens of full-resolution images at once (was causing
+// heavy scroll jank in the admin gallery editor).
+function cldThumb(url: string): string {
+  if (!url.includes('/upload/')) return url
+  return url.replace('/upload/', '/upload/w_300,h_225,c_fill,q_auto,f_auto/')
+}
+
 interface Props {
   initial?: Partial<FormData>
   onSave: (data: Partial<FormData>) => Promise<void>
@@ -272,7 +280,7 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
             <p className="apf-hint">The thumbnail image shown on the Portfolio page card.</p>
             {form.coverImage ? (
               <div className="apf-cover-preview">
-                <img src={form.coverImage} alt="Cover" />
+                <img src={cldThumb(form.coverImage)} alt="Cover" loading="lazy" decoding="async" />
                 <button className="apf-cover-remove" onClick={() => set('coverImage', '')}>
                   <X size={14} /> Remove
                 </button>
@@ -315,7 +323,7 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
             <p className="apf-hint">The large banner image shown at the top of the project detail page.</p>
             {form.heroImage ? (
               <div className="apf-cover-preview">
-                <img src={form.heroImage} alt="Hero" />
+                <img src={cldThumb(form.heroImage)} alt="Hero" loading="lazy" decoding="async" />
                 <button className="apf-cover-remove" onClick={() => set('heroImage', '')}>
                   <X size={14} /> Remove
                 </button>
@@ -388,7 +396,7 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
               <div className="apf-gallery-grid">
                 {(form.images || []).map((url, i) => (
                   <div key={i} className={`apf-gallery-item${form.heroImage === url ? ' apf-gallery-item-hero' : ''}`}>
-                    <img src={url} alt={`Image ${i + 1}`} />
+                    <img src={cldThumb(url)} alt={`Image ${i + 1}`} loading="lazy" decoding="async" />
                     <div className="apf-gallery-overlay">
                       <button onClick={() => removeImage(i)} title="Remove" className="apf-gal-btn apf-gal-btn-del"><X size={12} /></button>
                     </div>
