@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Phone, Mail, MapPin, MessageCircle, ArrowRight, Clock, Loader2 } from 'lucide-react'
+import { Phone, Mail, MapPin, ArrowRight, Clock, Loader2 } from 'lucide-react'
 import { submitEnquiry } from '../lib/api'
 
 const SPACE_TYPES = ['Residential', 'Commercial', 'Office', 'Retail', 'Villa/Bungalow', 'Other']
@@ -521,21 +521,9 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* middle — WhatsApp + Hours */}
+              {/* middle — Hours */}
               <div>
                 <div style={{ borderTop: '1px solid #E8E0D0', paddingTop: 28 }}>
-                  <a
-                    href="https://wa.me/917276687805?text=Hello%2C%20I%20am%20interested%20in%20your%20interior%20design%20services."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-wa-btn"
-                  >
-                    <MessageCircle size={13} />
-                    Chat on WhatsApp <ArrowRight size={11} />
-                  </a>
-                </div>
-
-                <div style={{ borderTop: '1px solid #E8E0D0', marginTop: 28, paddingTop: 28 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
                     <Clock size={13} style={{ color: '#C9A96E', flexShrink: 0 }} />
                     <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888880', margin: 0 }}>
