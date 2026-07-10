@@ -2708,7 +2708,15 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
         <style>{`
           @media (max-width: 767px) {
 
-            /* ── Layout: stack text → image ─────────────────────────── */
+            /* ── Section horizontal padding ──────────────────────────── */
+            .philosophy-section {
+              padding-left: 20px !important;
+              padding-right: 20px !important;
+              box-sizing: border-box !important;
+              overflow: hidden !important;
+            }
+
+            /* ── Layout: column, text first then image ───────────────── */
             .philosophy-flex {
               flex-direction: column !important;
               gap: 0 !important;
@@ -2730,13 +2738,13 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               margin: 0 !important;
             }
 
-            /* ── Heading — reduce size on narrow screens ─────────────── */
+            /* ── Heading — responsive clamp, comfortable line-height ─── */
             .philosophy-text-block > p:first-of-type {
-              font-size: clamp(1.35rem, 6vw, 1.8rem) !important;
-              line-height: 1.35 !important;
+              font-size: clamp(1.4rem, 5.5vw, 1.8rem) !important;
+              line-height: 1.45 !important;
             }
 
-            /* ── Label with flanking rules ───────────────────────────── */
+            /* ── Label flanking rules — shorter on narrow screens ─────── */
             .philosophy-label-row {
               gap: 10px !important;
             }
@@ -2745,53 +2753,61 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               flex-shrink: 0 !important;
             }
 
-            /* ── Image: full-width, natural aspect ratio ─────────────── */
+            /* ── Image wrap — clips to rounded corners ───────────────── */
             .philosophy-image-wrap {
               display: block !important;
               position: relative !important;
               height: auto !important;
               overflow: hidden !important;
-              margin-bottom: 0 !important;
-              border-radius: 12px !important;
+              margin: 0 !important;
+              border-radius: 14px !important;
+              box-shadow: 0 8px 32px rgba(20,18,14,0.14) !important;
             }
             .philosophy-frame {
               display: none !important;
             }
+
+            /* ── Photo inner — let the wrap handle clipping ──────────── */
             .philosophy-photo-inner {
               height: auto !important;
               width: 100% !important;
-              border-radius: 12px !important;
-              overflow: hidden !important;
+              overflow: visible !important;
+              border-radius: 0 !important;
               position: relative !important;
             }
+
+            /* ── Photo — full width, natural height, NO parallax ─────── */
+            /*    JS sets transform via inline style on scroll; the         */
+            /*    !important here wins the cascade and pins it to none.     */
             .philosophy-photo-inner .philosophy-photo {
               width: 100% !important;
               height: auto !important;
               object-fit: unset !important;
               display: block !important;
-              border-radius: 0 !important;
+              transform: none !important;
             }
 
-            /* ── Quote card: anchored inside image, full span ─────────── */
+            /* ── Quote card — 78% width, bottom-left 16px offsets ─────── */
             .philosophy-quote-card {
               position: absolute !important;
-              bottom: 14px !important;
-              left: 12px !important;
-              right: 12px !important;
+              bottom: 16px !important;
+              left: 16px !important;
+              right: auto !important;
               top: auto !important;
-              width: auto !important;
-              max-width: none !important;
-              margin-top: 0 !important;
-              background-color: rgba(18,28,18,0.88) !important;
+              width: 78% !important;
+              max-width: 78% !important;
+              margin: 0 !important;
+              background-color: rgba(14,24,14,0.90) !important;
               backdrop-filter: blur(8px) !important;
               -webkit-backdrop-filter: blur(8px) !important;
               border: 1px solid rgba(201,169,110,0.55) !important;
               border-radius: 10px !important;
               padding: 14px 16px !important;
-              box-shadow: 0 12px 32px rgba(0,0,0,0.32) !important;
-              transform: translateY(16px) !important;
+              box-shadow: 0 12px 32px rgba(0,0,0,0.35) !important;
+              transform: translateY(14px) !important;
               opacity: 0 !important;
-              transition: opacity 500ms ease-out 300ms, transform 500ms ease-out 300ms !important;
+              transition: opacity 500ms ease-out 300ms,
+                          transform 500ms ease-out 300ms !important;
             }
             .philosophy-in-view .philosophy-quote-card {
               transform: translateY(0) !important;
@@ -2800,20 +2816,23 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
 
             /* ── Quote card typography ───────────────────────────────── */
             .philosophy-quote-mark {
-              font-size: 24px !important;
+              font-size: 22px !important;
+              line-height: 0.8 !important;
               margin-bottom: 10px !important;
             }
             .philosophy-quote-text {
-              font-size: 13px !important;
+              font-size: 12.5px !important;
               line-height: 1.55 !important;
+              margin: 0 !important;
             }
             .philosophy-quote-author {
               font-size: 10px !important;
               letter-spacing: 1.5px !important;
               margin-top: 10px !important;
+              margin-bottom: 0 !important;
             }
 
-            /* ── Text animations (slide up instead of left) ──────────── */
+            /* ── Text block entrance animations (slide up) ───────────── */
             .philosophy-mobile-fade {
               transform: translateY(20px) !important;
             }
