@@ -26,6 +26,7 @@ The Vite dev server proxies `/api/*` requests to the Express API on port 3001.
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
 | `CLOUDINARY_API_KEY` | Cloudinary API key |
 | `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+| `ADMIN_PASSWORD` | Password for the admin panel |
 
 ## Seeding data
 
