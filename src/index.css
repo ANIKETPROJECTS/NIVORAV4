@@ -209,6 +209,35 @@ h3 { font-size: clamp(1.1rem, 2.2vw, 1.85rem); }
   }
 }
 
+/* ── Philosophy section — mobile image fix ───────────────────────── */
+/* On mobile the parallax scroll handler is disabled in JS (Home.tsx).  */
+/* These rules ensure the full bedroom image is visible, uncropped.     */
+@media (max-width: 767px) {
+  .philosophy-section .philosophy-image-col {
+    flex: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+  }
+  .philosophy-section .philosophy-image-wrap {
+    height: auto !important;
+    overflow: hidden !important;
+    border-radius: 14px !important;
+  }
+  .philosophy-section .philosophy-photo-inner {
+    height: auto !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  .philosophy-section .philosophy-photo {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    transform: none !important;
+  }
+}
+
 /* ── Philosophy quote card — continuous shimmer/glow on gold border ── */
 @keyframes philosophy-card-glow {
   0%, 100% {

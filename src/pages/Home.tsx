@@ -2442,6 +2442,12 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
     const img = philosophyImgRef.current
     if (!img || !section) return
     const handleScroll = () => {
+      // Disable parallax on mobile — the transform crops the image inside
+      // the overflow:hidden container, showing only the ceiling
+      if (window.innerWidth < 768) {
+        img.style.transform = 'none'
+        return
+      }
       const rect = section.getBoundingClientRect()
       const progress = -rect.top / window.innerHeight
       img.style.transform = `translateY(${progress * 30}px)`
