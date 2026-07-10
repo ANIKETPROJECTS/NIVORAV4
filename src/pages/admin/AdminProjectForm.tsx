@@ -1,6 +1,6 @@
 import { useState, useRef, ChangeEvent } from 'react'
 import { Project, uploadImages } from '../../lib/api'
-import { X, Plus, Upload, Loader2, GripVertical } from 'lucide-react'
+import { X, Plus, Upload, Loader2, GripVertical, Star } from 'lucide-react'
 
 type FormData = Omit<Project, 'badge'>
 
@@ -387,7 +387,7 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
             {(form.images || []).length > 0 && (
               <div className="apf-gallery-grid">
                 {(form.images || []).map((url, i) => (
-                  <div key={i} className="apf-gallery-item">
+                  <div key={i} className={`apf-gallery-item${form.heroImage === url ? ' apf-gallery-item-hero' : ''}`}>
                     <img src={url} alt={`Image ${i + 1}`} />
                     <div className="apf-gallery-overlay">
                       <button onClick={() => removeImage(i)} title="Remove" className="apf-gal-btn apf-gal-btn-del"><X size={12} /></button>
@@ -396,6 +396,14 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
                       {i > 0 && <button onClick={() => moveImage(i, i - 1)} className="apf-ord-btn">↑</button>}
                       {i < (form.images || []).length - 1 && <button onClick={() => moveImage(i, i + 1)} className="apf-ord-btn">↓</button>}
                     </div>
+                    <button
+                      onClick={() => set('heroImage', form.heroImage === url ? '' : url)}
+                      title={form.heroImage === url ? 'Unset as hero image' : 'Use as hero image'}
+                      className={`apf-hero-toggle${form.heroImage === url ? ' apf-hero-toggle-active' : ''}`}
+                    >
+                      <Star size={11} fill={form.heroImage === url ? 'currentColor' : 'none'} />
+                      {form.heroImage === url ? 'Hero' : 'Set Hero'}
+                    </button>
                     <span className="apf-gallery-num">#{i + 1}</span>
                   </div>
                 ))}
@@ -535,6 +543,7 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
           border: 1px solid #e2d9ce; aspect-ratio: 4/3;
           box-sizing: border-box;
         }
+        .apf-gallery-item-hero { border-color: #C9A96E; box-shadow: inset 0 0 0 1px #C9A96E, 0 0 0 2px rgba(201,169,110,0.25); }
         .apf-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .apf-gallery-overlay {
           position: absolute; top: 4px; right: 4px;
@@ -552,6 +561,20 @@ export default function AdminProjectForm({ initial, onSave, onCancel, isEdit }: 
         .apf-gal-btn:hover { background: #ffffff; }
         .apf-gal-btn-del { background: rgba(184,90,74,0.9); color: #fff; }
         .apf-gal-btn-del:hover { background: rgba(184,90,74,1); }
+        .apf-hero-toggle {
+          position: absolute; bottom: 4px; right: 4px; z-index: 2;
+          display: flex; align-items: center; gap: 4px;
+          background: rgba(26,22,18,0.72); color: #f0ebe3;
+          border: none; border-radius: 20px; padding: 4px 9px;
+          font-size: 10px; font-family: Arial, sans-serif; cursor: pointer;
+          letter-spacing: 0.02em; transition: background 0.2s, color 0.2s;
+          opacity: 0;
+        }
+        .apf-gallery-item:hover .apf-hero-toggle, .apf-hero-toggle-active { opacity: 1; }
+        .apf-hero-toggle:hover { background: rgba(26,22,18,0.9); }
+        .apf-hero-toggle-active {
+          background: #C9A96E; color: #2a2218;
+        }
         .apf-gallery-order {
           position: absolute; bottom: 4px; left: 4px; display: flex; gap: 4px;
         }
