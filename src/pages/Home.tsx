@@ -1590,28 +1590,28 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
           .hero-cta-group {
             flex-direction: column !important;
             gap: 10px !important;
-            align-items: stretch !important;
+            align-items: center !important;
             width: 100% !important;
           }
 
-          /* 10. Button wrappers — full width */
+          /* 10. Button wrappers — auto width, centered */
           .hero-btn-wrap {
-            width: 100% !important;
+            width: auto !important;
           }
 
-          /* 11. Primary button — full width, readable size */
+          /* 11. Primary button — auto width, readable size */
           .hero-btn-primary {
-            width: 100% !important;
+            width: auto !important;
             justify-content: center !important;
-            padding: 14px 20px !important;
+            padding: 14px 32px !important;
             font-size: 12px !important;
           }
 
-          /* 12. Secondary button — full width, readable size */
+          /* 12. Secondary button — auto width, readable size */
           .hero-btn-secondary {
-            width: 100% !important;
+            width: auto !important;
             justify-content: center !important;
-            padding: 14px 20px !important;
+            padding: 14px 32px !important;
             font-size: 12px !important;
           }
         }
