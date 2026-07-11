@@ -276,10 +276,11 @@ export default function ProjectDetail() {
       {/* Hero */}
       {/* Desktop: fixed 70vh viewport-fill hero with object-cover, same as every other
           project page. Mobile: full uncropped image via object-contain + auto height.
-          "The Quite Curve" only: cover-fit image is scaled down ~8% on desktop so more
-          of the room (ceiling, side table) is visible without changing the hero height —
-          the dark green backdrop shows through the small revealed margin, matching the
-          existing dark gradient overlay treatment. */}
+          "The Quite Curve" only: its current hero photo is a tall portrait image, which
+          in a wide 70vh banner would be cropped to a thin sliver under object-cover.
+          object-contain shows the entire composition uncropped, centered both ways,
+          inside the same fixed-height container; the dark green backdrop fills the
+          revealed side margins instead of leaving them blank. */}
       <div className="relative overflow-hidden" style={{
         height: isMobile ? 'auto' : '70vh',
         background: (!isMobile && project.id === 'the-quite-curve') ? '#2D3E29' : undefined,
@@ -287,13 +288,14 @@ export default function ProjectDetail() {
         <img
           src={project.heroImage || project.images[0] || project.coverImage}
           alt={project.name}
-          className={isMobile ? 'w-full block' : 'w-full h-full object-cover'}
+          className={
+            isMobile || project.id === 'the-quite-curve'
+              ? 'w-full h-full object-contain'
+              : 'w-full h-full object-cover'
+          }
           style={{
             filter: 'contrast(1.07) saturate(1.05)',
             ...(isMobile ? { height: 'auto', objectFit: 'contain' } : {}),
-            ...((!isMobile && project.id === 'the-quite-curve')
-              ? { transform: 'scale(0.92)', transformOrigin: 'center center' }
-              : {}),
           }}
         />
         <div className="absolute inset-0" style={{
