@@ -37,12 +37,20 @@
   }
 
   header .navbar-inner {
-    height: 60px;
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
   }
 
   header img.logo {
     height: 36px;
     width: 36px;
+  }
+
+  /* Hamburger — pull it slightly inward from the right edge */
+  header .mobile-ham-btn {
+    margin-right: -4px;
+    padding-right: 4px !important;
   }
 
   /* Hide desktop nav and enquire button */

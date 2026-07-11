@@ -64,7 +64,7 @@ export default function Navbar() {
           backdropFilter: scrolled ? 'blur(10px)' : 'none',
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
+        <div className="navbar-inner max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
 
           {/* Logo */}
           <a
@@ -141,7 +141,7 @@ export default function Navbar() {
           </Link>
 
           <button
-            className="lg:hidden p-2"
+            className="lg:hidden p-2 mobile-ham-btn"
             style={{ color: GOLD_LIGHT }}
             onClick={() => setOpen(o => !o)}
             aria-label="Toggle menu"
