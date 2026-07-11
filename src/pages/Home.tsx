@@ -1531,7 +1531,7 @@ function HeroSection({ splashDone }: { splashDone: boolean }) {
         @media (max-width: 767px) {
           /* 1. Compact height + vertically centred content */
           .hero-section {
-            height: 90dvh !important;
+            height: 100dvh !important;
             min-height: unset !important;
             justify-content: center !important;
             padding-top: 20px !important;
