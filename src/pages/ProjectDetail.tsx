@@ -220,6 +220,14 @@ export default function ProjectDetail() {
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const openLightbox = useCallback((i: number) => setLightboxIndex(i), [])
   const closeLightbox = useCallback(() => setLightboxIndex(null), [])
@@ -266,12 +274,15 @@ export default function ProjectDetail() {
     <div style={{ background: '#FFFCF7' }} className="pt-20">
 
       {/* Hero */}
-      <div className="relative overflow-hidden" style={{ height: '70vh' }}>
+      <div className="relative overflow-hidden" style={{ height: isMobile ? 'auto' : '70vh' }}>
         <img
           src={project.heroImage || project.images[0] || project.coverImage}
           alt={project.name}
-          className="w-full h-full object-cover"
-          style={{ filter: 'contrast(1.07) saturate(1.05)' }}
+          className={isMobile ? 'w-full block' : 'w-full h-full object-cover'}
+          style={{
+            filter: 'contrast(1.07) saturate(1.05)',
+            ...(isMobile ? { height: 'auto', objectFit: 'contain' } : {}),
+          }}
         />
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.52) 100%)',
