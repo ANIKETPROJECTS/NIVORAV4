@@ -2626,20 +2626,35 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               transition: 'opacity 900ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 900ms cubic-bezier(0.22,1,0.36,1) 150ms',
             }}
           >
-            <div className="philosophy-image-wrap" style={{ position: 'relative', display: 'block', width: '100%', height: isMobile ? 'auto' : '100%' }}>
-              {/* Offset gold frame */}
-              <div className="philosophy-frame" style={{
-                position: 'absolute',
-                top: 8,
-                left: 8,
-                right: -8,
-                bottom: -8,
-                border: '1px solid #C9A96E',
-                pointerEvents: 'none',
-                zIndex: 0,
-              }} />
+            <div className="philosophy-image-wrap" style={{
+              position: 'relative',
+              display: isMobile ? 'flex' : 'block',
+              flexDirection: isMobile ? 'column' : undefined,
+              width: '100%',
+              height: isMobile ? 'auto' : '100%',
+            }}>
+              {/* Offset gold frame — desktop only */}
+              {!isMobile && (
+                <div className="philosophy-frame" style={{
+                  position: 'absolute',
+                  top: 8,
+                  left: 8,
+                  right: -8,
+                  bottom: -8,
+                  border: '1px solid #C9A96E',
+                  pointerEvents: 'none',
+                  zIndex: 0,
+                }} />
+              )}
               {/* Photo */}
-              <div className="philosophy-photo-inner" style={{ position: 'relative', zIndex: 1, overflow: isMobile ? 'visible' : 'hidden', height: isMobile ? 'auto' : '100%' }}>
+              <div className="philosophy-photo-inner" style={{
+                position: 'relative',
+                zIndex: 1,
+                overflow: 'hidden',
+                height: isMobile ? 'auto' : '100%',
+                borderRadius: isMobile ? 14 : 0,
+                boxShadow: isMobile ? '0 8px 32px rgba(20,18,14,0.14)' : 'none',
+              }}>
                 <img
                   ref={philosophyImgRef}
                   src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=700&q=85"
@@ -2648,19 +2663,33 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
                   style={{
                     width: '100%',
                     height: isMobile ? 'auto' : '100%',
-                    objectFit: isMobile ? 'contain' : 'cover',
+                    objectFit: 'cover',
                     display: 'block',
                   }}
                   loading="lazy"
                 />
               </div>
 
-              {/* Glass quote card — overlaps bottom-left corner of image */}
+              {/* Glass quote card — overlaps image on desktop, flows below on mobile */}
               <div
                 ref={quoteCardRef}
                 className="philosophy-quote-card"
                 data-inview={philosophyInView ? 'true' : 'false'}
-                style={{
+                style={isMobile ? {
+                  position: 'static',
+                  marginTop: 16,
+                  width: '100%',
+                  backgroundColor: 'rgba(14,24,14,0.92)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(201,169,110,0.55)',
+                  borderRadius: 10,
+                  padding: '16px 18px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.28)',
+                  opacity: philosophyInView ? 1 : 0,
+                  transform: philosophyInView ? 'translateY(0)' : 'translateY(14px)',
+                  transition: 'opacity 500ms ease-out 300ms, transform 500ms ease-out 300ms',
+                } : {
                   position: 'absolute',
                   left: -32,
                   bottom: -32,
