@@ -274,24 +274,18 @@ export default function ProjectDetail() {
     <div style={{ background: '#FFFCF7' }} className="pt-20">
 
       {/* Hero */}
-      {/* "The Quite Curve" (the-quite-curve) needs its desktop hero shown uncropped;
-          all other projects keep the original 70vh + object-cover desktop treatment. */}
+      {/* Desktop: fixed 70vh viewport-fill hero with object-cover, same as every other
+          project page. Mobile: full uncropped image via object-contain + auto height. */}
       <div className="relative overflow-hidden" style={{
-        height: isMobile ? 'auto' : (project.id === 'the-quite-curve' ? 'auto' : '70vh'),
+        height: isMobile ? 'auto' : '70vh',
       }}>
         <img
           src={project.heroImage || project.images[0] || project.coverImage}
           alt={project.name}
-          className={
-            isMobile || project.id === 'the-quite-curve'
-              ? 'w-full block'
-              : 'w-full h-full object-cover'
-          }
+          className={isMobile ? 'w-full block' : 'w-full h-full object-cover'}
           style={{
             filter: 'contrast(1.07) saturate(1.05)',
-            ...((isMobile || project.id === 'the-quite-curve')
-              ? { height: 'auto', objectFit: 'contain' }
-              : {}),
+            ...(isMobile ? { height: 'auto', objectFit: 'contain' } : {}),
           }}
         />
         <div className="absolute inset-0" style={{
