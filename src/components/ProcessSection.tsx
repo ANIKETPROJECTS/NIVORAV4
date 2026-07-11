@@ -193,47 +193,8 @@ function StepContent({
     ? { duration: 0.6, ease: 'easeOut' as const, delay: 0.2 }
     : { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.15 }
 
-  const numChars = step.num.split('')
-
   return (
     <div style={{ textAlign: align }}>
-      {mobile ? (
-        /* Step number — zoom-stamp: scales in from 1.5× with fade, ease-out */
-        <motion.p
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 300,
-            fontSize: 10,
-            letterSpacing: '0.4em',
-            color: '#C9A96E',
-            textTransform: 'uppercase',
-            margin: '0 0 16px',
-            display: 'inline-block',
-            willChange: 'transform, opacity',
-          }}
-          initial={{ opacity: 0, scale: 1.5 }}
-          animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.5 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          {step.num}
-        </motion.p>
-      ) : (
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={active ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 300,
-            fontSize: 10,
-            letterSpacing: '0.4em',
-            color: '#C9A96E',
-            textTransform: 'uppercase',
-            margin: '0 0 10px',
-          }}
-        >{step.num}</motion.p>
-      )}
-
       <motion.h3
         className="process-title"
         initial={titleInitial}
