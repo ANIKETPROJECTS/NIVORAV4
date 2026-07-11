@@ -2767,27 +2767,27 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               flex-shrink: 0 !important;
             }
 
-            /* ── Image wrap — clips to rounded corners ───────────────── */
+            /* ── Image wrap — clips image only, quote card flows below ── */
             .philosophy-image-wrap {
-              display: block !important;
+              display: flex !important;
+              flex-direction: column !important;
               position: relative !important;
               height: auto !important;
-              overflow: hidden !important;
+              overflow: visible !important;
               margin: 0 !important;
-              border-radius: 14px !important;
-              box-shadow: 0 8px 32px rgba(20,18,14,0.14) !important;
             }
             .philosophy-frame {
               display: none !important;
             }
 
-            /* ── Photo inner — let the wrap handle clipping ──────────── */
+            /* ── Photo inner — rounded corners on the image itself ───── */
             .philosophy-photo-inner {
               height: auto !important;
               width: 100% !important;
-              overflow: visible !important;
-              border-radius: 0 !important;
+              overflow: hidden !important;
+              border-radius: 14px !important;
               position: relative !important;
+              box-shadow: 0 8px 32px rgba(20,18,14,0.14) !important;
             }
 
             /* ── Photo — full width, natural height, NO parallax ─────── */
@@ -2796,28 +2796,24 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
             .philosophy-photo-inner .philosophy-photo {
               width: 100% !important;
               height: auto !important;
-              object-fit: unset !important;
+              object-fit: cover !important;
               display: block !important;
               transform: none !important;
             }
 
-            /* ── Quote card — 78% width, bottom-left 16px offsets ─────── */
+            /* ── Quote card — static block below the image ───────────── */
             .philosophy-quote-card {
-              position: absolute !important;
-              bottom: 16px !important;
-              left: 16px !important;
-              right: auto !important;
-              top: auto !important;
-              width: 78% !important;
-              max-width: 78% !important;
-              margin: 0 !important;
-              background-color: rgba(14,24,14,0.90) !important;
+              position: static !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              margin: 16px 0 0 0 !important;
+              background-color: rgba(14,24,14,0.92) !important;
               backdrop-filter: blur(8px) !important;
               -webkit-backdrop-filter: blur(8px) !important;
               border: 1px solid rgba(201,169,110,0.55) !important;
               border-radius: 10px !important;
-              padding: 14px 16px !important;
-              box-shadow: 0 12px 32px rgba(0,0,0,0.35) !important;
+              padding: 16px 18px !important;
+              box-shadow: 0 8px 24px rgba(0,0,0,0.28) !important;
               transform: translateY(14px) !important;
               opacity: 0 !important;
               transition: opacity 500ms ease-out 300ms,
