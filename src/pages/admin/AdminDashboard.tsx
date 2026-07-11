@@ -10,6 +10,7 @@ import {
   Plus, Pencil, Trash2, LogOut, RefreshCw, ExternalLink, Loader2,
   LayoutTemplate, Image, AlignLeft, Grid2X2, Home, Briefcase,
   ChevronDown, ChevronRight, Sparkles, Columns, List, GripVertical,
+  BarChart2, Info,
 } from 'lucide-react'
 
 type ProjectSummary = Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage' | 'order'>
@@ -38,10 +39,19 @@ const SIDEBAR_PAGES: SidebarPage[] = [
     label: 'Home Page',
     icon: Home,
     items: [
-      { tab: 'settings/header',    label: 'Header',      icon: AlignLeft,      hint: 'Navbar logo' },
-      { tab: 'settings/hero',      label: 'Hero Section', icon: Sparkles,      hint: 'Full-screen hero banner' },
-      { tab: 'settings/expertise', label: 'Our Expertise', icon: Grid2X2,      hint: 'Service cards section' },
-      { tab: 'settings/footer',    label: 'Footer',       icon: LayoutTemplate, hint: 'Footer logo' },
+      { tab: 'settings/header',     label: 'Header',       icon: AlignLeft,      hint: 'Navbar logo' },
+      { tab: 'settings/hero',       label: 'Hero Section', icon: Sparkles,       hint: 'Full-screen hero banner' },
+      { tab: 'settings/expertise',  label: 'Our Expertise', icon: Grid2X2,       hint: 'Service cards section' },
+      { tab: 'settings/home-stats', label: 'Stats Numbers', icon: BarChart2,     hint: 'Years, Projects, Clients, Satisfaction' },
+      { tab: 'settings/footer',     label: 'Footer',        icon: LayoutTemplate, hint: 'Footer logo' },
+    ],
+  },
+  {
+    id: 'about',
+    label: 'About Page',
+    icon: Info,
+    items: [
+      { tab: 'settings/about-stats', label: 'Stats Numbers', icon: BarChart2, hint: 'Clients, Experience, Cities, Solutions' },
     ],
   },
   {

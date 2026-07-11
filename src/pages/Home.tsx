@@ -4,7 +4,7 @@ import { useSiteSettings } from '../hooks/useSiteSettings'
 import { ArrowRight, Home as HomeIcon, Building2, Coffee, Layers, Monitor, Gem, Wrench, Clock, Settings, Heart } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import { ExpertiseCarousel } from '../components/ExpertiseCarousel'
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { projects } from '../data/projects'
 
 const heroImg = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85'
@@ -183,16 +183,39 @@ const testimonials = [
   },
 ]
 
-const statsData = [
+const DEFAULT_HOME_STATS = [
   { value: 2,  from: 0, suffix: '+', label: 'Years Experience',    duration: 1200 },
   { value: 25, from: 0, suffix: '+', label: 'Projects Completed',  duration: 1800 },
   { value: 50, from: 0, suffix: '+', label: 'Clients Served',      duration: 1600 },
   { value: 90, from: 0, suffix: '%', label: 'Client Satisfaction', duration: 1400 },
 ]
 
+function parseStatValue(v: string): { numeric: number; suffix: string } {
+  const m = v.match(/^(\d+(?:\.\d+)?)(.*)$/)
+  return m ? { numeric: Number(m[1]), suffix: m[2] } : { numeric: 0, suffix: '' }
+}
+
 function StatsSection() {
-  const [counts, setCounts] = useState(statsData.map(() => 0))
-  const [shimmer, setShimmer] = useState(statsData.map(() => false))
+  const { settings } = useSiteSettings()
+
+  const statsData = useMemo(() => {
+    if (settings?.homeStats?.length) {
+      return settings.homeStats.map(s => {
+        const { numeric, suffix } = parseStatValue(s.value)
+        return { value: numeric, from: 0, suffix, label: s.label, duration: 1400 }
+      })
+    }
+    return DEFAULT_HOME_STATS
+  }, [settings?.homeStats])
+
+  const [counts, setCounts] = useState(() => statsData.map(() => 0))
+  const [shimmer, setShimmer] = useState(() => statsData.map(() => false))
+
+  // Reset counts when settings load and statsData changes
+  useEffect(() => {
+    setCounts(statsData.map(() => 0))
+    setShimmer(statsData.map(() => false))
+  }, [statsData])
   const [inView, setInView] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
   const timersRef = useRef<(() => void)[]>([])
@@ -381,12 +404,15 @@ function StatsSection() {
 }
 
 function MobileStatsCarousel() {
-  const slides = [
-    { value: '2+',  label: 'Years Experience'    },
-    { value: '25+', label: 'Projects Completed'  },
-    { value: '50+', label: 'Clients Served'       },
-    { value: '90%', label: 'Client Satisfaction' },
-  ]
+  const { settings } = useSiteSettings()
+  const slides = settings?.homeStats?.length
+    ? settings.homeStats.map(s => ({ value: s.value, label: s.label }))
+    : [
+        { value: '2+',  label: 'Years Experience'    },
+        { value: '25+', label: 'Projects Completed'  },
+        { value: '50+', label: 'Clients Served'       },
+        { value: '90%', label: 'Client Satisfaction' },
+      ]
   const n = slides.length
 
   const [current, setCurrent]   = useState(0)

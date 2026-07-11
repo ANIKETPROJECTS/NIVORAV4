@@ -60,7 +60,7 @@ router.get('/', async (_req, res) => {
 // ── PUT /api/site-settings (admin — JSON fields only) ─────────────────────────
 router.put('/', requireAdmin, async (req, res) => {
   try {
-    const allowed = ['logoUrl', 'logoSize', 'footerLogoUrl', 'footerLogoSize', 'serviceCards', 'homePortfolio', 'homeHero', 'servicePageHero', 'servicesList']
+    const allowed = ['logoUrl', 'logoSize', 'footerLogoUrl', 'footerLogoSize', 'serviceCards', 'homePortfolio', 'homeHero', 'servicePageHero', 'servicesList', 'homeStats', 'aboutStats']
     const update = {}
     for (const key of allowed) {
       if (key in req.body) update[key] = req.body[key]

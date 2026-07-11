@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import FadeIn from '../components/FadeIn'
+import { useSiteSettings } from '../hooks/useSiteSettings'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Lightbulb, Gem, Heart, Wrench, ShieldCheck, Target, Compass } from 'lucide-react'
 import founderPhoto from '@assets/WhatsApp_Image_2026-07-08_at_20.50.13_1783534790416.jpeg'
@@ -27,12 +28,17 @@ const values = [
   { title: 'Trust & Transparency',    desc: 'Clear timelines, honest communication, no surprises.',                     Icon: ShieldCheck },
 ]
 
-const statsData = [
+const DEFAULT_ABOUT_STATS = [
   { value: 25,  suffix: '+', label: 'Clients Served',         duration: 1800 },
   { value: 2,   suffix: '',  label: 'Years of Experience',    duration: 1200 },
   { value: 2,   suffix: '',  label: 'Cities — Mumbai & Pune', duration: 1200 },
   { value: 100, suffix: '%', label: 'End-to-End Solutions',   duration: 1600 },
 ]
+
+function parseAboutStatValue(v: string): { numeric: number; suffix: string } {
+  const m = v.match(/^(\d+(?:\.\d+)?)(.*)$/)
+  return m ? { numeric: Number(m[1]), suffix: m[2] } : { numeric: 0, suffix: '' }
+}
 
 const offerings = [
   'Home interiors — 1BHK, 2BHK, 3BHK apartments & villas',
@@ -158,10 +164,28 @@ function FounderSection({ founderImg }: { founderImg: string }) {
 
 /* ─── STATS COUNTER — clean count-up, no dip ────────────── */
 function AboutStatsSection() {
-  const [counts, setCounts] = useState(statsData.map(() => 0))
-  const startedRef = useRef(false)   // desktop: never triggers re-render/cleanup once started
+  const { settings } = useSiteSettings()
+
+  const statsData = useMemo(() => {
+    if (settings?.aboutStats?.length) {
+      return settings.aboutStats.map(s => {
+        const { numeric, suffix } = parseAboutStatValue(s.value)
+        return { value: numeric, suffix, label: s.label, duration: 1400 }
+      })
+    }
+    return DEFAULT_ABOUT_STATS
+  }, [settings?.aboutStats])
+
+  const [counts, setCounts] = useState(() => statsData.map(() => 0))
+  const startedRef = useRef(false)
   const sectionRef = useRef<HTMLElement>(null)
   const isMobile = useIsMobile()
+
+  // Reset when settings load and statsData changes
+  useEffect(() => {
+    setCounts(statsData.map(() => 0))
+    startedRef.current = false
+  }, [statsData])
 
   useEffect(() => {
     const el = sectionRef.current
@@ -176,13 +200,13 @@ function AboutStatsSection() {
     const startCounting = () => {
       if (!isMobile && startedRef.current) return
       startedRef.current = true
-      cancelRafs() // guard against overlapping runs (e.g. rapid mobile re-entry)
+      cancelRafs()
       if (isMobile) setCounts(statsData.map(() => 0))
       statsData.forEach((stat, i) => {
         const startTime = performance.now()
         const tick = (now: number) => {
           const progress = Math.min((now - startTime) / stat.duration, 1)
-          const eased = 1 - Math.pow(1 - progress, 4)          // ease-out quartic
+          const eased = 1 - Math.pow(1 - progress, 4)
           const val = Math.round(stat.value * eased)
           setCounts(prev => { const n = [...prev]; n[i] = val; return n })
           if (progress < 1) {
@@ -195,14 +219,12 @@ function AboutStatsSection() {
       })
     }
 
-    // IntersectionObserver for scroll-triggered start. Mobile: replay every re-entry.
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) startCounting()
       else if (isMobile) { startedRef.current = false; cancelRafs() }
     }, { threshold: 0.2 })
     observer.observe(el)
 
-    // If section is already in viewport on mount, start immediately
     const rect = el.getBoundingClientRect()
     if (rect.top < window.innerHeight && rect.bottom > 0) startCounting()
 
@@ -210,7 +232,7 @@ function AboutStatsSection() {
       observer.disconnect()
       cancelRafs()
     }
-  }, [isMobile])   // re-run when the breakpoint changes so observer/replay mode stays in sync with rendered state
+  }, [isMobile, statsData])
 
   return (
     <section

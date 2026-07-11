@@ -52,6 +52,11 @@ export async function submitEnquiry(data: ContactEnquiry): Promise<void> {
   }
 }
 
+export interface StatItem {
+  value: string
+  label: string
+}
+
 export interface ServiceCard {
   img: string
   title: string
@@ -98,6 +103,8 @@ export interface SiteSettings {
   homePortfolio: HomePortfolioItem[]
   servicePageHero: ServicePageHero
   servicesList: ServiceItem[]
+  homeStats?: StatItem[]
+  aboutStats?: StatItem[]
 }
 
 const BASE = '/api'

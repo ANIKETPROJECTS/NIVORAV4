@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, ChangeEvent } from 'react'
 import {
   fetchSiteSettings, updateSiteSettings, uploadSiteImage,
-  SiteSettings, ServiceCard, HomeHero, ServicePageHero, ServiceItem,
+  SiteSettings, ServiceCard, HomeHero, ServicePageHero, ServiceItem, StatItem,
 } from '../../lib/api'
 import { invalidateSiteSettings } from '../../hooks/useSiteSettings'
 import { Upload, Loader2, Save, Plus, Trash2 } from 'lucide-react'
@@ -10,7 +10,9 @@ export type SettingsSection =
   | 'header'        // Home Page → Header (navbar logo)
   | 'hero'          // Home Page → Hero Section
   | 'expertise'     // Home Page → Our Expertise
+  | 'home-stats'    // Home Page → Stats numbers
   | 'footer'        // Home Page → Footer logo
+  | 'about-stats'   // About Page → Stats numbers
   | 'services'      // Service Page → Services list
 
 const GOLD = '#7a6245'
@@ -329,6 +331,94 @@ function ExpertisePanel({ settings, onChange }: { settings: SiteSettings; onChan
 
 
 
+function HomeStatsPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
+  const stats: StatItem[] = settings.homeStats?.length
+    ? settings.homeStats
+    : [
+        { value: '2+',  label: 'Years Experience'    },
+        { value: '25+', label: 'Projects Completed'  },
+        { value: '50+', label: 'Clients Served'      },
+        { value: '90%', label: 'Client Satisfaction' },
+      ]
+
+  const update = (i: number, patch: Partial<StatItem>) => {
+    const next = stats.map((s, idx) => idx === i ? { ...s, ...patch } : s)
+    onChange({ ...settings, homeStats: next })
+  }
+
+  return (
+    <div>
+      <p style={descStyle}>
+        The four numbers shown in the <strong>stats strip</strong> below the Philosophy section on the home page.
+        Enter the full display value (e.g. <code>25+</code>, <code>90%</code>, <code>2</code>).
+      </p>
+      {stats.map((stat, i) => (
+        <div key={i} style={cardBoxStyle}>
+          <p style={cardIndexStyle}>Stat {i + 1}</p>
+          <FieldRow>
+            <TextField
+              label="Value (e.g. 25+, 90%)"
+              value={stat.value}
+              placeholder="e.g. 25+"
+              onChange={v => update(i, { value: v })}
+            />
+            <TextField
+              label="Label"
+              value={stat.label}
+              placeholder="e.g. Projects Completed"
+              onChange={v => update(i, { label: v })}
+            />
+          </FieldRow>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function AboutStatsPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
+  const stats: StatItem[] = settings.aboutStats?.length
+    ? settings.aboutStats
+    : [
+        { value: '25+',  label: 'Clients Served'        },
+        { value: '2',    label: 'Years of Experience'    },
+        { value: '2',    label: 'Cities — Mumbai & Pune' },
+        { value: '100%', label: 'End-to-End Solutions'   },
+      ]
+
+  const update = (i: number, patch: Partial<StatItem>) => {
+    const next = stats.map((s, idx) => idx === i ? { ...s, ...patch } : s)
+    onChange({ ...settings, aboutStats: next })
+  }
+
+  return (
+    <div>
+      <p style={descStyle}>
+        The four numbers shown in the <strong>stats strip</strong> on the About page.
+        Enter the full display value (e.g. <code>25+</code>, <code>100%</code>, <code>2</code>).
+      </p>
+      {stats.map((stat, i) => (
+        <div key={i} style={cardBoxStyle}>
+          <p style={cardIndexStyle}>Stat {i + 1}</p>
+          <FieldRow>
+            <TextField
+              label="Value (e.g. 25+, 100%)"
+              value={stat.value}
+              placeholder="e.g. 100%"
+              onChange={v => update(i, { value: v })}
+            />
+            <TextField
+              label="Label"
+              value={stat.label}
+              placeholder="e.g. Clients Served"
+              onChange={v => update(i, { label: v })}
+            />
+          </FieldRow>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function ServicesPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
   const items: ServiceItem[] = settings.servicesList ?? []
 
@@ -396,6 +486,18 @@ const EMPTY_SETTINGS: SiteSettings = {
   homePortfolio: [],
   servicePageHero: { backgroundImage: '', headline: '', subheadline: '' },
   servicesList: [],
+  homeStats: [
+    { value: '2+',  label: 'Years Experience'    },
+    { value: '25+', label: 'Projects Completed'  },
+    { value: '50+', label: 'Clients Served'      },
+    { value: '90%', label: 'Client Satisfaction' },
+  ],
+  aboutStats: [
+    { value: '25+',  label: 'Clients Served'        },
+    { value: '2',    label: 'Years of Experience'    },
+    { value: '2',    label: 'Cities — Mumbai & Pune' },
+    { value: '100%', label: 'End-to-End Solutions'   },
+  ],
 }
 
 export default function AdminSiteSettings({ section }: Props) {
@@ -454,11 +556,13 @@ export default function AdminSiteSettings({ section }: Props) {
     <div>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
-      {section === 'header'    && <HeaderPanel    settings={settings} onChange={setSettings} />}
-      {section === 'hero'      && <HeroPanel      settings={settings} onChange={setSettings} />}
-      {section === 'expertise' && <ExpertisePanel settings={settings} onChange={setSettings} />}
-      {section === 'footer'    && <FooterPanel    settings={settings} onChange={setSettings} />}
-      {section === 'services'  && <ServicesPanel  settings={settings} onChange={setSettings} />}
+      {section === 'header'      && <HeaderPanel      settings={settings} onChange={setSettings} />}
+      {section === 'hero'        && <HeroPanel        settings={settings} onChange={setSettings} />}
+      {section === 'expertise'   && <ExpertisePanel   settings={settings} onChange={setSettings} />}
+      {section === 'home-stats'  && <HomeStatsPanel   settings={settings} onChange={setSettings} />}
+      {section === 'footer'      && <FooterPanel      settings={settings} onChange={setSettings} />}
+      {section === 'about-stats' && <AboutStatsPanel  settings={settings} onChange={setSettings} />}
+      {section === 'services'    && <ServicesPanel    settings={settings} onChange={setSettings} />}
 
       <SaveBar saving={saving} onSave={save} success={success} error={error} onClearError={() => setError('')} />
     </div>
