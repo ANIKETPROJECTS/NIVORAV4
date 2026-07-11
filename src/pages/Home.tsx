@@ -2822,53 +2822,68 @@ export default function Home({ splashDone }: { splashDone: boolean }) {
               flex-shrink: 0 !important;
             }
 
-            /* ── Image wrap — clips image only, quote card flows below ── */
+            /* ── Image wrap — column stack, image on top, card below ─── */
             .philosophy-image-wrap {
               display: flex !important;
               flex-direction: column !important;
+              align-items: stretch !important;
               position: relative !important;
+              width: 100% !important;
               height: auto !important;
+              min-height: 0 !important;
               overflow: visible !important;
+              border-radius: 0 !important;
               margin: 0 !important;
             }
             .philosophy-frame {
               display: none !important;
             }
 
-            /* ── Photo inner — rounded corners on the image itself ───── */
+            /* ── Photo inner — full width, natural height ────────────── */
             .philosophy-photo-inner {
-              height: auto !important;
               width: 100% !important;
+              flex-shrink: 1 !important;
+              height: auto !important;
+              min-height: 0 !important;
               overflow: hidden !important;
               border-radius: 14px !important;
               position: relative !important;
               box-shadow: 0 8px 32px rgba(20,18,14,0.14) !important;
             }
 
-            /* ── Photo — full width, natural height, NO parallax ─────── */
-            /*    JS sets transform via inline style on scroll; the         */
-            /*    !important here wins the cascade and pins it to none.     */
+            /* ── Photo — static flow so photo-inner gets natural height ─ */
             .philosophy-photo-inner .philosophy-photo {
+              position: static !important;
+              inset: auto !important;
               width: 100% !important;
               height: auto !important;
-              object-fit: cover !important;
+              max-width: 100% !important;
+              object-fit: unset !important;
+              object-position: unset !important;
               display: block !important;
               transform: none !important;
             }
 
-            /* ── Quote card — static block below the image ───────────── */
+            /* ── Quote card — full-width block below image ───────────── */
             .philosophy-quote-card {
               position: static !important;
+              top: auto !important; left: auto !important;
+              right: auto !important; bottom: auto !important;
               width: 100% !important;
+              flex-shrink: 1 !important;
               max-width: 100% !important;
               margin: 16px 0 0 0 !important;
               background-color: rgba(14,24,14,0.92) !important;
+              background: rgba(14,24,14,0.92) !important;
               backdrop-filter: blur(8px) !important;
               -webkit-backdrop-filter: blur(8px) !important;
               border: 1px solid rgba(201,169,110,0.55) !important;
               border-radius: 10px !important;
               padding: 16px 18px !important;
               box-shadow: 0 8px 24px rgba(0,0,0,0.28) !important;
+              display: block !important;
+              justify-content: unset !important;
+              z-index: auto !important;
               transform: translateY(14px) !important;
               opacity: 0 !important;
               transition: opacity 500ms ease-out 300ms,
