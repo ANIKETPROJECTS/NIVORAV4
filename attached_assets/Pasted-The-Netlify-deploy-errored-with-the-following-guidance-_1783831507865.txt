@@ -1,0 +1,75 @@
+The Netlify deploy errored, with the following guidance provided:
+
+Diagnosis
+- Relevant log lines: the warning about NODE_ENV at [line 15](#L15) and the failing build exit at [line 18](#L18).
+- The build is failing because devDependencies were not installed (NODE_ENV is set so npm will skip devDependencies). The project’s build command requires devDependencies (e.g. bundler like Vite/webpack/esbuild). When those tools are missing the build script exits non‑zero.
+
+Cause
+- NODE_ENV is set to production (masked in the log) so npm does not install devDependencies during dependency installation. The build command then fails because required build tools from devDependencies are missing.
+
+Solution (choose one)
+
+1) Quick fix — install devDependencies during Netlify build
+- In the Netlify UI set an environment variable:
+  - Key: NPM_CONFIG_PRODUCTION
+  - Value: false
+- Or change the Build command to explicitly install devDeps before building:
+```bash
+npm ci --include=dev && npm run build
+```
+or
+```bash
+NPM_CONFIG_PRODUCTION=false npm ci && npm run build
+```
+
+2) Persist via netlify.toml
+- Add or update netlify.toml in repo root:
+```toml
+[build]
+  command = "npm ci --include=dev && npm run build"
+
+[build.environment]
+  NPM_CONFIG_PRODUCTION = "false"
+```
+
+3) Verify package.json and build tools
+- Verify the build tools are actually listed in package.json (devDependencies) and that package.json is committed:
+  - package.json: https://github.com/ANIKETPROJECTS/NIVORAV4/blob/main/package.json
+- If build tools are missing, add them (for example, vite, webpack, esbuild) and commit:
+```bash
+npm install --save-dev vite
+git add package.json package-lock.json
+git commit -m "Add build tool to devDependencies"
+git push
+```
+
+Optional: Node version compatibility
+- If your project requires a different Node version, ensure Netlify uses the correct Node version (via engines in package.json, .nvmrc, or Netlify env var). See Netlify docs for changing Node versions:
+https://docs.netlify.com/configure-builds/manage-dependencies/#node-js-and-javascript
+
+Why this fixes it
+- Ensuring devDependencies are installed makes the build tooling available during the build step so the build script can complete rather than exiting with code 2.
+
+If you still get errors after enabling devDependencies, paste the expanded build log lines following the install step so I can inspect the next specific error.
+
+The relevant error logs are:
+
+Line 0: build-image version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3 (noble-new-builds)
+Line 1: buildbot version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: No cached dependencies found. Cloning fresh repo
+Line 6: git clone --filter=blob:none https://github.com/ANIKETPROJECTS/NIVORAV4
+Line 7: Preparing Git Reference refs/heads/main
+Line 8: Installing dependencies
+Line 9: mise ~/.config/mise/config.toml tools: python@3.14.3
+Line 10: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+Line 11: mise ~/.config/mise/config.toml tools: go@1.26.2
+Line 12: v20.20.2 is already installed.
+Line 13: Now using node v20.20.2 (npm v10.8.2)
+Line 14: Enabling Node.js Corepack
+Line 15: WARNING: The environment variable 'NODE_ENV' is set to '****'. Any 'devDependencies' in package.json will not be installed
+Line 16: No npm workspaces detected
+Line 17: Installing npm packages using npm version 10.8.2
+Line 18: Failed during stage 'building site': Build script returned non-zero exit code: 2

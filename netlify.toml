@@ -12,6 +12,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Ensure devDependencies (vite, typescript, etc.) are installed during the
+  # build step even when NODE_ENV=production is set in site env vars.
+  NPM_CONFIG_PRODUCTION = "false"
 
 # ── Function settings ─────────────────────────────────────────────────────────
 [functions]
