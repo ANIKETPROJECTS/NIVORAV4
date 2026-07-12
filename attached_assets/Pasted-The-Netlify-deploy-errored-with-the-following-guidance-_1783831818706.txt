@@ -1,0 +1,143 @@
+The Netlify deploy errored, with the following guidance provided:
+
+**Diagnosis**
+
+- Relevant log lines: the build runs your npm script [#L57](#L57) which executes the package build script [#L59-L60](#L59-L60), and the build fails because the TypeScript compiler is missing: "sh: 1: tsc: not found" [#L61](#L61).  
+- There is also a warning that devDependencies were not installed because NODE_ENV is set (production): [#L15](#L15) and npm warnings about omitting dev deps [#L17-L19](#L17-L19) / [#L58](#L58).  
+- Error type & cause: your build script runs `tsc && vite build` but `tsc` is not available in the build environment. Most likely `tsc` (TypeScript) is declared in devDependencies and Netlify did not install devDependencies during the build, so the tsc binary is not present.
+
+Before changing Netlify configuration, verify that TypeScript is present in your repo:
+- Check package.json to see whether typescript is listed under devDependencies or dependencies: https://github.com/ANIKETPROJECTS/NIVORAV4/blob/main/package.json
+
+**Solution (pick one)**
+
+Option A — (recommended) Install devDependencies during the Netlify build
+1. In your repo’s netlify.toml (or in Netlify UI env vars), set NPM_CONFIG_PRODUCTION to false so npm will install devDependencies and make `tsc` available during build.
+
+Add this to netlify.toml (commit and push):
+```toml
+[build.environment]
+  NPM_CONFIG_PRODUCTION = "false"
+```
+-or- set an environment variable in the Netlify site UI: NPM_CONFIG_PRODUCTION = false.
+
+This keeps TypeScript as a devDependency (the usual practice) and makes the `tsc` binary available to your build script.
+
+Option B — Move TypeScript into production dependencies
+1. Verify TypeScript is declared in package.json (see link above).  
+2. If you prefer not to enable installing devDependencies, install TypeScript as a regular dependency so it’s present in production:
+
+Run locally and commit the updated package.json and lockfile:
+```bash
+npm install typescript --save
+git add package.json package-lock.json
+git commit -m "Install typescript as dependency for Netlify build"
+git push
+```
+
+Either approach will ensure `tsc` exists and fix the "tsc: not found" error seen at [#L61](#L61). After applying one of the options, push to the repo and trigger a deploy.
+
+Notes / alternatives:
+- If you intended not to run the TypeScript compiler at build time, you can remove `tsc &&` from your build script in package.json so the command becomes just `vite build`. Only do that if you are sure type compilation is unnecessary for your build.
+- If you need help changing Node versions on Netlify, see Netlify’s docs: https://docs.netlify.com/configure-builds/manage-dependencies/#node-js-and-javascript
+
+The relevant error logs are:
+
+Line 0: build-image version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3 (noble-new-builds)
+Line 1: buildbot version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: No cached dependencies found. Cloning fresh repo
+Line 6: git clone --filter=blob:none https://github.com/ANIKETPROJECTS/NIVORAV4
+Line 7: Preparing Git Reference refs/heads/main
+Line 8: Installing dependencies
+Line 9: mise ~/.config/mise/config.toml tools: python@3.14.3
+Line 10: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+Line 11: mise ~/.config/mise/config.toml tools: go@1.26.2
+Line 12: v20.20.2 is already installed.
+Line 13: Now using node v20.20.2 (npm v10.8.2)
+Line 14: Enabling Node.js Corepack
+Line 15: WARNING: The environment variable 'NODE_ENV' is set to '****'. Any 'devDependencies' in package.json will not be installed
+Line 16: No npm workspaces detected
+Line 17: npm warn config **** Use `--omit=dev` instead.
+Line 18: Installing npm packages using npm version 10.8.2
+Line 19: npm warn config **** Use `--omit=dev` instead.
+Line 20: npm error Exit handler never called!
+Line 21: npm error This is an error with npm itself. Please report this error at:
+Line 22: npm error   <https://github.com/npm/cli/issues>
+Line 23: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-07-12T04_46_29_887Z-debug-0.log
+Line 24: npm packages installed
+Line 25: npm warn config **** Use `--omit=dev` instead.
+Line 26: Successfully installed dependencies
+Line 27: Detected 1 framework(s)
+Line 28: "vite" at version "5.4.21"
+Line 29: Starting build script
+Line 30: Section completed: initializing
+Line 31: ​
+Line 32: Netlify Build                                                 
+Line 33: ────────────────────────────────────────────────────────────────
+Line 34: ​
+Line 35: ❯ Version
+Line 36:   @netlify/build 36.1.2
+Line 37: ​
+Line 38: ❯ Flags
+Line 39:   accountId: 689594c20d87155ab17af86b
+Line 40:   baseRelDir: true
+Line 41:   buildId: 6a531c180eb8e00008340e32
+Line 42:   deployId: 6a531c180eb8e00008340e34
+Line 43: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 44: ​
+Line 45: ❯ Current directory
+Line 46:   /opt/build/repo
+Line 47: ​
+Line 48: ❯ Config file
+Line 49:   /opt/build/repo/netlify.toml
+Line 50: ​
+Line 51: ❯ Context
+Line 52:   ****
+Line 53: ​
+Line 54: build.command from netlify.toml                               
+Line 55: ────────────────────────────────────────────────────────────────
+Line 56: ​
+Line 57: $ npm run build
+Line 58: npm warn config **** Use `--omit=dev` instead.
+Line 59: > nivora-interiors@0.1.0 build
+Line 60: > tsc && vite build
+Line 61: sh: 1: tsc: not found
+Line 62: ​
+Line 63: "build.command" failed                                        
+Line 64: ────────────────────────────────────────────────────────────────
+Line 65: ​
+Line 66:   Error message
+Line 67:   Command failed with exit code 127: npm run build
+Line 68: ​
+Line 69:   Error location
+Line 70:   In build.command from netlify.toml:
+Line 71:   npm run build
+Line 72: ​
+Line 73:   Resolved config
+Line 74:   build:
+Line 75:     command: npm run build
+Line 76:     commandOrigin: config
+Line 77:     environment:
+Line 78:       - ADMIN_PASSWORD
+Line 79:       - ADMIN_USERNAME
+Line 91:       - NPM_CONFIG_PRODUCTION
+Line 92:     publish: /opt/build/repo/dist
+Line 93:     publishOrigin: config
+Line 94:   functions:
+Line 95:     api:
+Line 96:       timeout: 26
+Line 97:   functionsDirectory: /opt/build/repo/netlify/functions
+Line 98:   redirects:
+Line 99:     - force: true
+Line 100:       from: /api/*
+      status: 200
+      to: /.netlify/functions/api/:splat
+    - from: /*
+      status: 200
+      to: /index.
+Line 101: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 102: Failing build: Failed to build site
+Line 103: Finished processing build request in 1m27.703s

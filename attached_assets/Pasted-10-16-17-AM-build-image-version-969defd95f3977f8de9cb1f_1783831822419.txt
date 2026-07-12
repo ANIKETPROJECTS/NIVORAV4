@@ -1,0 +1,110 @@
+10:16:17 AM: build-image version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3 (noble-new-builds)
+10:16:17 AM: buildbot version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3
+10:16:17 AM: Fetching cached dependencies
+10:16:17 AM: Failed to fetch cache, continuing with build
+10:16:17 AM: Starting to prepare the repo for build
+10:16:17 AM: No cached dependencies found. Cloning fresh repo
+10:16:17 AM: git clone --filter=blob:none https://github.com/ANIKETPROJECTS/NIVORAV4
+10:16:17 AM: Preparing Git Reference refs/heads/main
+10:16:28 AM: Installing dependencies
+10:16:28 AM: mise ~/.config/mise/config.toml tools: python@3.14.3
+10:16:28 AM: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+10:16:28 AM: mise ~/.config/mise/config.toml tools: go@1.26.2
+10:16:29 AM: v20.20.2 is already installed.
+10:16:29 AM: Now using node v20.20.2 (npm v10.8.2)
+10:16:29 AM: Enabling Node.js Corepack
+10:16:29 AM: WARNING: The environment variable 'NODE_ENV' is set to '****'. Any 'devDependencies' in package.json will not be installed
+10:16:29 AM: No npm workspaces detected
+10:16:29 AM: npm warn config **** Use `--omit=dev` instead.
+10:16:29 AM: Installing npm packages using npm version 10.8.2
+10:16:29 AM: npm warn config **** Use `--omit=dev` instead.
+10:17:40 AM: npm error Exit handler never called!
+10:17:40 AM: npm error This is an error with npm itself. Please report this error at:
+10:17:40 AM: npm error   <https://github.com/npm/cli/issues>
+10:17:40 AM: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-07-12T04_46_29_887Z-debug-0.log
+10:17:40 AM: npm packages installed
+10:17:41 AM: npm warn config **** Use `--omit=dev` instead.
+10:17:41 AM: Successfully installed dependencies
+10:17:41 AM: Detected 1 framework(s)
+10:17:41 AM: "vite" at version "5.4.21"
+10:17:41 AM: Starting build script
+10:17:42 AM: Section completed: initializing
+10:17:43 AM: ​
+10:17:43 AM: Netlify Build                                                 
+10:17:43 AM: ────────────────────────────────────────────────────────────────
+10:17:43 AM: ​
+10:17:43 AM: ❯ Version
+10:17:43 AM:   @netlify/build 36.1.2
+10:17:43 AM: ​
+10:17:43 AM: ❯ Flags
+10:17:43 AM:   accountId: 689594c20d87155ab17af86b
+10:17:43 AM:   baseRelDir: true
+10:17:43 AM:   buildId: 6a531c180eb8e00008340e32
+10:17:43 AM:   deployId: 6a531c180eb8e00008340e34
+10:17:44 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+10:17:44 AM: ​
+10:17:44 AM: ❯ Current directory
+10:17:44 AM:   /opt/build/repo
+10:17:44 AM: ​
+10:17:44 AM: ❯ Config file
+10:17:44 AM:   /opt/build/repo/netlify.toml
+10:17:44 AM: ​
+10:17:44 AM: ❯ Context
+10:17:44 AM:   ****
+10:17:44 AM: ​
+10:17:44 AM: build.command from netlify.toml                               
+10:17:44 AM: ────────────────────────────────────────────────────────────────
+10:17:44 AM: ​
+10:17:44 AM: $ npm run build
+10:17:44 AM: npm warn config **** Use `--omit=dev` instead.
+10:17:44 AM: > nivora-interiors@0.1.0 build
+10:17:44 AM: > tsc && vite build
+10:17:44 AM: sh: 1: tsc: not found
+10:17:44 AM: ​
+10:17:44 AM: "build.command" failed                                        
+10:17:44 AM: ────────────────────────────────────────────────────────────────
+10:17:44 AM: ​
+10:17:44 AM:   Error message
+10:17:44 AM:   Command failed with exit code 127: npm run build (https://ntl.fyi/exit-code-127)
+10:17:44 AM: ​
+10:17:44 AM:   Error location
+10:17:44 AM:   In build.command from netlify.toml:
+10:17:44 AM:   npm run build
+10:17:44 AM: ​
+10:17:44 AM:   Resolved config
+10:17:44 AM:   build:
+10:17:44 AM:     command: npm run build
+10:17:44 AM:     commandOrigin: config
+10:17:44 AM:     environment:
+10:17:44 AM:       - ADMIN_PASSWORD
+10:17:44 AM:       - ADMIN_USERNAME
+10:17:44 AM:       - API_PORT
+10:17:44 AM:       - CLOUDINARY_API_KEY
+10:17:44 AM:       - CLOUDINARY_API_SECRET
+10:17:44 AM:       - CLOUDINARY_CLOUD_NAME
+10:17:44 AM:       - EMAIL_APP_SECRET
+10:17:44 AM:       - EMAIL_TO
+10:17:44 AM:       - EMAIL_USER
+10:17:44 AM:       - MONGODB_URI
+10:17:44 AM:       - NODE_ENV
+10:17:44 AM:       - SESSION_SECRET
+10:17:44 AM:       - NODE_VERSION
+10:17:44 AM:       - NPM_CONFIG_PRODUCTION
+10:17:44 AM:     publish: /opt/build/repo/dist
+10:17:44 AM:     publishOrigin: config
+10:17:44 AM:   functions:
+10:17:44 AM:     api:
+10:17:44 AM:       timeout: 26
+10:17:44 AM:   functionsDirectory: /opt/build/repo/netlify/functions
+10:17:44 AM:   redirects:
+10:17:44 AM:     - force: true
+10:17:44 AM:       from: /api/*
+      status: 200
+      to: /.netlify/functions/api/:splat
+    - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+10:17:44 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+10:17:44 AM: Failing build: Failed to build site
+10:17:44 AM: Finished processing build request in 1m27.703s
