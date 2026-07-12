@@ -6,19 +6,21 @@
  */
 import crypto from 'crypto'
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
-
-if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
-  console.error('[Server] ADMIN_USERNAME and ADMIN_PASSWORD environment variables must be set')
-  process.exit(1)
-}
-
-// One token per server lifetime — rotates on restart
+// One token per server lifetime — rotates on restart / cold start
 const SESSION_TOKEN = crypto.randomUUID()
 
+function getCredentials() {
+  const username = process.env.ADMIN_USERNAME
+  const password = process.env.ADMIN_PASSWORD
+  if (!username || !password) {
+    throw new Error('ADMIN_USERNAME and ADMIN_PASSWORD environment variables must be set')
+  }
+  return { username, password }
+}
+
 export function checkCredentials(username, password) {
-  return username === ADMIN_USERNAME && password === ADMIN_PASSWORD
+  const creds = getCredentials()
+  return username === creds.username && password === creds.password
 }
 
 export function getSessionToken() {
