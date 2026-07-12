@@ -1,0 +1,35 @@
+# ── Netlify configuration for Nivora Interiors ───────────────────────────────
+#
+# Deployment model:
+#   • Frontend (React/Vite)  →  Netlify static hosting  (this file)
+#   • Backend  (Express API) →  Separate Node.js host   (e.g. Render, Railway)
+#
+# Before deploying:
+#   1. Deploy the Express server somewhere (see deployment steps in README).
+#   2. In Netlify → Site settings → Environment variables, add:
+#        BACKEND_URL = https://your-api-server.onrender.com   (no trailing slash)
+#   3. Push this repo — Netlify will build and proxy /api/* automatically.
+# ─────────────────────────────────────────────────────────────────────────────
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# ── API proxy ─────────────────────────────────────────────────────────────────
+# All /api/* requests are forwarded to the Express backend.
+# ${BACKEND_URL} is substituted at build-time from the Netlify env var.
+[[redirects]]
+  from   = "/api/*"
+  to     = "${BACKEND_URL}/api/:splat"
+  status = 200
+  force  = true
+
+# ── SPA fallback ──────────────────────────────────────────────────────────────
+# Every non-asset URL returns index.html so React Router handles routing.
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
