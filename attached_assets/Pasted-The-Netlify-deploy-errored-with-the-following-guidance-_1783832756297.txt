@@ -1,0 +1,146 @@
+The Netlify deploy errored, with the following guidance provided:
+
+Isolation of relevant error lines
+- npm internal error during install: [lines 17-20](#L17-L20) and repeat at [lines 54-57](#L54-L57)
+- the build command being run: [line 52](#L52) and resolved config showing same: [lines 74-75](#L74-L75)
+- the TypeScript compiler is missing and causes the build to fail: [line 60](#L60)
+- build command exits non‑zero: [lines 66-70](#L66-L70)
+
+Diagnosis — error type and cause
+- Primary error: the build failed because the tsc (TypeScript compiler) binary was not found when running the build script ("tsc && vite build") — see [line 60](#L60). That means either:
+  - typescript is not installed as a dependency (so the tsc binary is not present in node_modules/.bin), or
+  - devDependencies were not actually installed during the Netlify install step due to an npm install problem.
+- There are also npm internal errors in the logs ([lines 17-20](#L17-L20) and [54-57](#L54-L57)) that may have prevented devDependencies from installing properly, causing tsc to be missing.
+
+Solution — concrete steps to fix
+1. Verify typescript is declared in package.json
+   - Open your repository package.json and confirm a devDependency entry for typescript exists. (Repo file: https://github.com/ANIKETPROJECTS/NIVORAV4/blob/main/package.json)
+   - If typescript is missing, add and commit it:
+     ```bash
+     npm install --save-dev typescript
+     git add package.json package-lock.json
+     git commit -m "chore: add typescript as devDependency"
+     git push
+     ```
+   - Then trigger a new Netlify deploy.
+
+2. If typescript is already listed in package.json
+   - Ensure package-lock.json is committed to the repo (helps deterministic installs).
+   - Update your build command to use npm ci (more reliable for CI) and include dev deps:
+     - In netlify.toml change the build.command from:
+       npm install --include=dev && npm run build
+     - To:
+       npm ci --include=dev && npm run build
+     Commit netlify.toml and redeploy.
+
+3. Alternative quick fixes
+   - If your project does not actually need a pre-build tsc step (for example, if Vite handles TypeScript without a separate tsc compile), update package.json scripts to remove tsc:
+     - Edit package.json scripts:
+       ```json
+       "scripts": {
+         "build": "vite build"
+       }
+       ```
+     - Commit and redeploy.
+   - Or call tsc via npx so it fails more clearly if missing:
+     ```json
+     "scripts": {
+       "build": "npx tsc && vite build"
+     }
+     ```
+
+4. If the npm internal error ("Exit handler never called!") persists
+   - Try clearing caches and re-deploy:
+     - Locally test: npm ci && npm run build
+     - On Netlify, try switching to npm ci as noted above.
+   - Consider pinning a Node version used by Netlify if your local dev environment uses a different Node version. To force a Node version on Netlify you can add an .nvmrc or set engines in package.json — see Netlify docs for changing Node versions:
+     https://docs.netlify.com/configure-builds/manage-dependencies/#node-js-and-javascript
+
+Summary checklist to resolve quickly
+- [ ] Confirm typescript in package.json (if missing, run npm install --save-dev typescript and commit)
+- [ ] Commit package-lock.json
+- [ ] Use npm ci --include=dev in build.command (or remove the tsc step if unnecessary)
+- [ ] If npm internal errors continue, pin Node version via .nvmrc or package.json engines and follow Netlify Node docs above
+
+After making the changes, push and trigger a new Netlify deploy.
+
+The relevant error logs are:
+
+Line 7: Custom build command detected. Proceeding with the specified command: 'npm install --include=dev && npm run build'
+Line 8: Installing dependencies
+Line 9: mise ~/.config/mise/config.toml tools: python@3.14.3
+Line 10: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+Line 11: mise ~/.config/mise/config.toml tools: go@1.26.2
+Line 12: v20.20.2 is already installed.
+Line 13: Now using node v20.20.2 (npm v10.8.2)
+Line 14: Enabling Node.js Corepack
+Line 15: No npm workspaces detected
+Line 16: Installing npm packages using npm version 10.8.2
+Line 17: npm error Exit handler never called!
+Line 18: npm error This is an error with npm itself. Please report this error at:
+Line 19: npm error   <https://github.com/npm/cli/issues>
+Line 20: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-07-12T05_01_33_645Z-debug-0.log
+Line 21: npm packages installed
+Line 22: Successfully installed dependencies
+Line 23: Detected 1 framework(s)
+Line 24: "vite" at version "5.4.21"
+Line 25: Starting build script
+Line 26: Section completed: initializing
+Line 27: ​
+Line 28: Netlify Build                                                 
+Line 29: ────────────────────────────────────────────────────────────────
+Line 30: ​
+Line 43: ❯ Config file
+Line 44:   /opt/build/repo/netlify.toml
+Line 45: ​
+Line 46: ❯ Context
+Line 47:   production
+Line 48: ​
+Line 49: build.command from netlify.toml                               
+Line 50: ────────────────────────────────────────────────────────────────
+Line 51: ​
+Line 52: $ npm install --include=dev && npm run build
+Line 53: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 54: npm error Exit handler never called!
+Line 55: npm error This is an error with npm itself. Please report this error at:
+Line 56: npm error   <https://github.com/npm/cli/issues>
+Line 57: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-07-12T05_02_48_235Z-debug-0.log
+Line 58: > nivora-interiors@0.1.0 build
+Line 59: > tsc && vite build
+Line 60: sh: 1: tsc: not found
+Line 61: ​
+Line 62: "build.command" failed                                        
+Line 63: ────────────────────────────────────────────────────────────────
+Line 64: ​
+Line 65:   Error message
+Line 66:   Command failed with exit code 127: npm install --include=dev && npm run build
+Line 67: ​
+Line 68:   Error location
+Line 69:   In build.command from netlify.toml:
+Line 70:   npm install --include=dev && npm run build
+Line 71: ​
+Line 72:   Resolved config
+Line 73:   build:
+Line 74:     command: npm install --include=dev && npm run build
+Line 75:     commandOrigin: config
+Line 76:     environment:
+Line 77:       - ADMIN_PASSWORD
+Line 78:       - ADMIN_USERNAME
+Line 89:       - NODE_VERSION
+Line 90:     publish: /opt/build/repo/dist
+Line 91:     publishOrigin: config
+Line 92:   functions:
+Line 93:     api:
+Line 94:       timeout: 26
+Line 95:   functionsDirectory: /opt/build/repo/netlify/functions
+Line 96:   redirects:
+Line 97:     - force: true
+Line 98:       from: /api/*
+      status: 200
+      to: /.netlify/functions/api/:splat
+    - from: /*
+      status: 200
+      to: /index.
+Line 99: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 100: Failing build: Failed to build site
+Line 101: Finished processing build request in 2m39.607s

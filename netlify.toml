@@ -7,10 +7,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 [build]
-  # npm 10 ignores NPM_CONFIG_PRODUCTION; explicitly pass --include=dev so
-  # devDependencies (vite, typescript) are always installed before building,
-  # even when NODE_ENV=production is set in Netlify's environment variables.
-  command = "npm install --include=dev && npm run build"
+  command = "npm run build"
   publish = "dist"
 
 [build.environment]
