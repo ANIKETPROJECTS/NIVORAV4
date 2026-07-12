@@ -7,11 +7,28 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 [build]
-  command = "npm run build"
+  # Netlify's automatic dependency-install stage has been intermittently
+  # aborting mid-way (npm's "Exit handler never called!" bug), which leaves
+  # node_modules/vite created but without its node_modules/.bin/vite symlink
+  # — so "vite build" then fails with "vite: not found" even though vite is
+  # listed as a dependency and the install stage reports success. Re-running
+  # a full "npm install" as part of the build command itself guarantees the
+  # dependency tree (including bin symlinks) is complete before the build
+  # script runs, regardless of what happened during the earlier install stage.
+  command = "npm install --no-audit --no-fund && npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
+  # Pin a patched npm release: npm 10.8.2 (the Netlify build image default)
+  # intermittently throws "Exit handler never called!" and aborts the install
+  # before dependency bin symlinks (e.g. vite) are linked, which is why
+  # "vite build" then fails with "vite: not found" despite vite being listed
+  # as a dependency.
+  NPM_VERSION = "10.9.2"
+  # Skip the audit/funding network calls during install — fewer registry
+  # round-trips means less chance of hitting the same installer bug.
+  NPM_FLAGS = "--no-audit --no-fund"
 
 # ── Function settings ─────────────────────────────────────────────────────────
 [functions]
