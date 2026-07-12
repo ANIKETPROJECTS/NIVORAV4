@@ -1,0 +1,135 @@
+The Netlify deploy errored, with the following guidance provided:
+
+Diagnosis
+
+Relevant log lines:
+- npm install step started: [line 16](#L16)
+- npm install error: [line 17-L20](#L17-L20)
+- npm says packages installed (contradiction): [line 21-L22](#L21-L22)
+- build script runs and fails because vite binary is missing: [line 53-L56](#L53-L56) and specifically [line 56](#L56) ("sh: 1: vite: not found").
+
+Error type and cause
+- Error: missing Vite CLI when running the build script ("vite: not found") — [line 56](#L56).
+- Root cause: the Vite binary was not available in node_modules/.bin because the npm install step failed/was incomplete (see the npm error at [line 17-L20](#L17-L20)). That left the build command unable to execute "vite build". Either Vite is not present in package.json, or it is present but devDependencies were not installed during the Netlify install (or the install crashed).
+
+Solution (step-by-step)
+
+1) Verify Vite is listed in your repo
+- Open your package.json in the repo and confirm Vite is present (typically under devDependencies). Example file: https://github.com/ANIKETPROJECTS/NIVORAV4/blob/main/package.json
+- If Vite is missing, add it locally then commit:
+  - Run:
+```bash
+npm install --save-dev vite
+git add package.json package-lock.json
+git commit -m "Add vite"
+git push
+```
+
+2) Ensure Netlify installs devDependencies during build
+- If Vite is in devDependencies (recommended), make sure Netlify installs devDependencies. On Netlify you can set the environment variable NPM_CONFIG_PRODUCTION to false so npm will install devDependencies during the build.
+- Add this to netlify.toml (commit the change) or set it in the Build & deploy > Environment > Environment variables in the Netlify UI.
+
+Example netlify.toml snippet:
+```toml
+[build.environment]
+  NPM_CONFIG_PRODUCTION = "false"
+```
+Or set environment variable in the Netlify site settings UI.
+
+(Alternative: move Vite to "dependencies" with `npm install vite` if you prefer not to modify Netlify environment variables — but keeping it in devDependencies is standard.)
+
+3) Clear Netlify build cache and re-deploy
+- Because the logs show an npm error during install ([line 17-L20](#L17-L20)), clear the Netlify build cache and trigger a fresh deploy:
+  - In Netlify: Deploys → Trigger deploy → Clear cache and deploy site.
+
+4) Re-run the build and confirm
+- After pushing the package.json change or setting NPM_CONFIG_PRODUCTION=false and clearing cache, trigger a new deploy. The build should now find the vite binary and run `vite build` successfully.
+
+Notes
+- The npm error "Exit handler never called!" indicates the install may have failed partway; clearing cache and re-running a full install usually resolves that. If you continue to see npm internal errors during install, consider trying a different Node version in Netlify (set via .nvmrc or the Netlify UI). Documentation for changing Node versions on Netlify: https://docs.netlify.com/configure-builds/manage-dependencies/#node-js-and-javascript
+
+The relevant error logs are:
+
+Line 0: build-image version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3 (noble-new-builds)
+Line 1: buildbot version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: No cached dependencies found. Cloning fresh repo
+Line 6: git clone --filter=blob:none https://github.com/ANIKETPROJECTS/NIVORAV4
+Line 7: Preparing Git Reference refs/heads/main
+Line 8: Installing dependencies
+Line 9: mise ~/.config/mise/config.toml tools: python@3.14.3
+Line 10: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+Line 11: mise ~/.config/mise/config.toml tools: go@1.26.2
+Line 12: v20.20.2 is already installed.
+Line 13: Now using node v20.20.2 (npm v10.8.2)
+Line 14: Enabling Node.js Corepack
+Line 15: No npm workspaces detected
+Line 16: Installing npm packages using npm version 10.8.2
+Line 17: npm error Exit handler never called!
+Line 18: npm error This is an error with npm itself. Please report this error at:
+Line 19: npm error   <https://github.com/npm/cli/issues>
+Line 20: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-07-12T05_19_54_069Z-debug-0.log
+Line 21: npm packages installed
+Line 22: Successfully installed dependencies
+Line 23: Detected 1 framework(s)
+Line 24: "vite" at version "5.4.21"
+Line 25: Starting build script
+Line 26: Section completed: initializing
+Line 27: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 28: ​
+Line 29: Netlify Build                                                 
+Line 30: ────────────────────────────────────────────────────────────────
+Line 31: ​
+Line 32: ❯ Version
+Line 33:   @netlify/build 36.1.2
+Line 34: ​
+Line 35: ❯ Flags
+Line 36:   accountId: 689594c20d87155ab17af86b
+Line 37:   baseRelDir: true
+Line 48:   production
+Line 49: ​
+Line 50: build.command from netlify.toml                               
+Line 51: ────────────────────────────────────────────────────────────────
+Line 52: ​
+Line 53: $ npm run build
+Line 54: > nivora-interiors@0.1.0 build
+Line 55: > vite build
+Line 56: sh: 1: vite: not found
+Line 57: ​
+Line 58: "build.command" failed                                        
+Line 59: ────────────────────────────────────────────────────────────────
+Line 60: ​
+Line 61:   Error message
+Line 62:   Command failed with exit code 127: npm run build
+Line 63: ​
+Line 64:   Error location
+Line 65:   In build.command from netlify.toml:
+Line 66:   npm run build
+Line 67: ​
+Line 68:   Resolved config
+Line 69:   build:
+Line 70:     command: npm run build
+Line 71:     commandOrigin: config
+Line 72:     environment:
+Line 73:       - ADMIN_PASSWORD
+Line 74:       - ADMIN_USERNAME
+Line 85:       - NODE_VERSION
+Line 86:     publish: /opt/build/repo/dist
+Line 87:     publishOrigin: config
+Line 88:   functions:
+Line 89:     api:
+Line 90:       timeout: 26
+Line 91:   functionsDirectory: /opt/build/repo/netlify/functions
+Line 92:   redirects:
+Line 93:     - force: true
+Line 94:       from: /api/*
+      status: 200
+      to: /.netlify/functions/api/:splat
+    - from: /*
+      status: 200
+      to: /index.
+Line 95: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 96: Failing build: Failed to build site
+Line 97: Finished processing build request in 1m26.898s
