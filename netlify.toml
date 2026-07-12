@@ -45,6 +45,16 @@
   # Directory where Netlify looks for function files
   directory = "netlify/functions"
 
+  # Force esbuild bundling into a single CJS file. Without this, Netlify's
+  # default "included files" behavior can zip our ESM source files
+  # (server/app.js, server/routes/*.js) as separate, untranspiled files
+  # without the root package.json's "type": "module" carried along —
+  # Node then loads them via the CommonJS loader, `import`/`export default`
+  # interop breaks, and Express receives a non-function router, crashing
+  # with "TypeError: argument handler must be a function". Bundling
+  # resolves all local imports inline so this class of error can't happen.
+  node_bundler = "esbuild"
+
   # Extend timeout to 26 s (max for synchronous functions) so that
   # Cloudinary image uploads have enough time to complete.
   [functions."api"]
