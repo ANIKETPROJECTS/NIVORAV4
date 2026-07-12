@@ -35,6 +35,20 @@ app.use('/api/contact',       contactRoute)
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
 
+// Debug endpoint — confirms the function is alive and which env vars are present.
+// Does NOT require MongoDB. Visit /api/debug in the browser to diagnose 502s.
+app.get('/api/debug', (_req, res) => {
+  const vars = [
+    'MONGODB_URI', 'CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY',
+    'CLOUDINARY_API_SECRET', 'ADMIN_USERNAME', 'ADMIN_PASSWORD',
+    'SESSION_SECRET', 'EMAIL_USER', 'EMAIL_APP_SECRET', 'EMAIL_TO', 'NODE_ENV',
+  ]
+  res.json({
+    status: 'function alive',
+    env: Object.fromEntries(vars.map(k => [k, !!process.env[k]])),
+  })
+})
+
 // ── Global error handler ──────────────────────────────────────────────────────
 app.use((err, _req, res, _next) => {
   if (err.code === 'LIMIT_FILE_SIZE')      return res.status(413).json({ error: 'File too large.' })
