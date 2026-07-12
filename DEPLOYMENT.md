@@ -41,23 +41,25 @@ git push
 ## Step 3 — Add environment variables
 
 1. In your Netlify site, go to **Site configuration → Environment variables**.
-2. Click **Add a variable** and add each row from the table below:
+2. Click **Add a variable** and add each key listed in `.env.example` at the root of this repo, using your actual credential values.
 
-| Key | Value |
-|-----|-------|
-| `NODE_ENV` | `production` |
-| `MONGODB_URI` | `mongodb+srv://nivorainbox_db_user:z4ZvlqcltmGqVkPR@nivora.9kua3dk.mongodb.net/?appName=Nivora` |
-| `CLOUDINARY_CLOUD_NAME` | `tgmyheme` |
-| `CLOUDINARY_API_KEY` | `811595815326532` |
-| `CLOUDINARY_API_SECRET` | `frnuzUt0_D4-DNVr4dVEcPHl66k` |
-| `ADMIN_USERNAME` | `admin` |
-| `ADMIN_PASSWORD` | `admin123` |
-| `SESSION_SECRET` | `fNmQZUl14iExPKKoo3SzhUJxPxLHfFAxZKB77YXsLOqIpJYj259rSXcBwkl5XUJOK21aB9q6Uml0950tfWUc/Q==` |
-| `EMAIL_USER` | `nivora.inbox@gmail.com` |
-| `EMAIL_APP_SECRET` | `nuelfrebcpveiwkz` |
-| `EMAIL_TO` | `nivora.inbox@gmail.com` |
+The keys you need to set are:
 
-> All values are also in `.env.example` in this repo for reference.
+```
+NODE_ENV
+MONGODB_URI
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+ADMIN_USERNAME
+ADMIN_PASSWORD
+SESSION_SECRET
+EMAIL_USER
+EMAIL_APP_SECRET
+EMAIL_TO
+```
+
+> Find the actual values in your Replit Secrets panel or in `ecosystem.config.cjs` (which is on your private server, not committed with real values).
 
 ---
 

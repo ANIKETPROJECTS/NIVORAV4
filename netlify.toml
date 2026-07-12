@@ -20,6 +20,16 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Exclude files that legitimately contain credential-shaped values but are
+  # not secrets (ecosystem.config.cjs is a PM2 config for local VPS use;
+  # attached_assets/ and dist/ are build artifacts; .agents/ is agent memory).
+  SECRETS_SCAN_OMIT_PATHS = "ecosystem.config.cjs,attached_assets,.agents,dist"
+  # Exclude env var keys whose values appear legitimately in source/built files:
+  #   API_PORT  → port number used in server config and vite proxy comments
+  #   NODE_ENV  → the string "production" appears throughout bundled JS
+  #   ADMIN_USERNAME → the word "admin" appears in route paths and UI text
+  #   EMAIL_TO / EMAIL_USER → public-facing contact email shown in footer/contact page
+  SECRETS_SCAN_OMIT_KEYS = "API_PORT,NODE_ENV,ADMIN_USERNAME,EMAIL_TO,EMAIL_USER"
   # Pin a patched npm release: npm 10.8.2 (the Netlify build image default)
   # intermittently throws "Exit handler never called!" and aborts the install
   # before dependency bin symlinks (e.g. vite) are linked, which is why

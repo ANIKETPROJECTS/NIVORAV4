@@ -1,0 +1,346 @@
+11:17:44 AM: build-image version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3 (noble-new-builds)
+11:17:44 AM: buildbot version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3
+11:17:44 AM: Fetching cached dependencies
+11:17:44 AM: Failed to fetch cache, continuing with build
+11:17:44 AM: Starting to prepare the repo for build
+11:17:44 AM: No cached dependencies found. Cloning fresh repo
+11:17:44 AM: git clone --filter=blob:none https://github.com/ANIKETPROJECTS/NIVORAV4
+11:17:44 AM: Preparing Git Reference refs/heads/main
+11:17:55 AM: Custom build command detected. Proceeding with the specified command: 'npm install --no-audit --no-fund && npm run build'
+11:17:55 AM: Installing dependencies
+11:17:55 AM: mise ~/.config/mise/config.toml tools: python@3.14.3
+11:17:55 AM: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+11:17:56 AM: mise ~/.config/mise/config.toml tools: go@1.26.2
+11:17:56 AM: v20.20.2 is already installed.
+11:17:57 AM: Now using node v20.20.2 (npm v10.8.2)
+11:17:57 AM: Enabling Node.js Corepack
+11:17:57 AM: No npm workspaces detected
+11:17:57 AM: Found npm version (10.8.2) that doesn't match expected (10.9.2)
+Installing using npm version 10.9.2
+11:17:58 AM: npm warn exec The following package was not found and will be installed: npm@10.9.2
+11:18:04 AM: added 245 packages in 3s
+11:18:04 AM: npm packages installed
+11:18:05 AM: Successfully installed dependencies
+11:18:05 AM: Detected 1 framework(s)
+11:18:05 AM: "vite" at version "5.4.21"
+11:18:05 AM: Starting build script
+11:18:06 AM: Section completed: initializing
+11:18:07 AM: ​
+11:18:07 AM: Netlify Build                                                 
+11:18:07 AM: ────────────────────────────────────────────────────────────────
+11:18:07 AM: ​
+11:18:07 AM: ❯ Version
+11:18:07 AM:   @netlify/build 36.1.2
+11:18:07 AM: ​
+11:18:07 AM: ❯ Flags
+11:18:07 AM:   accountId: 689594c20d87155ab17af86b
+11:18:07 AM:   baseRelDir: true
+11:18:07 AM:   buildId: 6a532a7f486307000889f225
+11:18:07 AM:   deployId: 6a532a7f486307000889f227
+11:18:07 AM: ​
+11:18:07 AM: ❯ Current directory
+11:18:07 AM:   /opt/build/repo
+11:18:07 AM: ​
+11:18:07 AM: ❯ Config file
+11:18:07 AM:   /opt/build/repo/netlify.toml
+11:18:07 AM: ​
+11:18:07 AM: ❯ Context
+11:18:07 AM:   production
+11:18:07 AM: ​
+11:18:07 AM: build.command from netlify.toml                               
+11:18:07 AM: ────────────────────────────────────────────────────────────────
+11:18:07 AM: ​
+11:18:07 AM: $ npm install --no-audit --no-fund && npm run build
+11:18:08 AM: up to date in 395ms
+11:18:08 AM: > nivora-interiors@0.1.0 build
+11:18:08 AM: > vite build
+11:18:08 AM: vite v5.4.21 building for production...
+11:18:08 AM: transforming...
+11:18:12 AM: ✓ 1957 modules transformed.
+11:18:13 AM: rendering chunks...
+11:18:14 AM: computing gzip size...
+11:18:14 AM: dist/index.html                                                                  1.18 kB │ gzip:   0.60 kB
+11:18:14 AM: dist/assets/nivora-logo-DiQ_wEqZ.png                                            21.35 kB
+11:18:14 AM: dist/assets/WhatsApp_Image_2026-07-08_at_20.50.13_1783534790416-DCZK0Ozg.jpeg  249.26 kB
+11:18:14 AM: dist/assets/index-Dwc7T6_1.css                                                  31.14 kB │ gzip:   7.15 kB
+11:18:14 AM: dist/assets/index-BaSaWyHE.js                                                  940.43 kB │ gzip: 240.48 kB │ map: 3,569.44 kB
+11:18:14 AM: 
+11:18:14 AM: (!) Some chunks are larger than 500 kB after minification. Consider:
+11:18:14 AM: - Using dynamic import() to code-split the application
+11:18:14 AM: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+11:18:14 AM: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+11:18:14 AM: ✓ built in 5.44s
+11:18:14 AM: ​
+11:18:14 AM: (build.command completed in 6.2s)
+11:18:14 AM: ​
+11:18:14 AM: Functions bundling                                            
+11:18:14 AM: ────────────────────────────────────────────────────────────────
+11:18:14 AM: ​
+11:18:14 AM: Packaging Functions from netlify/functions directory:
+11:18:14 AM:  - api.js
+11:18:14 AM: ​
+11:18:17 AM: ​
+11:18:17 AM: (Functions bundling completed in 3.4s)
+11:18:29 AM: ​
+11:18:29 AM: Scanning for secrets in code and build output.                
+11:18:29 AM: ────────────────────────────────────────────────────────────────
+11:18:29 AM: ​
+11:18:29 AM: ​
+11:18:29 AM: ❯ Scanning complete. 461 file(s) scanned. Secrets scanning found 11 instance(s) of secrets in build output or repo code.
+11:18:29 AM: ​
+11:18:29 AM: Secret env var "ADMIN_PASSWORD"'s value detected:
+  found value at line 25 in .env.example
+11:18:29 AM:   found value at line 70 in .replit
+11:18:29 AM:   found value at line 54 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 82 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 24 in ecosystem.config.cjs
+11:18:29 AM: Secret env var "CLOUDINARY_CLOUD_NAME"'s value detected:
+  found value at line 19 in .env.example
+11:18:29 AM:   found value at line 74 in .replit
+11:18:29 AM:   found value at line 50 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 19 in ecosystem.config.cjs
+11:18:29 AM: Secret env var "EMAIL_APP_SECRET"'s value detected:
+  found value at line 32 in .env.example
+11:18:29 AM:   found value at line 75 in .replit
+11:18:29 AM:   found value at line 57 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 30 in ecosystem.config.cjs
+11:18:29 AM: Secret env var "SESSION_SECRET"'s value detected:
+  found value at line 28 in .env.example
+11:18:29 AM:   found value at line 80 in .replit
+11:18:29 AM:   found value at line 55 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 25 in ecosystem.config.cjs
+11:18:29 AM: Secret env var "ADMIN_USERNAME"'s value detected:
+  found value at line 2 in .agents/memory/MEMORY.md
+11:18:29 AM:   found value at line 26 in .agents/memory/mongo-cloudinary-setup.md
+11:18:29 AM:   found value at line 8 in .agents/memory/secret-hygiene-chat-values.md
+11:18:29 AM:   found value at line 14 in .agents/memory/secret-hygiene-chat-values.md
+11:18:29 AM:   found value at line 9 in .agents/memory/site-settings-pattern.md
+11:18:29 AM:   found value at line 15 in .agents/memory/site-settings-pattern.md
+11:18:29 AM:   found value at line 17 in .agents/memory/site-settings-pattern.md
+11:18:29 AM:   found value at line 24 in .env.example
+11:18:29 AM:   found value at line 25 in .env.example
+11:18:29 AM:   found value at line 69 in .replit
+11:18:29 AM:   found value at line 70 in .replit
+11:18:29 AM:   found value at line 53 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 54 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 82 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 132 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 527 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2454 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2455 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2463 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2472 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2476 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2483 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2491 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2492 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2493 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2500 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2511 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2512 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2513 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2519 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2534 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2535 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2536 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2749 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2915 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 1 in dist/assets/index-BaSaWyHE.js.map
+11:18:29 AM:   found value at line 23 in ecosystem.config.cjs
+11:18:29 AM:   found value at line 24 in ecosystem.config.cjs
+11:18:29 AM:   found value at line 29 in replit.md
+11:18:29 AM:   found value at line 30 in replit.md
+11:18:29 AM:   found value at line 2 in server/****Auth.js
+11:18:29 AM:   found value at line 5 in server/****Auth.js
+11:18:29 AM:   found value at line 8 in server/app.js
+11:18:29 AM:   found value at line 31 in server/app.js
+11:18:29 AM:   found value at line 2 in server/routes/****Login.js
+11:18:29 AM:   found value at line 6 in server/routes/****Login.js
+11:18:29 AM:   found value at line 5 in server/routes/projects.js
+11:18:29 AM:   found value at line 32 in server/routes/projects.js
+11:18:29 AM:   found value at line 34 in server/routes/projects.js
+11:18:29 AM:   found value at line 36 in server/routes/projects.js
+11:18:29 AM:   found value at line 5 in server/routes/siteSettings.js
+11:18:29 AM:   found value at line 29 in server/routes/siteSettings.js
+11:18:29 AM:   found value at line 60 in server/routes/siteSettings.js
+11:18:29 AM:   found value at line 84 in server/routes/siteSettings.js
+11:18:29 AM:   found value at line 18 in src/App.tsx
+11:18:29 AM:   found value at line 19 in src/App.tsx
+11:18:29 AM:   found value at line 20 in src/App.tsx
+11:18:29 AM:   found value at line 126 in src/App.tsx
+11:18:29 AM:   found value at line 128 in src/App.tsx
+11:18:29 AM:   found value at line 44 in src/hooks/useSiteSettings.ts
+11:18:29 AM:   found value at line 113 in src/lib/api.ts
+11:18:29 AM:   found value at line 120 in src/lib/api.ts
+11:18:29 AM:   found value at line 124 in src/lib/api.ts
+11:18:29 AM:   found value at line 139 in src/lib/api.ts
+11:18:29 AM:   found value at line 143 in src/lib/api.ts
+11:18:29 AM:   found value at line 151 in src/lib/api.ts
+11:18:29 AM:   found value at line 162 in src/lib/api.ts
+11:18:29 AM:   found value at line 163 in src/lib/api.ts
+11:18:29 AM:   found value at line 181 in src/lib/api.ts
+11:18:29 AM:   found value at line 184 in src/lib/api.ts
+11:18:29 AM:   found value at line 194 in src/lib/api.ts
+11:18:29 AM:   found value at line 198 in src/lib/api.ts
+11:18:29 AM:   found value at line 202 in src/lib/api.ts
+11:18:29 AM:   found value at line 209 in src/lib/api.ts
+11:18:29 AM:   found value at line 213 in src/lib/api.ts
+11:18:29 AM:   found value at line 224 in src/lib/api.ts
+11:18:29 AM:   found value at line 246 in src/lib/api.ts
+11:18:29 AM:   found value at line 264 in src/lib/api.ts
+11:18:29 AM:   found value at line 122 in src/pages/****/AdminDashboard.tsx
+11:18:29 AM:   found value at line 192 in src/pages/****/AdminDashboard.tsx
+11:18:29 AM:   found value at line 3 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 17 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 18 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 26 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 27 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 28 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 29 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 30 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 32 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 33 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 44 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 54 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 55 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 62 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 70 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 79 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 83 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 90 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 98 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 99 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 100 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 107 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 118 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 119 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 120 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 126 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 141 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 142 in src/pages/****/AdminLogin.tsx
+11:18:29 AM:   found value at line 9 in src/pages/****/AdminProjectForm.tsx
+11:18:29 AM:   found value at line 4 in src/pages/****/ProtectedAdminRoute.tsx
+11:18:29 AM:   found value at line 5 in src/pages/****/ProtectedAdminRoute.tsx
+11:18:29 AM: Secret env var "CLOUDINARY_API_KEY"'s value detected:
+  found value at line 20 in .env.example
+11:18:29 AM:   found value at line 72 in .replit
+11:18:29 AM:   found value at line 51 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 20 in ecosystem.config.cjs
+11:18:29 AM: Secret env var "CLOUDINARY_API_SECRET"'s value detected:
+  found value at line 21 in .env.example
+11:18:29 AM:   found value at line 73 in .replit
+11:18:29 AM:   found value at line 52 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 21 in ecosystem.config.cjs
+11:18:29 AM: Secret env var "MONGODB_URI"'s value detected:
+  found value at line 16 in .env.example
+11:18:29 AM:   found value at line 78 in .replit
+11:18:29 AM:   found value at line 49 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 17 in ecosystem.config.cjs
+11:18:29 AM: Secret env var "EMAIL_TO"'s value detected:
+  found value at line 31 in .env.example
+11:18:29 AM:   found value at line 33 in .env.example
+11:18:29 AM:   found value at line 76 in .replit
+11:18:29 AM:   found value at line 77 in .replit
+11:18:29 AM:   found value at line 56 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 58 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 25 in attached_assets/Pasted--Replit-Prompt-Footer-Instagram-Handle-Gallery-Image-Li_1783524803264.txt
+11:18:29 AM:   found value at line 13 in attached_assets/Pasted--Replit-Prompt-Update-Contact-Details-Across-Entire-Web_1783523336343.txt
+11:18:29 AM:   found value at line 13 in attached_assets/Pasted--Replit-Prompt-Update-Contact-Details-Across-Entire-Web_1783523904805.txt
+11:18:29 AM:   found value at line 684 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2403 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 1 in dist/assets/index-BaSaWyHE.js.map
+11:18:29 AM:   found value at line 29 in ecosystem.config.cjs
+11:18:29 AM:   found value at line 31 in ecosystem.config.cjs
+11:18:29 AM:   found value at line 444 in src/components/Footer.tsx
+11:18:29 AM:   found value at line 458 in src/components/Footer.tsx
+11:18:29 AM:   found value at line 517 in src/pages/Contact.tsx
+11:18:29 AM:   found value at line 518 in src/pages/Contact.tsx
+11:18:29 AM: Secret env var "API_PORT"'s value detected:
+  found value at line 1 in .agents/memory/MEMORY.md
+11:18:29 AM:   found value at line 9 in .agents/memory/mongo-cloudinary-setup.md
+11:18:29 AM:   found value at line 10 in .agents/memory/mongo-cloudinary-setup.md
+11:18:29 AM:   found value at line 13 in .env.example
+11:18:29 AM:   found value at line 47 in .replit
+11:18:29 AM:   found value at line 50 in .replit
+11:18:29 AM:   found value at line 51 in .replit
+11:18:29 AM:   found value at line 71 in .replit
+11:18:29 AM:   found value at line 116 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 119 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 16811 in attached_assets/12_1782958481048.jpg
+11:18:29 AM:   found value at line 9651 in attached_assets/14_1782958481047.jpg
+11:18:29 AM:   found value at line 70 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 1 in dist/assets/index-BaSaWyHE.js.map
+11:18:29 AM:   found value at line 11 in ecosystem.config.cjs
+11:18:29 AM:   found value at line 17 in replit.md
+11:18:29 AM:   found value at line 19 in replit.md
+11:18:29 AM:   found value at line 7 in server/index.js
+11:18:29 AM:   found value at line 14 in vite.config.ts
+11:18:29 AM: Secret env var "NODE_ENV"'s value detected:
+  found value at line 113 in DEPLOYMENT.md
+11:18:29 AM:   found value at line 97 in attached_assets/Pasted-Redesign-the-Home-Page-Services-section-Current-Only-3-_1781790543401.txt
+11:18:29 AM:   found value at line 3 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 33 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 56 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 64 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 78 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 203 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 235 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 900 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 2032 in dist/assets/index-BaSaWyHE.js
+11:18:29 AM:   found value at line 1 in dist/assets/index-BaSaWyHE.js.map
+11:18:29 AM:   found value at line 1 in server/index.js
+11:18:29 AM:   found value at line 71 in server/seedNewFields.js
+11:18:29 AM:   found value at line 103 in src/pages/Home.tsx
+11:18:29 AM:   found value at line 36 in src/pages/Services.tsx
+11:18:29 AM: ​
+11:18:29 AM: To prevent exposing secrets, the build will fail until these secret values are not found in build output or repo files.
+11:18:29 AM: ​
+11:18:29 AM: If these are expected, use SECRETS_SCAN_OMIT_PATHS, SECRETS_SCAN_OMIT_KEYS, or SECRETS_SCAN_ENABLED to prevent detecting.
+11:18:29 AM: ​
+11:18:29 AM: For more information on secrets scanning, see the Netlify Docs: https://ntl.fyi/configure-secrets-scanning
+11:18:29 AM: ​
+11:18:29 AM: Secrets scanning detected secrets in files during build.      
+11:18:29 AM: ────────────────────────────────────────────────────────────────
+11:18:29 AM: ​
+11:18:29 AM:   Error message
+11:18:29 AM:   Secrets scanning found secrets in build.
+11:18:29 AM: ​
+11:18:29 AM:   Resolved config
+11:18:29 AM:   build:
+11:18:29 AM:     command: npm install --no-audit --no-fund && npm run build
+11:18:29 AM:     commandOrigin: config
+11:18:29 AM:     environment:
+11:18:29 AM:       - ADMIN_PASSWORD
+11:18:29 AM:       - ADMIN_USERNAME
+11:18:29 AM:       - API_PORT
+11:18:29 AM:       - CLOUDINARY_API_KEY
+11:18:29 AM:       - CLOUDINARY_API_SECRET
+11:18:29 AM:       - CLOUDINARY_CLOUD_NAME
+11:18:29 AM:       - EMAIL_APP_SECRET
+11:18:29 AM:       - EMAIL_TO
+11:18:29 AM:       - EMAIL_USER
+11:18:29 AM:       - MONGODB_URI
+11:18:29 AM:       - NODE_ENV
+11:18:29 AM:       - SESSION_SECRET
+11:18:29 AM:       - NODE_VERSION
+11:18:29 AM:       - NPM_VERSION
+11:18:29 AM:       - NPM_FLAGS
+11:18:29 AM:     publish: /opt/build/repo/dist
+11:18:29 AM:     publishOrigin: config
+11:18:29 AM:   functions:
+11:18:29 AM:     api:
+11:18:29 AM:       timeout: 26
+11:18:29 AM:   functionsDirectory: /opt/build/repo/netlify/functions
+11:18:29 AM:   redirects:
+11:18:29 AM:     - force: true
+11:18:30 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+11:18:30 AM:       from: /api/*
+      status: 200
+      to: /.netlify/functions/api/:splat
+    - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+11:18:30 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+11:18:30 AM: Failing build: Failed to build site
+11:18:30 AM: Finished processing build request in 46.372s
