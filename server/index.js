@@ -1,76 +1,11 @@
-import 'dotenv/config'
-import express from 'express'
-import cors from 'cors'
-import { v2 as cloudinary } from 'cloudinary'
+// Local development entry-point.
+// Imports the shared Express app and starts a real HTTP server.
+// On Netlify the app is imported by netlify/functions/api.js instead.
+import app from './app.js'
 import { connectDB } from './db.js'
-import projectRoutes from './routes/projects.js'
-import adminLoginRoute from './routes/adminLogin.js'
-import siteSettingsRoute from './routes/siteSettings.js'
-import contactRoute from './routes/contact.js'
 
-const app = express()
 const PORT = process.env.API_PORT || 3001
 
-// ── Cloudinary config ─────────────────────────────────────────────────────────
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true,
-})
-
-// ── CORS ──────────────────────────────────────────────────────────────────────
-// In production the frontend is on a different origin (Netlify).
-// Set FRONTEND_URL to your Netlify site URL; multiple origins can be
-// comma-separated: https://a.netlify.app,https://custom-domain.com
-const allowedOrigins = process.env.FRONTEND_URL
-  ? process.env.FRONTEND_URL.split(',').map(s => s.trim())
-  : []
-
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (server-to-server, curl, Postman)
-    if (!origin) return callback(null, true)
-    // Allow any origin in development
-    if (process.env.NODE_ENV !== 'production') return callback(null, true)
-    // In production, allow only the configured frontend origin(s)
-    if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
-      return callback(null, true)
-    }
-    callback(new Error(`CORS: origin ${origin} not allowed`))
-  },
-  credentials: true,
-}))
-
-// ── Middleware ────────────────────────────────────────────────────────────────
-app.use(express.json({ limit: '10mb' }))
-
-// ── Routes ────────────────────────────────────────────────────────────────────
-app.use('/api/admin', adminLoginRoute)
-app.use('/api/projects', projectRoutes)
-app.use('/api/site-settings', siteSettingsRoute)
-app.use('/api/contact', contactRoute)
-
-app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
-
-// ── Global error handler ──────────────────────────────────────────────────────
-// Normalises Multer and other route errors to consistent JSON responses.
-app.use((err, _req, res, _next) => {
-  if (err.code === 'LIMIT_FILE_SIZE') {
-    return res.status(413).json({ error: 'File too large.' })
-  }
-  if (err.code === 'LIMIT_UNEXPECTED_FILE') {
-    return res.status(400).json({ error: 'Unexpected file field.' })
-  }
-  if (err.name === 'MulterError') {
-    return res.status(400).json({ error: err.message })
-  }
-  console.error('[Server] Unhandled error:', err)
-  const status = err.status || err.statusCode || 500
-  res.status(status).json({ error: err.message || 'Internal server error.' })
-})
-
-// ── Start ─────────────────────────────────────────────────────────────────────
 connectDB()
   .then(() => {
     app.listen(PORT, '0.0.0.0', () => {

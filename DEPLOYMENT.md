@@ -1,124 +1,124 @@
 # Deploying Nivora Interiors to Netlify
 
-The project is split into two parts that deploy separately:
+Everything — frontend and backend — runs on a single Netlify site.
 
-| Part | What it is | Where it goes |
-|------|-----------|---------------|
-| **Frontend** | React + Vite (static build) | Netlify |
-| **Backend** | Express API + MongoDB | Render (free tier) or any Node.js host |
+| Layer | Technology | How it runs on Netlify |
+|-------|-----------|------------------------|
+| Frontend | React + Vite | Static build in `dist/` |
+| Backend | Express API | Netlify Function (`netlify/functions/api.js`) |
 
-Netlify proxies all `/api/*` requests from the frontend to the backend automatically — the React app never needs to know the backend URL.
-
----
-
-## Step 1 — Deploy the Express backend on Render
-
-1. Go to [render.com](https://render.com) and sign up / log in.
-2. Click **New → Web Service** and connect your GitHub repo.
-3. Configure the service:
-   - **Runtime**: Node
-   - **Build command**: `npm install`
-   - **Start command**: `node server/index.js`
-   - **Instance type**: Free
-4. Under **Environment**, add every variable from `.env.example`:
-
-   | Key | Value |
-   |-----|-------|
-   | `NODE_ENV` | `production` |
-   | `API_PORT` | `3001` |
-   | `MONGODB_URI` | *(from .env.example)* |
-   | `CLOUDINARY_CLOUD_NAME` | `tgmyheme` |
-   | `CLOUDINARY_API_KEY` | `811595815326532` |
-   | `CLOUDINARY_API_SECRET` | *(from .env.example)* |
-   | `ADMIN_USERNAME` | `admin` |
-   | `ADMIN_PASSWORD` | `admin123` |
-   | `SESSION_SECRET` | *(from .env.example)* |
-   | `EMAIL_USER` | `nivora.inbox@gmail.com` |
-   | `EMAIL_APP_SECRET` | *(from .env.example)* |
-   | `EMAIL_TO` | `nivora.inbox@gmail.com` |
-   | `FRONTEND_URL` | *(your Netlify URL — add after Step 2)* |
-
-5. Click **Deploy**. Once green, copy the service URL, e.g.:
-   ```
-   https://nivora-api.onrender.com
-   ```
+The `/api/*` requests are transparently rewritten to the function by `netlify.toml`, so the browser always talks to the same origin — no CORS configuration needed.
 
 ---
 
-## Step 2 — Deploy the frontend on Netlify
+## Step 1 — Push the repo to GitHub
 
-1. Go to [netlify.com](https://netlify.com) and sign up / log in.
-2. Click **Add new site → Import an existing project** and connect your GitHub repo.
-3. Netlify auto-detects the settings from `netlify.toml`:
+If you haven't already:
+
+```bash
+git add .
+git commit -m "Netlify deployment setup"
+git push
+```
+
+---
+
+## Step 2 — Create a new site on Netlify
+
+1. Go to [netlify.com](https://netlify.com) and log in.
+2. Click **Add new site → Import an existing project**.
+3. Choose **GitHub** and select the `nivora-interiors` repository.
+4. Netlify reads `netlify.toml` automatically — the build settings are pre-filled:
    - **Build command**: `npm run build`
    - **Publish directory**: `dist`
-4. Under **Site configuration → Environment variables**, add:
 
-   | Key | Value |
-   |-----|-------|
-   | `BACKEND_URL` | `https://nivora-api.onrender.com` *(your Render URL from Step 1, no trailing slash)* |
+   Do **not** change these.
 
-5. Click **Deploy site**. Netlify builds and publishes the frontend.
-6. Copy your Netlify site URL, e.g. `https://nivora-interiors.netlify.app`.
+5. Click **Deploy site** — the first deploy will fail because the environment variables aren't set yet. That's fine.
 
 ---
 
-## Step 3 — Wire the CORS back-reference
+## Step 3 — Add environment variables
 
-Once you have the Netlify URL:
+1. In your Netlify site, go to **Site configuration → Environment variables**.
+2. Click **Add a variable** and add each row from the table below:
 
-1. Go back to Render → your service → **Environment**.
-2. Update `FRONTEND_URL` to your Netlify URL:
-   ```
-   https://nivora-interiors.netlify.app
-   ```
-3. Render redeploys automatically. CORS will now only accept requests from your frontend.
+| Key | Value |
+|-----|-------|
+| `NODE_ENV` | `production` |
+| `MONGODB_URI` | `mongodb+srv://nivorainbox_db_user:z4ZvlqcltmGqVkPR@nivora.9kua3dk.mongodb.net/?appName=Nivora` |
+| `CLOUDINARY_CLOUD_NAME` | `tgmyheme` |
+| `CLOUDINARY_API_KEY` | `811595815326532` |
+| `CLOUDINARY_API_SECRET` | `frnuzUt0_D4-DNVr4dVEcPHl66k` |
+| `ADMIN_USERNAME` | `admin` |
+| `ADMIN_PASSWORD` | `admin123` |
+| `SESSION_SECRET` | `fNmQZUl14iExPKKoo3SzhUJxPxLHfFAxZKB77YXsLOqIpJYj259rSXcBwkl5XUJOK21aB9q6Uml0950tfWUc/Q==` |
+| `EMAIL_USER` | `nivora.inbox@gmail.com` |
+| `EMAIL_APP_SECRET` | `nuelfrebcpveiwkz` |
+| `EMAIL_TO` | `nivora.inbox@gmail.com` |
+
+> All values are also in `.env.example` in this repo for reference.
 
 ---
 
-## Step 4 — (Optional) Custom domain on Netlify
+## Step 4 — Trigger a redeploy
+
+1. Go to **Deploys** in your Netlify site.
+2. Click **Trigger deploy → Deploy site**.
+3. Wait for the build to finish (usually 1–2 minutes).
+
+---
+
+## Step 5 — Verify
+
+Once deployed, open your Netlify URL and check:
+
+| Test | How |
+|------|-----|
+| Site loads | Visit `https://your-site.netlify.app` |
+| Projects load | Visit `/portfolio` — projects should appear |
+| API health | Visit `https://your-site.netlify.app/api/health` — should return `{"status":"ok"}` |
+| Contact form | Fill in and submit the enquiry form on `/contact` |
+| Admin panel | Visit `/admin`, log in with `admin` / `admin123` |
+
+---
+
+## Step 6 — (Optional) Custom domain
 
 1. **Netlify → Domain management → Add custom domain**.
-2. Point your DNS CNAME to Netlify's load balancer as instructed.
-3. Update `FRONTEND_URL` on Render to match the custom domain.
+2. Follow the DNS instructions Netlify provides.
+3. Netlify provisions a free SSL certificate automatically.
 
 ---
 
-## How the proxy works
+## How the architecture works
 
 ```
-Browser  →  GET /api/projects
-         →  Netlify edge (netlify.toml redirect, status 200)
-         →  https://nivora-api.onrender.com/api/projects
-         →  Express → MongoDB → response
-         →  Browser
+Browser
+  │
+  ├─ GET /portfolio          → Netlify CDN serves dist/index.html (React Router)
+  │
+  ├─ GET /api/projects       → netlify.toml rewrites to /.netlify/functions/api/projects
+  │                            └─ Express route → MongoDB → JSON response
+  │
+  └─ POST /api/contact       → netlify.toml rewrites to /.netlify/functions/api/contact
+                               └─ Express route → Nodemailer → Gmail
 ```
 
-The `[[redirects]]` block in `netlify.toml` does the forwarding:
-
-```toml
-[[redirects]]
-  from   = "/api/*"
-  to     = "${BACKEND_URL}/api/:splat"
-  status = 200
-  force  = true
-```
-
-`${BACKEND_URL}` is substituted with the environment variable you set in Step 2.
+The rewrite is **transparent** (HTTP 200, not 301/302), so the browser always sees
+requests going to the same origin. No CORS headers needed.
 
 ---
 
 ## Local development (unchanged)
 
 ```bash
-# Terminal 1 — API server
+# Terminal 1 — Express API on :3001
 npm run server
 
-# Terminal 2 — Vite dev server (proxies /api → localhost:3001)
+# Terminal 2 — Vite dev server on :5000 (proxies /api → :3001)
 npm run dev
 ```
-
-No `.env` changes needed locally — the Replit Secrets supply all environment variables.
 
 ---
 
@@ -126,8 +126,8 @@ No `.env` changes needed locally — the Replit Secrets supply all environment v
 
 | Symptom | Fix |
 |---------|-----|
-| Netlify build fails | Check Node version is 20 in `netlify.toml` `[build.environment]` |
-| `/api/*` returns 404 on Netlify | Ensure `BACKEND_URL` env var is set in Netlify (no trailing slash) |
-| API returns CORS error | Ensure `FRONTEND_URL` is set correctly on Render |
-| Admin token rejected after Render redeploy | The token rotates on restart — log in to the admin panel again |
-| Render free tier spins down after 15 min | First API call after idle takes ~30s to wake. Upgrade to paid or use an uptime monitor. |
+| Build fails with `Cannot find module` | Ensure `serverless-http` is in `dependencies` (not `devDependencies`) in `package.json` |
+| `/api/health` returns 404 | Check `netlify.toml` `[[redirects]]` — the `/api/*` rule must come before `/*` |
+| Function times out | Netlify Function timeout is set to 26 s in `netlify.toml`. Cloudinary uploads on slow connections may still occasionally hit this. |
+| Admin token rejected after redeploy | The token is in-memory and resets on every cold start. Just log in to `/admin` again. |
+| MongoDB connection error | Confirm `MONGODB_URI` is set correctly in Netlify env vars and the Atlas cluster allows connections from any IP (`0.0.0.0/0`). |

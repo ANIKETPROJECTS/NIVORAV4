@@ -1,34 +1,39 @@
 # ── Netlify configuration for Nivora Interiors ───────────────────────────────
+# Everything — frontend AND backend — runs on Netlify.
+#   • Frontend  : React/Vite static build  →  dist/
+#   • Backend   : Express wrapped in serverless-http  →  netlify/functions/api.js
 #
-# Deployment model:
-#   • Frontend (React/Vite)  →  Netlify static hosting  (this file)
-#   • Backend  (Express API) →  Separate Node.js host   (e.g. Render, Railway)
-#
-# Before deploying:
-#   1. Deploy the Express server somewhere (see deployment steps in README).
-#   2. In Netlify → Site settings → Environment variables, add:
-#        BACKEND_URL = https://your-api-server.onrender.com   (no trailing slash)
-#   3. Push this repo — Netlify will build and proxy /api/* automatically.
+# The /api/* rewrite is transparent to the browser (same origin, no CORS needed).
 # ─────────────────────────────────────────────────────────────────────────────
 
 [build]
-  command = "npm run build"
-  publish = "dist"
+  command   = "npm run build"
+  publish   = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
 
-# ── API proxy ─────────────────────────────────────────────────────────────────
-# All /api/* requests are forwarded to the Express backend.
-# ${BACKEND_URL} is substituted at build-time from the Netlify env var.
+# ── Function settings ─────────────────────────────────────────────────────────
+[functions]
+  # Directory where Netlify looks for function files
+  directory = "netlify/functions"
+
+  # Extend timeout to 26 s (max for synchronous functions) so that
+  # Cloudinary image uploads have enough time to complete.
+  [functions."api"]
+    timeout = 26
+
+# ── Rewrite /api/* → the serverless function ─────────────────────────────────
+# Status 200 = rewrite (transparent to browser), not a redirect.
+# force = true ensures this rule beats any matching static file.
 [[redirects]]
   from   = "/api/*"
-  to     = "${BACKEND_URL}/api/:splat"
+  to     = "/.netlify/functions/api/:splat"
   status = 200
   force  = true
 
 # ── SPA fallback ──────────────────────────────────────────────────────────────
-# Every non-asset URL returns index.html so React Router handles routing.
+# Every non-asset URL returns index.html so React Router handles client routing.
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
