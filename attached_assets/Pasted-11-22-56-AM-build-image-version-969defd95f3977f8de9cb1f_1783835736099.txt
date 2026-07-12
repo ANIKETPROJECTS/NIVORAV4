@@ -1,0 +1,163 @@
+11:22:56 AM: build-image version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3 (noble-new-builds)
+11:22:56 AM: buildbot version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3
+11:22:56 AM: Fetching cached dependencies
+11:22:56 AM: Failed to fetch cache, continuing with build
+11:22:56 AM: Starting to prepare the repo for build
+11:22:56 AM: No cached dependencies found. Cloning fresh repo
+11:22:56 AM: git clone --filter=blob:none https://github.com/ANIKETPROJECTS/NIVORAV4
+11:22:56 AM: Preparing Git Reference refs/heads/main
+11:23:05 AM: Custom build command detected. Proceeding with the specified command: 'npm install --no-audit --no-fund && npm run build'
+11:23:06 AM: Installing dependencies
+11:23:06 AM: mise ~/.config/mise/config.toml tools: python@3.14.3
+11:23:06 AM: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+11:23:06 AM: mise ~/.config/mise/config.toml tools: go@1.26.2
+11:23:07 AM: v20.20.2 is already installed.
+11:23:07 AM: Now using node v20.20.2 (npm v10.8.2)
+11:23:07 AM: Enabling Node.js Corepack
+11:23:07 AM: No npm workspaces detected
+11:23:07 AM: Found npm version (10.8.2) that doesn't match expected (10.9.2)
+Installing using npm version 10.9.2
+11:23:08 AM: npm warn exec The following package was not found and will be installed: npm@10.9.2
+11:23:14 AM: added 245 packages in 3s
+11:23:14 AM: npm packages installed
+11:23:14 AM: Successfully installed dependencies
+11:23:14 AM: Detected 1 framework(s)
+11:23:14 AM: "vite" at version "5.4.21"
+11:23:15 AM: Starting build script
+11:23:15 AM: Section completed: initializing
+11:23:16 AM: ​
+11:23:16 AM: Netlify Build                                                 
+11:23:16 AM: ────────────────────────────────────────────────────────────────
+11:23:16 AM: ​
+11:23:16 AM: ❯ Version
+11:23:16 AM:   @netlify/build 36.1.2
+11:23:16 AM: ​
+11:23:16 AM: ❯ Flags
+11:23:16 AM:   accountId: 689594c20d87155ab17af86b
+11:23:16 AM:   baseRelDir: true
+11:23:16 AM:   buildId: 6a532bb7480bef00089f62b8
+11:23:16 AM:   deployId: 6a532bb7480bef00089f62ba
+11:23:17 AM: ​
+11:23:17 AM: ❯ Current directory
+11:23:17 AM:   /opt/build/repo
+11:23:17 AM: ​
+11:23:17 AM: ❯ Config file
+11:23:17 AM:   /opt/build/repo/netlify.toml
+11:23:17 AM: ​
+11:23:17 AM: ❯ Context
+11:23:17 AM:   production
+11:23:17 AM: ​
+11:23:17 AM: build.command from netlify.toml                               
+11:23:17 AM: ────────────────────────────────────────────────────────────────
+11:23:17 AM: ​
+11:23:17 AM: $ npm install --no-audit --no-fund && npm run build
+11:23:17 AM: up to date in 345ms
+11:23:17 AM: > nivora-interiors@0.1.0 build
+11:23:17 AM: > vite build
+11:23:17 AM: vite v5.4.21 building for production...
+11:23:17 AM: transforming...
+11:23:20 AM: ✓ 1957 modules transformed.
+11:23:22 AM: rendering chunks...
+11:23:22 AM: computing gzip size...
+11:23:22 AM: dist/index.html                                                                  1.18 kB │ gzip:   0.60 kB
+11:23:22 AM: dist/assets/nivora-logo-DiQ_wEqZ.png                                            21.35 kB
+11:23:22 AM: dist/assets/WhatsApp_Image_2026-07-08_at_20.50.13_1783534790416-DCZK0Ozg.jpeg  249.26 kB
+11:23:22 AM: dist/assets/index-Dwc7T6_1.css                                                  31.14 kB │ gzip:   7.15 kB
+11:23:22 AM: dist/assets/index-BaSaWyHE.js                                                  940.43 kB │ gzip: 240.48 kB │ map: 3,569.44 kB
+11:23:22 AM: 
+11:23:22 AM: (!) Some chunks are larger than 500 kB after minification. Consider:
+11:23:22 AM: - Using dynamic import() to code-split the application
+11:23:22 AM: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+11:23:22 AM: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+11:23:22 AM: ✓ built in 4.92s
+11:23:22 AM: ​
+11:23:22 AM: (build.command completed in 5.6s)
+11:23:22 AM: ​
+11:23:22 AM: Functions bundling                                            
+11:23:22 AM: ────────────────────────────────────────────────────────────────
+11:23:22 AM: ​
+11:23:22 AM: Packaging Functions from netlify/functions directory:
+11:23:22 AM:  - api.js
+11:23:22 AM: ​
+11:23:25 AM: ​
+11:23:25 AM: (Functions bundling completed in 2.7s)
+11:23:25 AM: ​
+11:23:25 AM: Scanning for secrets in code and build output.                
+11:23:25 AM: ────────────────────────────────────────────────────────────────
+11:23:25 AM: ​
+11:23:25 AM: SECRETS_SCAN_OMIT_KEYS override option set to: API_PORT,NODE_ENV,ADMIN_USERNAME,EMAIL_TO,EMAIL_USER
+11:23:25 AM: ​
+11:23:25 AM: SECRETS_SCAN_OMIT_PATHS override option set to: ecosystem.config.cjs,attached_assets,.agents,dist
+11:23:25 AM: ​
+11:23:26 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+11:23:26 AM: ​
+11:23:26 AM: ❯ Scanning complete. 111 file(s) scanned. Secrets scanning found 7 instance(s) of secrets in build output or repo code.
+11:23:26 AM: ​
+11:23:26 AM: Secret env var "EMAIL_APP_SECRET"'s value detected:
+  found value at line 75 in .replit
+11:23:26 AM: Secret env var "ADMIN_PASSWORD"'s value detected:
+  found value at line 70 in .replit
+11:23:26 AM:   found value at line 84 in DEPLOYMENT.md
+11:23:26 AM: Secret env var "SESSION_SECRET"'s value detected:
+  found value at line 80 in .replit
+11:23:26 AM: Secret env var "CLOUDINARY_CLOUD_NAME"'s value detected:
+  found value at line 74 in .replit
+11:23:26 AM: Secret env var "MONGODB_URI"'s value detected:
+  found value at line 78 in .replit
+11:23:26 AM: Secret env var "CLOUDINARY_API_KEY"'s value detected:
+  found value at line 72 in .replit
+11:23:26 AM: Secret env var "CLOUDINARY_API_SECRET"'s value detected:
+  found value at line 73 in .replit
+11:23:26 AM: ​
+11:23:26 AM: To prevent exposing secrets, the build will fail until these secret values are not found in build output or repo files.
+11:23:26 AM: ​
+11:23:26 AM: If these are expected, use SECRETS_SCAN_OMIT_PATHS, SECRETS_SCAN_OMIT_KEYS, or SECRETS_SCAN_ENABLED to prevent detecting.
+11:23:26 AM: ​
+11:23:26 AM: For more information on secrets scanning, see the Netlify Docs: https://ntl.fyi/configure-secrets-scanning
+11:23:26 AM: ​
+11:23:26 AM: Secrets scanning detected secrets in files during build.      
+11:23:26 AM: ────────────────────────────────────────────────────────────────
+11:23:26 AM: ​
+11:23:26 AM:   Error message
+11:23:26 AM:   Secrets scanning found secrets in build.
+11:23:26 AM: ​
+11:23:26 AM:   Resolved config
+11:23:26 AM:   build:
+11:23:26 AM:     command: npm install --no-audit --no-fund && npm run build
+11:23:26 AM:     commandOrigin: config
+11:23:26 AM:     environment:
+11:23:26 AM:       - ADMIN_PASSWORD
+11:23:26 AM:       - ADMIN_USERNAME
+11:23:26 AM:       - API_PORT
+11:23:26 AM:       - CLOUDINARY_API_KEY
+11:23:26 AM:       - CLOUDINARY_API_SECRET
+11:23:26 AM:       - CLOUDINARY_CLOUD_NAME
+11:23:26 AM:       - EMAIL_APP_SECRET
+11:23:26 AM:       - EMAIL_TO
+11:23:26 AM:       - EMAIL_USER
+11:23:26 AM:       - MONGODB_URI
+11:23:26 AM:       - NODE_ENV
+11:23:26 AM:       - SESSION_SECRET
+11:23:26 AM:       - NODE_VERSION
+11:23:26 AM:       - SECRETS_SCAN_OMIT_PATHS
+11:23:26 AM:       - SECRETS_SCAN_OMIT_KEYS
+11:23:26 AM:       - NPM_VERSION
+11:23:26 AM:       - NPM_FLAGS
+11:23:26 AM:     publish: /opt/build/repo/dist
+11:23:26 AM:     publishOrigin: config
+11:23:26 AM:   functions:
+11:23:26 AM:     api:
+11:23:26 AM:       timeout: 26
+11:23:26 AM:   functionsDirectory: /opt/build/repo/netlify/functions
+11:23:26 AM:   redirects:
+11:23:26 AM:     - force: true
+11:23:26 AM:       from: /api/*
+      status: 200
+      to: /.netlify/functions/api/:splat
+    - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+11:23:26 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+11:23:26 AM: Failing build: Failed to build site
+11:23:27 AM: Finished processing build request in 31.073s

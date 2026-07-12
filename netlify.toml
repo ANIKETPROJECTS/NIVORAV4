@@ -23,7 +23,7 @@
   # Exclude files that legitimately contain credential-shaped values but are
   # not secrets (ecosystem.config.cjs is a PM2 config for local VPS use;
   # attached_assets/ and dist/ are build artifacts; .agents/ is agent memory).
-  SECRETS_SCAN_OMIT_PATHS = "ecosystem.config.cjs,attached_assets,.agents,dist"
+  SECRETS_SCAN_OMIT_PATHS = "ecosystem.config.cjs,attached_assets,.agents,dist,.replit"
   # Exclude env var keys whose values appear legitimately in source/built files:
   #   API_PORT  → port number used in server config and vite proxy comments
   #   NODE_ENV  → the string "production" appears throughout bundled JS

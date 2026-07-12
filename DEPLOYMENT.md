@@ -81,7 +81,7 @@ Once deployed, open your Netlify URL and check:
 | Projects load | Visit `/portfolio` — projects should appear |
 | API health | Visit `https://your-site.netlify.app/api/health` — should return `{"status":"ok"}` |
 | Contact form | Fill in and submit the enquiry form on `/contact` |
-| Admin panel | Visit `/admin`, log in with `admin` / `admin123` |
+| Admin panel | Visit `/admin`, log in with your `ADMIN_USERNAME` / `ADMIN_PASSWORD` |
 
 ---
 
