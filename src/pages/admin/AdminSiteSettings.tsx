@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, ChangeEvent } from 'react'
 import {
   fetchSiteSettings, updateSiteSettings, uploadSiteImage,
-  SiteSettings, ServiceCard, HomeHero, ServicePageHero, ServiceItem, StatItem,
+  SiteSettings, ServiceCard, HomeHero, ServicePageHero, ServiceItem, StatItem, InstagramPost,
 } from '../../lib/api'
 import { invalidateSiteSettings } from '../../hooks/useSiteSettings'
 import { Upload, Loader2, Save, Plus, Trash2 } from 'lucide-react'
@@ -10,6 +10,7 @@ export type SettingsSection =
   | 'header'        // Home Page → Header (navbar logo)
   | 'hero'          // Home Page → Hero Section
   | 'expertise'     // Home Page → Our Expertise
+  | 'instagram'     // Home Page → Instagram section
   | 'home-stats'    // Home Page → Stats numbers
   | 'footer'        // Home Page → Footer logo
   | 'about-stats'   // About Page → Stats numbers
@@ -331,6 +332,79 @@ function ExpertisePanel({ settings, onChange }: { settings: SiteSettings; onChan
 
 
 
+function InstagramPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
+  const posts: InstagramPost[] = settings.instagramPosts ?? []
+
+  const update = (i: number, patch: Partial<InstagramPost>) => {
+    const next = posts.map((p, idx) => idx === i ? { ...p, ...patch } : p)
+    onChange({ ...settings, instagramPosts: next })
+  }
+
+  const addPost = () => {
+    onChange({ ...settings, instagramPosts: [...posts, { image: '', url: '' }] })
+  }
+
+  const removePost = (i: number) => {
+    onChange({ ...settings, instagramPosts: posts.filter((_, idx) => idx !== i) })
+  }
+
+  const move = (i: number, dir: -1 | 1) => {
+    const j = i + dir
+    if (j < 0 || j >= posts.length) return
+    const next = [...posts]
+    ;[next[i], next[j]] = [next[j], next[i]]
+    onChange({ ...settings, instagramPosts: next })
+  }
+
+  return (
+    <div>
+      <p style={descStyle}>
+        The <strong>"Follow Our Journey"</strong> Instagram grid on the homepage. For each card, paste the link to
+        the Instagram post or reel and upload its cover image (Instagram doesn't allow pulling the image
+        automatically, so upload a screenshot or save the post's photo/video thumbnail).
+      </p>
+      {posts.length === 0 && (
+        <p style={{ fontSize: 12, color: '#c0b5a8', marginBottom: 16 }}>
+          No custom cards yet — the homepage is currently showing placeholder images. Add cards below to replace them.
+        </p>
+      )}
+      {posts.map((post, i) => (
+        <div key={i} style={{ ...cardBoxStyle, position: 'relative' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <p style={{ ...cardIndexStyle, margin: 0 }}>Card {i + 1}</p>
+            <div style={{ display: 'flex', gap: 6 }}>
+              <button onClick={() => move(i, -1)} disabled={i === 0} style={{ ...uploadBtnStyle, padding: '4px 9px', opacity: i === 0 ? 0.4 : 1, cursor: i === 0 ? 'default' : 'pointer' }}>↑</button>
+              <button onClick={() => move(i, 1)} disabled={i === posts.length - 1} style={{ ...uploadBtnStyle, padding: '4px 9px', opacity: i === posts.length - 1 ? 0.4 : 1, cursor: i === posts.length - 1 ? 'default' : 'pointer' }}>↓</button>
+              <button
+                onClick={() => removePost(i)}
+                style={{ background: 'none', border: '1px solid #e2d9ce', color: '#b85a4a', borderRadius: 4, padding: '4px 8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}
+              >
+                <Trash2 size={12} /> Remove
+              </button>
+            </div>
+          </div>
+          <ImageUploadField label="Cover Image" hint="Upload the post/reel's cover photo — a square image works best." currentUrl={post.image} onUploaded={url => update(i, { image: url })} />
+          <TextField
+            label="Instagram Post / Reel Link"
+            value={post.url}
+            placeholder="e.g. https://www.instagram.com/p/XXXXXXXXXXX/"
+            onChange={v => update(i, { url: v })}
+          />
+        </div>
+      ))}
+
+      <button onClick={addPost} style={{
+        display: 'inline-flex', alignItems: 'center', gap: 8,
+        background: 'none', border: `1px dashed ${GOLD}`, color: GOLD,
+        borderRadius: 6, padding: '10px 20px', fontSize: 13, cursor: 'pointer',
+        letterSpacing: '0.04em', marginBottom: 24,
+      }}>
+        <Plus size={14} /> Add Instagram Card
+      </button>
+    </div>
+  )
+}
+
 function HomeStatsPanel({ settings, onChange }: { settings: SiteSettings; onChange: (s: SiteSettings) => void }) {
   const stats: StatItem[] = settings.homeStats?.length
     ? settings.homeStats
@@ -484,6 +558,7 @@ const EMPTY_SETTINGS: SiteSettings = {
   homeHero: { backgroundImage: '', headline: '', subheadline: '', ctaText: '', ctaLink: '' },
   serviceCards: [],
   homePortfolio: [],
+  instagramPosts: [],
   servicePageHero: { backgroundImage: '', headline: '', subheadline: '' },
   servicesList: [],
   homeStats: [
@@ -559,6 +634,7 @@ export default function AdminSiteSettings({ section }: Props) {
       {section === 'header'      && <HeaderPanel      settings={settings} onChange={setSettings} />}
       {section === 'hero'        && <HeroPanel        settings={settings} onChange={setSettings} />}
       {section === 'expertise'   && <ExpertisePanel   settings={settings} onChange={setSettings} />}
+      {section === 'instagram'   && <InstagramPanel   settings={settings} onChange={setSettings} />}
       {section === 'home-stats'  && <HomeStatsPanel   settings={settings} onChange={setSettings} />}
       {section === 'footer'      && <FooterPanel      settings={settings} onChange={setSettings} />}
       {section === 'about-stats' && <AboutStatsPanel  settings={settings} onChange={setSettings} />}

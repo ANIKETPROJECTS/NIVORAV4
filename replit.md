@@ -37,6 +37,10 @@ All set as Replit Secrets (not plaintext env vars):
 
 Note: `ecosystem.config.cjs` (used for standalone VPS/PM2 deploys outside Replit) intentionally keeps its own copy of these values in plaintext per the project owner's request — that file is unrelated to the Replit Secrets above and is not used when running on Replit.
 
+## Instagram section (Home page)
+
+The "Follow Our Journey" grid on the homepage is editable from Admin Panel → Home Page → Instagram. Each card has a link to an Instagram post/reel and a manually-uploaded cover image — Instagram blocks automated scraping of post images from server environments, so there's no way to pull the cover image automatically; the admin uploads a screenshot or saved thumbnail of the post instead. Cards can be added, removed, and reordered. Falls back to placeholder images if none are configured.
+
 ## Contact form records ("excelsheet")
 
 Every contact-form submission is saved to MongoDB in addition to being emailed — so a submission is never lost even if email delivery fails.

@@ -102,6 +102,11 @@ export interface ServiceItem {
   desc: string
 }
 
+export interface InstagramPost {
+  image: string
+  url: string
+}
+
 export interface SiteSettings {
   logoUrl: string
   logoSize: number
@@ -110,6 +115,7 @@ export interface SiteSettings {
   homeHero: HomeHero
   serviceCards: ServiceCard[]
   homePortfolio: HomePortfolioItem[]
+  instagramPosts?: InstagramPost[]
   servicePageHero: ServicePageHero
   servicesList: ServiceItem[]
   homeStats?: StatItem[]

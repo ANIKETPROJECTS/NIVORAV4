@@ -60,7 +60,7 @@ router.get('/', async (_req, res) => {
 // ── PUT /api/site-settings (admin — JSON fields only) ─────────────────────────
 router.put('/', requireAdmin, async (req, res) => {
   try {
-    const allowed = ['logoUrl', 'logoSize', 'footerLogoUrl', 'footerLogoSize', 'serviceCards', 'homePortfolio', 'homeHero', 'servicePageHero', 'servicesList', 'homeStats', 'aboutStats']
+    const allowed = ['logoUrl', 'logoSize', 'footerLogoUrl', 'footerLogoSize', 'serviceCards', 'homePortfolio', 'instagramPosts', 'homeHero', 'servicePageHero', 'servicesList', 'homeStats', 'aboutStats']
     const update = {}
     for (const key of allowed) {
       if (key in req.body) update[key] = req.body[key]
@@ -68,7 +68,7 @@ router.put('/', requireAdmin, async (req, res) => {
     const doc = await SiteSettings.findOneAndUpdate(
       { _singleton: 'default' },
       { $set: update },
-      { new: true, upsert: true, runValidators: true }
+      { returnDocument: 'after', upsert: true, runValidators: true }
     )
     // Use same toObject() pattern as GET so all fields are always serialized
     const plain = doc.toObject({ versionKey: false })

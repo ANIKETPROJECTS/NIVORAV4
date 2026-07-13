@@ -10,7 +10,7 @@ import {
   Plus, Pencil, Trash2, LogOut, RefreshCw, ExternalLink, Loader2,
   LayoutTemplate, Image, AlignLeft, Grid2X2, Home, Briefcase,
   ChevronDown, ChevronRight, Sparkles, Columns, List, GripVertical,
-  BarChart2, Info,
+  BarChart2, Info, Instagram,
 } from 'lucide-react'
 
 type ProjectSummary = Pick<Project, 'id' | 'name' | 'location' | 'category' | 'year' | 'badge' | 'concept' | 'coverImage' | 'order'>
@@ -42,6 +42,7 @@ const SIDEBAR_PAGES: SidebarPage[] = [
       { tab: 'settings/header',     label: 'Header',       icon: AlignLeft,      hint: 'Navbar logo' },
       { tab: 'settings/hero',       label: 'Hero Section', icon: Sparkles,       hint: 'Full-screen hero banner' },
       { tab: 'settings/expertise',  label: 'Our Expertise', icon: Grid2X2,       hint: 'Service cards section' },
+      { tab: 'settings/instagram',  label: 'Instagram',     icon: Instagram,     hint: 'Follow Our Journey grid' },
       { tab: 'settings/home-stats', label: 'Stats Numbers', icon: BarChart2,     hint: 'Years, Projects, Clients, Satisfaction' },
       { tab: 'settings/footer',     label: 'Footer',        icon: LayoutTemplate, hint: 'Footer logo' },
     ],

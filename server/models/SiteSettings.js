@@ -41,6 +41,13 @@ const serviceItemSchema = new mongoose.Schema({
   desc: { type: String, default: '' },
 }, { _id: false })
 
+const instagramPostSchema = new mongoose.Schema({
+  // Cover image shown on the homepage grid (uploaded by the admin).
+  image: { type: String, default: '' },
+  // The Instagram post/reel URL the card should link to.
+  url: { type: String, default: '' },
+}, { _id: false })
+
 const siteSettingsSchema = new mongoose.Schema({
   // Singleton — always one document
   _singleton: { type: String, default: 'default', unique: true },
@@ -55,6 +62,7 @@ const siteSettingsSchema = new mongoose.Schema({
   homeHero: { type: homeHeroSchema, default: () => ({}) },
   serviceCards: { type: [serviceCardSchema], default: [] },
   homePortfolio: { type: [portfolioItemSchema], default: [] },
+  instagramPosts: { type: [instagramPostSchema], default: [] },
   homeStats: { type: [statItemSchema], default: [
     { value: '2+',  label: 'Years Experience'    },
     { value: '25+', label: 'Projects Completed'  },
