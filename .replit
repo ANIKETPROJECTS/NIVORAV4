@@ -66,15 +66,5 @@ publicDir = "dist"
 [userenv]
 
 [userenv.shared]
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin123"
 API_PORT = "3001"
-CLOUDINARY_API_KEY = "811595815326532"
-CLOUDINARY_API_SECRET = "frnuzUt0_D4-DNVr4dVEcPHl66k"
-CLOUDINARY_CLOUD_NAME = "tgmyheme"
-EMAIL_APP_SECRET = "nuelfrebcpveiwkz"
-EMAIL_TO = "nivora.inbox@gmail.com"
-EMAIL_USER = "nivora.inbox@gmail.com"
-MONGODB_URI = "mongodb+srv://nivorainbox_db_user:z4ZvlqcltmGqVkPR@nivora.9kua3dk.mongodb.net/?appName=Nivora"
-NODE_ENV = "production"
-SESSION_SECRET = "fNmQZUl14iExPKKoo3SzhUJxPxLHfFAxZKB77YXsLOqIpJYj259rSXcBwkl5XUJOK21aB9q6Uml0950tfWUc/Q=="
+NODE_ENV = "development"

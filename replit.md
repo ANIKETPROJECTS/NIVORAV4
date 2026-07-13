@@ -20,6 +20,8 @@ The Vite dev server proxies `/api/*` requests to the Express API on port 3001.
 
 ## Required secrets
 
+All set as Replit Secrets (not plaintext env vars):
+
 | Secret | Description |
 |---|---|
 | `MONGODB_URI` | MongoDB connection string |
@@ -28,6 +30,12 @@ The Vite dev server proxies `/api/*` requests to the Express API on port 3001.
 | `CLOUDINARY_API_SECRET` | Cloudinary API secret |
 | `ADMIN_USERNAME` | Username for the admin panel |
 | `ADMIN_PASSWORD` | Password for the admin panel |
+| `SESSION_SECRET` | Session signing secret |
+| `EMAIL_USER` | Gmail address used to send contact-form enquiries |
+| `EMAIL_APP_SECRET` | Gmail app password |
+| `EMAIL_TO` | Inbox that receives contact-form enquiries |
+
+Note: `ecosystem.config.cjs` (used for standalone VPS/PM2 deploys outside Replit) intentionally keeps its own copy of these values in plaintext per the project owner's request — that file is unrelated to the Replit Secrets above and is not used when running on Replit.
 
 ## Seeding data
 
