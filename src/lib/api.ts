@@ -52,6 +52,15 @@ export async function submitEnquiry(data: ContactEnquiry): Promise<void> {
   }
 }
 
+// ── Contact-form records ("excelsheet") ────────────────────────────────────────
+export interface Enquiry extends ContactEnquiry {
+  _id: string
+  notes: string
+  emailSent: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 export interface StatItem {
   value: string
   label: string
@@ -262,4 +271,92 @@ export function fetchSiteSettings(): Promise<SiteSettings> {
 
 export function updateSiteSettings(data: Partial<SiteSettings>): Promise<SiteSettings> {
   return adminRequest('/site-settings', { method: 'PUT', body: JSON.stringify(data) })
+}
+
+// ── Excel sheet (contact-form records) ─────────────────────────────────────────
+// Uses its own session key so logging out of one panel doesn't affect the other,
+// even though it checks the same ADMIN_USERNAME / ADMIN_PASSWORD credentials.
+const EXCEL_TOKEN_KEY = 'nivora_excel_token'
+
+export function getExcelToken(): string | null {
+  return sessionStorage.getItem(EXCEL_TOKEN_KEY)
+}
+function setExcelToken(token: string) {
+  sessionStorage.setItem(EXCEL_TOKEN_KEY, token)
+  sessionStorage.setItem('nivora_excel_admin', 'true')
+}
+export function clearExcelToken() {
+  sessionStorage.removeItem(EXCEL_TOKEN_KEY)
+  sessionStorage.removeItem('nivora_excel_admin')
+}
+
+export async function excelLogin(username: string, password: string): Promise<void> {
+  const res = await fetch(`${BASE}/admin/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || 'Login failed')
+  }
+  const data = await res.json()
+  setExcelToken(data.token)
+}
+
+async function excelRequest<T>(path: string, options?: RequestInit): Promise<T> {
+  const token = getExcelToken() || ''
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'x-admin-token': token,
+    ...(options?.headers as Record<string, string> | undefined),
+  }
+  const res = await fetch(`${BASE}${path}`, { ...options, headers })
+  if (res.status === 403) {
+    clearExcelToken()
+    window.location.href = '/excelsheet'
+    throw new Error('Session expired. Please log in again.')
+  }
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || `Request failed: ${res.status}`)
+  }
+  return res.json()
+}
+
+export function fetchEnquiries(): Promise<Enquiry[]> {
+  return excelRequest('/enquiries')
+}
+
+export function updateEnquiry(id: string, data: Partial<Enquiry>): Promise<Enquiry> {
+  return excelRequest(`/enquiries/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+}
+
+export function deleteEnquiry(id: string): Promise<{ message: string }> {
+  return excelRequest(`/enquiries/${id}`, { method: 'DELETE' })
+}
+
+export async function downloadEnquiriesExcel(): Promise<void> {
+  const token = getExcelToken() || ''
+  const res = await fetch(`${BASE}/enquiries/export`, {
+    headers: { 'x-admin-token': token },
+  })
+  if (res.status === 403) {
+    clearExcelToken()
+    window.location.href = '/excelsheet'
+    throw new Error('Session expired. Please log in again.')
+  }
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || 'Failed to export enquiries')
+  }
+  const blob = await res.blob()
+  const url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `nivora-enquiries-${Date.now()}.xlsx`
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  window.URL.revokeObjectURL(url)
 }

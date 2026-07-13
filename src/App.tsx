@@ -18,6 +18,9 @@ import ProjectDetail from './pages/ProjectDetail'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import ProtectedAdminRoute from './pages/admin/ProtectedAdminRoute'
+import ExcelLogin from './pages/excel/ExcelLogin'
+import ExcelDashboard from './pages/excel/ExcelDashboard'
+import ExcelProtectedRoute from './pages/excel/ExcelProtectedRoute'
 
 // Computed once at module load: was this a fresh page load or reload?
 // "navigate" = fresh load (URL bar / bookmark / new tab)
@@ -130,6 +133,16 @@ export default function App() {
             <ProtectedAdminRoute>
               <AdminDashboard />
             </ProtectedAdminRoute>
+          }
+        />
+        {/* ── Contact-form records ("excelsheet") ── */}
+        <Route path="/excelsheet" element={<ExcelLogin />} />
+        <Route
+          path="/excelsheet/data"
+          element={
+            <ExcelProtectedRoute>
+              <ExcelDashboard />
+            </ExcelProtectedRoute>
           }
         />
         {/* ── Public site ── */}

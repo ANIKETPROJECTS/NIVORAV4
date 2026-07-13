@@ -37,6 +37,15 @@ All set as Replit Secrets (not plaintext env vars):
 
 Note: `ecosystem.config.cjs` (used for standalone VPS/PM2 deploys outside Replit) intentionally keeps its own copy of these values in plaintext per the project owner's request — that file is unrelated to the Replit Secrets above and is not used when running on Replit.
 
+## Contact form records ("excelsheet")
+
+Every contact-form submission is saved to MongoDB in addition to being emailed — so a submission is never lost even if email delivery fails.
+
+- Visit `/excelsheet` and log in with the same `ADMIN_USERNAME` / `ADMIN_PASSWORD` credentials as the main admin panel (`/adminpannel`). It's a separate login session, so signing out of one doesn't affect the other.
+- `/excelsheet/data` shows all submitted enquiries: view, edit, delete, and download the full list as an `.xlsx` file.
+- Backend: `server/models/Enquiry.js`, `server/routes/enquiries.js` (guarded by the same admin session token as `server/routes/projects.js`).
+- Frontend: `src/pages/excel/`.
+
 ## Seeding data
 
 ```bash

@@ -8,6 +8,7 @@ import projectRoutes from './routes/projects.js'
 import adminLoginRoute from './routes/adminLogin.js'
 import siteSettingsRoute from './routes/siteSettings.js'
 import contactRoute from './routes/contact.js'
+import enquiriesRoute from './routes/enquiries.js'
 
 // ── Cloudinary config ─────────────────────────────────────────────────────────
 cloudinary.config({
@@ -32,6 +33,7 @@ app.use('/api/admin',         adminLoginRoute)
 app.use('/api/projects',      projectRoutes)
 app.use('/api/site-settings', siteSettingsRoute)
 app.use('/api/contact',       contactRoute)
+app.use('/api/enquiries',     enquiriesRoute)
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
 

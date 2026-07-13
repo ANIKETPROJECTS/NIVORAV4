@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import nodemailer from 'nodemailer'
+import { Enquiry } from '../models/Enquiry.js'
 
 const router = Router()
 
@@ -64,10 +65,25 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Please provide a valid phone number.' })
   }
 
+  // Persist the enquiry first so it's never lost, even if email delivery
+  // is misconfigured or fails below.
+  let enquiryDoc
+  try {
+    enquiryDoc = await Enquiry.create({
+      fullName, phone, email, spaceType, location,
+      projectType, budget, referral, requirements,
+    })
+  } catch (err) {
+    console.error('[Contact] Failed to save enquiry:', err)
+    return res.status(500).json({ error: 'Failed to save your enquiry. Please try again later.' })
+  }
+
   const t = getTransporter()
   if (!t) {
     console.error('[Contact] Email transporter not configured — missing EMAIL_USER or EMAIL_APP_SECRET.')
-    return res.status(500).json({ error: 'Email is not configured on the server.' })
+    // The enquiry is already saved and viewable in the records dashboard,
+    // so we don't fail the request just because email isn't configured.
+    return res.json({ ok: true, emailSent: false })
   }
 
   const to = process.env.EMAIL_TO || process.env.EMAIL_USER
@@ -105,10 +121,14 @@ router.post('/', async (req, res) => {
       text,
       html,
     })
-    res.json({ ok: true })
+    enquiryDoc.emailSent = true
+    await enquiryDoc.save()
+    res.json({ ok: true, emailSent: true })
   } catch (err) {
-    console.error('[Contact] Failed to send email:', err)
-    res.status(502).json({ error: 'Failed to send email. Please try again later.' })
+    console.error('[Contact] Failed to send email (enquiry was still saved):', err)
+    // The enquiry record itself is safe in the database, so this is not a
+    // failure from the visitor's point of view.
+    res.json({ ok: true, emailSent: false })
   }
 })
 
